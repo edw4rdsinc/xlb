@@ -243,7 +243,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Meet Our Expert Team */}
+      {/* Meet Our Expert Team - Updated */}
       <section className="py-16 bg-xl-dark-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center mb-12">
