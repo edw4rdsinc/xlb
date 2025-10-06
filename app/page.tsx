@@ -1,17 +1,7 @@
 import Link from 'next/link'
-import ExpertBio from '@/components/shared/ExpertBio'
 import AnimatedSection from '@/components/shared/AnimatedSection'
-import StatsTicker from '@/components/shared/StatsTicker'
 
 export default function HomePage() {
-  const stats = [
-    { value: '500+', label: 'Brokers Served' },
-    { value: '95%', label: 'Client Retention' },
-    { value: '$2.1B', label: 'Annual Premium Analyzed' },
-    { value: '40-Point', label: 'Contract Analysis' },
-    { value: '24/7', label: 'Expert Support' },
-  ];
-
   return (
     <div>
       {/* Hero Section with Parallax */}
@@ -26,15 +16,15 @@ export default function HomePage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
               Your Sidekick for Stop-Loss Success
             </h1>
-            <p className="text-xl sm:text-2xl mb-8 text-primary-100">
-              Interactive tools and expert guidance to help insurance brokers navigate stop-loss challenges with confidence.
+            <p className="text-xl sm:text-2xl mb-8 text-white/90">
+              Expert guidance and interactive tools designed exclusively for insurance brokers navigating stop-loss challenges.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/toolkit"
                 className="bg-white text-primary-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg"
               >
-                Explore Toolkit
+                Explore the Toolkit
               </Link>
               <Link
                 href="/contact"
@@ -47,150 +37,164 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Ticker */}
-      <StatsTicker stats={stats} />
+      {/* Why Brokers Choose XL Benefits */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection animation="fade-up" className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
+              Why Brokers Choose XL Benefits
+            </h2>
+            <p className="text-lg text-xl-grey leading-relaxed">
+              When your clients need stop-loss solutions, you need a partner who understands the complexities you face every day. XL Benefits brings deep carrier relationships, meticulous RFP management, and genuine expertise to every placement—from straightforward renewals to the most challenging cases.
+            </p>
+            <p className="text-lg text-xl-grey leading-relaxed mt-4">
+              We don't just find coverage. We help you present solutions with confidence.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
 
       {/* Featured Tools */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Interactive Tools Built for Brokers
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-4">
+              Your Complete Stop-Loss Toolkit
             </h2>
-            <p className="text-xl text-gray-600">
-              Stop guessing. Start calculating with confidence.
+            <p className="text-xl text-xl-grey">
+              Interactive tools built for brokers who need accurate answers fast
             </p>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Tool 1: COBRA Calculator */}
             <AnimatedSection animation="fade-up" delay={100}>
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">COBRA Rate Calculator</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">COBRA Calculator</h3>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Accurately project COBRA rates for self-funded groups with state-specific compliance considerations. Get calculations you can confidently share with clients.
+                </p>
+                <Link
+                  href="/solutions/cobra-calculation-challenges"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <p className="text-gray-600 mb-4">
-                Calculate accurate COBRA rates for self-funded groups with state-specific compliance built in.
-              </p>
-              <Link
-                href="/solutions/cobra-calculation-challenges"
-                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center"
-              >
-                Try Now
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
             </AnimatedSection>
 
             {/* Tool 2: Deductible Analyzer */}
             <AnimatedSection animation="fade-up" delay={200}>
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Stop-Loss Deductible Analyzer</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Deductible Analyzer</h3>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Compare specific and aggregate deductible structures to identify optimal cost-savings strategies. Make data-driven recommendations for every client scenario.
+                </p>
+                <Link
+                  href="/solutions/deductible-optimization"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <p className="text-gray-600 mb-4">
-                Optimize stop-loss deductibles with side-by-side comparison of specific and aggregate options.
-              </p>
-              <Link
-                href="/solutions/deductible-optimization"
-                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center"
-              >
-                Try Now
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
             </AnimatedSection>
 
-            {/* Tool 3: Self-Funding Quiz */}
+            {/* Tool 3: Self-Funding Assessment */}
             <AnimatedSection animation="fade-up" delay={300}>
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Self-Funding Readiness Assessment</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Self-Funding Quiz</h3>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Evaluate whether your client is truly prepared for self-funding with our comprehensive feasibility quiz. Identify risks before they become problems.
+                </p>
+                <Link
+                  href="/solutions/self-funding-feasibility"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <p className="text-gray-600 mb-4">
-                Assess whether your client is ready to transition from fully-insured to self-funding in 5 minutes.
-              </p>
-              <Link
-                href="/solutions/self-funding-feasibility"
-                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center"
-              >
-                Try Now
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
             </AnimatedSection>
 
             {/* Tool 4: Agg Specific Calculator */}
             <AnimatedSection animation="fade-up" delay={400}>
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Aggregating Specific Calculator</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Agg Specific Analysis</h3>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Analyze the ROI potential of aggregating specific deductibles versus traditional structures. Discover opportunities your clients might be missing.
+                </p>
+                <Link
+                  href="/solutions/aggregating-specific-analysis"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <p className="text-gray-600 mb-4">
-                Compare aggregating specific deductibles vs traditional specific with ROI modeling.
-              </p>
-              <Link
-                href="/solutions/aggregating-specific-analysis"
-                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center"
-              >
-                Try Now
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
             </AnimatedSection>
 
             {/* Tool 5: Vendor Directory */}
             <AnimatedSection animation="fade-up" delay={500}>
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Cost Containment Vendor Directory</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Vendor Directory</h3>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Access our curated directory of vetted cost containment vendors, filterable by specialty and integration requirements. Connect clients with the right partners.
+                </p>
+                <Link
+                  href="/solutions/cost-containment-solutions"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <p className="text-gray-600 mb-4">
-                Searchable directory of cost containment vendors with specialties and integration details.
-              </p>
-              <Link
-                href="/solutions/cost-containment-solutions"
-                className="text-primary-600 font-semibold hover:text-primary-700 inline-flex items-center"
-              >
-                Try Now
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
             </AnimatedSection>
           </div>
         </div>
@@ -199,86 +203,100 @@ export default function HomePage() {
       {/* Broker Testimonials */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Trusted by Brokers Nationwide
+          <AnimatedSection animation="fade-up" className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-4">
+              What Brokers Are Saying
             </h2>
-          </div>
+          </AnimatedSection>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <p className="text-gray-700 mb-4 italic">
-                "XL Benefits helped us navigate a complex renewal with multiple high claimants. Their 40-point inspection caught issues our previous MGU missed."
-              </p>
-              <p className="font-semibold text-gray-900">Sarah M.</p>
-              <p className="text-sm text-gray-600">Benefits Broker, Texas</p>
-            </div>
+            <AnimatedSection animation="fade-up" delay={100}>
+              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+                <p className="text-xl-grey mb-6 italic leading-relaxed">
+                  "Daron Pitts of XL Benefits knowledge of the reinsurance industry is exemplary. He and his firm provides phenomenal service and handles all matters timely and with a sense of professionalism. I believe that XL Benefits would be an excellent partner with any group client and their benefits."
+                </p>
+                <p className="font-semibold text-xl-dark-blue">Gina Cuttone</p>
+                <p className="text-sm text-xl-grey">President, Barthuli & Associates Insurance Services, Inc.</p>
+              </div>
+            </AnimatedSection>
 
-            <div className="bg-gray-50 rounded-lg p-6">
-              <p className="text-gray-700 mb-4 italic">
-                "The COBRA calculator alone has saved me hours every month. Having tools like this makes my job so much easier."
-              </p>
-              <p className="font-semibold text-gray-900">Mike R.</p>
-              <p className="text-sm text-gray-600">Independent Broker, California</p>
-            </div>
+            <AnimatedSection animation="fade-up" delay={200}>
+              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+                <p className="text-xl-grey mb-6 italic leading-relaxed">
+                  "As a TPA we've been approached by a number of stop loss general agents through the years. Recently we were introduced to the XL Benefits team and they have exceeded our expectations, setting a new standard for stop loss marketing. Their carrier relationships, expertise, responsiveness, and flexibility have freed us up to focus on what we do best – plan administration."
+                </p>
+                <p className="font-semibold text-xl-dark-blue">Regional Sales Manager</p>
+                <p className="text-sm text-xl-grey">Third-Party Administrator (Northern California)</p>
+              </div>
+            </AnimatedSection>
 
-            <div className="bg-gray-50 rounded-lg p-6">
-              <p className="text-gray-700 mb-4 italic">
-                "They don't just quote rates - they truly analyze the contracts and find savings opportunities we wouldn't have seen on our own."
-              </p>
-              <p className="font-semibold text-gray-900">Jennifer L.</p>
-              <p className="text-sm text-gray-600">Agency Principal, Florida</p>
-            </div>
+            <AnimatedSection animation="fade-up" delay={300}>
+              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+                <p className="text-xl-grey mb-6 italic leading-relaxed">
+                  "We consider XL Benefits an extension of our team. From the initial marketing to the final presentation their help is invaluable to our overall success. On more than one occasion they've helped us secure new business via broker of record and transition some of our fully insured clients to self-funding."
+                </p>
+                <p className="font-semibold text-xl-dark-blue">Vice President, Benefits</p>
+                <p className="text-sm text-xl-grey">Regional Firm (Fresno, CA)</p>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Expert Team Preview */}
-      <section className="py-16 bg-gray-50">
+      {/* Meet Our Expert Team */}
+      <section className="py-16 bg-xl-dark-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Meet Our Experts
+          <AnimatedSection animation="fade-up" className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Meet Our Expert Team
             </h2>
-            <p className="text-xl text-gray-600">
-              Decades of combined stop-loss experience at your service
-            </p>
-          </div>
+          </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <ExpertBio
-              name="Daron Smith"
-              title="Principal, Stop-Loss Specialist"
-              expertise={[
-                "40-Point Contract Analysis",
-                "RFP Management",
-                "Carrier Negotiations"
-              ]}
-            />
-            <ExpertBio
-              name="Jennifer Martinez"
-              title="Senior Account Manager"
-              expertise={[
-                "Self-Funding Transitions",
-                "COBRA Compliance",
-                "Client Relations"
-              ]}
-            />
-            <ExpertBio
-              name="Steve Johnson"
-              title="Underwriting Specialist"
-              expertise={[
-                "Risk Assessment",
-                "Deductible Optimization",
-                "Claims Analysis"
-              ]}
-            />
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <AnimatedSection animation="fade-up" delay={100}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                  DP
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Daron Pitts</h3>
+                <p className="text-white/80 text-sm mb-4">President, Founder</p>
+                <p className="text-white/90 leading-relaxed text-sm">
+                  Daron founded XL Benefits to provide creative solutions and uncommon service to the stop-loss industry. With over 12 years specializing in medical stop-loss, he's a problem solver dedicated to helping brokers and TPAs navigate complex placements.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection animation="fade-up" delay={200}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                  JB
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Jennifer Baird</h3>
+                <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
+                <p className="text-white/90 leading-relaxed text-sm">
+                  Jennifer brings 20+ years of experience in self-funded health plans, cost containment strategies, and benefits consulting. She serves as a trusted partner to brokers and TPAs on the East Coast.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection animation="fade-up" delay={300}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                  SC
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
+                <p className="text-white/80 text-sm mb-4">Director of Business Development</p>
+                <p className="text-white/90 leading-relaxed text-sm">
+                  Steve contributes 20+ years of management and strategic problem-solving experience to the medical stop-loss arena, focusing on understanding client needs and delivering solutions.
+                </p>
+              </div>
+            </AnimatedSection>
           </div>
 
           <div className="text-center">
             <Link
               href="/how-we-help/meet-the-team"
-              className="inline-flex items-center text-primary-600 font-semibold hover:text-primary-700 text-lg"
+              className="inline-flex items-center bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-bright-blue/90 transition-all hover:scale-105"
             >
               Meet the Full Team
               <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -289,57 +307,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Recent Resources */}
+      {/* How We Work */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Latest Resources
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection animation="fade-up" className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
+              How We Work With You
             </h2>
-            <p className="text-xl text-gray-600">
-              Stay informed with industry insights and best practices
+            <p className="text-lg text-xl-grey leading-relaxed mb-4">
+              XL Benefits handles the complexity so you can focus on your client relationships. Our 40-point inspection process ensures nothing gets overlooked—from gathering clean data to presenting competitive options with complete transparency.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <div className="text-sm text-primary-600 font-semibold mb-2">WHITE PAPER</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
-                Stop-Loss 101: A Broker's Complete Guide
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Everything you need to know about stop-loss insurance, from basics to advanced strategies.
-              </p>
-              <Link href="/resources/white-papers" className="text-primary-600 font-semibold hover:text-primary-700">
-                Download PDF →
-              </Link>
-            </div>
-
-            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-              <div className="text-sm text-primary-600 font-semibold mb-2">BLOG POST</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
-                5 Red Flags in Stop-Loss Contracts
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Learn what to watch for during contract reviews to protect your clients from unexpected costs.
-              </p>
-              <Link href="/resources/blog" className="text-primary-600 font-semibold hover:text-primary-700">
-                Read More →
-              </Link>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
+            <p className="text-lg text-xl-grey leading-relaxed mb-8">
+              Whether you're managing a straightforward renewal or navigating a challenging placement, we provide the expertise and carrier access you need to deliver exceptional results.
+            </p>
             <Link
-              href="/resources"
-              className="inline-flex items-center text-primary-600 font-semibold hover:text-primary-700 text-lg"
+              href="/how-we-help/our-process"
+              className="inline-flex items-center text-xl-bright-blue font-semibold hover:text-xl-dark-blue text-lg transition-colors"
             >
-              View All Resources
+              Learn About Our Process
               <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-          </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <section className="py-20 bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <AnimatedSection animation="fade-up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Ready to tackle your next stop-loss challenge?
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Connect with our team to discuss your specific situation.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-xl"
+            >
+              Schedule a Conversation
+            </Link>
+          </AnimatedSection>
         </div>
       </section>
     </div>
