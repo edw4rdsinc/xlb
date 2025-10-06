@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--wpex-heading-font-family, var(--wpex-font-sans));
   font-weight: var(--wpex-bold);
   line-height: var(--wpex-leading-tight);
-  color: var(--xl-dark-blue);
+  color: inherit; /* Inherit color from parent instead of forcing dark blue */
 }
 
 h1 { font-size: var(--wpex-text-3xl); }
