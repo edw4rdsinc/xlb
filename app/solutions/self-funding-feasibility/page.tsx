@@ -1,5 +1,5 @@
 import ProblemStatement from '@/components/shared/ProblemStatement'
-import ToolComingSoon from '@/components/shared/ToolComingSoon'
+import SelfFundingQuiz from '@/components/tools/SelfFundingQuiz'
 
 export default function SelfFundingFeasibilityPage() {
   return (
@@ -10,11 +10,7 @@ export default function SelfFundingFeasibilityPage() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <ToolComingSoon
-          toolName="Self-Funding Readiness Assessment"
-          description="15-question assessment with scored results and personalized recommendations for transitioning to self-funding."
-          expectedDate="Q2 2025"
-        />
+        <SelfFundingQuiz />
       </div>
     </div>
   )
