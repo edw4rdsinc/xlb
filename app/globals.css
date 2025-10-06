@@ -1,7 +1,21 @@
 @import "tailwindcss";
 
-:root {
+@theme {
   /* XL Benefits Brand Colors */
+  --color-xl-dark-blue: #003366;
+  --color-xl-bright-blue: #0099CC;
+  --color-xl-grey: #333333;
+  --color-xl-light-grey: #F0F0F0;
+
+  /* Primary/Accent aliases */
+  --color-primary-600: #003366;
+  --color-primary-700: #002952;
+  --color-primary-800: #001429;
+  --color-primary-900: #000a14;
+}
+
+:root {
+  /* XL Benefits Brand Colors (for custom CSS) */
   --xl-dark-blue: #003366;
   --xl-bright-blue: #0099CC;
   --xl-grey: #333333;
