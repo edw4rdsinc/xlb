@@ -296,7 +296,7 @@ export default function HomePage() {
           <div className="text-center">
             <Link
               href="/how-we-help/meet-the-team"
-              className="inline-flex items-center bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-bright-blue/90 transition-all hover:scale-105"
+              className="inline-flex items-center bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-lg"
             >
               Meet the Full Team
               <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
