@@ -48,6 +48,9 @@ export default function Header() {
             <Link href="/how-we-help" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               How We Help
             </Link>
+            <Link href="/fantasy-football" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+              Fantasy Football
+            </Link>
             <Link
               href="/contact"
               className="rounded-md bg-xl-bright-blue px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-xl-dark-blue transition-colors"
