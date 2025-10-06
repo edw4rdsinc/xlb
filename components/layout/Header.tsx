@@ -13,28 +13,28 @@ export default function Header() {
         <div className="flex h-16 justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-primary-600">
+            <Link href="/" className="text-2xl font-bold text-xl-dark-blue hover:text-xl-bright-blue transition-colors">
               XL Benefits
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link href="/solutions" className="text-gray-700 hover:text-primary-600">
+            <Link href="/solutions" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Solutions
             </Link>
-            <Link href="/toolkit" className="text-gray-700 hover:text-primary-600">
+            <Link href="/toolkit" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Toolkit
             </Link>
-            <Link href="/resources" className="text-gray-700 hover:text-primary-600">
+            <Link href="/resources" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Resources
             </Link>
-            <Link href="/how-we-help" className="text-gray-700 hover:text-primary-600">
+            <Link href="/how-we-help" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               How We Help
             </Link>
             <Link
               href="/contact"
-              className="rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500"
+              className="rounded-md bg-xl-bright-blue px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-xl-dark-blue transition-colors"
             >
               Contact Us
             </Link>
