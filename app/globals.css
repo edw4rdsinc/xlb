@@ -1,1 +1,31 @@
 @import "tailwindcss";
+
+/* XL Benefits Brand Color CSS Variables */
+:root {
+  --xl-dark-blue: #003366;
+  --xl-bright-blue: #0099CC;
+  --xl-grey: #333333;
+  --xl-light-grey: #F0F0F0;
+  --xl-white: #FFFFFF;
+}
+
+/* Base body styling with XL Benefits colors */
+body {
+  color: var(--xl-grey);
+  background-color: var(--xl-white);
+}
+
+/* Default link styling with brand colors */
+a {
+  color: var(--xl-bright-blue);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--xl-dark-blue);
+}
+
+/* Headings use dark blue */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--xl-dark-blue);
+}

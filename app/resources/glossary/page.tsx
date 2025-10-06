@@ -70,14 +70,14 @@ export default function GlossaryPage() {
         }))}
       />
 
-      <div className="py-16 bg-gray-50">
+      <div className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-xl-dark-blue mb-4">
               Stop-Loss Insurance Glossary
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl">
+            <p className="text-xl text-xl-grey max-w-3xl">
               Your comprehensive, searchable guide to stop-loss insurance terminology.
               From self-funding basics to complex pharmacy benefit terms, find clear definitions
               for over {glossaryTerms.length} industry terms.
@@ -145,8 +145,8 @@ export default function GlossaryPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                       selectedCategory === category
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        ? 'bg-xl-bright-blue text-white'
+                        : 'bg-white text-xl-grey hover:bg-xl-light-grey'
                     }`}
                   >
                     {category}
@@ -194,10 +194,10 @@ export default function GlossaryPage() {
                         className="w-full text-left flex items-start justify-between gap-4"
                       >
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-900 mb-1">
+                          <h3 className="text-xl font-bold text-xl-dark-blue mb-1">
                             {term.term}
                           </h3>
-                          <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          <span className="inline-block px-3 py-1 text-xs font-medium bg-xl-bright-blue/10 text-xl-bright-blue rounded-full">
                             {term.category}
                           </span>
                         </div>
@@ -258,7 +258,7 @@ export default function GlossaryPage() {
                                   <a
                                     key={idx}
                                     href={content.url}
-                                    className="block text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                                    className="block text-sm text-xl-bright-blue hover:text-xl-dark-blue hover:underline transition-colors"
                                   >
                                     {content.type === 'tool' && '🔧 '}
                                     {content.type === 'blog' && '📝 '}
@@ -279,17 +279,17 @@ export default function GlossaryPage() {
           </div>
 
           {/* CTA Section */}
-          <div className="mt-12 bg-blue-600 rounded-lg p-8 text-center">
+          <div className="mt-12 bg-xl-bright-blue rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-4">
               Still Have Questions?
             </h2>
-            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+            <p className="text-white/90 mb-6 max-w-2xl mx-auto">
               Our stop-loss experts can help you navigate these complex terms and
               apply them to your specific situation.
             </p>
             <a
               href="/contact"
-              className="inline-block px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+              className="inline-block px-8 py-3 bg-white text-xl-bright-blue font-semibold rounded-lg hover:bg-xl-light-grey transition-colors"
             >
               Talk to an Expert
             </a>
