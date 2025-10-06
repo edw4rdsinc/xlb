@@ -13,7 +13,7 @@ export default function DeductibleOptimizationPage() {
         <ToolComingSoon
           toolName="Deductible Optimization Calculator"
           description="Side-by-side comparison of deductible strategies with ROI modeling and carrier-specific provisions analysis."
-          expectedDate="Q2 2025"
+          expectedDate="Q1 2026"
         />
       </div>
     </div>

@@ -13,7 +13,7 @@ export default function AggregatingSpecificPage() {
         <ToolComingSoon
           toolName="Agg Specific Calculator"
           description="ROI comparison tool for aggregating specific vs traditional specific deductibles with claim scenario modeling."
-          expectedDate="Q3 2025"
+          expectedDate="Q2 2026"
         />
       </div>
     </div>
