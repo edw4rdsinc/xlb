@@ -5,13 +5,13 @@
 Modern, broker-focused website for XL Benefits, a stop-loss insurance specialist. The site uses an AI-first content strategy with interactive tools as the primary conversion mechanism.
 
 ## Tech Stack
-- **Frontend Framework:** Next.js 14+ with App Router
+- **Frontend Framework:** Next.js 15.5.4 with App Router
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS v4
 - **Forms:** React Hook Form with Zod validation
 - **Email Verification:** Double opt-in ready
 - **Analytics:** Google Analytics 4
-- **Deployment:** Vercel-ready
+- **Deployment:** Vercel (deployed and live)
 
 ## Core Design Principles
 1. **Mobile-first responsive design** - Brokers work from phones
@@ -99,6 +99,9 @@ Modern, broker-focused website for XL Benefits, a stop-loss insurance specialist
 │   │   │   └── page.tsx                           # Team Bios & Expertise
 │   │   └── why-brokers-choose-us/
 │   │       └── page.tsx                           # Value Proposition
+│   │
+│   ├── fantasy-football/
+│   │   └── page.tsx                               # Fantasy Football Challenge
 │   │
 │   ├── contact/
 │   │   └── page.tsx                               # Contact/Calendly Integration
