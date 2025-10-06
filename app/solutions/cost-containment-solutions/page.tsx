@@ -13,7 +13,7 @@ export default function CostContainmentPage() {
         <ToolComingSoon
           toolName="Cost Containment Vendor Directory"
           description="Searchable directory with filters for specialty, integration requirements, and group size compatibility."
-          expectedDate="Q3 2025"
+          expectedDate="Q2 2026"
         />
       </div>
     </div>

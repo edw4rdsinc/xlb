@@ -13,7 +13,7 @@ export default function CobraCalculationPage() {
         <ToolComingSoon
           toolName="COBRA Calculator"
           description="Comprehensive COBRA rate calculator with state-specific compliance, administrative fee calculations, coverage tier variations, and stop-loss carrier-specific provisions. Tool is far more complex than a simple 2% calculation and requires integration with carrier systems and state regulation databases."
-          expectedDate="Q2 2025"
+          expectedDate="Q4 2025"
         />
       </div>
     </div>

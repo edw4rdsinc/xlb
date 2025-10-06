@@ -32,62 +32,52 @@ export default function ToolkitPage() {
 
             {/* Tool 1: COBRA Calculator */}
             <AnimatedSection animation="fade-up" delay={100}>
-              <Link href="/solutions/cobra-calculation-challenges">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
-                        COBRA Rate Calculator
-                      </h3>
-                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Calculate accurate COBRA rates for self-funded groups with state-specific compliance and administrative fee calculations.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
-                    Use Tool
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      COBRA Rate Calculator
+                    </h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q4 2025</span>
+                  </div>
                 </div>
-              </Link>
+                <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
+                  Calculate accurate COBRA rates for self-funded groups with state-specific compliance and administrative fee calculations.
+                </p>
+                <div className="text-gray-500 font-semibold text-sm">
+                  Coming Soon
+                </div>
+              </div>
             </AnimatedSection>
 
             {/* Tool 2: Deductible Analyzer */}
             <AnimatedSection animation="fade-up" delay={200}>
-              <Link href="/solutions/deductible-optimization">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
-                        Stop-Loss Deductible Analyzer
-                      </h3>
-                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Compare specific and aggregate deductible structures to identify optimal cost-savings strategies.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
-                    Use Tool
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Stop-Loss Deductible Analyzer
+                    </h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q1 2026</span>
+                  </div>
                 </div>
-              </Link>
+                <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
+                  Compare specific and aggregate deductible structures to identify optimal cost-savings strategies.
+                </p>
+                <div className="text-gray-500 font-semibold text-sm">
+                  Coming Soon
+                </div>
+              </div>
             </AnimatedSection>
 
             {/* Tool 3: Self-Funding Assessment */}
@@ -122,62 +112,52 @@ export default function ToolkitPage() {
 
             {/* Tool 4: Agg Specific Calculator */}
             <AnimatedSection animation="fade-up" delay={400}>
-              <Link href="/solutions/aggregating-specific-analysis">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
-                        Aggregating Specific Calculator
-                      </h3>
-                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Analyze the ROI potential of aggregating specific deductibles versus traditional structures.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
-                    Use Tool
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Aggregating Specific Calculator
+                    </h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q2 2026</span>
+                  </div>
                 </div>
-              </Link>
+                <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
+                  Analyze the ROI potential of aggregating specific deductibles versus traditional structures.
+                </p>
+                <div className="text-gray-500 font-semibold text-sm">
+                  Coming Soon
+                </div>
+              </div>
             </AnimatedSection>
 
             {/* Tool 5: Vendor Directory */}
             <AnimatedSection animation="fade-up" delay={500}>
-              <Link href="/solutions/cost-containment-solutions">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
-                        Cost Containment Vendor Directory
-                      </h3>
-                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Access our curated directory of vetted cost containment vendors, filterable by specialty.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
-                    Browse Directory
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Cost Containment Vendor Directory
+                    </h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q2 2026</span>
+                  </div>
                 </div>
-              </Link>
+                <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
+                  Access our curated directory of vetted cost containment vendors, filterable by specialty.
+                </p>
+                <div className="text-gray-500 font-semibold text-sm">
+                  Coming Soon
+                </div>
+              </div>
             </AnimatedSection>
 
           </div>
