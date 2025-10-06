@@ -16,9 +16,9 @@ export default function MeetTheTeamPage() {
           <AnimatedSection animation="fade-up" delay={100}>
             <FlipCard
               name="Daron Pitts"
-              title="President, Founder"
-              expertise={["Stop Loss General Agent", "Self-Funded Consulting", "Creative Solutions"]}
-              bio="Daron is the founder of XL Benefits and a problem solver at heart. He joined the insurance industry more than twelve years ago, working primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
+              title="President, Founder | CSFS"
+              expertise={["20+ Years Self-Funding", "Stop Loss General Agent", "CSFS Designation"]}
+              bio="Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
               email="daron@xlbenefits.com"
             />
           </AnimatedSection>
@@ -27,8 +27,8 @@ export default function MeetTheTeamPage() {
             <FlipCard
               name="Jennifer Baird"
               title="Stop Loss Sales Consultant"
-              expertise={["Self-Funded Health Plans", "Cost Containment", "PBM Analysis"]}
-              bio="Jennifer has over 20 years of experience working alongside employers helping manage their benefit offerings. She spent the last 4½ years as an employee benefits consultant and prior to that worked for a TPA for 19 years, supporting large companies to develop and deploy cost containment strategies. Jennifer joined the XL Benefits team in May 2023 as a stop loss sales consultant with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
+              expertise={["20+ Years Self-Funding", "TPA Experience", "Broker & Consultant Background"]}
+              bio="Jennifer has over 20 years of experience in self-funding, having worked as a TPA professional, employee benefits broker, and now as a stop loss consultant. Her diverse background gives her unique insights into all sides of the self-funding equation. She specializes in helping large companies develop and deploy cost containment strategies including PBM analysis, captive solutions, and risk mitigation. Jennifer joined the XL Benefits team in May 2023 with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
               email="jennifer@xlbenefits.com"
             />
           </AnimatedSection>
@@ -36,9 +36,9 @@ export default function MeetTheTeamPage() {
           <AnimatedSection animation="fade-up" delay={300}>
             <FlipCard
               name="Steve Caler"
-              title="Director of Business Development"
-              expertise={["Management Experience", "Strategic Problem-Solving", "Client Needs Assessment"]}
-              bio="Steve joined XL Benefits with a background in real estate sales and management, as well as years of leading family ministries. He now contributes his more than twenty years of management and personal development experience to the Medical Stop Loss arena. His combined experience leads him to recognize the true needs of others and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo)."
+              title="Director of Business Development | CSFS"
+              expertise={["10+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
+              bio="Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo). He loves watching UFC with his four boys and drinking coffee with his wife and two girls."
               email="steve@xlbenefits.com"
             />
           </AnimatedSection>
