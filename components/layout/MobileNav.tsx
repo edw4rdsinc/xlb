@@ -42,6 +42,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           How We Help
         </Link>
         <Link
+          href="/fantasy-football"
+          className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-600"
+          onClick={onClose}
+        >
+          Fantasy Football
+        </Link>
+        <Link
           href="/contact"
           className="block rounded-md bg-primary-600 px-3 py-2 text-base font-medium text-white hover:bg-primary-500"
           onClick={onClose}
