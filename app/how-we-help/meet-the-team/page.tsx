@@ -15,71 +15,31 @@ export default function MeetTheTeamPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatedSection animation="fade-up" delay={100}>
             <FlipCard
-              name="Daron Smith"
-              title="Principal, Stop-Loss Specialist"
-              expertise={["40-Point Contract Analysis", "RFP Management", "Carrier Negotiations"]}
-              bio="With over 15 years in the stop-loss industry, Daron specializes in comprehensive contract analysis and carrier negotiations. He has saved clients millions through meticulous RFP management."
+              name="Daron Pitts"
+              title="President, Founder"
+              expertise={["Stop Loss General Agent", "Self-Funded Consulting", "Creative Solutions"]}
+              bio="Daron is the founder of XL Benefits and a problem solver at heart. He joined the insurance industry more than twelve years ago, working primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
               email="daron@xlbenefits.com"
             />
           </AnimatedSection>
 
           <AnimatedSection animation="fade-up" delay={200}>
             <FlipCard
-              name="Jennifer Martinez"
-              title="Senior Account Manager"
-              expertise={["Self-Funding Transitions", "COBRA Compliance", "Client Relations"]}
-              bio="Jennifer excels at guiding employers through the transition to self-funding. Her expertise in COBRA compliance ensures clients avoid costly mistakes."
+              name="Jennifer Baird"
+              title="Stop Loss Sales Consultant"
+              expertise={["Self-Funded Health Plans", "Cost Containment", "PBM Analysis"]}
+              bio="Jennifer has over 20 years of experience working alongside employers helping manage their benefit offerings. She spent the last 4½ years as an employee benefits consultant and prior to that worked for a TPA for 19 years, supporting large companies to develop and deploy cost containment strategies. Jennifer joined the XL Benefits team in May 2023 as a stop loss sales consultant with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
               email="jennifer@xlbenefits.com"
             />
           </AnimatedSection>
 
           <AnimatedSection animation="fade-up" delay={300}>
             <FlipCard
-              name="Steve Johnson"
-              title="Underwriting Specialist"
-              expertise={["Risk Assessment", "Deductible Optimization", "Claims Analysis"]}
-              bio="Steve's deep understanding of underwriting allows him to optimize deductible levels and identify risk factors that others miss."
+              name="Steve Caler"
+              title="Director of Business Development"
+              expertise={["Management Experience", "Strategic Problem-Solving", "Client Needs Assessment"]}
+              bio="Steve joined XL Benefits with a background in real estate sales and management, as well as years of leading family ministries. He now contributes his more than twenty years of management and personal development experience to the Medical Stop Loss arena. His combined experience leads him to recognize the true needs of others and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo)."
               email="steve@xlbenefits.com"
-            />
-          </AnimatedSection>
-
-          <AnimatedSection animation="fade-up" delay={400}>
-            <FlipCard
-              name="Joe Chen"
-              title="Compliance Expert"
-              expertise={["Regulatory Compliance", "State Requirements", "DOL Guidance"]}
-              bio="Joe keeps clients ahead of changing regulations. His expertise in state-specific requirements and DOL guidance is invaluable."
-              email="joe@xlbenefits.com"
-            />
-          </AnimatedSection>
-
-          <AnimatedSection animation="fade-up" delay={500}>
-            <FlipCard
-              name="Christine Davis"
-              title="Marketing Specialist"
-              expertise={["Broker Support", "Client Communication", "Market Intelligence"]}
-              bio="Christine provides brokers with the marketing support and market intelligence they need to win and retain clients."
-              email="christine@xlbenefits.com"
-            />
-          </AnimatedSection>
-
-          <AnimatedSection animation="fade-up" delay={600}>
-            <FlipCard
-              name="Erin Thompson"
-              title="Implementation Manager"
-              expertise={["Plan Setup", "System Integration", "Training"]}
-              bio="Erin ensures smooth plan implementations with comprehensive training and seamless system integrations."
-              email="erin@xlbenefits.com"
-            />
-          </AnimatedSection>
-
-          <AnimatedSection animation="fade-up" delay={700}>
-            <FlipCard
-              name="Sam Rodriguez"
-              title="Data Analyst"
-              expertise={["Claims Analytics", "Trend Analysis", "Reporting"]}
-              bio="Sam transforms raw claims data into actionable insights, helping clients make data-driven decisions about their health plans."
-              email="sam@xlbenefits.com"
             />
           </AnimatedSection>
         </div>

@@ -261,7 +261,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white mb-2">Daron Pitts</h3>
                 <p className="text-white/80 text-sm mb-4">President, Founder</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Daron founded XL Benefits to provide creative solutions and uncommon service to the stop-loss industry. With over 12 years specializing in medical stop-loss, he's a problem solver dedicated to helping brokers and TPAs navigate complex placements.
+                  Daron is the founder of XL Benefits and a problem solver at heart. With over 12 years in the medical stop-loss field serving brokers and TPAs, he started XL Benefits in 2014 with the goal to provide creative solutions and uncommon service to an industry he loves.
                 </p>
               </div>
             </AnimatedSection>
@@ -274,7 +274,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white mb-2">Jennifer Baird</h3>
                 <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Jennifer brings 20+ years of experience in self-funded health plans, cost containment strategies, and benefits consulting. She serves as a trusted partner to brokers and TPAs on the East Coast.
+                  Jennifer has over 20 years of experience helping employers manage their benefit offerings. She specializes in self-funded health plans and cost containment strategies, serving as a trusted partner to brokers and TPAs on the East Coast since joining XL Benefits in May 2023.
                 </p>
               </div>
             </AnimatedSection>
@@ -287,7 +287,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
                 <p className="text-white/80 text-sm mb-4">Director of Business Development</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Steve contributes 20+ years of management and strategic problem-solving experience to the medical stop-loss arena, focusing on understanding client needs and delivering solutions.
+                  Steve brings over 20 years of management and personal development experience to medical stop-loss. His background in real estate sales and management helps him recognize the true needs of others and provide strategic problem-solving solutions.
                 </p>
               </div>
             </AnimatedSection>
