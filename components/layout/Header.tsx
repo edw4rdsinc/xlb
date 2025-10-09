@@ -36,17 +36,14 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link href="/solutions" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
-              Solutions
+            <Link href="/how-we-help" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+              How We Help
             </Link>
             <Link href="/toolkit" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Toolkit
             </Link>
             <Link href="/resources" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Resources
-            </Link>
-            <Link href="/how-we-help" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
-              How We Help
             </Link>
             <Link href="/fantasy-football" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
               Fantasy Football
