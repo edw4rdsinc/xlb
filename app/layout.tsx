@@ -19,6 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script defer data-domain="xlbenefits.com" src="http://5.78.156.118:8001/js/script.js"></script>
+      </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
           <Header />
