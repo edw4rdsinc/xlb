@@ -14,11 +14,11 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     <div className="md:hidden">
       <div className="space-y-1 px-2 pb-3 pt-2">
         <Link
-          href="/solutions"
+          href="/how-we-help"
           className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-600"
           onClick={onClose}
         >
-          Solutions
+          How We Help
         </Link>
         <Link
           href="/toolkit"
@@ -33,13 +33,6 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           onClick={onClose}
         >
           Resources
-        </Link>
-        <Link
-          href="/how-we-help"
-          className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-600"
-          onClick={onClose}
-        >
-          How We Help
         </Link>
         <Link
           href="/fantasy-football"
