@@ -270,13 +270,13 @@ export default function HowWeHelpPage() {
                     COMMON CHALLENGE
                   </div>
                   <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
-                    "How do I calculate COBRA rates without risking compliance errors?"
+                    "How do I calculate fully insured equivalent rates accurately?"
                   </h3>
                   <p className="text-xl-grey mb-4 leading-relaxed">
-                    COBRA rate calculations for self-funded plans are notoriously complex. State-specific rules, administrative fee caps, coverage tier variations, and monthly adjustments create a compliance minefield.
+                    Fully insured equivalent rates for self-funded plans are notoriously complex. State-specific rules, administrative fee caps, coverage tier variations, and monthly adjustments create a compliance minefield.
                   </p>
                   <p className="text-xl-grey mb-6 leading-relaxed">
-                    One miscalculation can expose your client to penalties—or leave money on the table.
+                    Let us help.
                   </p>
                   <Link
                     href="/toolkit#cobra-calculator"
