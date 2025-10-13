@@ -733,6 +733,76 @@ export const glossaryTerms: GlossaryTerm[] = [
     definition: 'Restrictions on the amount of a particular medication that will be covered over a specific period of time (e.g., 30 pills per month). These limits are often in place for safety reasons, to prevent stockpiling and waste, or to control costs for medications that may be prone to overuse.',
     relatedTerms: ['Prior Authorization', 'Step Therapy', 'Utilization Management']
   },
+  {
+    term: 'MAC Effective Rate (MER)',
+    slug: 'mac-effective-rate',
+    category: 'Pharmacy Benefits',
+    definition: 'The Maximum Allowable Cost (MAC) list sets the reimbursement limit for generics. The MAC Effective Rate reflects the blended reimbursement across all MAC lists a PBM uses.',
+    relatedTerms: ['MAC', 'PBM', 'Generic Drugs']
+  },
+  {
+    term: 'Generic Substitution Rate (GSR)',
+    slug: 'generic-substitution-rate',
+    category: 'Pharmacy Benefits',
+    definition: 'Measures how often brand-name prescriptions are replaced with clinically equivalent generics. A high substitution rate is critical for cost control and should be 98% or better.',
+    relatedTerms: ['Generic Drugs', 'Brand-Name Drugs', 'Formulary', 'Cost Containment']
+  },
+  {
+    term: 'Medication Possession Ratio (MPR)',
+    slug: 'medication-possession-ratio',
+    category: 'Pharmacy Benefits',
+    definition: 'A key measure of medication adherence, MPR calculates the proportion of time a patient has access to their medication. An effective plan should target an MPR of 80% or better.',
+    relatedTerms: ['Medication Therapy Management', 'Disease Management', 'PBM']
+  },
+  {
+    term: 'Rebate Yield',
+    slug: 'rebate-yield',
+    category: 'Pharmacy Benefits',
+    definition: 'The percentage of rebates retained relative to total drug spend. It should be at least 20% of brand drug spend.',
+    relatedTerms: ['Rebates', 'PBM', 'Brand-Name Drugs']
+  },
+  {
+    term: 'Prior Authorization Approval Rate',
+    slug: 'prior-authorization-approval-rate',
+    category: 'Pharmacy Benefits',
+    definition: 'Measures how often prior authorization (PA) requests are approved by the PBM. The benchmark should generally be below 65%.',
+    relatedTerms: ['Prior Authorization', 'PBM', 'Utilization Management']
+  },
+  {
+    term: 'Medication Therapy Management (MTM)',
+    slug: 'medication-therapy-management',
+    category: 'Pharmacy Benefits',
+    definition: 'Programs that ensure patients, especially those with multiple chronic conditions, are on the right medications and taking them correctly.',
+    relatedTerms: ['PBM', 'Disease Management', 'Medication Possession Ratio', 'Case Management']
+  },
+  {
+    term: 'Specialty Dispensing Rate',
+    slug: 'specialty-dispensing-rate',
+    category: 'Pharmacy Benefits',
+    definition: 'Measures (as a percentage) how often prescriptions for high-cost specialty drugs are filled by PBM-owned or preferred specialty pharmacies.',
+    relatedTerms: ['Specialty Drugs', 'Specialty Pharmacy', 'PBM']
+  },
+  {
+    term: 'Back-Billing',
+    slug: 'back-billing',
+    category: 'Pharmacy Benefits',
+    definition: 'When PBMs withhold reimbursement to the pharmacy after the point of sale and keep those dollars without disclosing or sharing them with the plan sponsor.',
+    relatedTerms: ['PBM', 'Spread Pricing', 'Transparency']
+  },
+  {
+    term: 'Pharmacogenomics (PGx)',
+    slug: 'pharmacogenomics',
+    category: 'Pharmacy Benefits',
+    definition: 'The study of how a person\'s genes influence drug effectiveness and safety.',
+    relatedTerms: ['Medication Therapy Management', 'Specialty Drugs']
+  },
+  {
+    term: 'Total Cost of Pharmacy Care (TCoPC)',
+    slug: 'total-cost-of-pharmacy-care',
+    category: 'Pharmacy Benefits',
+    definition: 'Looks beyond the unit cost of prescriptions and considers the full impact of pharmacy care, including ingredient costs, claims management, clinical services, and medical costs avoided.',
+    relatedTerms: ['PBM', 'Cost Containment', 'Medication Therapy Management']
+  },
 
   // MEMBER EXPERIENCE & COST-SHARING
   {

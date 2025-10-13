@@ -47,7 +47,7 @@ export default function ToolkitPage() {
                   </div>
                 </div>
                 <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
-                  Calculate accurate COBRA rates for self-funded groups with state-specific compliance and administrative fee calculations.
+                  Calculate accurate fully insured equivalent rates for self-funded groups with state-specific compliance and administrative fee calculations.
                 </p>
                 <div className="text-gray-500 font-semibold text-sm">
                   Coming Soon
