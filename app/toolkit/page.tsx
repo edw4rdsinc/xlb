@@ -41,7 +41,7 @@ export default function ToolkitPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900">
-                      COBRA Rate Calculator
+                      Fully Insured Equivalent Rate Calculator
                     </h3>
                     <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q4 2025</span>
                   </div>

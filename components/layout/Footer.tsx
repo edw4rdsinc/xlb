@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -9,7 +10,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">XL Benefits</h3>
+            <Image
+              src="/images/logos/xl-logo-full.png"
+              alt="XL Benefits"
+              width={200}
+              height={50}
+              className="h-12 w-auto mb-4"
+            />
             <p className="text-xl-light-grey text-sm">
               Your sidekick for stop-loss success. Expert guidance and interactive tools for insurance brokers.
             </p>
