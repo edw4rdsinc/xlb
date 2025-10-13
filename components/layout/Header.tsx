@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import MobileNav from './MobileNav'
 
@@ -29,23 +30,30 @@ export default function Header() {
         <div className="flex h-16 justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-xl-dark-blue hover:text-xl-bright-blue transition-colors">
-              XL Benefits
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/logos/xl-logo-icon.png"
+                alt="XL Benefits"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link href="/how-we-help" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+            <Link href="/how-we-help" className="text-xl-dark-blue hover:text-xl-bright-blue transition-colors font-medium">
               How We Help
             </Link>
-            <Link href="/toolkit" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+            <Link href="/toolkit" className="text-xl-dark-blue hover:text-xl-bright-blue transition-colors font-medium">
               Toolkit
             </Link>
-            <Link href="/resources" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+            <Link href="/resources" className="text-xl-dark-blue hover:text-xl-bright-blue transition-colors font-medium">
               Resources
             </Link>
-            <Link href="/fantasy-football" className="text-xl-grey hover:text-xl-bright-blue transition-colors">
+            <Link href="/fantasy-football" className="text-xl-dark-blue hover:text-xl-bright-blue transition-colors font-medium">
               Fantasy Football
             </Link>
             <Link

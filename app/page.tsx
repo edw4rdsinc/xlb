@@ -76,7 +76,7 @@ export default function HomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-xl-dark-blue">COBRA Rate Calculator</h3>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Fully Insured Equivalent Rate Calculator</h3>
                 </div>
                 <p className="text-xl-grey mb-6 flex-grow">
                   Accurately project COBRA rates for self-funded groups with state-specific compliance considerations. Get calculations you can confidently share with clients.
@@ -296,7 +296,7 @@ export default function HomePage() {
           <div className="text-center">
             <Link
               href="/how-we-help/meet-the-team"
-              className="inline-flex items-center bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-lg"
+              className="inline-flex items-center bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-bright-blue hover:text-white transition-all hover:scale-105 shadow-lg"
             >
               Meet the Full Team
               <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

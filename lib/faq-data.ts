@@ -110,15 +110,15 @@ We also work with smaller groups (25-50 employees) when they have favorable demo
   // Tools & Calculators
   {
     id: 'cobra-calculator',
-    question: 'How does the COBRA Rate Calculator work?',
-    answer: `Our COBRA Rate Calculator helps you quickly determine the compliant monthly premium to charge employees electing COBRA continuation coverage. You input the employer's monthly premium cost for the plan, and the calculator applies the maximum 2% administrative fee allowed under federal law.
+    question: 'How does the Fully Insured Equivalent Rate Calculator work?',
+    answer: `Our Fully Insured Equivalent Rate Calculator helps you quickly determine the compliant monthly premium to charge employees electing COBRA continuation coverage. You input the employer's monthly premium cost for the plan, and the calculator applies the maximum 2% administrative fee allowed under federal law.
 
 For example, if the employer pays $800/month for single coverage, the COBRA rate would be $816/month ($800 × 1.02). The calculator handles family tiers automatically and gives you print-ready rates to provide to the COBRA administrator or terminating employees.
 
 This tool is popular because COBRA rate calculations must be precise—undercharging violates IRS rules, while overcharging can trigger penalties. It's a simple tool that ensures compliance and saves brokers time on a routine administrative task.`,
     category: 'Tools & Calculators',
     relatedLinks: [
-      { title: 'COBRA Rate Calculator', url: '/toolkit/cobra-rate-calculator', type: 'tool' },
+      { title: 'Fully Insured Equivalent Rate Calculator', url: '/toolkit/cobra-rate-calculator', type: 'tool' },
     ],
   },
   {
@@ -165,7 +165,7 @@ The calculator lets you input your expected claims, specific deductible, aggrega
   {
     id: 'calculator-accuracy',
     question: 'How accurate are your online calculators?',
-    answer: `Our calculators provide accurate estimates based on the inputs you provide, but they're designed for preliminary analysis—not final quoting. The COBRA Rate Calculator is precise because it's a straightforward math formula (premium × 1.02). The deductible optimizer and aggregating specific tools are modeling tools that help you understand relationships between variables.
+    answer: `Our calculators provide accurate estimates based on the inputs you provide, but they're designed for preliminary analysis—not final quoting. The Fully Insured Equivalent Rate Calculator is precise because it's a straightforward math formula (premium × 1.02). The deductible optimizer and aggregating specific tools are modeling tools that help you understand relationships between variables.
 
 For actual stop-loss quotes, we need to underwrite the specific group—reviewing census data, claims history, industry, and geographic location. Carrier appetites, underwriting guidelines, and market conditions all affect final pricing in ways that a calculator can't capture.
 
@@ -240,7 +240,7 @@ We also proactively reach out as renewals approach to discuss strategy and timin
   {
     id: 'tools-without-client',
     question: 'Can I access your tools without becoming a client?',
-    answer: `Absolutely. All of our online tools—COBRA Rate Calculator, Self-Funding Readiness Assessment, Deductible Optimizer, and more—are freely available to all brokers. You don't need to create an account, submit a case, or commit to anything to use them.
+    answer: `Absolutely. All of our online tools—Fully Insured Equivalent Rate Calculator, Self-Funding Readiness Assessment, Deductible Optimizer, and more—are freely available to all brokers. You don't need to create an account, submit a case, or commit to anything to use them.
 
 We built these tools because we believe in adding value to the broker community, whether or not you're placing business with us today. If the tools help you serve your clients better and position you as an expert, that's a win. Many brokers use our resources for months before they have a stop-loss opportunity, and that's perfectly fine.
 
