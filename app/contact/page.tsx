@@ -29,12 +29,42 @@ function ContactPageContent() {
         }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="text-center">
+          <div className="text-center mb-8">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>Contact Us</h1>
             <p className="text-xl drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Ready to discuss your stop-loss needs? We're here to help.
             </p>
           </div>
+
+          {/* Territory Specialist in Hero */}
+          {!loading && (
+            <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-md mx-auto">
+              <h2 className="text-xl font-bold text-xl-dark-blue mb-3 text-center">
+                Your Territory Specialist
+              </h2>
+              {location && location.state && (
+                <p className="text-sm text-xl-grey mb-4 text-center">
+                  Based on your location
+                </p>
+              )}
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-xl-dark-blue mb-3">{displayRep.name}</h3>
+                <a href={`mailto:${displayRep.email}`} className="block text-xl-bright-blue hover:text-xl-dark-blue mb-2">
+                  {displayRep.email}
+                </a>
+                {displayRep.phone && (
+                  <a href={`tel:${displayRep.phone}`} className="block text-xl-bright-blue hover:text-xl-dark-blue mb-4">
+                    {displayRep.phone}
+                  </a>
+                )}
+                {!displayRep.bookingUrl && (
+                  <p className="text-sm text-xl-grey mt-4">
+                    Reach out via email or phone to schedule a consultation
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -114,8 +144,7 @@ function ContactPageContent() {
           <div className="grid md:grid-cols-3 gap-6">
             {getAllSalesReps().map((rep) => (
               <div key={rep.email} className="bg-white rounded-lg p-6 text-center">
-                <h4 className="text-lg font-bold text-xl-dark-blue mb-2">{rep.name}</h4>
-                <p className="text-sm text-xl-grey mb-3">Territory: {rep.territory.length} states</p>
+                <h4 className="text-lg font-bold text-xl-dark-blue mb-3">{rep.name}</h4>
                 <a
                   href={`mailto:${rep.email}`}
                   className="text-xl-bright-blue text-sm hover:text-xl-dark-blue"
