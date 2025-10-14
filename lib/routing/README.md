@@ -18,13 +18,16 @@ This system automatically routes website visitors to the appropriate sales repre
 ## Sales Rep Territories
 
 ### Daron Pitts (West Coast & Mountain)
-- CA, OR, WA, NV, AZ, UT, ID, MT, WY, CO, NM, AK, HI
+- **Territory**: CA, OR, WA, NV, AZ, UT, ID, MT, WY, CO, NM, AK, HI
+- **Booking**: Contact via email/phone (no online booking)
 
 ### Jennifer Baird (East Coast & Southeast)
-- NC, SC, GA, FL, VA, WV, MD, DE, DC, PA, NJ, NY, CT, RI, MA, VT, NH, ME, AL, MS, TN, KY
+- **Territory**: NC, SC, GA, FL, VA, WV, MD, DE, DC, PA, NJ, NY, CT, RI, MA, VT, NH, ME, AL, MS, TN, KY
+- **Booking**: [Microsoft Bookings Link](https://outlook.office.com/bookwithme/user/4222c27974ba40aa8cd9fa739cfd7d6a@xlbenefits.com?anonymous&ismsaljsauthenabled&ep=pcard)
 
-### Steve Caler (Midwest & Central)
-- IL, IN, OH, MI, WI, MN, IA, MO, KS, NE, SD, ND, OK, TX, AR, LA
+### Samuel Edwards (Midwest & Central)
+- **Territory**: IL, IN, OH, MI, WI, MN, IA, MO, KS, NE, SD, ND, OK, TX, AR, LA
+- **Booking**: [Microsoft Bookings Link](https://outlook.office.com/bookwithme/user/1a47160b5696400daebe957e6952dbe7@foundationrp.net/meetingtype/TYZOJFFz3UK835t3s89qWA2?anonymous&ismsaljsauthenabled&ep=mlink)
 
 ## Usage
 
