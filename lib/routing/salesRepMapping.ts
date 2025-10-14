@@ -14,7 +14,7 @@ export const salesReps: Record<string, SalesRep> = {
     name: 'Daron Pitts',
     email: 'daron@xlbenefits.com',
     phone: '(555) 123-4567', // Update with actual phone
-    bookingUrl: '', // Will be provided later
+    bookingUrl: '', // No booking link - contact via email/phone
     territory: [
       // West Coast & Mountain States
       'CA', 'OR', 'WA', 'NV', 'AZ', 'UT', 'ID', 'MT', 'WY', 'CO', 'NM',
@@ -25,20 +25,20 @@ export const salesReps: Record<string, SalesRep> = {
     name: 'Jennifer Baird',
     email: 'jennifer@xlbenefits.com',
     phone: '(555) 234-5678', // Update with actual phone
-    bookingUrl: '', // Will be provided later
+    bookingUrl: 'https://outlook.office.com/bookwithme/user/4222c27974ba40aa8cd9fa739cfd7d6a@xlbenefits.com?anonymous&ismsaljsauthenabled&ep=pcard',
     territory: [
       // East Coast & Southeast
       'NC', 'SC', 'GA', 'FL', 'VA', 'WV', 'MD', 'DE', 'DC', 'PA', 'NJ',
       'NY', 'CT', 'RI', 'MA', 'VT', 'NH', 'ME', 'AL', 'MS', 'TN', 'KY'
     ]
   },
-  steve: {
-    name: 'Steve Caler',
-    email: 'steve@xlbenefits.com',
+  sam: {
+    name: 'Samuel Edwards',
+    email: 'sam@xlbenefits.com',
     phone: '(555) 345-6789', // Update with actual phone
-    bookingUrl: '', // Will be provided later
+    bookingUrl: 'https://outlook.office.com/bookwithme/user/1a47160b5696400daebe957e6952dbe7@foundationrp.net/meetingtype/TYZOJFFz3UK835t3s89qWA2?anonymous&ismsaljsauthenabled&ep=mlink',
     territory: [
-      // Midwest & Central
+      // Midwest & Central (formerly Steve's territory)
       'IL', 'IN', 'OH', 'MI', 'WI', 'MN', 'IA', 'MO', 'KS', 'NE', 'SD',
       'ND', 'OK', 'TX', 'AR', 'LA'
     ]
