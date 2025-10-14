@@ -5,37 +5,44 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section with Hero Image */}
-      <section
-        className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-32 parallax-bg overflow-hidden"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), url("/images/other-images/xlb-hero.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection animation="fade-up" className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Your Sidekick for Stop-Loss Success
-            </h1>
-            <p className="text-xl sm:text-2xl mb-8 text-white/90">
-              Expert guidance and interactive tools designed exclusively for insurance brokers navigating stop-loss challenges.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/toolkit"
-                className="bg-white text-primary-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg"
-              >
-                Explore the Toolkit
-              </Link>
-              <Link
-                href="/contact"
-                className="bg-primary-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-primary-900 transition-all hover:scale-105 border-2 border-white"
-              >
-                Talk to an Expert
-              </Link>
-            </div>
-          </AnimatedSection>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Hero Image */}
+            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
+              <div className="relative w-full h-64 md:h-96 parallax-bg">
+                <img
+                  src="/images/other-images/xlb-hero.png"
+                  alt="Your Sidekick for Stop-Loss Success"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </AnimatedSection>
+
+            {/* Right Side - Content */}
+            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Your Sidekick for Stop-Loss Success
+              </h1>
+              <p className="text-xl sm:text-2xl mb-8 text-white/90">
+                Expert guidance and interactive tools designed exclusively for insurance brokers navigating stop-loss challenges.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/toolkit"
+                  className="bg-white text-primary-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg text-center"
+                >
+                  Explore the Toolkit
+                </Link>
+                <Link
+                  href="/contact"
+                  className="bg-primary-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-primary-900 transition-all hover:scale-105 border-2 border-white text-center"
+                >
+                  Talk to an Expert
+                </Link>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
