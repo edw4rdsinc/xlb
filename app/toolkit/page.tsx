@@ -12,7 +12,7 @@ export default function ToolkitPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative text-white py-32 min-h-[500px] flex items-center"
+        className="relative py-32 min-h-[700px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/toolkit.jpg")',
           backgroundSize: 'cover',
@@ -20,12 +20,12 @@ export default function ToolkitPage() {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <AnimatedSection animation="fade-up" className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <AnimatedSection animation="fade-up" className="mr-auto max-w-2xl text-left">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#251610', textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}>
               Your Stop-Loss Toolkit
             </h1>
-            <p className="text-xl text-white drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-xl drop-shadow-lg" style={{ color: '#251610', textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}>
               Free interactive tools designed for insurance brokers. No login required—just click and use.
             </p>
           </AnimatedSection>

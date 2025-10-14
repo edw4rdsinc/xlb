@@ -10,7 +10,7 @@ export default function ResourcesPage() {
   return (
     <div>
       <section
-        className="relative text-white py-32 min-h-[500px] flex items-center"
+        className="relative py-32 min-h-[700px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/resources.JPG")',
           backgroundSize: 'cover',
@@ -18,12 +18,12 @@ export default function ResourcesPage() {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="ml-auto max-w-2xl text-right">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#e5bf64', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Resources for Brokers
             </h1>
-            <p className="text-xl text-white drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-xl drop-shadow-lg" style={{ color: '#e5bf64', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               White papers, guides, and insights to help you serve your clients better.
             </p>
           </div>

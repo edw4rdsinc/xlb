@@ -5,12 +5,12 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-32 overflow-hidden min-h-[600px] md:min-h-[700px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
             <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-64 md:h-96 parallax-bg">
+              <div className="relative w-full h-80 md:h-[500px] parallax-bg">
                 <img
                   src="/images/other-images/xlb-hero.png"
                   alt="Your Sidekick for Stop-Loss Success"
