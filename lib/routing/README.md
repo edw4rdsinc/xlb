@@ -17,17 +17,25 @@ This system automatically routes website visitors to the appropriate sales repre
 
 ## Sales Rep Territories
 
-### Daron Pitts (West Coast & Mountain)
-- **Territory**: CA, OR, WA, NV, AZ, UT, ID, MT, WY, CO, NM, AK, HI
+### Steve Caler - Southwest/South Region
+- **Headquarters**: California
+- **Territory**: CA, NV, AZ, TX, OK, AR, LA, MS, AL, KY, TN
+- **Coverage**: 111.5M people (33%), ~97,000 companies (33%)
+- **Business Density**: 0.87 companies per 1,000 residents
 - **Booking**: Contact via email/phone (no online booking)
 
-### Jennifer Baird (East Coast & Southeast)
-- **Territory**: NC, SC, GA, FL, VA, WV, MD, DE, DC, PA, NJ, NY, CT, RI, MA, VT, NH, ME, AL, MS, TN, KY
-- **Booking**: [Microsoft Bookings Link](https://outlook.office.com/bookwithme/user/4222c27974ba40aa8cd9fa739cfd7d6a@xlbenefits.com?anonymous&ismsaljsauthenabled&ep=pcard)
-
-### Samuel Edwards (Midwest & Central)
-- **Territory**: IL, IN, OH, MI, WI, MN, IA, MO, KS, NE, SD, ND, OK, TX, AR, LA
+### Samuel Edwards - Mountain/Plains/Midwest Region
+- **Headquarters**: Oregon
+- **Territory**: OR, WA, ID, MT, WY, CO, UT, NM, ND, SD, NE, KS, MN, WI, IA, MO, IL, IN, MI, OH, AK, HI
+- **Coverage**: 88.1M people (26%), ~76,500 companies (26%)
+- **Business Density**: 0.87 companies per 1,000 residents
 - **Booking**: [Microsoft Bookings Link](https://outlook.office.com/bookwithme/user/1a47160b5696400daebe957e6952dbe7@foundationrp.net/meetingtype/TYZOJFFz3UK835t3s89qWA2?anonymous&ismsaljsauthenabled&ep=mlink)
+
+### Jennifer Baird - Eastern Seaboard Region
+- **Headquarters**: North Carolina
+- **Territory**: ME, NH, VT, MA, RI, CT, NY, NJ, DE, MD, DC, VA, NC, SC, GA, FL, WV, PA
+- **Coverage**: 112.6M people (37%), ~82,000 companies (37%)
+- **Booking**: [Microsoft Bookings Link](https://outlook.office.com/bookwithme/user/4222c27974ba40aa8cd9fa739cfd7d6a@xlbenefits.com?anonymous&ismsaljsauthenabled&ep=pcard)
 
 ## Usage
 

@@ -13,10 +13,10 @@ interface GeolocationData {
 /**
  * Hook to get user's geolocation and appropriate sales rep
  * Uses ipapi.co for IP geolocation (free tier: 1000 requests/day)
- * Falls back to default rep (Daron) if geolocation fails
+ * Falls back to default rep (Steve) if geolocation fails
  */
 export function useGeolocation() {
-  const [salesRep, setSalesRep] = useState<SalesRep>(salesReps.daron)
+  const [salesRep, setSalesRep] = useState<SalesRep>(salesReps.steve)
   const [location, setLocation] = useState<GeolocationData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -53,14 +53,14 @@ export function useGeolocation() {
           const rep = getSalesRepByState(data.region_code)
           setSalesRep(rep)
         } else {
-          // Default to Daron for international or unknown locations
-          setSalesRep(salesReps.daron)
+          // Default to Steve for international or unknown locations
+          setSalesRep(salesReps.steve)
         }
       } catch (err) {
         console.error('Geolocation error:', err)
         setError(err instanceof Error ? err.message : 'Unknown error')
-        // Default to Daron on error
-        setSalesRep(salesReps.daron)
+        // Default to Steve on error
+        setSalesRep(salesReps.steve)
       } finally {
         setLoading(false)
       }
