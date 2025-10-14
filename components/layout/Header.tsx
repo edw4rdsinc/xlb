@@ -58,8 +58,9 @@ export default function Header() {
             </Link>
             <Link
               href="/contact"
-              className="rounded-md bg-xl-bright-blue px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-xl-dark-blue transition-colors"
+              className="rounded-md bg-xl-bright-blue px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-xl-dark-blue transition-colors inline-flex items-center gap-2"
             >
+              <img src="/images/parallax/contact.jpg" alt="" className="w-4 h-4 rounded" />
               Contact Us
             </Link>
           </div>

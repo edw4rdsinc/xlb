@@ -5,7 +5,15 @@ export default function FantasyFootballPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-20">
+      <section
+        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-20"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), url("/images/parallax/fantasy-football.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6">

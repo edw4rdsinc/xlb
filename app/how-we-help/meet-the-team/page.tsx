@@ -176,6 +176,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Daron Pitts"
                 title="President, Founder | CSFS"
+                imageUrl="/images/team/daron-headshot.jpeg"
                 expertise={["20+ Years Self-Funding", "Stop Loss General Agent", "CSFS Designation"]}
                 bio="Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
                 email="daron@xlbenefits.com"
@@ -198,6 +199,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Jennifer Baird"
                 title="Stop Loss Sales Consultant"
+                imageUrl="/images/team/jennifer-headshot.jpeg"
                 expertise={["20+ Years Self-Funding", "TPA Experience", "Broker & Consultant Background"]}
                 bio="Jennifer has over 20 years of experience in self-funding, having worked as a TPA professional, employee benefits broker, and now as a stop loss consultant. Her diverse background gives her unique insights into all sides of the self-funding equation. She specializes in helping large companies develop and deploy cost containment strategies including PBM analysis, captive solutions, and risk mitigation. Jennifer joined the XL Benefits team in May 2023 with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
                 email="jennifer@xlbenefits.com"
@@ -209,6 +211,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Samuel Edwards"
                 title="Stop Loss Sales Consultant"
+                imageUrl="/images/team/sam-headshot.jpeg"
                 expertise={["20+ Years Insurance Experience", "Agency Owner Background", "Tech Startup Contributor"]}
                 bio="Sam brings over 20 years of insurance experience, including a decade running his own agency and most recently contributing to a tech startup. His passion for building relationships, supporting brokers, and improving how we serve our clients makes him a fantastic addition to our team."
                 email="sam@xlbenefits.com"
@@ -220,6 +223,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Joe Landziak"
                 title="Account Executive"
+                imageUrl="/images/team/joe-headshot.jpeg"
                 expertise={["10+ Years Insurance Industry", "P&C Agent Background", "Analytical Expertise"]}
                 bio="Joe has worked in the insurance industry for more than a decade, serving as a property and casualty agent for the first part of his career. Responsible for new business sales of both personal and commercial lines, Joe gained plenty of industry knowledge before transitioning to our world of self-funding. In July of 2015, Joe joined XL Benefits with the goal to apply his analytical mind to the field of medical stop loss. You could describe Joe as an all around great guy. He's our resident fantasy football guru, as well as a garden growing, spicy food eating, deep thinking, board game playing, nature loving, husband of one and father of three."
                 email="joe@xlbenefits.com"
@@ -242,6 +246,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Erin Maurer"
                 title="Account Executive"
+                imageUrl="/images/team/erin-headshot-final.png"
                 expertise={["Insurance Since 2004", "Large Self-Funded Groups", "RFP & Renewals Specialist"]}
                 bio="Erin joined our team in 2023 with an extensive insurance background that began in 2004, working mainly on large self-funded employer groups, including stop loss insurance. Erin assists with RFP submission, renewals and new business set-up. Erin is bubbly, creative and has a heart for outstanding customer service. When she's not working she is typically out riding horses and camping with her daughter, and enjoys dancing, wine tasting and volunteering at her local school and church events."
                 email="erin@xlbenefits.com"

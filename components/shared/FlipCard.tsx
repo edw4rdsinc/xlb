@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface FlipCardProps {
   name: string;
@@ -8,9 +9,10 @@ interface FlipCardProps {
   expertise: string[];
   bio?: string;
   email?: string;
+  imageUrl?: string;
 }
 
-export default function FlipCard({ name, title, expertise, bio, email }: FlipCardProps) {
+export default function FlipCard({ name, title, expertise, bio, email, imageUrl }: FlipCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -40,11 +42,23 @@ export default function FlipCard({ name, title, expertise, bio, email }: FlipCar
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div>
-            <div className="w-16 h-16 bg-gradient-to-br from-xl-dark-blue to-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
-              {name.split(' ').map(n => n[0]).join('')}
-            </div>
-            <h3 className="text-xl font-bold text-xl-dark-blue mb-2">{name}</h3>
-            <p className="text-sm text-xl-grey mb-4">{title}</p>
+            {imageUrl ? (
+              <div className="w-24 h-24 rounded-full overflow-hidden mb-4 mx-auto border-4 border-xl-bright-blue/20">
+                <Image
+                  src={imageUrl}
+                  alt={name}
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-16 h-16 bg-gradient-to-br from-xl-dark-blue to-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
+                {name.split(' ').map(n => n[0]).join('')}
+              </div>
+            )}
+            <h3 className="text-xl font-bold text-xl-dark-blue mb-2 text-center">{name}</h3>
+            <p className="text-sm text-xl-grey mb-4 text-center">{title}</p>
           </div>
 
           <div>

@@ -9,13 +9,21 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div>
-      <section className="bg-gradient-to-r from-primary-50 to-primary-100 py-16">
+      <section
+        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), url("/images/parallax/resources.JPG")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               Resources for Brokers
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-white/90">
               White papers, guides, and insights to help you serve your clients better.
             </p>
           </div>
