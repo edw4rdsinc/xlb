@@ -6,7 +6,7 @@ export default function CobraCalculationPage() {
     <div>
       <ProblemStatement
         title="Fully Insured Equivalent Rate Calculations for Self-Funded Groups"
-        description="Calculating accurate COBRA rates isn't just about adding 2% to the premium. State-specific requirements, carrier variations, and qualifying event nuances can create compliance headaches and unexpected costs for your clients. Get it right the first time with our comprehensive calculator built specifically for brokers managing self-funded groups."
+        description="Calculating accurate fully insured equivalent rates isn't just about adding 2% to the premium. State-specific requirements, carrier variations, and qualifying event nuances can create compliance headaches and unexpected costs for your clients. Get it right the first time with our comprehensive calculator built specifically for brokers managing self-funded groups."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
