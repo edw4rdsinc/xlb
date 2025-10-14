@@ -20,7 +20,7 @@ function ContactPageContent() {
     <div>
       {/* Hero Section with Phone Parallax */}
       <section
-        className="relative text-white py-32 min-h-[700px] flex items-center"
+        className="relative text-white py-32 min-h-[900px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/contact.jpg")',
           backgroundSize: 'cover',

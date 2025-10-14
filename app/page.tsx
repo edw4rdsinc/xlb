@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 
 export default function HomePage() {
   return (
     <div>
       {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-32 overflow-hidden min-h-[600px] md:min-h-[700px]">
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 md:py-32 overflow-hidden min-h-[600px] md:min-h-[900px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
@@ -261,11 +262,17 @@ export default function HomePage() {
             </h2>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <AnimatedSection animation="fade-up" delay={100}>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
-                  DP
+                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
+                  <Image
+                    src="/images/team/daron-headshot.jpeg"
+                    alt="Daron Pitts"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Daron Pitts</h3>
                 <p className="text-white/80 text-sm mb-4">President, Founder | CSFS</p>
@@ -277,8 +284,14 @@ export default function HomePage() {
 
             <AnimatedSection animation="fade-up" delay={200}>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
-                  JB
+                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
+                  <Image
+                    src="/images/team/jennifer-headshot.jpeg"
+                    alt="Jennifer Baird"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Jennifer Baird</h3>
                 <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
@@ -290,13 +303,32 @@ export default function HomePage() {
 
             <AnimatedSection animation="fade-up" delay={300}>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
                   SC
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
                 <p className="text-white/80 text-sm mb-4">Director of Business Development | CSFS</p>
                 <p className="text-white/90 leading-relaxed text-sm">
                   Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop-loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection animation="fade-up" delay={400}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
+                  <Image
+                    src="/images/team/sam-headshot.jpeg"
+                    alt="Samuel Edwards"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Samuel Edwards</h3>
+                <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
+                <p className="text-white/90 leading-relaxed text-sm">
+                  Sam brings a unique combination of technical expertise and industry knowledge to XL Benefits. With experience in both technology and stop-loss consulting, he helps brokers leverage innovative solutions while providing expert guidance on complex self-funding scenarios across the Mountain, Plains, and Midwest regions.
                 </p>
               </div>
             </AnimatedSection>

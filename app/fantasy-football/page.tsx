@@ -6,7 +6,7 @@ export default function FantasyFootballPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative text-white py-32 min-h-[500px] flex items-center"
+        className="relative text-white py-32 min-h-[900px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/fantasy-football.jpeg")',
           backgroundSize: 'cover',

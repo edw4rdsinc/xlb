@@ -43,13 +43,13 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl 
         >
           <div>
             {imageUrl ? (
-              <div className="w-24 h-24 rounded-full overflow-hidden mb-4 mx-auto border-4 border-xl-bright-blue/20">
+              <div className="w-24 h-24 rounded-full overflow-hidden mb-4 mx-auto border-4 border-xl-bright-blue/20 bg-gray-100">
                 <Image
                   src={imageUrl}
                   alt={name}
                   width={96}
                   height={96}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
             ) : (
