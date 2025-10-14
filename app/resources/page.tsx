@@ -10,7 +10,7 @@ export default function ResourcesPage() {
   return (
     <div>
       <section
-        className="relative py-32 min-h-[700px] flex items-center"
+        className="relative py-32 min-h-[900px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/resources.JPG")',
           backgroundSize: 'cover',

@@ -12,7 +12,7 @@ export default function ToolkitPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative py-32 min-h-[700px] flex items-center"
+        className="relative py-32 min-h-[900px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/toolkit.jpg")',
           backgroundSize: 'cover',
@@ -21,7 +21,7 @@ export default function ToolkitPage() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <AnimatedSection animation="fade-up" className="mr-auto max-w-2xl text-left">
+          <AnimatedSection animation="fade-up" className="max-w-xl text-left">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#251610', textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}>
               Your Stop-Loss Toolkit
             </h1>
