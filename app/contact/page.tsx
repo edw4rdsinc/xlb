@@ -17,12 +17,29 @@ function ContactPageContent() {
     : salesRep
 
   return (
-    <div className="py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-xl-dark-blue mb-4 text-center">Contact Us</h1>
-        <p className="text-xl text-xl-grey mb-12 text-center">
-          Ready to discuss your stop-loss needs? We're here to help.
-        </p>
+    <div>
+      {/* Hero Section with Phone Parallax */}
+      <section
+        className="relative text-white py-32 min-h-[700px] flex items-center"
+        style={{
+          backgroundImage: 'url("/images/parallax/contact.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>Contact Us</h1>
+            <p className="text-xl drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+              Ready to discuss your stop-loss needs? We're here to help.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Your Territory Specialist */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
@@ -129,6 +146,7 @@ function ContactPageContent() {
             <p>Hours: Monday - Friday, 8:00 AM - 5:00 PM CST</p>
             <p>General Inquiries: <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:text-xl-dark-blue">info@xlbenefits.com</a></p>
           </div>
+        </div>
         </div>
       </div>
     </div>

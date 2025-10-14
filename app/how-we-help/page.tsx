@@ -6,7 +6,7 @@ export default function HowWeHelpPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative text-white py-32 min-h-[500px] flex items-center"
+        className="relative py-32 min-h-[700px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/how-we-help.jpg")',
           backgroundSize: 'cover',
@@ -14,12 +14,12 @@ export default function HowWeHelpPage() {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <AnimatedSection animation="fade-up" className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <AnimatedSection animation="fade-up" className="ml-auto max-w-2xl text-right">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#ebc583', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               How We Help Brokers Win
             </h1>
-            <p className="text-xl text-white drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-xl drop-shadow-lg" style={{ color: '#ebc583', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Expert stop-loss guidance, market access, and tools to serve your clients better.
             </p>
           </AnimatedSection>
