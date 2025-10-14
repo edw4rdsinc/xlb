@@ -27,6 +27,58 @@ export default function SelfFundingFeasibilityPage() {
         </div>
       </section>
 
+      {/* Video Explainer Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection animation="fade-up" className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-4">
+              Understanding Self-Funding: A Quick Guide
+            </h2>
+            <p className="text-lg text-xl-grey max-w-3xl mx-auto">
+              Watch this 3-minute video to understand the key factors that determine self-funding readiness.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection animation="fade-up">
+            <div className="relative bg-xl-light-grey rounded-lg shadow-xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+              {/* Video Placeholder - Replace with actual video embed once available */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-24 h-24 bg-xl-bright-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-12 h-12 text-xl-bright-blue" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Video Coming Soon</h3>
+                  <p className="text-xl-grey max-w-md mx-auto">
+                    We're creating an in-depth explainer video on self-funding readiness assessment. Check back soon!
+                  </p>
+                </div>
+              </div>
+              {/*
+                When video is ready, replace the placeholder above with:
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="YOUR_VIDEO_URL"
+                  title="Self-Funding Assessment Explainer"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              */}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection animation="fade-up">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-xl-grey">
+                Want a personalized consultation? Our experts can walk you through the assessment in detail.
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Assessment Tool */}
       <section className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
