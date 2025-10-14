@@ -30,8 +30,8 @@ function ContactPageContent() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center mb-8">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>Contact Us</h1>
-            <p className="text-xl drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#f8bc07', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>Contact Us</h1>
+            <p className="text-xl drop-shadow-lg" style={{ color: '#f8bc07', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Ready to discuss your stop-loss needs? We're here to help.
             </p>
           </div>
