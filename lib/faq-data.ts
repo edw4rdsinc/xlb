@@ -111,11 +111,11 @@ We also work with smaller groups (25-50 employees) when they have favorable demo
   {
     id: 'cobra-calculator',
     question: 'How does the Fully Insured Equivalent Rate Calculator work?',
-    answer: `Our Fully Insured Equivalent Rate Calculator helps you quickly determine the compliant monthly premium to charge employees electing COBRA continuation coverage. You input the employer's monthly premium cost for the plan, and the calculator applies the maximum 2% administrative fee allowed under federal law.
+    answer: `Our Fully Insured Equivalent Rate Calculator helps you quickly determine the compliant monthly premium to charge employees electing continuation coverage. You input the employer's monthly premium cost for the plan, and the calculator applies the maximum 2% administrative fee allowed under federal law.
 
-For example, if the employer pays $800/month for single coverage, the COBRA rate would be $816/month ($800 × 1.02). The calculator handles family tiers automatically and gives you print-ready rates to provide to the COBRA administrator or terminating employees.
+For example, if the employer pays $800/month for single coverage, the fully insured equivalent rate would be $816/month ($800 × 1.02). The calculator handles family tiers automatically and gives you print-ready rates to provide to the plan administrator or terminating employees.
 
-This tool is popular because COBRA rate calculations must be precise—undercharging violates IRS rules, while overcharging can trigger penalties. It's a simple tool that ensures compliance and saves brokers time on a routine administrative task.`,
+This tool is popular because rate calculations must be precise—undercharging violates IRS rules, while overcharging can trigger penalties. It's a simple tool that ensures compliance and saves brokers time on a routine administrative task.`,
     category: 'Tools & Calculators',
     relatedLinks: [
       { title: 'Fully Insured Equivalent Rate Calculator', url: '/toolkit/cobra-rate-calculator', type: 'tool' },
