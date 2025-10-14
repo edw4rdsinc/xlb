@@ -53,12 +53,11 @@ function ContactPageContent() {
               <>
                 {location && location.state && (
                   <p className="text-sm text-xl-grey mb-4">
-                    Based on your location ({location.city}, {location.state})
+                    Based on your location
                   </p>
                 )}
                 <div className="bg-xl-light-grey rounded-lg p-6 my-6">
                   <h3 className="text-2xl font-bold text-xl-dark-blue mb-2">{displayRep.name}</h3>
-                  <p className="text-xl-grey mb-4">{displayRep.territory.join(', ')}</p>
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-center">
