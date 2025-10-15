@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { type Player, type Round } from '@/lib/supabase/client';
 import { PlayerSelect } from './PlayerSelect';
 import { CustomPlayerModal } from './CustomPlayerModal';
-import { ConfirmationModal } from './ConfirmationModal';
 
 type Position = 'QB' | 'RB' | 'WR' | 'TE' | 'K' | 'DEF';
 
@@ -17,7 +16,6 @@ interface LineupFormProps {
 interface FormData {
   name: string;
   email: string;
-  phone: string;
   teamName: string;
   qb: string;
   rb1: string;
@@ -33,7 +31,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    phone: '',
     teamName: '',
     qb: '',
     rb1: '',
@@ -50,7 +47,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
     open: false,
     position: null,
   });
-  const [confirmationModal, setConfirmationModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [customPlayers, setCustomPlayers] = useState<Player[]>([]);
 
@@ -127,7 +123,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Invalid email address';
     }
-    if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
     if (!formData.teamName.trim()) newErrors.teamName = 'Team name is required';
 
     // Position validation
@@ -149,16 +144,11 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      setConfirmationModal(true);
-    }
-  };
+    if (!validateForm()) return;
 
-  const handleConfirmedSubmit = async () => {
     setSubmitting(true);
-    setConfirmationModal(false);
 
     try {
       const response = await fetch('/api/fantasy-football/submit-lineup', {
@@ -194,10 +184,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
       alert(error.message || 'Failed to submit lineup. Please try again.');
       setSubmitting(false);
     }
-  };
-
-  const getSelectedPlayer = (playerId: string): Player | undefined => {
-    return [...players, ...customPlayers].find(p => p.id === playerId);
   };
 
   return (
@@ -237,22 +223,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
                 placeholder="john@example.com"
               />
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Phone <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleChange('phone', e.target.value)}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.phone ? 'border-red-500' : 'border-slate-300'
-                }`}
-                placeholder="(555) 123-4567"
-              />
-              {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
             </div>
 
             <div>
@@ -399,7 +369,7 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
             disabled={submitting}
             className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors"
           >
-            {submitting ? 'Submitting...' : 'Review & Submit Lineup'}
+            {submitting ? 'Submitting...' : 'Submit Lineup'}
           </button>
         </div>
       </form>
@@ -414,15 +384,6 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
         />
       )}
 
-      {/* Confirmation Modal */}
-      <ConfirmationModal
-        open={confirmationModal}
-        formData={formData}
-        getSelectedPlayer={getSelectedPlayer}
-        onClose={() => setConfirmationModal(false)}
-        onConfirm={handleConfirmedSubmit}
-        submitting={submitting}
-      />
     </>
   );
 }
