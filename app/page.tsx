@@ -307,7 +307,7 @@ export default function HomePage() {
                   SC
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
-                <p className="text-white/80 text-sm mb-4">Director of Business Development | CSFS</p>
+                <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
                 <p className="text-white/90 leading-relaxed text-sm">
                   Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop-loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions.
                 </p>
