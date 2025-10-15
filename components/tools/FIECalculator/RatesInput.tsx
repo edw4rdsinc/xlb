@@ -22,6 +22,17 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                        numberOfTiers === 3 ? ['EO', 'ES', 'F'] :
                        ['EO', 'ES', 'EC', 'F'];
 
+  // Calculate plan differential based on Employee Only rate
+  const calculatePlanDifferential = (plan: PlanData, basePlanEORate: number): number => {
+    if (!basePlanEORate || basePlanEORate === 0) return 1.0;
+    if (!plan.currentRates.EO || plan.currentRates.EO === 0) return 1.0;
+
+    return plan.currentRates.EO / basePlanEORate;
+  };
+
+  // Get base plan (first plan) EO rate for differential calculation
+  const basePlanEORate = plans[0]?.currentRates?.EO || 0;
+
   const handleRateChange = (planIndex: number, tier: string, value: string) => {
     const newPlans = [...plans];
     const numValue = parseFormattedNumber(value);
@@ -36,23 +47,12 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
     }
 
     newPlans[planIndex].currentRates[tier as keyof typeof newPlans[0]['currentRates']] = numValue;
-    onUpdate(newPlans);
-  };
 
-  const handleDifferentialChange = (planIndex: number, value: string) => {
-    const newPlans = [...plans];
-    const numValue = parseFloat(value) || 1.0;
+    // Recalculate differentials for all plans when any rate changes
+    newPlans.forEach((plan, idx) => {
+      plan.differential = calculatePlanDifferential(plan, newPlans[0]?.currentRates?.EO || 0);
+    });
 
-    if (!newPlans[planIndex]) {
-      newPlans[planIndex] = {
-        name: `Plan ${planIndex + 1}`,
-        differential: 1.0,
-        census: { EO: 0, ES: 0, EC: 0, F: 0 },
-        currentRates: { EO: 0, ES: 0, EC: 0, F: 0 }
-      };
-    }
-
-    newPlans[planIndex].differential = numValue;
     onUpdate(newPlans);
   };
 
@@ -107,17 +107,10 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                 Plan Differential
               </td>
               {plans.map((plan, planIndex) => (
-                <td key={planIndex} className="border border-gray-300 px-2 py-1">
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0.5"
-                    max="2.0"
-                    value={plan?.differential || 1.0}
-                    onChange={(e) => handleDifferentialChange(planIndex, e.target.value)}
-                    className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
-                    placeholder="1.0"
-                  />
+                <td key={planIndex} className="border border-gray-300 px-2 py-1 bg-gray-100">
+                  <div className="w-full px-2 py-1 text-center font-semibold text-gray-700">
+                    {(plan?.differential || 1.0).toFixed(2)}
+                  </div>
                 </td>
               ))}
             </tr>
@@ -153,16 +146,9 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
               <div className="pt-2 border-t border-gray-200">
                 <div className="flex justify-between items-center">
                   <label className="text-sm font-medium text-gray-700">Plan Differential</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0.5"
-                    max="2.0"
-                    value={plan?.differential || 1.0}
-                    onChange={(e) => handleDifferentialChange(planIndex, e.target.value)}
-                    className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
-                    placeholder="1.0"
-                  />
+                  <div className="w-24 px-2 py-1 text-center bg-gray-100 rounded font-semibold text-gray-700">
+                    {(plan?.differential || 1.0).toFixed(2)}
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,8 +188,9 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
             <div className="text-sm text-amber-800">
-              <strong>Plan Differential:</strong> This multiplier represents the relative richness of each plan.
-              Base plans typically use 1.0, while richer plans might be 1.1-1.2. This affects how costs are allocated across plans.
+              <strong>Plan Differential:</strong> Auto-calculated based on Employee Only rates. This multiplier represents
+              the relative richness of each plan compared to your base plan (first plan). Higher EO rates result in higher
+              differentials, which affects how FIE costs are allocated across plans.
             </div>
           </div>
         </div>
