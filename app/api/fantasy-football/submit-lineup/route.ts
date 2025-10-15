@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     const {
       name,
       email,
-      phone,
       teamName,
       roundId,
       qb,
@@ -22,7 +21,7 @@ export async function POST(request: Request) {
     } = body;
 
     // Validation
-    if (!name || !email || !phone || !teamName || !roundId) {
+    if (!name || !email || !teamName || !roundId) {
       return NextResponse.json(
         { error: 'Missing required personal information' },
         { status: 400 }
@@ -84,7 +83,6 @@ export async function POST(request: Request) {
         .from('users')
         .update({
           name,
-          phone,
           team_name: teamName,
           updated_at: new Date().toISOString(),
         })
@@ -98,7 +96,6 @@ export async function POST(request: Request) {
         .insert({
           email: email.toLowerCase(),
           name,
-          phone,
           team_name: teamName,
         })
         .select()

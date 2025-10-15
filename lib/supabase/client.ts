@@ -10,7 +10,6 @@ export type User = {
   id: string;
   email: string;
   name: string;
-  phone: string;
   team_name: string;
   created_at: string;
   updated_at: string;
