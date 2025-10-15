@@ -291,7 +291,7 @@ export default function HowWeHelpPage() {
                     className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
                     style={{ color: 'white' }}
                   >
-                    Try the Fully Insured Equivalent Calculator
+                    Try the TrueCost Calculator
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
