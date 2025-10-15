@@ -169,20 +169,25 @@ export default function MeetTheTeamPage() {
       {/* Team Grid */}
       <section className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            {/* Daron Pitts */}
-            <AnimatedSection animation="fade-up" delay={100}>
-              <FlipCard
-                name="Daron Pitts"
-                title="President, Founder | CSFS"
-                imageUrl="/images/team/daron-headshot.jpeg"
-                expertise={["20+ Years Self-Funding", "Stop Loss General Agent", "CSFS Designation"]}
-                bio="Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
-                email="daron@xlbenefits.com"
-              />
-            </AnimatedSection>
+          {/* Top Row - Daron Only */}
+          <div className="flex justify-center mb-8">
+            <div className="w-full max-w-md">
+              <AnimatedSection animation="fade-up" delay={100}>
+                <FlipCard
+                  name="Daron Pitts"
+                  title="President, Founder | CSFS"
+                  imageUrl="/images/team/daron-headshot.jpeg"
+                  expertise={["20+ Years Self-Funding", "Stop Loss General Agent", "CSFS Designation"]}
+                  bio="Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
+                  email="daron@xlbenefits.com"
+                />
+              </AnimatedSection>
+            </div>
+          </div>
 
+          {/* Second Row - Steve, Jennifer, Sam */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             {/* Steve Caler */}
             <AnimatedSection animation="fade-up" delay={200}>
               <FlipCard
@@ -217,7 +222,10 @@ export default function MeetTheTeamPage() {
                 email="sam@xlbenefits.com"
               />
             </AnimatedSection>
+          </div>
 
+          {/* Bottom Row - Joe, Christine, Erin */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Joe Landziak */}
             <AnimatedSection animation="fade-up" delay={500}>
               <FlipCard
@@ -252,8 +260,8 @@ export default function MeetTheTeamPage() {
                 email="erin@xlbenefits.com"
               />
             </AnimatedSection>
-
           </div>
+
         </div>
       </section>
 
