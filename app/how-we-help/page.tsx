@@ -288,7 +288,8 @@ export default function HowWeHelpPage() {
                   </p>
                   <Link
                     href="/toolkit#cobra-calculator"
-                    className="inline-flex items-center bg-xl-bright-blue text-white px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    style={{ color: 'white' }}
                   >
                     Try the COBRA Calculator
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -348,7 +349,8 @@ export default function HowWeHelpPage() {
                   </p>
                   <Link
                     href="/toolkit#deductible-analyzer"
-                    className="inline-flex items-center bg-xl-bright-blue text-white px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    style={{ color: 'white' }}
                   >
                     Try the Deductible Analyzer
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -408,7 +410,8 @@ export default function HowWeHelpPage() {
                   </p>
                   <Link
                     href="/toolkit#readiness-assessment"
-                    className="inline-flex items-center bg-xl-bright-blue text-white px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    style={{ color: 'white' }}
                   >
                     Try the Readiness Assessment
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
