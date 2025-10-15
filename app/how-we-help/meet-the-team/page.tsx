@@ -186,28 +186,28 @@ export default function MeetTheTeamPage() {
             </div>
           </div>
 
-          {/* Second Row - Steve, Jennifer, Sam */}
+          {/* Second Row - Jennifer, Steve, Samuel */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            {/* Steve Caler */}
+            {/* Jennifer Baird-Flynn */}
             <AnimatedSection animation="fade-up" delay={200}>
+              <FlipCard
+                name="Jennifer Baird-Flynn"
+                title="Stop Loss Sales Consultant"
+                imageUrl="/images/team/jennifer-headshot.jpeg"
+                expertise={["20+ Years Self-Funding", "TPA Experience", "Broker & Consultant Background"]}
+                bio="Jennifer has over 20 years of experience in self-funding, having worked as a TPA professional, employee benefits broker, and now as a stop loss consultant. Her diverse background gives her unique insights into all sides of the self-funding equation. She specializes in helping large companies develop and deploy cost containment strategies including PBM analysis, captive solutions, and risk mitigation. Jennifer joined the XL Benefits team in May 2023 with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
+                email="jennifer@xlbenefits.com"
+              />
+            </AnimatedSection>
+
+            {/* Steve Caler */}
+            <AnimatedSection animation="fade-up" delay={300}>
               <FlipCard
                 name="Steve Caler"
                 title="Stop Loss Sales Consultant"
                 expertise={["10+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
                 bio="Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo). He loves watching UFC with his four boys and drinking coffee with his wife and two girls."
                 email="steve@xlbenefits.com"
-              />
-            </AnimatedSection>
-
-            {/* Jennifer Baird */}
-            <AnimatedSection animation="fade-up" delay={300}>
-              <FlipCard
-                name="Jennifer Baird"
-                title="Stop Loss Sales Consultant"
-                imageUrl="/images/team/jennifer-headshot.jpeg"
-                expertise={["20+ Years Self-Funding", "TPA Experience", "Broker & Consultant Background"]}
-                bio="Jennifer has over 20 years of experience in self-funding, having worked as a TPA professional, employee benefits broker, and now as a stop loss consultant. Her diverse background gives her unique insights into all sides of the self-funding equation. She specializes in helping large companies develop and deploy cost containment strategies including PBM analysis, captive solutions, and risk mitigation. Jennifer joined the XL Benefits team in May 2023 with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
-                email="jennifer@xlbenefits.com"
               />
             </AnimatedSection>
 
@@ -224,7 +224,7 @@ export default function MeetTheTeamPage() {
             </AnimatedSection>
           </div>
 
-          {/* Bottom Row - Joe, Christine, Erin */}
+          {/* Bottom Row - Joe, Erin, Christine */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Joe Landziak */}
             <AnimatedSection animation="fade-up" delay={500}>
@@ -238,19 +238,8 @@ export default function MeetTheTeamPage() {
               />
             </AnimatedSection>
 
-            {/* Christine Childs */}
-            <AnimatedSection animation="fade-up" delay={600}>
-              <FlipCard
-                name="Christine Childs"
-                title="Account Manager"
-                expertise={["Account Management", "Client Relations", "Detail-Oriented Service"]}
-                bio="Christine brings an unparalleled energy to XL Benefits. She has a knack for account management bolstered by her warm personality and desire to serve others. She has years of experience in managing reports, forecasting, training and serving as a day to day contact for clients. Utilizing her strengths and personality she seeks to build rapport with co-workers and clients establishing trusted, long term relationships. Christine has a love for decorating, cooking and cleaning. She likes to create welcoming spaces for others. Her eye for detail and the joy of caring for others has contributed to the creation of personalized parties and weddings for many."
-                email="christine@xlbenefits.com"
-              />
-            </AnimatedSection>
-
             {/* Erin Maurer */}
-            <AnimatedSection animation="fade-up" delay={700}>
+            <AnimatedSection animation="fade-up" delay={600}>
               <FlipCard
                 name="Erin Maurer"
                 title="Account Executive"
@@ -258,6 +247,17 @@ export default function MeetTheTeamPage() {
                 expertise={["Insurance Since 2004", "Large Self-Funded Groups", "RFP & Renewals Specialist"]}
                 bio="Erin joined our team in 2023 with an extensive insurance background that began in 2004, working mainly on large self-funded employer groups, including stop loss insurance. Erin assists with RFP submission, renewals and new business set-up. Erin is bubbly, creative and has a heart for outstanding customer service. When she's not working she is typically out riding horses and camping with her daughter, and enjoys dancing, wine tasting and volunteering at her local school and church events."
                 email="erin@xlbenefits.com"
+              />
+            </AnimatedSection>
+
+            {/* Christine Titus */}
+            <AnimatedSection animation="fade-up" delay={700}>
+              <FlipCard
+                name="Christine Titus"
+                title="Account Manager"
+                expertise={["Account Management", "Client Relations", "Detail-Oriented Service"]}
+                bio="Christine brings an unparalleled energy to XL Benefits. She has a knack for account management bolstered by her warm personality and desire to serve others. She has years of experience in managing reports, forecasting, training and serving as a day to day contact for clients. Utilizing her strengths and personality she seeks to build rapport with co-workers and clients establishing trusted, long term relationships. Christine has a love for decorating, cooking and cleaning. She likes to create welcoming spaces for others. Her eye for detail and the joy of caring for others has contributed to the creation of personalized parties and weddings for many."
+                email="christine@xlbenefits.com"
               />
             </AnimatedSection>
           </div>
