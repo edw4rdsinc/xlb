@@ -266,22 +266,13 @@ export default function FIECalculator() {
         );
 
       case 5:
-        if (!emailSubmitted) {
-          return (
-            <EmailGate
-              onSubmit={handleEmailSubmit}
-              results={wizardData.results}
-              isCalculating={isCalculating}
-            />
-          );
-        } else {
-          return (
-            <ResultsDashboard
-              wizardData={wizardData}
-              results={wizardData.results!}
-            />
-          );
-        }
+        // Email gate muted for testing - directly show results
+        return (
+          <ResultsDashboard
+            wizardData={wizardData}
+            results={wizardData.results!}
+          />
+        );
 
       default:
         return null;
