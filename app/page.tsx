@@ -6,7 +6,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-8 md:py-16 overflow-hidden min-h-[300px] md:min-h-[225px]">
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-5 md:py-10 overflow-hidden min-h-[180px] md:min-h-[135px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
