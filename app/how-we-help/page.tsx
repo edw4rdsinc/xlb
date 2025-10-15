@@ -6,7 +6,7 @@ export default function HowWeHelpPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative py-32 min-h-[900px] flex items-center"
+        className="relative py-32 min-h-[900px] flex items-center justify-center"
         style={{
           backgroundImage: 'url("/images/parallax/how-we-help.jpg")',
           backgroundSize: 'cover',
@@ -15,7 +15,7 @@ export default function HowWeHelpPage() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <AnimatedSection animation="fade-up" className="ml-auto max-w-2xl text-right">
+          <AnimatedSection animation="fade-up" className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#ebc583', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               How We Help Brokers Win
             </h1>
