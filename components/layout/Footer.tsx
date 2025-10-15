@@ -27,7 +27,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Solutions</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/solutions/cobra-calculation-challenges" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
+                <Link href="/solutions/truecost-calculator" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
                   TrueCost Calculator
                 </Link>
               </li>
