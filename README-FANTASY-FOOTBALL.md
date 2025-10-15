@@ -296,13 +296,80 @@ async fetchWeeklyStats(weekNumber: number): Promise<NFLPlayerStats[]> {
 - [x] PPR calculation engine
 - [x] Database schema with all tables
 
-### 🚧 In Progress / Coming Soon
-- [ ] Player management page
-- [ ] Lineup viewing/editing for admins
-- [ ] Email notification system with Resend
-- [ ] Real NFL stats API integration
-- [ ] CSV import for players
-- [ ] Bulk elite status updates
+### 🚧 Todo - Admin Features
+
+**Player Management** (`/admin/players`)
+- [ ] View all players in database (searchable table)
+- [ ] Add new player (name, position, team, elite status)
+- [ ] Edit existing player details
+- [ ] Delete players (with confirmation)
+- [ ] Bulk elite status updates (select multiple, mark as elite)
+- [ ] CSV import for bulk player creation
+- [ ] Filter by position (QB, RB, WR, TE, K, DEF)
+
+**Lineup Management** (`/admin/lineups`)
+- [ ] View all submitted lineups by round
+- [ ] Search by team name or participant name
+- [ ] Edit lineup on behalf of participant (one-time)
+- [ ] Delete lineup (with confirmation)
+- [ ] Export lineups to CSV
+- [ ] View submission timestamps
+- [ ] Filter by round
+
+**Email System** (`/admin/emails`)
+- [ ] Email templates:
+  - Lineup confirmation (auto-sent on submission)
+  - Weekly scores notification (after publishing)
+  - Weekly winner announcement ($25)
+  - Round results (top 3 placings)
+  - Season championship results
+- [ ] Resend integration setup
+- [ ] Send test emails
+- [ ] Send to all participants
+- [ ] Send to specific round participants
+- [ ] Email preview before sending
+- [ ] Email history/logs
+- [ ] Variable replacement ({{name}}, {{teamName}}, {{points}}, etc.)
+
+**NFL Stats API Integration**
+- [ ] Choose API provider (ESPN, Sleeper, Yahoo, RapidAPI, etc.)
+- [ ] Update `lib/api/nfl-stats.ts` with real API calls
+- [ ] Add API credentials to environment variables
+- [ ] Test API connection
+- [ ] Handle API errors gracefully
+- [ ] Cache API responses to avoid rate limits
+- [ ] Player name matching logic (API → Database)
+
+**Additional Admin Features**
+- [ ] Round management (create, edit, set active)
+- [ ] View detailed scoring breakdown per lineup
+- [ ] Export results to PDF
+- [ ] Admin user management (multiple admin accounts)
+- [ ] Activity log (who did what, when)
+- [ ] Settings page (configure prizes, rules, etc.)
+
+### 💡 Nice-to-Have Features
+
+**Public Features**
+- [ ] Participant profile page (view my lineups, my scores)
+- [ ] Live scoring updates during games
+- [ ] Mobile app (React Native)
+- [ ] Push notifications for scores
+- [ ] Social sharing (share results on Twitter/LinkedIn)
+- [ ] Historical season data (archive old seasons)
+
+**Analytics**
+- [ ] Most picked players
+- [ ] Elite player usage stats
+- [ ] Average points by position
+- [ ] Participant engagement metrics
+- [ ] Winner streaks
+
+**Gamification**
+- [ ] Badges/achievements
+- [ ] Trash talk comments section
+- [ ] Weekly power rankings
+- [ ] Prediction game (bonus points for guessing winners)
 
 ## 🤝 Contributing
 
