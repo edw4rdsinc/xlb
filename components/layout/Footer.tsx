@@ -28,7 +28,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/solutions/cobra-calculation-challenges" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
-                  COBRA Calculator
+                  Fully Insured Equivalent
                 </Link>
               </li>
               <li>
