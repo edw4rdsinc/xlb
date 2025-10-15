@@ -92,7 +92,7 @@ export default function HomePage() {
                   Accurately project fully insured equivalent rates for self-funded groups with state-specific compliance considerations. Get calculations you can confidently share with clients.
                 </p>
                 <Link
-                  href="/solutions/cobra-calculation-challenges"
+                  href="/solutions/truecost-calculator"
                   className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
                 >
                   Try This Tool
