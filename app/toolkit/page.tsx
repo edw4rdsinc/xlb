@@ -22,10 +22,10 @@ export default function ToolkitPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <AnimatedSection animation="fade-up" className="max-w-xl text-left">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#251610', textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Your Stop-Loss Toolkit
             </h1>
-            <p className="text-xl drop-shadow-lg" style={{ color: '#251610', textShadow: '2px 2px 4px rgba(255,255,255,0.7)' }}>
+            <p className="text-xl drop-shadow-lg" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Free interactive tools designed for insurance brokers. No login required—just click and use.
             </p>
           </AnimatedSection>
