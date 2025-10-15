@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { formatNumber, parseFormattedNumber } from '@/lib/fie-calculator/validation';
+import { getTierConfig, calculatePlanDifferential } from '@/lib/fie-calculator/calculations';
 import type { PlanData } from '@/lib/fie-calculator/calculations';
 
 interface RatesInputProps {
@@ -11,46 +13,62 @@ interface RatesInputProps {
 }
 
 export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: RatesInputProps) {
-  const tierLabels = {
-    EO: 'Employee Only',
-    ES: 'Employee + Spouse',
-    EC: 'Employee + Children',
-    F: 'Family'
-  };
+  const [skipRates, setSkipRates] = useState(false);
 
-  const visibleTiers = numberOfTiers === 2 ? ['EO', 'F'] :
-                       numberOfTiers === 3 ? ['EO', 'ES', 'F'] :
-                       ['EO', 'ES', 'EC', 'F'];
-
-  // Calculate plan differential based on Employee Only rate
-  const calculatePlanDifferential = (plan: PlanData, basePlanEORate: number): number => {
-    if (!basePlanEORate || basePlanEORate === 0) return 1.0;
-    if (!plan.currentRates.EO || plan.currentRates.EO === 0) return 1.0;
-
-    return plan.currentRates.EO / basePlanEORate;
-  };
+  const tierConfig = getTierConfig(numberOfTiers);
+  const tierCodes = tierConfig.map(t => t.code);
+  const tierLabelMap = tierConfig.reduce((acc, tier) => {
+    acc[tier.code] = tier.label;
+    return acc;
+  }, {} as Record<string, string>);
 
   // Get base plan (first plan) EO rate for differential calculation
-  const basePlanEORate = plans[0]?.currentRates?.EO || 0;
+  const basePlanEORate = plans[0]?.currentRates?.['EO'] || 0;
+
+  const handleSkipRatesChange = (checked: boolean) => {
+    setSkipRates(checked);
+
+    if (checked) {
+      // When skipping rates, set all rates to 0 and all differentials to 1.0
+      const newPlans = plans.map(plan => ({
+        ...plan,
+        currentRates: tierCodes.reduce((acc, code) => {
+          acc[code] = 0;
+          return acc;
+        }, {} as Record<string, number>),
+        differential: 1.0
+      }));
+      onUpdate(newPlans);
+    }
+  };
 
   const handleRateChange = (planIndex: number, tier: string, value: string) => {
     const newPlans = [...plans];
     const numValue = parseFormattedNumber(value);
 
     if (!newPlans[planIndex]) {
+      const census: Record<string, number> = {};
+      const currentRates: Record<string, number> = {};
+      tierCodes.forEach(code => {
+        census[code] = 0;
+        currentRates[code] = 0;
+      });
+
       newPlans[planIndex] = {
         name: `Plan ${planIndex + 1}`,
         differential: 1.0,
-        census: { EO: 0, ES: 0, EC: 0, F: 0 },
-        currentRates: { EO: 0, ES: 0, EC: 0, F: 0 }
+        census,
+        currentRates
       };
     }
 
-    newPlans[planIndex].currentRates[tier as keyof typeof newPlans[0]['currentRates']] = numValue;
+    newPlans[planIndex].currentRates[tier] = numValue;
 
     // Recalculate differentials for all plans when any rate changes
-    newPlans.forEach((plan, idx) => {
-      plan.differential = calculatePlanDifferential(plan, newPlans[0]?.currentRates?.EO || 0);
+    const newBasePlanEORate = newPlans[0]?.currentRates?.['EO'] || 0;
+    newPlans.forEach((plan) => {
+      const planEORate = plan.currentRates['EO'] || 0;
+      plan.differential = calculatePlanDifferential(planEORate, newBasePlanEORate);
     });
 
     onUpdate(newPlans);
@@ -60,101 +78,137 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-xl-dark-blue mb-4">Current Monthly Rates</h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-4">
           Enter your current monthly premium rates for each tier and plan. These will be compared to the calculated FIE rates.
         </p>
+
+        {/* Skip Rates Checkbox */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <label className="flex items-start cursor-pointer">
+            <input
+              type="checkbox"
+              checked={skipRates}
+              onChange={(e) => handleSkipRatesChange(e.target.checked)}
+              className="mt-1 mr-3 h-4 w-4 text-xl-bright-blue focus:ring-xl-bright-blue border-gray-300 rounded"
+            />
+            <div>
+              <div className="font-semibold text-amber-900">Skip Rate Input for New Groups</div>
+              <div className="text-sm text-amber-800 mt-1">
+                Check this box if you don't have current rates (e.g., for a new group or switching from fully-insured without rate history).
+                The calculator will use plan differentials of 1.0 for all plans and won't calculate savings comparison.
+              </div>
+            </div>
+          </label>
+        </div>
       </div>
 
       {/* Desktop Grid */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-left font-semibold text-gray-700">
-                Tier
-              </th>
-              {plans.map((plan, index) => (
-                <th key={index} className="border border-gray-300 bg-gray-50 px-4 py-2 text-center font-semibold text-gray-700">
-                  {plan?.name || `Plan ${index + 1}`}
+      {!skipRates && (
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-left font-semibold text-gray-700">
+                  Tier
                 </th>
+                {plans.map((plan, index) => (
+                  <th key={index} className="border border-gray-300 bg-gray-50 px-4 py-2 text-center font-semibold text-gray-700">
+                    {plan?.name || `Plan ${index + 1}`}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tierCodes.map(tier => (
+                <tr key={tier}>
+                  <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
+                    {tierLabelMap[tier]}
+                  </td>
+                  {plans.map((plan, planIndex) => (
+                    <td key={planIndex} className="border border-gray-300 px-2 py-1">
+                      <div className="flex items-center">
+                        <span className="text-gray-500 mr-1">$</span>
+                        <input
+                          type="text"
+                          value={formatNumber(plan?.currentRates?.[tier] || 0)}
+                          onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
+                          className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
+                          placeholder="0"
+                        />
+                      </div>
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {visibleTiers.map(tier => (
-              <tr key={tier}>
+              <tr>
                 <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
-                  {tierLabels[tier as keyof typeof tierLabels]}
+                  Plan Differential
                 </td>
                 {plans.map((plan, planIndex) => (
-                  <td key={planIndex} className="border border-gray-300 px-2 py-1">
-                    <div className="flex items-center">
-                      <span className="text-gray-500 mr-1">$</span>
-                      <input
-                        type="text"
-                        value={formatNumber(plan?.currentRates?.[tier as keyof typeof plan.currentRates] || 0)}
-                        onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
-                        className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
-                        placeholder="0"
-                      />
+                  <td key={planIndex} className="border border-gray-300 px-2 py-1 bg-gray-100">
+                    <div className="w-full px-2 py-1 text-center font-semibold text-gray-700">
+                      {(plan?.differential || 1.0).toFixed(2)}
                     </div>
                   </td>
                 ))}
               </tr>
-            ))}
-            <tr>
-              <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
-                Plan Differential
-              </td>
-              {plans.map((plan, planIndex) => (
-                <td key={planIndex} className="border border-gray-300 px-2 py-1 bg-gray-100">
-                  <div className="w-full px-2 py-1 text-center font-semibold text-gray-700">
-                    {(plan?.differential || 1.0).toFixed(2)}
-                  </div>
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Mobile Grid */}
-      <div className="md:hidden space-y-4">
-        {plans.map((plan, planIndex) => (
-          <div key={planIndex} className="border border-gray-300 rounded-lg p-4 bg-white">
-            <h3 className="font-semibold text-lg text-xl-dark-blue mb-3">
-              {plan?.name || `Plan ${planIndex + 1}`}
-            </h3>
-            <div className="space-y-3">
-              {visibleTiers.map(tier => (
-                <div key={tier} className="flex justify-between items-center">
-                  <label className="text-sm font-medium text-gray-700">
-                    {tierLabels[tier as keyof typeof tierLabels]}
-                  </label>
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-1">$</span>
-                    <input
-                      type="text"
-                      value={formatNumber(plan?.currentRates?.[tier as keyof typeof plan.currentRates] || 0)}
-                      onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
-                      className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
-                      placeholder="0"
-                    />
+      {!skipRates && (
+        <div className="md:hidden space-y-4">
+          {plans.map((plan, planIndex) => (
+            <div key={planIndex} className="border border-gray-300 rounded-lg p-4 bg-white">
+              <h3 className="font-semibold text-lg text-xl-dark-blue mb-3">
+                {plan?.name || `Plan ${planIndex + 1}`}
+              </h3>
+              <div className="space-y-3">
+                {tierCodes.map(tier => (
+                  <div key={tier} className="flex justify-between items-center">
+                    <label className="text-sm font-medium text-gray-700">
+                      {tierLabelMap[tier]}
+                    </label>
+                    <div className="flex items-center">
+                      <span className="text-gray-500 mr-1">$</span>
+                      <input
+                        type="text"
+                        value={formatNumber(plan?.currentRates?.[tier] || 0)}
+                        onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
+                        className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
+                        placeholder="0"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
-              <div className="pt-2 border-t border-gray-200">
-                <div className="flex justify-between items-center">
-                  <label className="text-sm font-medium text-gray-700">Plan Differential</label>
-                  <div className="w-24 px-2 py-1 text-center bg-gray-100 rounded font-semibold text-gray-700">
-                    {(plan?.differential || 1.0).toFixed(2)}
+                ))}
+                <div className="pt-2 border-t border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-medium text-gray-700">Plan Differential</label>
+                    <div className="w-24 px-2 py-1 text-center bg-gray-100 rounded font-semibold text-gray-700">
+                      {(plan?.differential || 1.0).toFixed(2)}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* Skip Rates Message */}
+      {skipRates && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+          <svg className="w-12 h-12 text-green-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 className="text-lg font-semibold text-green-900 mb-2">Rates Skipped</h3>
+          <p className="text-sm text-green-800">
+            All plan differentials are set to 1.0. The calculator will generate FIE rates without savings comparison.
+          </p>
+        </div>
+      )}
 
       {/* Validation Error */}
       {errors.rates && (

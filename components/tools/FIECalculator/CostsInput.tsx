@@ -2,37 +2,30 @@
 
 import { useState } from 'react';
 import { formatNumber, parseFormattedNumber } from '@/lib/fie-calculator/validation';
-import type { CostComponents, TierRatios } from '@/lib/fie-calculator/calculations';
+import { getTierConfig } from '@/lib/fie-calculator/calculations';
+import type { CostComponents } from '@/lib/fie-calculator/calculations';
 
 interface CostsInputProps {
   costs: CostComponents;
-  tierRatios: TierRatios;
   numberOfTiers: number;
   onUpdateCosts: (costs: CostComponents) => void;
-  onUpdateRatios: (ratios: TierRatios) => void;
   errors: Record<string, string>;
 }
 
 export default function CostsInput({
   costs,
-  tierRatios,
   numberOfTiers,
   onUpdateCosts,
-  onUpdateRatios,
   errors
 }: CostsInputProps) {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const tierLabels = {
-    EO: 'Employee Only',
-    ES: 'Employee + Spouse',
-    EC: 'Employee + Children',
-    F: 'Family'
-  };
-
-  const visibleTiers = numberOfTiers === 2 ? ['EO', 'F'] :
-                       numberOfTiers === 3 ? ['EO', 'ES', 'F'] :
-                       ['EO', 'ES', 'EC', 'F'];
+  const tierConfig = getTierConfig(numberOfTiers);
+  const tierCodes = tierConfig.map(t => t.code);
+  const tierLabelMap = tierConfig.reduce((acc, tier) => {
+    acc[tier.code] = tier.label;
+    return acc;
+  }, {} as Record<string, string>);
 
   const deductibleOptions = [
     { value: 50000, label: '$50,000' },
@@ -52,6 +45,42 @@ export default function CostsInput({
     { value: 1.25, label: '125%' },
     { value: 1.30, label: '130%' }
   ];
+
+  const handleAdminModeChange = (mode: 'simple' | 'detailed') => {
+    if (mode === 'simple') {
+      onUpdateCosts({
+        ...costs,
+        adminCostMode: mode,
+        adminPEPM: costs.adminPEPM || 35,
+        detailedAdminCosts: undefined
+      });
+    } else {
+      onUpdateCosts({
+        ...costs,
+        adminCostMode: mode,
+        detailedAdminCosts: {
+          tpaFees: 0,
+          brokerage: 0,
+          consulting: 0,
+          compliance: 0,
+          banking: 0,
+          other: 0
+        }
+      });
+    }
+  };
+
+  const handleDetailedAdminChange = (field: string, value: number) => {
+    if (costs.detailedAdminCosts) {
+      onUpdateCosts({
+        ...costs,
+        detailedAdminCosts: {
+          ...costs.detailedAdminCosts,
+          [field]: value
+        }
+      });
+    }
+  };
 
   const handleLaserAdd = () => {
     const newLasers = [...costs.lasers, { memberId: '', amount: 0, planIndex: 0 }];
@@ -78,31 +107,188 @@ export default function CostsInput({
         </p>
       </div>
 
-      {/* Basic Costs */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Admin Cost */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Admin Cost (PEPM) *
-          </label>
-          <div className="flex items-center">
-            <span className="text-gray-500 mr-2">$</span>
+      {/* Admin Cost Mode Toggle */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <label className="block text-sm font-semibold text-blue-900 mb-3">
+          Admin Cost Entry Mode
+        </label>
+        <div className="flex gap-4">
+          <label className="flex items-center cursor-pointer">
             <input
-              type="number"
-              step="0.01"
-              value={costs.adminPEPM}
-              onChange={(e) => onUpdateCosts({ ...costs, adminPEPM: parseFloat(e.target.value) || 0 })}
-              className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
-                errors.adminPEPM ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="35"
+              type="radio"
+              checked={costs.adminCostMode === 'simple'}
+              onChange={() => handleAdminModeChange('simple')}
+              className="mr-2 h-4 w-4 text-xl-bright-blue focus:ring-xl-bright-blue"
             />
+            <span className={`text-sm ${costs.adminCostMode === 'simple' ? 'font-semibold text-blue-900' : 'text-blue-700'}`}>
+              Simple (Single PEPM)
+            </span>
+          </label>
+          <label className="flex items-center cursor-pointer">
+            <input
+              type="radio"
+              checked={costs.adminCostMode === 'detailed'}
+              onChange={() => handleAdminModeChange('detailed')}
+              className="mr-2 h-4 w-4 text-xl-bright-blue focus:ring-xl-bright-blue"
+            />
+            <span className={`text-sm ${costs.adminCostMode === 'detailed' ? 'font-semibold text-blue-900' : 'text-blue-700'}`}>
+              Detailed (Line Item Breakdown)
+            </span>
+          </label>
+        </div>
+      </div>
+
+      {/* Admin Costs Section */}
+      {costs.adminCostMode === 'simple' ? (
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Admin Cost (PEPM) *
+            </label>
+            <div className="flex items-center">
+              <span className="text-gray-500 mr-2">$</span>
+              <input
+                type="number"
+                step="0.01"
+                value={costs.adminPEPM || 0}
+                onChange={(e) => onUpdateCosts({ ...costs, adminPEPM: parseFloat(e.target.value) || 0 })}
+                className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
+                  errors.adminPEPM ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="35"
+              />
+            </div>
+            {errors.adminPEPM && (
+              <p className="mt-1 text-sm text-red-600">{errors.adminPEPM}</p>
+            )}
+            <p className="mt-1 text-xs text-gray-500">
+              Combined monthly admin cost per employee
+            </p>
           </div>
-          {errors.adminPEPM && (
-            <p className="mt-1 text-sm text-red-600">{errors.adminPEPM}</p>
+        </div>
+      ) : (
+        <div>
+          <h3 className="text-lg font-semibold text-xl-dark-blue mb-3">Detailed Admin Costs (PEPM)</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                TPA Fees
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.tpaFees || 0}
+                  onChange={(e) => handleDetailedAdminChange('tpaFees', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Brokerage Fees
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.brokerage || 0}
+                  onChange={(e) => handleDetailedAdminChange('brokerage', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Consulting Fees
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.consulting || 0}
+                  onChange={(e) => handleDetailedAdminChange('consulting', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Compliance/COBRA
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.compliance || 0}
+                  onChange={(e) => handleDetailedAdminChange('compliance', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Banking/IBNR
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.banking || 0}
+                  onChange={(e) => handleDetailedAdminChange('banking', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Other
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.other || 0}
+                  onChange={(e) => handleDetailedAdminChange('other', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+          </div>
+          {costs.detailedAdminCosts && (
+            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex justify-between items-center font-semibold text-gray-700">
+                <span>Total Admin PEPM:</span>
+                <span className="text-xl-dark-blue">
+                  ${(
+                    (costs.detailedAdminCosts.tpaFees || 0) +
+                    (costs.detailedAdminCosts.brokerage || 0) +
+                    (costs.detailedAdminCosts.consulting || 0) +
+                    (costs.detailedAdminCosts.compliance || 0) +
+                    (costs.detailedAdminCosts.banking || 0) +
+                    (costs.detailedAdminCosts.other || 0)
+                  ).toFixed(2)}
+                </span>
+              </div>
+            </div>
           )}
         </div>
+      )}
 
+      {/* Stop-Loss Basic Settings */}
+      <div className="grid md:grid-cols-2 gap-6">
         {/* Specific Deductible */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -157,40 +343,23 @@ export default function CostsInput({
             />
           </div>
         </div>
-
-        {/* Aggregate Factor */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Aggregate Factor
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            min="0.5"
-            max="2.0"
-            value={costs.aggregateFactor}
-            onChange={(e) => onUpdateCosts({ ...costs, aggregateFactor: parseFloat(e.target.value) || 1.0 })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-            placeholder="1.0"
-          />
-        </div>
       </div>
 
       {/* Specific Rates by Tier */}
       <div>
         <h3 className="text-lg font-semibold text-xl-dark-blue mb-3">Specific Stop-Loss Rates (Monthly)</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {visibleTiers.map(tier => (
+        <div className={`grid gap-4 ${numberOfTiers === 2 ? 'md:grid-cols-2' : numberOfTiers === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
+          {tierCodes.map(tier => (
             <div key={tier}>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {tierLabels[tier as keyof typeof tierLabels]}
+                {tierLabelMap[tier]}
               </label>
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
                   type="number"
                   step="0.01"
-                  value={costs.specificRates[tier as keyof typeof costs.specificRates]}
+                  value={costs.specificRates[tier] || 0}
                   onChange={(e) => onUpdateCosts({
                     ...costs,
                     specificRates: {
@@ -205,6 +374,58 @@ export default function CostsInput({
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Aggregate Factors by Tier */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-semibold text-xl-dark-blue">Aggregate Factors by Tier</h3>
+          <button
+            type="button"
+            onClick={() => {
+              const defaultFactors = tierConfig.reduce((acc, tier) => {
+                acc[tier.code] = tier.aggregateFactor;
+                return acc;
+              }, {} as Record<string, number>);
+              onUpdateCosts({ ...costs, aggregateFactors: defaultFactors });
+            }}
+            className="text-sm text-xl-bright-blue hover:underline"
+          >
+            Reset to Defaults
+          </button>
+        </div>
+        <div className={`grid gap-4 ${numberOfTiers === 2 ? 'md:grid-cols-2' : numberOfTiers === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
+          {tierCodes.map(tier => {
+            const defaultFactor = tierConfig.find(t => t.code === tier)?.aggregateFactor || 1.0;
+            return (
+              <div key={tier}>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {tierLabelMap[tier]}
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0.5"
+                  max="3.0"
+                  value={costs.aggregateFactors[tier] || defaultFactor}
+                  onChange={(e) => onUpdateCosts({
+                    ...costs,
+                    aggregateFactors: {
+                      ...costs.aggregateFactors,
+                      [tier]: parseFloat(e.target.value) || defaultFactor
+                    }
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
+                  placeholder={defaultFactor.toFixed(2)}
+                />
+                <p className="mt-1 text-xs text-gray-500">Default: {defaultFactor.toFixed(2)}</p>
+              </div>
+            );
+          })}
+        </div>
+        <p className="mt-2 text-sm text-gray-600">
+          Aggregate factors adjust the aggregate premium calculation by tier to account for varying family sizes and risk profiles.
+        </p>
       </div>
 
       {/* Lasers */}
@@ -252,55 +473,9 @@ export default function CostsInput({
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-sm italic">No lasers added. Click "Add Laser" to include laser liabilities.</p>
-        )}
-      </div>
-
-      {/* Advanced Settings */}
-      <div className="border-t pt-6">
-        <button
-          type="button"
-          onClick={() => setShowAdvanced(!showAdvanced)}
-          className="flex items-center text-xl-bright-blue hover:text-xl-dark-blue font-semibold"
-        >
-          <svg
-            className={`w-5 h-5 mr-2 transform transition-transform ${showAdvanced ? 'rotate-90' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-          Advanced Settings (Tier Ratios)
-        </button>
-
-        {showAdvanced && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-4">
-              Adjust tier ratios to customize how costs are distributed across tiers. Default values are industry standard.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {visibleTiers.map(tier => (
-                <div key={tier}>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {tierLabels[tier as keyof typeof tierLabels]} Ratio
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0.5"
-                    max="5.0"
-                    value={tierRatios[tier as keyof typeof tierRatios]}
-                    onChange={(e) => onUpdateRatios({
-                      ...tierRatios,
-                      [tier]: parseFloat(e.target.value) || 1.0
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <p className="text-sm text-gray-500 italic">
+            No lasers added. Click "Add Laser" to include individual large claim accommodations.
+          </p>
         )}
       </div>
 
@@ -311,9 +486,9 @@ export default function CostsInput({
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
           </svg>
           <div className="text-sm text-blue-800">
-            <strong>Stop-Loss Components:</strong> These costs represent your stop-loss insurance premiums and
-            administrative fees. The calculator will combine these with your census data to determine
-            fully-insured equivalent rates.
+            <strong>Cost Components:</strong> These values should come from your stop-loss quotes and vendor proposals.
+            Admin costs include TPA fees, banking, compliance, and other operational expenses. Specific and aggregate rates
+            are from your stop-loss carrier proposals.
           </div>
         </div>
       </div>

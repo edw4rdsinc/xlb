@@ -14,7 +14,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
-import { formatCurrency, formatPercentage } from '@/lib/fie-calculator/calculations';
+import { formatCurrency, formatPercentage, getTierConfig } from '@/lib/fie-calculator/calculations';
 import type { CalculationResults } from '@/lib/fie-calculator/calculations';
 import type { WizardData } from '../FIECalculator';
 
@@ -26,20 +26,24 @@ interface ResultsDashboardProps {
 export default function ResultsDashboard({ wizardData, results }: ResultsDashboardProps) {
   const [showDetails, setShowDetails] = useState(false);
 
+  const tierConfig = getTierConfig(wizardData.numberOfTiers);
+  const tierCodes = tierConfig.map(t => t.code);
+  const tierLabelMap = tierConfig.reduce((acc, tier) => {
+    acc[tier.code] = tier.label;
+    return acc;
+  }, {} as Record<string, string>);
+
   const isPositiveSavings = results.savingsPercentage > 0;
 
   // Prepare data for bar chart (rates comparison)
   const ratesComparisonData = wizardData.plans.map((plan, index) => {
     const planAllocation = results.planAllocations[index];
-    const visibleTiers = wizardData.numberOfTiers === 2 ? ['EO', 'F'] :
-                        wizardData.numberOfTiers === 3 ? ['EO', 'ES', 'F'] :
-                        ['EO', 'ES', 'EC', 'F'];
 
-    return visibleTiers.map(tier => ({
+    return tierCodes.map(tier => ({
       tier: tier,
       plan: plan.name,
-      current: plan.currentRates[tier as keyof typeof plan.currentRates],
-      fie: planAllocation.fieRates[tier as keyof typeof planAllocation.fieRates]
+      current: plan.currentRates[tier] || 0,
+      fie: planAllocation.fieRates[tier] || 0
     }));
   }).flat();
 
@@ -57,7 +61,9 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
 
   function calculateTotalEmployees() {
     return wizardData.plans.reduce((total, plan) => {
-      return total + plan.census.EO + plan.census.ES + plan.census.EC + plan.census.F;
+      return total + tierCodes.reduce((sum, tier) => {
+        return sum + (plan.census[tier] || 0);
+      }, 0);
     }, 0);
   }
 
@@ -225,41 +231,20 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
               <thead>
                 <tr>
                   <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-left">Plan</th>
-                  <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-center" colSpan={2}>
-                    Employee Only
-                  </th>
-                  {wizardData.numberOfTiers >= 3 && (
-                    <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-center" colSpan={2}>
-                      Employee + Spouse
+                  {tierCodes.map(tier => (
+                    <th key={tier} className="border border-gray-300 bg-gray-50 px-4 py-2 text-center" colSpan={2}>
+                      {tierLabelMap[tier]}
                     </th>
-                  )}
-                  {wizardData.numberOfTiers === 4 && (
-                    <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-center" colSpan={2}>
-                      Employee + Children
-                    </th>
-                  )}
-                  <th className="border border-gray-300 bg-gray-50 px-4 py-2 text-center" colSpan={2}>
-                    Family
-                  </th>
+                  ))}
                 </tr>
                 <tr>
                   <th className="border border-gray-300 bg-gray-100 px-4 py-1"></th>
-                  <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">Current</th>
-                  <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">FIE</th>
-                  {wizardData.numberOfTiers >= 3 && (
+                  {tierCodes.map(tier => (
                     <>
-                      <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">Current</th>
-                      <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">FIE</th>
+                      <th key={`${tier}-current`} className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">Current</th>
+                      <th key={`${tier}-fie`} className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">FIE</th>
                     </>
-                  )}
-                  {wizardData.numberOfTiers === 4 && (
-                    <>
-                      <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">Current</th>
-                      <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">FIE</th>
-                    </>
-                  )}
-                  <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">Current</th>
-                  <th className="border border-gray-300 bg-gray-100 px-4 py-1 text-center text-xs">FIE</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -268,38 +253,16 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
                   return (
                     <tr key={index}>
                       <td className="border border-gray-300 px-4 py-2 font-medium">{plan.name}</td>
-                      <td className="border border-gray-300 px-4 py-2 text-center">
-                        {formatCurrency(plan.currentRates.EO)}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2 text-center font-semibold">
-                        {formatCurrency(allocation.fieRates.EO)}
-                      </td>
-                      {wizardData.numberOfTiers >= 3 && (
+                      {tierCodes.map(tier => (
                         <>
-                          <td className="border border-gray-300 px-4 py-2 text-center">
-                            {formatCurrency(plan.currentRates.ES)}
+                          <td key={`${index}-${tier}-current`} className="border border-gray-300 px-4 py-2 text-center">
+                            {formatCurrency(plan.currentRates[tier] || 0)}
                           </td>
-                          <td className="border border-gray-300 px-4 py-2 text-center font-semibold">
-                            {formatCurrency(allocation.fieRates.ES)}
+                          <td key={`${index}-${tier}-fie`} className="border border-gray-300 px-4 py-2 text-center font-semibold">
+                            {formatCurrency(allocation.fieRates[tier] || 0)}
                           </td>
                         </>
-                      )}
-                      {wizardData.numberOfTiers === 4 && (
-                        <>
-                          <td className="border border-gray-300 px-4 py-2 text-center">
-                            {formatCurrency(plan.currentRates.EC)}
-                          </td>
-                          <td className="border border-gray-300 px-4 py-2 text-center font-semibold">
-                            {formatCurrency(allocation.fieRates.EC)}
-                          </td>
-                        </>
-                      )}
-                      <td className="border border-gray-300 px-4 py-2 text-center">
-                        {formatCurrency(plan.currentRates.F)}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2 text-center font-semibold">
-                        {formatCurrency(allocation.fieRates.F)}
-                      </td>
+                      ))}
                     </tr>
                   );
                 })}

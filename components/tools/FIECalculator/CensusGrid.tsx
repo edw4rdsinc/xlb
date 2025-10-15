@@ -1,6 +1,7 @@
 'use client';
 
 import { formatNumber, parseFormattedNumber } from '@/lib/fie-calculator/validation';
+import { getTierConfig } from '@/lib/fie-calculator/calculations';
 import type { PlanData } from '@/lib/fie-calculator/calculations';
 
 interface CensusGridProps {
@@ -11,45 +12,48 @@ interface CensusGridProps {
 }
 
 export default function CensusGrid({ plans, numberOfTiers, onUpdate, errors }: CensusGridProps) {
-  const tierLabels = {
-    EO: 'Employee Only',
-    ES: 'Employee + Spouse',
-    EC: 'Employee + Children',
-    F: 'Family'
-  };
-
-  const visibleTiers = numberOfTiers === 2 ? ['EO', 'F'] :
-                       numberOfTiers === 3 ? ['EO', 'ES', 'F'] :
-                       ['EO', 'ES', 'EC', 'F'];
+  const tierConfig = getTierConfig(numberOfTiers);
+  const tierCodes = tierConfig.map(t => t.code);
+  const tierLabelMap = tierConfig.reduce((acc, tier) => {
+    acc[tier.code] = tier.label;
+    return acc;
+  }, {} as Record<string, string>);
 
   const handleCensusChange = (planIndex: number, tier: string, value: string) => {
     const newPlans = [...plans];
     const numValue = parseFormattedNumber(value);
 
     if (!newPlans[planIndex]) {
+      const census: Record<string, number> = {};
+      const currentRates: Record<string, number> = {};
+      tierCodes.forEach(code => {
+        census[code] = 0;
+        currentRates[code] = 0;
+      });
+
       newPlans[planIndex] = {
         name: `Plan ${planIndex + 1}`,
         differential: 1.0,
-        census: { EO: 0, ES: 0, EC: 0, F: 0 },
-        currentRates: { EO: 0, ES: 0, EC: 0, F: 0 }
+        census,
+        currentRates
       };
     }
 
-    newPlans[planIndex].census[tier as keyof typeof newPlans[0]['census']] = numValue;
+    newPlans[planIndex].census[tier] = numValue;
     onUpdate(newPlans);
   };
 
   // Calculate totals
-  const tierTotals = visibleTiers.reduce((acc, tier) => {
+  const tierTotals = tierCodes.reduce((acc, tier) => {
     acc[tier] = plans.reduce((sum, plan) => {
-      return sum + (plan?.census?.[tier as keyof typeof plan.census] || 0);
+      return sum + (plan?.census?.[tier] || 0);
     }, 0);
     return acc;
   }, {} as Record<string, number>);
 
   const planTotals = plans.map(plan => {
-    return visibleTiers.reduce((sum, tier) => {
-      return sum + (plan?.census?.[tier as keyof typeof plan.census] || 0);
+    return tierCodes.reduce((sum, tier) => {
+      return sum + (plan?.census?.[tier] || 0);
     }, 0);
   });
 
@@ -83,16 +87,16 @@ export default function CensusGrid({ plans, numberOfTiers, onUpdate, errors }: C
             </tr>
           </thead>
           <tbody>
-            {visibleTiers.map(tier => (
+            {tierCodes.map(tier => (
               <tr key={tier}>
                 <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
-                  {tierLabels[tier as keyof typeof tierLabels]}
+                  {tierLabelMap[tier]}
                 </td>
                 {plans.map((plan, planIndex) => (
                   <td key={planIndex} className="border border-gray-300 px-2 py-1">
                     <input
                       type="text"
-                      value={formatNumber(plan?.census?.[tier as keyof typeof plan.census] || 0)}
+                      value={formatNumber(plan?.census?.[tier] || 0)}
                       onChange={(e) => handleCensusChange(planIndex, tier, e.target.value)}
                       className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
                       placeholder="0"
@@ -129,14 +133,14 @@ export default function CensusGrid({ plans, numberOfTiers, onUpdate, errors }: C
               {plan?.name || `Plan ${planIndex + 1}`}
             </h3>
             <div className="space-y-3">
-              {visibleTiers.map(tier => (
+              {tierCodes.map(tier => (
                 <div key={tier} className="flex justify-between items-center">
                   <label className="text-sm font-medium text-gray-700">
-                    {tierLabels[tier as keyof typeof tierLabels]}
+                    {tierLabelMap[tier]}
                   </label>
                   <input
                     type="text"
-                    value={formatNumber(plan?.census?.[tier as keyof typeof plan.census] || 0)}
+                    value={formatNumber(plan?.census?.[tier] || 0)}
                     onChange={(e) => handleCensusChange(planIndex, tier, e.target.value)}
                     className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
                     placeholder="0"
