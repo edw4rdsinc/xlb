@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { saveToSession, getFromSession, clearSession } from '@/lib/fie-calculator/validation';
-import { calculateFIERates, DEFAULT_TIER_RATIOS } from '@/lib/fie-calculator/calculations';
-import type { PlanData, CostComponents, CalculationResults, TierRatios } from '@/lib/fie-calculator/calculations';
+import { calculateFIERates, getTierConfig } from '@/lib/fie-calculator/calculations';
+import type { PlanData, CostComponents, CalculationResults, TierConfig } from '@/lib/fie-calculator/calculations';
 
 // Import wizard step components
 import GroupSetup from './FIECalculator/GroupSetup';
@@ -30,7 +30,6 @@ export interface WizardData {
 
   // Step 4: Costs
   costs: CostComponents;
-  tierRatios: TierRatios;
 
   // Step 5: Email
   contactInfo?: {
@@ -53,15 +52,15 @@ const initialWizardData: WizardData = {
   planNames: ['Base Plan', 'Buy-Up Plan 1', 'Buy-Up Plan 2', 'Buy-Up Plan 3'],
   plans: [],
   costs: {
+    adminCostMode: 'simple',
     adminPEPM: 35,
     specificDeductible: 100000,
     specificRates: { EO: 45, ES: 95, EC: 75, F: 125 },
     aggregateCorridor: 1.25,
     aggregateRate: 15,
-    aggregateFactor: 1.0,
+    aggregateFactors: { EO: 1.0, ES: 2.1, EC: 1.65, F: 2.75 },
     lasers: []
-  },
-  tierRatios: DEFAULT_TIER_RATIOS
+  }
 };
 
 const STEP_TITLES = [
@@ -96,20 +95,34 @@ export default function FIECalculator() {
 
   // Initialize plans when number of plans or tiers changes
   useEffect(() => {
-    if (wizardData.plans.length !== wizardData.numberOfPlans) {
+    const tierConfig = getTierConfig(wizardData.numberOfTiers);
+    const shouldReinitialize =
+      wizardData.plans.length !== wizardData.numberOfPlans ||
+      (wizardData.plans.length > 0 && Object.keys(wizardData.plans[0].census).length !== tierConfig.length);
+
+    if (shouldReinitialize) {
       const newPlans: PlanData[] = [];
       for (let i = 0; i < wizardData.numberOfPlans; i++) {
         const existingPlan = wizardData.plans[i];
+
+        // Initialize census and rates with dynamic tier codes
+        const census: Record<string, number> = {};
+        const currentRates: Record<string, number> = {};
+        tierConfig.forEach(tier => {
+          census[tier.code] = existingPlan?.census?.[tier.code] || 0;
+          currentRates[tier.code] = existingPlan?.currentRates?.[tier.code] || 0;
+        });
+
         newPlans.push({
           name: wizardData.planNames[i] || `Plan ${i + 1}`,
           differential: i === 0 ? 1.0 : 1.1, // Base plan = 1.0, others slightly higher
-          census: existingPlan?.census || { EO: 0, ES: 0, EC: 0, F: 0 },
-          currentRates: existingPlan?.currentRates || { EO: 0, ES: 0, EC: 0, F: 0 }
+          census,
+          currentRates
         });
       }
       setWizardData(prev => ({ ...prev, plans: newPlans }));
     }
-  }, [wizardData.numberOfPlans, wizardData.planNames]);
+  }, [wizardData.numberOfPlans, wizardData.numberOfTiers, wizardData.planNames]);
 
   const handleNext = () => {
     // Validate current step before proceeding
@@ -149,21 +162,33 @@ export default function FIECalculator() {
         break;
 
       case 2:
-        const totalEmployees = wizardData.plans.reduce((sum, plan) =>
-          sum + plan.census.EO + plan.census.ES + plan.census.EC + plan.census.F, 0
-        );
+        const tierConfig = getTierConfig(wizardData.numberOfTiers);
+        const totalEmployees = wizardData.plans.reduce((sum, plan) => {
+          return sum + tierConfig.reduce((tierSum, tier) => {
+            return tierSum + (plan.census[tier.code] || 0);
+          }, 0);
+        }, 0);
         if (totalEmployees < 10) errors.census = 'Minimum 10 total employees required';
         break;
 
       case 3:
-        const hasZeroRates = wizardData.plans.some(plan =>
-          Object.values(plan.currentRates).some(rate => rate <= 0)
+        // Skip validation if all rates are 0 (skip rates mode)
+        const allRatesZero = wizardData.plans.every(plan =>
+          Object.values(plan.currentRates).every(rate => rate === 0)
         );
-        if (hasZeroRates) errors.rates = 'All rates must be positive numbers';
+
+        if (!allRatesZero) {
+          const hasZeroRates = wizardData.plans.some(plan =>
+            Object.values(plan.currentRates).some(rate => rate <= 0)
+          );
+          if (hasZeroRates) errors.rates = 'All rates must be positive numbers (or check "Skip Rate Input" to proceed without rates)';
+        }
         break;
 
       case 4:
-        if (wizardData.costs.adminPEPM <= 0) errors.adminPEPM = 'Admin cost must be positive';
+        if (wizardData.costs.adminCostMode === 'simple' && (!wizardData.costs.adminPEPM || wizardData.costs.adminPEPM <= 0)) {
+          errors.adminPEPM = 'Admin cost must be positive';
+        }
         if (wizardData.costs.specificDeductible < 50000 || wizardData.costs.specificDeductible > 500000) {
           errors.specificDeductible = 'Deductible must be between $50,000 and $500,000';
         }
@@ -180,7 +205,7 @@ export default function FIECalculator() {
     const results = calculateFIERates(
       wizardData.plans,
       wizardData.costs,
-      wizardData.tierRatios
+      wizardData.numberOfTiers
     );
 
     setWizardData(prev => ({ ...prev, results }));
@@ -234,10 +259,8 @@ export default function FIECalculator() {
         return (
           <CostsInput
             costs={wizardData.costs}
-            tierRatios={wizardData.tierRatios}
             numberOfTiers={wizardData.numberOfTiers}
             onUpdateCosts={(costs) => updateWizardData({ costs })}
-            onUpdateRatios={(tierRatios) => updateWizardData({ tierRatios })}
             errors={validationErrors}
           />
         );

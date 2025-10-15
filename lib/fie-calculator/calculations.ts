@@ -1,41 +1,91 @@
-// FIE Calculator - Core Calculation Logic
+// FIE Calculator - Core Calculation Logic (V2 - Dynamic Tier Support)
 
-export interface TierRatios {
-  EO: number;
-  ES: number;
-  EC: number;
-  F: number;
+// Tier configuration interface
+export interface TierConfig {
+  code: string;
+  label: string;
+  ratio: number;
+  aggregateFactor: number;
 }
 
+// Tier configurations for 2, 3, and 4 tier systems
+export const TIER_CONFIGURATIONS: Record<number, TierConfig[]> = {
+  2: [
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
+    { code: 'F', label: 'Family', ratio: 2.50, aggregateFactor: 2.30 }
+  ],
+  3: [
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
+    { code: 'E1', label: 'Employee + 1', ratio: 1.90, aggregateFactor: 1.85 },
+    { code: 'F', label: 'Family (2+ deps)', ratio: 2.85, aggregateFactor: 2.70 }
+  ],
+  4: [
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
+    { code: 'ES', label: 'Employee + Spouse', ratio: 2.15, aggregateFactor: 2.10 },
+    { code: 'EC', label: 'Employee + Child(ren)', ratio: 1.70, aggregateFactor: 1.65 },
+    { code: 'F', label: 'Family', ratio: 2.85, aggregateFactor: 2.75 }
+  ]
+};
+
+// Get tier configuration by number of tiers
+export function getTierConfig(numberOfTiers: number): TierConfig[] {
+  return TIER_CONFIGURATIONS[numberOfTiers] || TIER_CONFIGURATIONS[4];
+}
+
+// Get tier ratios as Record
+export function getTierRatios(numberOfTiers: number): Record<string, number> {
+  const config = getTierConfig(numberOfTiers);
+  return config.reduce((acc, tier) => {
+    acc[tier.code] = tier.ratio;
+    return acc;
+  }, {} as Record<string, number>);
+}
+
+// Get aggregate factors as Record
+export function getAggregatFactors(numberOfTiers: number): Record<string, number> {
+  const config = getTierConfig(numberOfTiers);
+  return config.reduce((acc, tier) => {
+    acc[tier.code] = tier.aggregateFactor;
+    return acc;
+  }, {} as Record<string, number>);
+}
+
+// Plan data interface with dynamic tier support
 export interface PlanData {
   name: string;
   differential: number;
-  census: {
-    EO: number;
-    ES: number;
-    EC: number;
-    F: number;
-  };
-  currentRates: {
-    EO: number;
-    ES: number;
-    EC: number;
-    F: number;
-  };
+  census: Record<string, number>;
+  currentRates: Record<string, number>;
+  actuarialValue?: number; // Optional: for AV-based differential mode
 }
 
+// Admin cost modes
+export type AdminCostMode = 'simple' | 'detailed';
+
+export interface DetailedAdminCosts {
+  tpaFees: number;
+  brokerage: number;
+  consulting: number;
+  compliance: number;
+  banking: number;
+  other: number;
+}
+
+// Cost components interface with dynamic tier support
 export interface CostComponents {
-  adminPEPM: number;
+  // Admin costs
+  adminCostMode: AdminCostMode;
+  adminPEPM?: number; // For simple mode
+  detailedAdminCosts?: DetailedAdminCosts; // For detailed mode
+
+  // Stop-loss costs
   specificDeductible: number;
-  specificRates: {
-    EO: number;
-    ES: number;
-    EC: number;
-    F: number;
-  };
+  specificRates: Record<string, number>;
   aggregateCorridor: number;
   aggregateRate: number;
-  aggregateFactor: number;
+  aggregateFactors: Record<string, number>; // Per-tier aggregate factors
+
+  // Lasers
   lasers: Array<{
     memberId: string;
     amount: number;
@@ -43,6 +93,7 @@ export interface CostComponents {
   }>;
 }
 
+// Calculation results interface
 export interface CalculationResults {
   totalAnnualLiability: number;
   adminCosts: number;
@@ -52,12 +103,7 @@ export interface CalculationResults {
   planAllocations: Array<{
     planName: string;
     allocation: number;
-    fieRates: {
-      EO: number;
-      ES: number;
-      EC: number;
-      F: number;
-    };
+    fieRates: Record<string, number>;
   }>;
   currentAnnualCost: number;
   fieAnnualCost: number;
@@ -72,57 +118,85 @@ export interface CalculationResults {
   };
 }
 
-// Default tier ratios
-export const DEFAULT_TIER_RATIOS: TierRatios = {
-  EO: 1.00,
-  ES: 2.15,
-  EC: 1.70,
-  F: 2.85
-};
-
 // Calculate total employees across all plans
-export function calculateTotalEmployees(plans: PlanData[]): number {
+export function calculateTotalEmployees(plans: PlanData[], tierConfig: TierConfig[]): number {
   return plans.reduce((total, plan) => {
-    return total + plan.census.EO + plan.census.ES + plan.census.EC + plan.census.F;
+    return total + tierConfig.reduce((sum, tier) => {
+      return sum + (plan.census[tier.code] || 0);
+    }, 0);
   }, 0);
 }
 
 // Calculate total lives (including dependents)
-export function calculateTotalLives(plans: PlanData[]): number {
+export function calculateTotalLives(plans: PlanData[], tierConfig: TierConfig[]): number {
+  // Life multipliers based on tier code
+  const lifeMultipliers: Record<string, number> = {
+    'EO': 1,
+    'ES': 2,
+    'EC': 2.5,
+    'E1': 2,
+    'F': 3.5
+  };
+
   return plans.reduce((total, plan) => {
-    // EO = 1 life, ES = 2 lives, EC = 2.5 lives (avg), F = 3.5 lives (avg)
-    return total +
-      plan.census.EO * 1 +
-      plan.census.ES * 2 +
-      plan.census.EC * 2.5 +
-      plan.census.F * 3.5;
+    return total + tierConfig.reduce((sum, tier) => {
+      const census = plan.census[tier.code] || 0;
+      const multiplier = lifeMultipliers[tier.code] || 1;
+      return sum + (census * multiplier);
+    }, 0);
   }, 0);
 }
 
-// Main calculation function
+// Calculate admin costs based on mode
+function calculateAdminCosts(costs: CostComponents, totalEmployees: number): number {
+  if (costs.adminCostMode === 'simple') {
+    return (costs.adminPEPM || 0) * totalEmployees * 12;
+  } else if (costs.adminCostMode === 'detailed' && costs.detailedAdminCosts) {
+    const monthlyTotal =
+      costs.detailedAdminCosts.tpaFees +
+      costs.detailedAdminCosts.brokerage +
+      costs.detailedAdminCosts.consulting +
+      costs.detailedAdminCosts.compliance +
+      costs.detailedAdminCosts.banking +
+      costs.detailedAdminCosts.other;
+    return monthlyTotal * totalEmployees * 12;
+  }
+  return 0;
+}
+
+// Main calculation function with dynamic tier support
 export function calculateFIERates(
   plans: PlanData[],
   costs: CostComponents,
-  tierRatios: TierRatios = DEFAULT_TIER_RATIOS
+  numberOfTiers: number
 ): CalculationResults {
-  const totalEmployees = calculateTotalEmployees(plans);
-  const totalLives = calculateTotalLives(plans);
+  const tierConfig = getTierConfig(numberOfTiers);
+  const tierRatios = getTierRatios(numberOfTiers);
+  const totalEmployees = calculateTotalEmployees(plans, tierConfig);
+  const totalLives = calculateTotalLives(plans, tierConfig);
 
   // Step 1: Calculate Total Annual Liability
-  const adminCosts = costs.adminPEPM * totalEmployees * 12;
+  const adminCosts = calculateAdminCosts(costs, totalEmployees);
 
   // Calculate stop-loss specific premium
   let specificPremium = 0;
   plans.forEach(plan => {
-    specificPremium +=
-      costs.specificRates.EO * plan.census.EO * 12 +
-      costs.specificRates.ES * plan.census.ES * 12 +
-      costs.specificRates.EC * plan.census.EC * 12 +
-      costs.specificRates.F * plan.census.F * 12;
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const rate = costs.specificRates[tier.code] || 0;
+      specificPremium += rate * census * 12;
+    });
   });
 
-  // Calculate aggregate premium
-  const aggregatePremium = costs.aggregateRate * totalEmployees * costs.aggregateFactor * 12;
+  // Calculate aggregate premium (using per-tier aggregate factors)
+  let aggregatePremium = 0;
+  plans.forEach(plan => {
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const factor = costs.aggregateFactors[tier.code] || 1.0;
+      aggregatePremium += costs.aggregateRate * census * factor * 12;
+    });
+  });
 
   // Calculate laser liability
   const laserLiability = costs.lasers.reduce((total, laser) => total + laser.amount, 0);
@@ -132,11 +206,13 @@ export function calculateFIERates(
 
   // Step 2: Distribute to Plans
   const planWeights = plans.map((plan, index) => {
-    const weight =
-      (plan.census.EO * tierRatios.EO +
-       plan.census.ES * tierRatios.ES +
-       plan.census.EC * tierRatios.EC +
-       plan.census.F * tierRatios.F) * plan.differential;
+    let weight = 0;
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const ratio = tierRatios[tier.code] || 1.0;
+      weight += census * ratio;
+    });
+    weight *= plan.differential;
 
     return { planIndex: index, weight };
   });
@@ -149,21 +225,20 @@ export function calculateFIERates(
     const planAllocation = totalWeight > 0 ? totalAnnualLiability * (planWeight / totalWeight) : 0;
 
     // Calculate single equivalent rate for this plan
-    const planTierUnits =
-      plan.census.EO * tierRatios.EO +
-      plan.census.ES * tierRatios.ES +
-      plan.census.EC * tierRatios.EC +
-      plan.census.F * tierRatios.F;
+    let planTierUnits = 0;
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const ratio = tierRatios[tier.code] || 1.0;
+      planTierUnits += census * ratio;
+    });
 
     const singleEquivalentRate = planTierUnits > 0 ? planAllocation / planTierUnits / 12 : 0;
 
     // Calculate FIE rates for each tier
-    const fieRates = {
-      EO: singleEquivalentRate * tierRatios.EO,
-      ES: singleEquivalentRate * tierRatios.ES,
-      EC: singleEquivalentRate * tierRatios.EC,
-      F: singleEquivalentRate * tierRatios.F
-    };
+    const fieRates: Record<string, number> = {};
+    tierConfig.forEach(tier => {
+      fieRates[tier.code] = singleEquivalentRate * (tierRatios[tier.code] || 1.0);
+    });
 
     return {
       planName: plan.name,
@@ -174,11 +249,13 @@ export function calculateFIERates(
 
   // Step 4: Calculate current annual cost
   const currentAnnualCost = plans.reduce((total, plan) => {
-    return total +
-      plan.currentRates.EO * plan.census.EO * 12 +
-      plan.currentRates.ES * plan.census.ES * 12 +
-      plan.currentRates.EC * plan.census.EC * 12 +
-      plan.currentRates.F * plan.census.F * 12;
+    let planTotal = 0;
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const rate = plan.currentRates[tier.code] || 0;
+      planTotal += rate * census * 12;
+    });
+    return total + planTotal;
   }, 0);
 
   // Calculate savings
@@ -188,11 +265,11 @@ export function calculateFIERates(
 
   // Calculate PEPM breakdown
   const pepmBreakdown = {
-    admin: costs.adminPEPM,
-    specific: specificPremium / totalEmployees / 12,
-    aggregate: costs.aggregateRate * costs.aggregateFactor,
-    laser: laserLiability / totalEmployees / 12,
-    total: totalAnnualLiability / totalEmployees / 12
+    admin: totalEmployees > 0 ? adminCosts / totalEmployees / 12 : 0,
+    specific: totalEmployees > 0 ? specificPremium / totalEmployees / 12 : 0,
+    aggregate: totalEmployees > 0 ? aggregatePremium / totalEmployees / 12 : 0,
+    laser: totalEmployees > 0 ? laserLiability / totalEmployees / 12 : 0,
+    total: totalEmployees > 0 ? totalAnnualLiability / totalEmployees / 12 : 0
   };
 
   return {
@@ -226,16 +303,15 @@ export function formatPercentage(value: number): string {
 }
 
 // Validate census data
-export function validateCensus(plans: PlanData[]): { isValid: boolean; error?: string } {
-  const totalEmployees = calculateTotalEmployees(plans);
+export function validateCensus(plans: PlanData[], tierConfig: TierConfig[]): { isValid: boolean; error?: string } {
+  const totalEmployees = calculateTotalEmployees(plans, tierConfig);
 
   if (totalEmployees < 10) {
     return { isValid: false, error: 'Minimum 10 total employees required' };
   }
 
   const hasNegativeValues = plans.some(plan =>
-    plan.census.EO < 0 || plan.census.ES < 0 ||
-    plan.census.EC < 0 || plan.census.F < 0
+    tierConfig.some(tier => (plan.census[tier.code] || 0) < 0)
   );
 
   if (hasNegativeValues) {
@@ -246,10 +322,9 @@ export function validateCensus(plans: PlanData[]): { isValid: boolean; error?: s
 }
 
 // Validate rates
-export function validateRates(plans: PlanData[]): { isValid: boolean; error?: string } {
+export function validateRates(plans: PlanData[], tierConfig: TierConfig[]): { isValid: boolean; error?: string } {
   const hasInvalidRates = plans.some(plan =>
-    plan.currentRates.EO <= 0 || plan.currentRates.ES <= 0 ||
-    plan.currentRates.EC <= 0 || plan.currentRates.F <= 0
+    tierConfig.some(tier => (plan.currentRates[tier.code] || 0) <= 0)
   );
 
   if (hasInvalidRates) {
@@ -260,9 +335,17 @@ export function validateRates(plans: PlanData[]): { isValid: boolean; error?: st
 }
 
 // Validate cost components
-export function validateCosts(costs: CostComponents): { isValid: boolean; error?: string } {
-  if (costs.adminPEPM <= 0) {
+export function validateCosts(costs: CostComponents, tierConfig: TierConfig[]): { isValid: boolean; error?: string } {
+  // Validate admin costs
+  if (costs.adminCostMode === 'simple' && (!costs.adminPEPM || costs.adminPEPM <= 0)) {
     return { isValid: false, error: 'Admin cost must be positive' };
+  }
+
+  if (costs.adminCostMode === 'detailed' && costs.detailedAdminCosts) {
+    const hasNegative = Object.values(costs.detailedAdminCosts).some(v => v < 0);
+    if (hasNegative) {
+      return { isValid: false, error: 'All detailed admin costs must be non-negative' };
+    }
   }
 
   if (costs.specificDeductible < 50000 || costs.specificDeductible > 500000) {
@@ -273,9 +356,9 @@ export function validateCosts(costs: CostComponents): { isValid: boolean; error?
     return { isValid: false, error: 'Aggregate corridor must be between 120% and 130%' };
   }
 
-  const hasInvalidSpecificRates =
-    costs.specificRates.EO <= 0 || costs.specificRates.ES <= 0 ||
-    costs.specificRates.EC <= 0 || costs.specificRates.F <= 0;
+  const hasInvalidSpecificRates = tierConfig.some(tier =>
+    !costs.specificRates[tier.code] || costs.specificRates[tier.code] <= 0
+  );
 
   if (hasInvalidSpecificRates) {
     return { isValid: false, error: 'All specific rates must be positive' };
@@ -291,4 +374,26 @@ export function validateCosts(costs: CostComponents): { isValid: boolean; error?
   }
 
   return { isValid: true };
+}
+
+// Calculate plan differential from rates (rate-based mode)
+export function calculatePlanDifferential(
+  planEORate: number,
+  basePlanEORate: number
+): number {
+  if (!basePlanEORate || basePlanEORate === 0) return 1.0;
+  if (!planEORate || planEORate === 0) return 1.0;
+  return planEORate / basePlanEORate;
+}
+
+// Calculate plan differential from actuarial value (AV-based mode)
+export function calculateAVDifferential(
+  planAV: number,
+  basePlanAV: number
+): number {
+  if (!basePlanAV || basePlanAV === 0) return 1.0;
+  if (!planAV || planAV === 0) return 1.0;
+  // Higher AV = lower member cost sharing = typically higher premium
+  // Direct ratio approach
+  return planAV / basePlanAV;
 }

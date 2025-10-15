@@ -121,9 +121,9 @@ export default function GroupSetup({ data, onUpdate, errors }: GroupSetupProps) 
             onChange={(e) => onUpdate({ numberOfTiers: parseInt(e.target.value) })}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
           >
-            <option value={2}>2 Tiers (EO, Family)</option>
-            <option value={3}>3 Tiers (EO, ES, Family)</option>
-            <option value={4}>4 Tiers (EO, ES, EC, Family)</option>
+            <option value={2}>2 Tiers (Employee Only, Family)</option>
+            <option value={3}>3 Tiers (Employee Only, Employee + 1, Family)</option>
+            <option value={4}>4 Tiers (Employee Only, Employee + Spouse, Employee + Child(ren), Family)</option>
           </select>
         </div>
       </div>
