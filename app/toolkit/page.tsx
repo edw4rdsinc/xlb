@@ -14,7 +14,7 @@ export default function ToolkitPage() {
       <section
         className="relative py-32 min-h-[900px] flex items-center"
         style={{
-          backgroundImage: 'url("/images/parallax/toolkit.jpg")',
+          backgroundImage: 'url("/images/parallax/toolsresources.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
