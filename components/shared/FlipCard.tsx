@@ -17,7 +17,7 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl 
 
   return (
     <div
-      className="flip-card-container h-80 cursor-pointer"
+      className="flip-card-container h-96 cursor-pointer"
       onClick={() => setIsFlipped(!isFlipped)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
