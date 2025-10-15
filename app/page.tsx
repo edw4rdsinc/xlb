@@ -206,6 +206,32 @@ export default function HomePage() {
                 </Link>
               </div>
             </AnimatedSection>
+
+            {/* Tool 6: Smart Share Calculator */}
+            <AnimatedSection animation="fade-up" delay={600}>
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue">Smart Share: ER/EE Contribution Calculator</h3>
+                </div>
+                <p className="text-xl-grey mb-6 flex-grow">
+                  Calculate optimal employer and employee contribution splits for health insurance premiums. Model different scenarios to find the right balance for your client's budget and employee satisfaction.
+                </p>
+                <Link
+                  href="/solutions/smart-share-calculator"
+                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
+                >
+                  Try This Tool
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
