@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { formatCurrency, parseFormattedNumber } from '@/lib/fie-calculator/validation';
 import { getTierConfig, calculatePlanDifferential } from '@/lib/fie-calculator/calculations';
 import type { PlanData } from '@/lib/fie-calculator/calculations';
@@ -12,6 +13,9 @@ interface RatesInputProps {
 }
 
 export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: RatesInputProps) {
+  const [editingField, setEditingField] = useState<string | null>(null);
+  const [editingValue, setEditingValue] = useState<string>('');
+
   const tierConfig = getTierConfig(numberOfTiers);
   const tierCodes = tierConfig.map(t => t.code);
   const tierLabelMap = tierConfig.reduce((acc, tier) => {
@@ -23,6 +27,7 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
   const basePlanEORate = plans[0]?.currentRates?.['EO'] || 0;
 
   const handleRateChange = (planIndex: number, tier: string, value: string) => {
+    setEditingValue(value);
     const newPlans = [...plans];
     const numValue = parseFormattedNumber(value);
 
@@ -84,22 +89,39 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                 <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
                   {tierLabelMap[tier]}
                 </td>
-                {plans.map((plan, planIndex) => (
-                  <td key={planIndex} className="border border-gray-300 px-2 py-1">
-                    <div className="flex items-center">
-                      <span className="text-gray-500 mr-1">$</span>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        tabIndex={(planIndex * tierCodes.length) + tierIndex + 1}
-                        value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatCurrency(plan?.currentRates?.[tier] || 0)}
-                        onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
-                        className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
-                        placeholder="0.00"
-                      />
-                    </div>
-                  </td>
-                ))}
+                {plans.map((plan, planIndex) => {
+                  const fieldKey = `${planIndex}-${tier}`;
+                  const isEditing = editingField === fieldKey;
+                  const currentValue = plan?.currentRates?.[tier] || 0;
+                  const displayValue = isEditing
+                    ? editingValue
+                    : (currentValue === 0 ? '' : formatCurrency(currentValue));
+
+                  return (
+                    <td key={planIndex} className="border border-gray-300 px-2 py-1">
+                      <div className="flex items-center">
+                        <span className="text-gray-500 mr-1">$</span>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          tabIndex={(planIndex * tierCodes.length) + tierIndex + 1}
+                          value={displayValue}
+                          onFocus={() => {
+                            setEditingField(fieldKey);
+                            setEditingValue(currentValue === 0 ? '' : currentValue.toString());
+                          }}
+                          onBlur={() => {
+                            setEditingField(null);
+                            setEditingValue('');
+                          }}
+                          onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
+                          className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
+                          placeholder="0.00"
+                        />
+                      </div>
+                    </td>
+                  );
+                })}
               </tr>
             ))}
             <tr>
@@ -126,24 +148,41 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
               {plan?.name || `Plan ${planIndex + 1}`}
             </h3>
             <div className="space-y-3">
-              {tierCodes.map(tier => (
-                <div key={tier} className="flex justify-between items-center">
-                  <label className="text-sm font-medium text-gray-700">
-                    {tierLabelMap[tier]}
-                  </label>
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-1">$</span>
-                    <input
-                      type="text"
-                      inputMode="decimal"
-                      value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatCurrency(plan?.currentRates?.[tier] || 0)}
-                      onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
-                      className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
-                      placeholder="0.00"
-                    />
+              {tierCodes.map(tier => {
+                const fieldKey = `${planIndex}-${tier}`;
+                const isEditing = editingField === fieldKey;
+                const currentValue = plan?.currentRates?.[tier] || 0;
+                const displayValue = isEditing
+                  ? editingValue
+                  : (currentValue === 0 ? '' : formatCurrency(currentValue));
+
+                return (
+                  <div key={tier} className="flex justify-between items-center">
+                    <label className="text-sm font-medium text-gray-700">
+                      {tierLabelMap[tier]}
+                    </label>
+                    <div className="flex items-center">
+                      <span className="text-gray-500 mr-1">$</span>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        value={displayValue}
+                        onFocus={() => {
+                          setEditingField(fieldKey);
+                          setEditingValue(currentValue === 0 ? '' : currentValue.toString());
+                        }}
+                        onBlur={() => {
+                          setEditingField(null);
+                          setEditingValue('');
+                        }}
+                        onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
+                        className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
+                        placeholder="0.00"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div className="pt-2 border-t border-gray-200">
                 <div className="flex justify-between items-center">
                   <label className="text-sm font-medium text-gray-700">Plan Differential</label>
