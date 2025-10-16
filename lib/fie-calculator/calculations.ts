@@ -191,15 +191,9 @@ export function calculateFIERates(
     });
   });
 
-  // Calculate aggregate premium (using per-tier aggregate factors)
-  let aggregatePremium = 0;
-  plans.forEach(plan => {
-    tierConfig.forEach(tier => {
-      const census = plan.census[tier.code] || 0;
-      const factor = costs.aggregateFactors[tier.code] || 1.0;
-      aggregatePremium += costs.aggregateRate * census * factor * 12;
-    });
-  });
+  // Calculate aggregate premium (Step 4A formula)
+  // Formula: Total Enrollment × Aggregate Rate PEPM × 12
+  const aggregatePremium = totalEmployees * costs.aggregateRate * 12;
 
   // Calculate laser liability
   const laserLiability = costs.lasers.reduce((total, laser) => total + laser.amount, 0);
