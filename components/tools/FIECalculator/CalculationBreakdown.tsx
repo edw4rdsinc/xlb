@@ -92,8 +92,8 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
   // Laser liability
   const laserLiability = costs.lasers.reduce((total: number, laser: any) => total + laser.amount, 0);
 
-  // Total annual liability
-  const totalAnnualLiability = adminCostsTotal + specificPremiumTotal + aggregatePremiumTotal + laserLiability;
+  // Total annual liability (including aggregate attachment point as maximum liability)
+  const totalAnnualLiability = adminCostsTotal + specificPremiumTotal + aggregatePremiumTotal + aggregateAttachmentTotal + laserLiability;
 
   return (
     <div className="space-y-6 bg-white rounded-lg shadow-lg p-6">
@@ -195,25 +195,19 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
         </div>
       )}
 
-      {/* Step 6: Total Annual Liability */}
+      {/* Step 6: Total Annual Liability (Maximum Liability) */}
       <div className="border-l-4 border-xl-dark-blue pl-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 6: Total Annual Liability</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 6: Total Annual Liability (Maximum Liability)</h3>
         <div className="bg-gray-50 p-3 rounded">
           <div className="space-y-1 text-sm font-mono">
             <p>Admin Costs: ${adminCostsTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             <p>Specific Premium: ${specificPremiumTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             <p>Aggregate Premium: ${aggregatePremiumTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p>Aggregate Attachment Point: ${aggregateAttachmentTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             {laserLiability > 0 && <p>Laser Liability: ${laserLiability.toLocaleString()}</p>}
             <div className="border-t border-gray-300 mt-2 pt-2">
               <p className="font-bold text-lg text-xl-dark-blue">
-                TOTAL LIABILITY: ${totalAnnualLiability.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              </p>
-            </div>
-            <div className="border-t border-gray-300 mt-3 pt-3">
-              <p className="text-xs text-gray-600 mb-1">Reference (not included in liability):</p>
-              <p className="text-amber-700">Aggregate Attachment Point: ${aggregateAttachmentTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-              <p className="text-xs text-gray-500 italic mt-1">
-                This is the claims threshold where aggregate coverage begins, not a cost.
+                MAXIMUM LIABILITY: ${totalAnnualLiability.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             </div>
           </div>
