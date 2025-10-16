@@ -149,10 +149,13 @@ export default function CostsInput({
             <div className="flex items-center">
               <span className="text-gray-500 mr-2">$</span>
               <input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={(costs.adminPEPM || 0) === 0 ? '' : costs.adminPEPM}
-                onChange={(e) => onUpdateCosts({ ...costs, adminPEPM: parseFloat(e.target.value) || 0 })}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9.]/g, '');
+                  onUpdateCosts({ ...costs, adminPEPM: parseFloat(value) || 0 });
+                }}
                 className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
                   errors.adminPEPM ? 'border-red-500' : 'border-gray-300'
                 }`}
@@ -178,10 +181,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : costs.detailedAdminCosts?.tpaFees}
-                  onChange={(e) => handleDetailedAdminChange('tpaFees', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('tpaFees', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -194,10 +200,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : costs.detailedAdminCosts?.brokerage}
-                  onChange={(e) => handleDetailedAdminChange('brokerage', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('brokerage', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -210,10 +219,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : costs.detailedAdminCosts?.compliance}
-                  onChange={(e) => handleDetailedAdminChange('compliance', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('compliance', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -226,10 +238,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : costs.detailedAdminCosts?.telemedicine}
-                  onChange={(e) => handleDetailedAdminChange('telemedicine', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('telemedicine', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -242,10 +257,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : costs.detailedAdminCosts?.ppoFees}
-                  onChange={(e) => handleDetailedAdminChange('ppoFees', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('ppoFees', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -258,10 +276,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : costs.detailedAdminCosts?.other1}
-                  onChange={(e) => handleDetailedAdminChange('other1', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('other1', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -274,10 +295,13 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : costs.detailedAdminCosts?.other2}
-                  onChange={(e) => handleDetailedAdminChange('other2', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    handleDetailedAdminChange('other2', parseFloat(value) || 0);
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -359,10 +383,13 @@ export default function CostsInput({
           <div className="flex items-center">
             <span className="text-gray-500 mr-2">$</span>
             <input
-              type="number"
-              step="0.01"
+              type="text"
+              inputMode="decimal"
               value={costs.aggregateRate === 0 ? '' : costs.aggregateRate}
-              onChange={(e) => onUpdateCosts({ ...costs, aggregateRate: parseFloat(e.target.value) || 0 })}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9.]/g, '');
+                onUpdateCosts({ ...costs, aggregateRate: parseFloat(value) || 0 });
+              }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               placeholder="15"
             />
@@ -382,16 +409,19 @@ export default function CostsInput({
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={(costs.specificRates[tier] || 0) === 0 ? '' : costs.specificRates[tier]}
-                  onChange={(e) => onUpdateCosts({
-                    ...costs,
-                    specificRates: {
-                      ...costs.specificRates,
-                      [tier]: parseFloat(e.target.value) || 0
-                    }
-                  })}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9.]/g, '');
+                    onUpdateCosts({
+                      ...costs,
+                      specificRates: {
+                        ...costs.specificRates,
+                        [tier]: parseFloat(value) || 0
+                      }
+                    });
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
                   placeholder="0"
                 />
@@ -430,17 +460,19 @@ export default function CostsInput({
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input
-                    type="number"
-                    step="1"
-                    min="0"
+                    type="text"
+                    inputMode="numeric"
                     value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : costs.aggregateFactors[tier]}
-                    onChange={(e) => onUpdateCosts({
-                      ...costs,
-                      aggregateFactors: {
-                        ...costs.aggregateFactors,
-                        [tier]: parseFloat(e.target.value) || 0
-                      }
-                    })}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      onUpdateCosts({
+                        ...costs,
+                        aggregateFactors: {
+                          ...costs.aggregateFactors,
+                          [tier]: parseFloat(value) || 0
+                        }
+                      });
+                    }}
                     className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
                     placeholder={defaultFactor.toFixed(0)}
                   />
@@ -482,9 +514,13 @@ export default function CostsInput({
                 <div className="flex items-center flex-1">
                   <span className="text-gray-500 mr-2">$</span>
                   <input
-                    type="number"
-                    value={laser.amount}
-                    onChange={(e) => handleLaserChange(index, 'amount', parseFloat(e.target.value) || 0)}
+                    type="text"
+                    inputMode="numeric"
+                    value={laser.amount === 0 ? '' : laser.amount}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      handleLaserChange(index, 'amount', parseFloat(value) || 0);
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                     placeholder="Amount"
                   />
