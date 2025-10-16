@@ -107,7 +107,9 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
       <div className="grid md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-            Current Annual Cost
+            {wizardData.currentFundingType === 'Fully-Insured'
+              ? 'Current Fully Insured Annual Premium'
+              : 'Current Annual Funding'}
           </h3>
           <p className="text-2xl font-bold text-xl-dark-blue">
             {formatCurrency(results.currentAnnualCost)}
