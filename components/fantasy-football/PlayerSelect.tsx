@@ -30,10 +30,10 @@ export function PlayerSelect({
   const [search, setSearch] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedPlayer = players.find(p => p.id === value);
+  const selectedPlayer = players.find((p: any) => p.id === value);
 
   // Filter players based on search and exclusions
-  const filteredPlayers = players.filter(player => {
+  const filteredPlayers = players.filter((player: any) => {
     if (excludePlayerIds.includes(player.id)) return false;
     if (!search) return true;
     const searchLower = search.toLowerCase();

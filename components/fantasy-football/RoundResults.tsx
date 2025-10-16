@@ -34,7 +34,7 @@ export function RoundResults({ rounds }: RoundResultsProps) {
     try {
       setLoading(true);
 
-      const round = rounds.find(r => r.id === selectedRound);
+      const round = rounds.find((r: any) => r.id === selectedRound);
       if (!round) return;
 
       // Get all lineups for this round
@@ -66,9 +66,9 @@ export function RoundResults({ rounds }: RoundResultsProps) {
 
         if (scoresError) throw scoresError;
 
-        const roundTotal = weeklyScores?.reduce((sum, score) => sum + score.total_points, 0) || 0;
-        const defTotal = weeklyScores?.reduce((sum, score) => sum + score.def_points, 0) || 0;
-        const kTotal = weeklyScores?.reduce((sum, score) => sum + score.k_points, 0) || 0;
+        const roundTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.total_points, 0) || 0;
+        const defTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.def_points, 0) || 0;
+        const kTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.k_points, 0) || 0;
 
         roundScores.push({
           user_id: lineup.user_id,
@@ -102,9 +102,9 @@ export function RoundResults({ rounds }: RoundResultsProps) {
     }
   }
 
-  const selectedRoundData = rounds.find(r => r.id === selectedRound);
+  const selectedRoundData = rounds.find((r: any) => r.id === selectedRound);
 
-  const filteredScores = scores.filter(score =>
+  const filteredScores = scores.filter((score: any) =>
     score.team_name.toLowerCase().includes(search.toLowerCase()) ||
     score.name.toLowerCase().includes(search.toLowerCase())
   );

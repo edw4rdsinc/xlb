@@ -70,9 +70,9 @@ export function SeasonResults() {
 
           if (scoresError) throw scoresError;
 
-          const lineupTotal = weeklyScores?.reduce((sum, score) => sum + score.total_points, 0) || 0;
-          const lineupDefTotal = weeklyScores?.reduce((sum, score) => sum + score.def_points, 0) || 0;
-          const lineupKTotal = weeklyScores?.reduce((sum, score) => sum + score.k_points, 0) || 0;
+          const lineupTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.total_points, 0) || 0;
+          const lineupDefTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.def_points, 0) || 0;
+          const lineupKTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.k_points, 0) || 0;
 
           seasonTotal += lineupTotal;
           defTotal += lineupDefTotal;
@@ -80,7 +80,7 @@ export function SeasonResults() {
           weeksPlayed += weeklyScores?.length || 0;
 
           // Track round totals
-          const round = rounds?.find(r => r.id === lineup.round_id);
+          const round = rounds?.find((r: any) => r.id === lineup.round_id);
           if (round) {
             roundTotals[round.round_number - 1] = lineupTotal;
           }
@@ -111,7 +111,7 @@ export function SeasonResults() {
         return b.k_total - a.k_total;
       });
 
-      setScores(seasonScores.filter(s => s.weeks_played > 0));
+      setScores(seasonScores.filter((s: any) => s.weeks_played > 0));
     } catch (error) {
       console.error('Error loading season scores:', error);
       setScores([]);
@@ -120,7 +120,7 @@ export function SeasonResults() {
     }
   }
 
-  const filteredScores = scores.filter(score =>
+  const filteredScores = scores.filter((score: any) =>
     score.team_name.toLowerCase().includes(search.toLowerCase()) ||
     score.name.toLowerCase().includes(search.toLowerCase())
   );
