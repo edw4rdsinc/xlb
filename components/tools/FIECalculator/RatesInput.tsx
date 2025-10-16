@@ -1,6 +1,6 @@
 'use client';
 
-import { formatNumber, parseFormattedNumber } from '@/lib/fie-calculator/validation';
+import { formatCurrency, parseFormattedNumber } from '@/lib/fie-calculator/validation';
 import { getTierConfig, calculatePlanDifferential } from '@/lib/fie-calculator/calculations';
 import type { PlanData } from '@/lib/fie-calculator/calculations';
 
@@ -90,10 +90,11 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                       <span className="text-gray-500 mr-1">$</span>
                       <input
                         type="text"
-                        value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatNumber(plan?.currentRates?.[tier] || 0)}
+                        inputMode="decimal"
+                        value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatCurrency(plan?.currentRates?.[tier] || 0)}
                         onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
                         className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"
-                        placeholder="0"
+                        placeholder="0.00"
                       />
                     </div>
                   </td>
@@ -133,10 +134,11 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                     <span className="text-gray-500 mr-1">$</span>
                     <input
                       type="text"
-                      value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatNumber(plan?.currentRates?.[tier] || 0)}
+                      inputMode="decimal"
+                      value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatCurrency(plan?.currentRates?.[tier] || 0)}
                       onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
                       className="w-24 px-2 py-1 text-center border border-gray-300 rounded focus:ring-2 focus:ring-xl-bright-blue"
-                      placeholder="0"
+                      placeholder="0.00"
                     />
                   </div>
                 </div>
