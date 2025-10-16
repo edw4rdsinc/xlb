@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
     if (playersError) throw playersError;
 
-    const eliteCount = players?.filter(p => p.is_elite).length || 0;
+    const eliteCount = players?.filter((p: any) => p.is_elite).length || 0;
     if (eliteCount > 2) {
       return NextResponse.json(
         { error: 'Maximum 2 elite players allowed per lineup' },
