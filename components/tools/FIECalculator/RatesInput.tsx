@@ -79,7 +79,7 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
             </tr>
           </thead>
           <tbody>
-            {tierCodes.map(tier => (
+            {tierCodes.map((tier, tierIndex) => (
               <tr key={tier}>
                 <td className="border border-gray-300 bg-gray-50 px-4 py-2 font-medium text-gray-700">
                   {tierLabelMap[tier]}
@@ -91,6 +91,7 @@ export default function RatesInput({ plans, numberOfTiers, onUpdate, errors }: R
                       <input
                         type="text"
                         inputMode="decimal"
+                        tabIndex={(planIndex * tierCodes.length) + tierIndex + 1}
                         value={(plan?.currentRates?.[tier] || 0) === 0 ? '' : formatCurrency(plan?.currentRates?.[tier] || 0)}
                         onChange={(e) => handleRateChange(planIndex, tier, e.target.value)}
                         className="w-full px-2 py-1 text-center border-0 focus:ring-2 focus:ring-xl-bright-blue"

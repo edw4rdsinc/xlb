@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { formatNumber, parseFormattedNumber } from '@/lib/fie-calculator/validation';
+import { formatCurrency, parseFormattedNumber } from '@/lib/fie-calculator/validation';
 import { getTierConfig } from '@/lib/fie-calculator/calculations';
 import type { CostComponents } from '@/lib/fie-calculator/calculations';
 
@@ -151,7 +151,7 @@ export default function CostsInput({
               <input
                 type="text"
                 inputMode="decimal"
-                value={(costs.adminPEPM || 0) === 0 ? '' : costs.adminPEPM}
+                value={(costs.adminPEPM || 0) === 0 ? '' : formatCurrency(costs.adminPEPM)}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9.]/g, '');
                   onUpdateCosts({ ...costs, adminPEPM: parseFloat(value) || 0 });
@@ -159,7 +159,7 @@ export default function CostsInput({
                 className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
                   errors.adminPEPM ? 'border-red-500' : 'border-gray-300'
                 }`}
-                placeholder="35"
+                placeholder="35.00"
               />
             </div>
             {errors.adminPEPM && (
@@ -183,13 +183,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : costs.detailedAdminCosts?.tpaFees}
+                  value={(costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.tpaFees || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('tpaFees', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -202,13 +202,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : costs.detailedAdminCosts?.brokerage}
+                  value={(costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.brokerage || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('brokerage', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -221,13 +221,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : costs.detailedAdminCosts?.compliance}
+                  value={(costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.compliance || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('compliance', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -240,13 +240,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : costs.detailedAdminCosts?.telemedicine}
+                  value={(costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.telemedicine || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('telemedicine', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -259,13 +259,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : costs.detailedAdminCosts?.ppoFees}
+                  value={(costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.ppoFees || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('ppoFees', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -278,13 +278,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : costs.detailedAdminCosts?.other1}
+                  value={(costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other1 || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('other1', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -297,13 +297,13 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : costs.detailedAdminCosts?.other2}
+                  value={(costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other2 || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     handleDetailedAdminChange('other2', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -385,13 +385,13 @@ export default function CostsInput({
             <input
               type="text"
               inputMode="decimal"
-              value={costs.aggregateRate === 0 ? '' : costs.aggregateRate}
+              value={costs.aggregateRate === 0 ? '' : formatCurrency(costs.aggregateRate)}
               onChange={(e) => {
                 const value = e.target.value.replace(/[^0-9.]/g, '');
                 onUpdateCosts({ ...costs, aggregateRate: parseFloat(value) || 0 });
               }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-              placeholder="15"
+              placeholder="15.00"
             />
           </div>
         </div>
@@ -411,7 +411,7 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.specificRates[tier] || 0) === 0 ? '' : costs.specificRates[tier]}
+                  value={(costs.specificRates[tier] || 0) === 0 ? '' : formatCurrency(costs.specificRates[tier])}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     onUpdateCosts({
@@ -423,7 +423,7 @@ export default function CostsInput({
                     });
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="0"
+                  placeholder="0.00"
                 />
               </div>
             </div>
@@ -461,10 +461,10 @@ export default function CostsInput({
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input
                     type="text"
-                    inputMode="numeric"
-                    value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : costs.aggregateFactors[tier]}
+                    inputMode="decimal"
+                    value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : formatCurrency(costs.aggregateFactors[tier])}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      const value = e.target.value.replace(/[^0-9.]/g, '');
                       onUpdateCosts({
                         ...costs,
                         aggregateFactors: {
@@ -474,10 +474,10 @@ export default function CostsInput({
                       });
                     }}
                     className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                    placeholder={defaultFactor.toFixed(0)}
+                    placeholder={defaultFactor.toFixed(2)}
                   />
                 </div>
-                <p className="mt-1 text-xs text-gray-500">Default: ${defaultFactor.toFixed(0)}</p>
+                <p className="mt-1 text-xs text-gray-500">Default: ${defaultFactor.toFixed(2)}</p>
               </div>
             );
           })}
