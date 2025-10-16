@@ -261,28 +261,78 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
 
       {/* Step 8: Calculate Monthly Rates */}
       <div className="border-l-4 border-pink-500 pl-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 8: Calculate Monthly FIE Rates per Tier</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 8: Calculate Annual Allocation & Monthly FIE Rates per Tier</h3>
         <div className="bg-gray-50 p-3 rounded">
           <p className="text-sm text-gray-600 mb-3">
-            Formula: (Plan Allocation ÷ Plan Tier Units ÷ 12) × Tier Ratio
+            <strong>Annual Allocation Formula:</strong> Total Annual Liability × (Plan Weight ÷ Total Weight)
+          </p>
+          <p className="text-sm text-gray-600 mb-3">
+            <strong>Monthly Rate Formula:</strong> (Plan Allocation ÷ Plan Tier Units ÷ 12) × Tier Ratio
           </p>
 
-          {results.planAllocations.map((planResult: any, idx: number) => (
-            <div key={idx} className="mb-4">
-              <p className="font-semibold">{planResult.planName}</p>
-              <p className="text-xs text-gray-600 ml-4">Annual Allocation: ${planResult.allocation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-              <div className="ml-4 mt-2 grid grid-cols-2 gap-2 text-sm">
-                {Object.entries(planResult.fieRates).map(([tierCode, rate]: [string, any]) => {
-                  const tierLabel = tierConfig.find((t: any) => t.code === tierCode)?.label || tierCode;
-                  return (
-                    <div key={tierCode} className="font-mono">
-                      {tierLabel}: ${rate.toFixed(2)}
-                    </div>
-                  );
-                })}
+          {results.planAllocations.map((planResult: any, idx: number) => {
+            // Recalculate plan weight for display
+            const tierRatios = tierConfig.reduce((acc: any, tier: any) => {
+              acc[tier.code] = tier.ratio;
+              return acc;
+            }, {} as Record<string, number>);
+
+            const plan = plans[idx];
+            let planWeight = 0;
+            let planTierUnits = 0;
+            tierConfig.forEach((tier: any) => {
+              const census = plan.census[tier.code] || 0;
+              const ratio = tierRatios[tier.code] || 1.0;
+              planTierUnits += census * ratio;
+            });
+            planWeight = planTierUnits * plan.differential;
+
+            // Calculate total weight
+            let totalWeight = 0;
+            plans.forEach((p: any) => {
+              let pWeight = 0;
+              tierConfig.forEach((tier: any) => {
+                const census = p.census[tier.code] || 0;
+                const ratio = tierRatios[tier.code] || 1.0;
+                pWeight += census * ratio;
+              });
+              totalWeight += pWeight * p.differential;
+            });
+
+            const weightPercentage = totalWeight > 0 ? (planWeight / totalWeight) * 100 : 0;
+
+            return (
+              <div key={idx} className="mb-4 border-b border-gray-200 pb-3 last:border-0">
+                <p className="font-semibold text-base">{planResult.planName}</p>
+
+                <div className="ml-4 mt-2 space-y-1 text-xs">
+                  <p className="text-gray-600">
+                    Plan Weight: {planWeight.toFixed(2)} units ({weightPercentage.toFixed(2)}% of total)
+                  </p>
+                  <p className="text-gray-600">
+                    Calculation: ${totalAnnualLiability.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} × ({planWeight.toFixed(2)} ÷ {totalWeight.toFixed(2)})
+                  </p>
+                  <p className="font-semibold text-sm text-xl-dark-blue">
+                    = Annual Allocation: ${planResult.allocation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </p>
+                </div>
+
+                <div className="ml-4 mt-3">
+                  <p className="text-xs text-gray-600 mb-2">Monthly FIE Rates:</p>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    {Object.entries(planResult.fieRates).map(([tierCode, rate]: [string, any]) => {
+                      const tierLabel = tierConfig.find((t: any) => t.code === tierCode)?.label || tierCode;
+                      return (
+                        <div key={tierCode} className="font-mono">
+                          {tierLabel}: ${rate.toFixed(2)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
