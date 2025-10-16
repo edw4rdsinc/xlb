@@ -80,6 +80,16 @@ export function formatNumber(value: number | string): string {
   return new Intl.NumberFormat('en-US').format(num);
 }
 
+// Format currency with 2 decimal places
+export function formatCurrency(value: number | string): string {
+  const num = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) : value;
+  if (isNaN(num)) return '0.00';
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(num);
+}
+
 // Parse formatted number
 export function parseFormattedNumber(value: string): number {
   const cleaned = value.replace(/[^0-9.-]/g, '');
