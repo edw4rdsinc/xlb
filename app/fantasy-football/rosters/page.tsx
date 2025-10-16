@@ -54,7 +54,7 @@ export default function RostersPage() {
       setRounds(roundsData || []);
 
       // Set active round as default, or first round if none active
-      const activeRound = roundsData?.find(r => r.is_active);
+      const activeRound = roundsData?.find((r: any) => r.is_active);
       setSelectedRound(activeRound?.id || roundsData?.[0]?.id || '');
     } catch (error) {
       console.error('Error loading rounds:', error);
