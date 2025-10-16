@@ -115,6 +115,7 @@ export interface CalculationResults {
     admin: number;
     specific: number;
     aggregate: number;
+    aggregateAttachment: number;
     laser: number;
     total: number;
   };
@@ -276,6 +277,7 @@ export function calculateFIERates(
     admin: totalEmployees > 0 ? adminCosts / totalEmployees / 12 : 0,
     specific: totalEmployees > 0 ? specificPremium / totalEmployees / 12 : 0,
     aggregate: totalEmployees > 0 ? aggregatePremium / totalEmployees / 12 : 0,
+    aggregateAttachment: totalEmployees > 0 ? aggregateAttachmentPoint / totalEmployees / 12 : 0,
     laser: totalEmployees > 0 ? laserLiability / totalEmployees / 12 : 0,
     total: totalEmployees > 0 ? totalAnnualLiability / totalEmployees / 12 : 0
   };

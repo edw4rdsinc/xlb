@@ -156,8 +156,12 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
                 <span className="font-semibold">{formatCurrency(results.pepmBreakdown.specific)}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200">
-                <span className="text-gray-600">Aggregate Stop-Loss</span>
+                <span className="text-gray-600">Aggregate Premium</span>
                 <span className="font-semibold">{formatCurrency(results.pepmBreakdown.aggregate)}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="text-gray-600">Aggregate Attachment</span>
+                <span className="font-semibold">{formatCurrency(results.pepmBreakdown.aggregateAttachment)}</span>
               </div>
               {results.pepmBreakdown.laser > 0 && (
                 <div className="flex justify-between py-2 border-b border-gray-200">
