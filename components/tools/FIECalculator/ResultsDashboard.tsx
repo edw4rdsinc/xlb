@@ -17,6 +17,7 @@ import {
 import { formatCurrency, formatPercentage, getTierConfig } from '@/lib/fie-calculator/calculations';
 import type { CalculationResults } from '@/lib/fie-calculator/calculations';
 import type { WizardData } from '../FIECalculator';
+import CalculationBreakdown from './CalculationBreakdown';
 
 interface ResultsDashboardProps {
   wizardData: WizardData;
@@ -25,6 +26,7 @@ interface ResultsDashboardProps {
 
 export default function ResultsDashboard({ wizardData, results }: ResultsDashboardProps) {
   const [showDetails, setShowDetails] = useState(false);
+  const [showBreakdown, setShowBreakdown] = useState(false);
 
   const tierConfig = getTierConfig(wizardData.numberOfTiers);
   const tierCodes = tierConfig.map(t => t.code);
@@ -337,6 +339,35 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
             <p>Schedule a consultation with our stop-loss experts for personalized guidance</p>
           </div>
         </div>
+      </div>
+
+      {/* Calculation Breakdown Toggle */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <button
+          onClick={() => setShowBreakdown(!showBreakdown)}
+          className="w-full flex items-center justify-between text-left"
+        >
+          <div>
+            <h3 className="text-lg font-semibold text-xl-dark-blue">View Detailed Calculation Breakdown</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              See step-by-step how we calculated your FIE rates
+            </p>
+          </div>
+          <svg
+            className={`w-6 h-6 text-xl-bright-blue transition-transform ${showBreakdown ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {showBreakdown && (
+          <div className="mt-6">
+            <CalculationBreakdown wizardData={wizardData} results={results} />
+          </div>
+        )}
       </div>
     </div>
   );
