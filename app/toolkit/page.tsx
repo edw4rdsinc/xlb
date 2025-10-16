@@ -38,29 +38,34 @@ export default function ToolkitPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            {/* Tool 1: COBRA Calculator */}
+            {/* Tool 1: TrueCost Calculator */}
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              <Link href="/solutions/truecost-calculator">
+                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-xl-dark-blue">
+                        TrueCost: FIE Rate Calculator
+                      </h3>
+                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">AVAILABLE</span>
+                    </div>
+                  </div>
+                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
+                    Calculate accurate fully insured equivalent rates for self-funded groups with state-specific compliance and administrative fee calculations.
+                  </p>
+                  <div className="text-xl-bright-blue font-semibold text-sm group-hover:text-xl-dark-blue inline-flex items-center">
+                    Launch Tool
+                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      Fully Insured Equivalent Rate Calculator
-                    </h3>
-                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q4 2025</span>
-                  </div>
                 </div>
-                <p className="text-gray-600 mb-4 flex-grow text-sm leading-relaxed">
-                  Calculate accurate fully insured equivalent rates for self-funded groups with state-specific compliance and administrative fee calculations.
-                </p>
-                <div className="text-gray-500 font-semibold text-sm">
-                  Coming Soon
-                </div>
-              </div>
+              </Link>
             </AnimatedSection>
 
             {/* Tool 2: Deductible Analyzer */}
