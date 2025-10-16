@@ -11,7 +11,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
             <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[480px] md:h-[750px] parallax-bg">
+              <div className="relative w-full h-[600px] md:h-[938px] parallax-bg">
                 <img
                   src="/images/other-images/xlb-hero.png"
                   alt="Your Sidekick for Stop-Loss Success"
@@ -329,8 +329,14 @@ export default function HomePage() {
 
             <AnimatedSection animation="fade-up" delay={300}>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <div className="w-20 h-20 bg-xl-bright-blue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">
-                  SC
+                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
+                  <Image
+                    src="/images/team/steve-headshot.jpeg"
+                    alt="Steve Caler"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
                 <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
