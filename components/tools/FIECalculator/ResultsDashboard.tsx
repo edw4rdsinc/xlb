@@ -35,6 +35,9 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
     return acc;
   }, {} as Record<string, string>);
 
+  // Extract plan year from effective date
+  const planYear = new Date(wizardData.effectiveDate).getFullYear();
+
   const isPositiveSavings = results.savingsPercentage > 0;
 
   // Prepare data for bar chart (rates comparison)
@@ -113,13 +116,13 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-            FIE Annual Cost
+            {planYear} Maximum Cost
           </h3>
           <p className="text-2xl font-bold text-xl-bright-blue">
             {formatCurrency(results.fieAnnualCost)}
           </p>
           <p className="text-sm text-gray-600 mt-1">
-            Self-funded equivalent
+            Self-funded maximum liability
           </p>
         </div>
 
