@@ -19,6 +19,8 @@ export default function CostsInput({
   errors
 }: CostsInputProps) {
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [editingField, setEditingField] = useState<string | null>(null);
+  const [editingValue, setEditingValue] = useState<string>('');
 
   const tierConfig = getTierConfig(numberOfTiers);
   const tierCodes = tierConfig.map(t => t.code);
@@ -151,9 +153,20 @@ export default function CostsInput({
               <input
                 type="text"
                 inputMode="decimal"
-                value={(costs.adminPEPM || 0) === 0 ? '' : formatCurrency(costs.adminPEPM || 0)}
+                value={editingField === 'adminPEPM'
+                  ? editingValue
+                  : ((costs.adminPEPM || 0) === 0 ? '' : formatCurrency(costs.adminPEPM || 0))}
+                onFocus={() => {
+                  setEditingField('adminPEPM');
+                  setEditingValue((costs.adminPEPM || 0) === 0 ? '' : (costs.adminPEPM || 0).toString());
+                }}
+                onBlur={() => {
+                  setEditingField(null);
+                  setEditingValue('');
+                }}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9.]/g, '');
+                  setEditingValue(value);
                   onUpdateCosts({ ...costs, adminPEPM: parseFloat(value) || 0 });
                 }}
                 className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
@@ -183,9 +196,20 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.tpaFees || 0)}
+                  value={editingField === 'tpaFees'
+                    ? editingValue
+                    : ((costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.tpaFees || 0))}
+                  onFocus={() => {
+                    setEditingField('tpaFees');
+                    setEditingValue((costs.detailedAdminCosts?.tpaFees || 0) === 0 ? '' : (costs.detailedAdminCosts?.tpaFees || 0).toString());
+                  }}
+                  onBlur={() => {
+                    setEditingField(null);
+                    setEditingValue('');
+                  }}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
+                    setEditingValue(value);
                     handleDetailedAdminChange('tpaFees', parseFloat(value) || 0);
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
@@ -202,11 +226,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.brokerage || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('brokerage', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'brokerage' ? editingValue : ((costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.brokerage || 0))}
+                  onFocus={() => { setEditingField('brokerage'); setEditingValue((costs.detailedAdminCosts?.brokerage || 0) === 0 ? '' : (costs.detailedAdminCosts?.brokerage || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('brokerage', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -221,11 +244,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.compliance || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('compliance', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'compliance' ? editingValue : ((costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.compliance || 0))}
+                  onFocus={() => { setEditingField('compliance'); setEditingValue((costs.detailedAdminCosts?.compliance || 0) === 0 ? '' : (costs.detailedAdminCosts?.compliance || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('compliance', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -240,11 +262,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.telemedicine || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('telemedicine', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'telemedicine' ? editingValue : ((costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.telemedicine || 0))}
+                  onFocus={() => { setEditingField('telemedicine'); setEditingValue((costs.detailedAdminCosts?.telemedicine || 0) === 0 ? '' : (costs.detailedAdminCosts?.telemedicine || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('telemedicine', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -259,11 +280,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.ppoFees || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('ppoFees', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'ppoFees' ? editingValue : ((costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.ppoFees || 0))}
+                  onFocus={() => { setEditingField('ppoFees'); setEditingValue((costs.detailedAdminCosts?.ppoFees || 0) === 0 ? '' : (costs.detailedAdminCosts?.ppoFees || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('ppoFees', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -278,11 +298,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other1 || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('other1', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'other1' ? editingValue : ((costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other1 || 0))}
+                  onFocus={() => { setEditingField('other1'); setEditingValue((costs.detailedAdminCosts?.other1 || 0) === 0 ? '' : (costs.detailedAdminCosts?.other1 || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('other1', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -297,11 +316,10 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other2 || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    handleDetailedAdminChange('other2', parseFloat(value) || 0);
-                  }}
+                  value={editingField === 'other2' ? editingValue : ((costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : formatCurrency(costs.detailedAdminCosts?.other2 || 0))}
+                  onFocus={() => { setEditingField('other2'); setEditingValue((costs.detailedAdminCosts?.other2 || 0) === 0 ? '' : (costs.detailedAdminCosts?.other2 || 0).toString()); }}
+                  onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                  onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); handleDetailedAdminChange('other2', parseFloat(value) || 0); }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0.00"
                 />
@@ -385,11 +403,10 @@ export default function CostsInput({
             <input
               type="text"
               inputMode="decimal"
-              value={(costs.aggregateRate || 0) === 0 ? '' : formatCurrency(costs.aggregateRate || 0)}
-              onChange={(e) => {
-                const value = e.target.value.replace(/[^0-9.]/g, '');
-                onUpdateCosts({ ...costs, aggregateRate: parseFloat(value) || 0 });
-              }}
+              value={editingField === 'aggregateRate' ? editingValue : ((costs.aggregateRate || 0) === 0 ? '' : formatCurrency(costs.aggregateRate || 0))}
+              onFocus={() => { setEditingField('aggregateRate'); setEditingValue((costs.aggregateRate || 0) === 0 ? '' : (costs.aggregateRate || 0).toString()); }}
+              onBlur={() => { setEditingField(null); setEditingValue(''); }}
+              onChange={(e) => { const value = e.target.value.replace(/[^0-9.]/g, ''); setEditingValue(value); onUpdateCosts({ ...costs, aggregateRate: parseFloat(value) || 0 }); }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               placeholder="15.00"
             />
@@ -401,33 +418,39 @@ export default function CostsInput({
       <div>
         <h3 className="text-lg font-semibold text-xl-dark-blue mb-3">Specific Stop-Loss Rates (Monthly)</h3>
         <div className={`grid gap-4 ${numberOfTiers === 2 ? 'md:grid-cols-2' : numberOfTiers === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
-          {tierCodes.map(tier => (
-            <div key={tier}>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                {tierLabelMap[tier]}
-              </label>
-              <div className="flex items-center">
-                <span className="text-gray-500 mr-2">$</span>
-                <input
-                  type="text"
-                  inputMode="decimal"
-                  value={(costs.specificRates[tier] || 0) === 0 ? '' : formatCurrency(costs.specificRates[tier] || 0)}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                    onUpdateCosts({
-                      ...costs,
-                      specificRates: {
-                        ...costs.specificRates,
-                        [tier]: parseFloat(value) || 0
-                      }
-                    });
-                  }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="0.00"
-                />
+          {tierCodes.map(tier => {
+            const fieldKey = `specificRate-${tier}`;
+            return (
+              <div key={tier}>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {tierLabelMap[tier]}
+                </label>
+                <div className="flex items-center">
+                  <span className="text-gray-500 mr-2">$</span>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={editingField === fieldKey ? editingValue : ((costs.specificRates[tier] || 0) === 0 ? '' : formatCurrency(costs.specificRates[tier] || 0))}
+                    onFocus={() => { setEditingField(fieldKey); setEditingValue((costs.specificRates[tier] || 0) === 0 ? '' : (costs.specificRates[tier] || 0).toString()); }}
+                    onBlur={() => { setEditingField(null); setEditingValue(''); }}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9.]/g, '');
+                      setEditingValue(value);
+                      onUpdateCosts({
+                        ...costs,
+                        specificRates: {
+                          ...costs.specificRates,
+                          [tier]: parseFloat(value) || 0
+                        }
+                      });
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
+                    placeholder="0.00"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -451,7 +474,8 @@ export default function CostsInput({
         </div>
         <div className={`grid gap-4 ${numberOfTiers === 2 ? 'md:grid-cols-2' : numberOfTiers === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
           {tierCodes.map(tier => {
-            const defaultFactor = tierConfig.find(t => t.code === tier)?.aggregateFactor || 1.0;
+            const defaultFactor = tierConfig.find((t: any) => t.code === tier)?.aggregateFactor || 1.0;
+            const fieldKey = `aggregateFactor-${tier}`;
             return (
               <div key={tier}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -462,9 +486,12 @@ export default function CostsInput({
                   <input
                     type="text"
                     inputMode="decimal"
-                    value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : formatCurrency(costs.aggregateFactors[tier] || 0)}
+                    value={editingField === fieldKey ? editingValue : ((costs.aggregateFactors[tier] || 0) === 0 ? '' : formatCurrency(costs.aggregateFactors[tier] || 0))}
+                    onFocus={() => { setEditingField(fieldKey); setEditingValue((costs.aggregateFactors[tier] || 0) === 0 ? '' : (costs.aggregateFactors[tier] || 0).toString()); }}
+                    onBlur={() => { setEditingField(null); setEditingValue(''); }}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9.]/g, '');
+                      setEditingValue(value);
                       onUpdateCosts({
                         ...costs,
                         aggregateFactors: {
