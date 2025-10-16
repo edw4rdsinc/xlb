@@ -52,8 +52,8 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
 
   // Get players by position
   const getPlayersByPosition = (position: Position): Player[] => {
-    const dbPlayers = players.filter(p => p.position === position);
-    const customPlayersForPosition = customPlayers.filter(p => p.position === position);
+    const dbPlayers = players.filter((p: any) => p.position === position);
+    const customPlayersForPosition = customPlayers.filter((p: any) => p.position === position);
     return [...dbPlayers, ...customPlayersForPosition];
   };
 
@@ -68,10 +68,10 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
       formData.te,
       formData.k,
       formData.def,
-    ].filter(id => id);
+    ].filter((id: any) => id);
 
-    return selectedPlayerIds.filter(id => {
-      const player = [...players, ...customPlayers].find(p => p.id === id);
+    return selectedPlayerIds.filter((id: any) => {
+      const player = [...players, ...customPlayers].find((p: any) => p.id === id);
       return player?.is_elite;
     }).length;
   };
@@ -80,7 +80,7 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
 
   // Check if a player can be selected (elite limit check)
   const canSelectPlayer = (playerId: string): boolean => {
-    const player = [...players, ...customPlayers].find(p => p.id === playerId);
+    const player = [...players, ...customPlayers].find((p: any) => p.id === playerId);
     if (!player?.is_elite) return true;
     return eliteCount < 2;
   };
@@ -170,14 +170,14 @@ export function LineupForm({ players, currentRound, onSuccess }: LineupFormProps
         ...formData,
         lineupId: data.lineupId,
         players: {
-          qb: [...players, ...customPlayers].find(p => p.id === formData.qb),
-          rb1: [...players, ...customPlayers].find(p => p.id === formData.rb1),
-          rb2: [...players, ...customPlayers].find(p => p.id === formData.rb2),
-          wr1: [...players, ...customPlayers].find(p => p.id === formData.wr1),
-          wr2: [...players, ...customPlayers].find(p => p.id === formData.wr2),
-          te: [...players, ...customPlayers].find(p => p.id === formData.te),
-          k: [...players, ...customPlayers].find(p => p.id === formData.k),
-          def: [...players, ...customPlayers].find(p => p.id === formData.def),
+          qb: [...players, ...customPlayers].find((p: any) => p.id === formData.qb),
+          rb1: [...players, ...customPlayers].find((p: any) => p.id === formData.rb1),
+          rb2: [...players, ...customPlayers].find((p: any) => p.id === formData.rb2),
+          wr1: [...players, ...customPlayers].find((p: any) => p.id === formData.wr1),
+          wr2: [...players, ...customPlayers].find((p: any) => p.id === formData.wr2),
+          te: [...players, ...customPlayers].find((p: any) => p.id === formData.te),
+          k: [...players, ...customPlayers].find((p: any) => p.id === formData.k),
+          def: [...players, ...customPlayers].find((p: any) => p.id === formData.def),
         },
       });
     } catch (error: any) {

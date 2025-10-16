@@ -37,7 +37,7 @@ export function RosterGrid({ lineups }: RosterGridProps) {
   ];
 
   const countElitePlayers = (players: Lineup['players']): number => {
-    return Object.values(players).filter(p => p?.is_elite).length;
+    return Object.values(players).filter((p: any) => p?.is_elite).length;
   };
 
   return (

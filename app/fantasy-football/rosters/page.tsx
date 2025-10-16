@@ -119,9 +119,9 @@ export default function RostersPage() {
     }
   }
 
-  const selectedRoundData = rounds.find(r => r.id === selectedRound);
+  const selectedRoundData = rounds.find((r: any) => r.id === selectedRound);
 
-  const filteredLineups = lineups.filter(lineup =>
+  const filteredLineups = lineups.filter((lineup: any) =>
     lineup.user.team_name.toLowerCase().includes(search.toLowerCase()) ||
     lineup.user.name.toLowerCase().includes(search.toLowerCase())
   );

@@ -103,7 +103,7 @@ export function WeeklyResults({ currentWeek, rounds }: WeeklyResultsProps) {
     }
   }
 
-  const filteredScores = scores.filter(score =>
+  const filteredScores = scores.filter((score: any) =>
     score.user.team_name.toLowerCase().includes(search.toLowerCase()) ||
     score.user.name.toLowerCase().includes(search.toLowerCase())
   );

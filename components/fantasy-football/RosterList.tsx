@@ -101,7 +101,7 @@ export function RosterList({ lineups }: RosterListProps) {
           </thead>
           <tbody className="divide-y divide-slate-200">
             {lineups.map(lineup => {
-              const eliteCount = Object.values(lineup.players).filter(p => p?.is_elite).length;
+              const eliteCount = Object.values(lineup.players).filter((p: any) => p?.is_elite).length;
 
               return (
                 <tr key={lineup.id} className="hover:bg-slate-50 transition-colors">
