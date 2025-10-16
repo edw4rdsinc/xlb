@@ -320,15 +320,22 @@ export default function FIECalculator() {
       )}
 
       {/* Back button for results page */}
-      {currentStep === 5 && emailSubmitted && (
-        <div className="mt-6">
+      {currentStep === 5 && (
+        <div className="flex justify-between mt-6">
+          <button
+            onClick={handleBack}
+            className="px-6 py-3 bg-gray-500 text-white rounded-md font-semibold hover:bg-gray-600 transition-all"
+          >
+            Back to Costs
+          </button>
           <button
             onClick={() => {
               setCurrentStep(1);
               setWizardData(initialWizardData);
               setEmailSubmitted(false);
+              clearSession();
             }}
-            className="px-6 py-3 bg-gray-500 text-white rounded-md font-semibold hover:bg-gray-600 transition-all"
+            className="px-6 py-3 bg-xl-bright-blue text-white rounded-md font-semibold hover:bg-xl-dark-blue transition-all"
           >
             Start New Calculation
           </button>

@@ -61,10 +61,11 @@ export default function CostsInput({
         detailedAdminCosts: {
           tpaFees: 0,
           brokerage: 0,
-          consulting: 0,
           compliance: 0,
-          banking: 0,
-          other: 0
+          telemedicine: 0,
+          ppoFees: 0,
+          other1: 0,
+          other2: 0
         }
       });
     }
@@ -188,7 +189,7 @@ export default function CostsInput({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Brokerage Fees
+                Brokerage & Consulting Fees
               </label>
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
@@ -197,22 +198,6 @@ export default function CostsInput({
                   step="0.01"
                   value={costs.detailedAdminCosts?.brokerage || 0}
                   onChange={(e) => handleDetailedAdminChange('brokerage', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
-                  placeholder="0"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Consulting Fees
-              </label>
-              <div className="flex items-center">
-                <span className="text-gray-500 mr-2">$</span>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={costs.detailedAdminCosts?.consulting || 0}
-                  onChange={(e) => handleDetailedAdminChange('consulting', parseFloat(e.target.value) || 0)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -236,15 +221,15 @@ export default function CostsInput({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Banking/IBNR
+                Telemedicine
               </label>
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
                   type="number"
                   step="0.01"
-                  value={costs.detailedAdminCosts?.banking || 0}
-                  onChange={(e) => handleDetailedAdminChange('banking', parseFloat(e.target.value) || 0)}
+                  value={costs.detailedAdminCosts?.telemedicine || 0}
+                  onChange={(e) => handleDetailedAdminChange('telemedicine', parseFloat(e.target.value) || 0)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -252,15 +237,47 @@ export default function CostsInput({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Other
+                PPO Network Fees
               </label>
               <div className="flex items-center">
                 <span className="text-gray-500 mr-2">$</span>
                 <input
                   type="number"
                   step="0.01"
-                  value={costs.detailedAdminCosts?.other || 0}
-                  onChange={(e) => handleDetailedAdminChange('other', parseFloat(e.target.value) || 0)}
+                  value={costs.detailedAdminCosts?.ppoFees || 0}
+                  onChange={(e) => handleDetailedAdminChange('ppoFees', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Other 1
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.other1 || 0}
+                  onChange={(e) => handleDetailedAdminChange('other1', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Other 2
+              </label>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={costs.detailedAdminCosts?.other2 || 0}
+                  onChange={(e) => handleDetailedAdminChange('other2', parseFloat(e.target.value) || 0)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue"
                   placeholder="0"
                 />
@@ -275,10 +292,11 @@ export default function CostsInput({
                   ${(
                     (costs.detailedAdminCosts.tpaFees || 0) +
                     (costs.detailedAdminCosts.brokerage || 0) +
-                    (costs.detailedAdminCosts.consulting || 0) +
                     (costs.detailedAdminCosts.compliance || 0) +
-                    (costs.detailedAdminCosts.banking || 0) +
-                    (costs.detailedAdminCosts.other || 0)
+                    (costs.detailedAdminCosts.telemedicine || 0) +
+                    (costs.detailedAdminCosts.ppoFees || 0) +
+                    (costs.detailedAdminCosts.other1 || 0) +
+                    (costs.detailedAdminCosts.other2 || 0)
                   ).toFixed(2)}
                 </span>
               </div>
@@ -294,17 +312,24 @@ export default function CostsInput({
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Specific Deductible *
           </label>
-          <select
-            value={costs.specificDeductible}
-            onChange={(e) => onUpdateCosts({ ...costs, specificDeductible: parseInt(e.target.value) })}
-            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
-              errors.specificDeductible ? 'border-red-500' : 'border-gray-300'
-            }`}
-          >
-            {deductibleOptions.map(option => (
-              <option key={option.value} value={option.value}>{option.label}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+            <input
+              type="text"
+              value={costs.specificDeductible.toLocaleString()}
+              onChange={(e) => {
+                const value = parseFormattedNumber(e.target.value);
+                if (!isNaN(value) && value >= 0) {
+                  onUpdateCosts({ ...costs, specificDeductible: value });
+                }
+              }}
+              className={`w-full pl-8 pr-3 py-2 border rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue ${
+                errors.specificDeductible ? 'border-red-500' : 'border-gray-300'
+              }`}
+              placeholder="50000"
+            />
+          </div>
+          <p className="text-xs text-gray-500 mt-1">Enter any amount (e.g., 65000, 82500)</p>
           {errors.specificDeductible && (
             <p className="mt-1 text-sm text-red-600">{errors.specificDeductible}</p>
           )}
@@ -379,7 +404,7 @@ export default function CostsInput({
       {/* Aggregate Factors by Tier */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-xl-dark-blue">Aggregate Factors by Tier</h3>
+          <h3 className="text-lg font-semibold text-xl-dark-blue">Aggregate Factors by Tier (Per Member)</h3>
           <button
             type="button"
             onClick={() => {
@@ -402,29 +427,31 @@ export default function CostsInput({
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {tierLabelMap[tier]}
                 </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0.5"
-                  max="3.0"
-                  value={costs.aggregateFactors[tier] || defaultFactor}
-                  onChange={(e) => onUpdateCosts({
-                    ...costs,
-                    aggregateFactors: {
-                      ...costs.aggregateFactors,
-                      [tier]: parseFloat(e.target.value) || defaultFactor
-                    }
-                  })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder={defaultFactor.toFixed(2)}
-                />
-                <p className="mt-1 text-xs text-gray-500">Default: {defaultFactor.toFixed(2)}</p>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                  <input
+                    type="number"
+                    step="1"
+                    min="0"
+                    value={costs.aggregateFactors[tier] || defaultFactor}
+                    onChange={(e) => onUpdateCosts({
+                      ...costs,
+                      aggregateFactors: {
+                        ...costs.aggregateFactors,
+                        [tier]: parseFloat(e.target.value) || defaultFactor
+                      }
+                    })}
+                    className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
+                    placeholder={defaultFactor.toFixed(0)}
+                  />
+                </div>
+                <p className="mt-1 text-xs text-gray-500">Default: ${defaultFactor.toFixed(0)}</p>
               </div>
             );
           })}
         </div>
         <p className="mt-2 text-sm text-gray-600">
-          Aggregate factors adjust the aggregate premium calculation by tier to account for varying family sizes and risk profiles.
+          Enter the expected aggregate claims liability per member for each tier. This represents the dollar amount used to calculate aggregate attachment points based on tier composition and family sizes.
         </p>
       </div>
 
