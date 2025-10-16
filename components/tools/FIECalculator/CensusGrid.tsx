@@ -7,11 +7,12 @@ import type { PlanData } from '@/lib/fie-calculator/calculations';
 interface CensusGridProps {
   plans: PlanData[];
   numberOfTiers: number;
+  planNames: string[];
   onUpdate: (plans: PlanData[]) => void;
   errors: Record<string, string>;
 }
 
-export default function CensusGrid({ plans, numberOfTiers, onUpdate, errors }: CensusGridProps) {
+export default function CensusGrid({ plans, numberOfTiers, planNames, onUpdate, errors }: CensusGridProps) {
   const tierConfig = getTierConfig(numberOfTiers);
   const tierCodes = tierConfig.map(t => t.code);
   const tierLabelMap = tierConfig.reduce((acc, tier) => {
@@ -32,7 +33,7 @@ export default function CensusGrid({ plans, numberOfTiers, onUpdate, errors }: C
       });
 
       newPlans[planIndex] = {
-        name: `Plan ${planIndex + 1}`,
+        name: planNames[planIndex] || `Plan ${planIndex + 1}`,
         differential: 1.0,
         census,
         currentRates

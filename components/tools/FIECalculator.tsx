@@ -240,6 +240,7 @@ export default function FIECalculator() {
           <CensusGrid
             plans={wizardData.plans}
             numberOfTiers={wizardData.numberOfTiers}
+            planNames={wizardData.planNames}
             onUpdate={(plans) => updateWizardData({ plans })}
             errors={validationErrors}
           />
