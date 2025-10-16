@@ -11,7 +11,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
             <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-80 md:h-[500px] parallax-bg">
+              <div className="relative w-full h-[480px] md:h-[750px] parallax-bg">
                 <img
                   src="/images/other-images/xlb-hero.png"
                   alt="Your Sidekick for Stop-Loss Success"

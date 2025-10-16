@@ -243,7 +243,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Erin Maurer"
                 title="Account Executive"
-                imageUrl="/images/team/erin-headshot-final.png"
+                imageUrl="/images/team/erin-headshot.jpeg"
                 expertise={["Insurance Since 2004", "Large Self-Funded Groups", "RFP & Renewals Specialist"]}
                 bio="Erin joined our team in 2023 with an extensive insurance background that began in 2004, working mainly on large self-funded employer groups, including stop loss insurance. Erin assists with RFP submission, renewals and new business set-up. Erin is bubbly, creative and has a heart for outstanding customer service. When she's not working she is typically out riding horses and camping with her daughter, and enjoys dancing, wine tasting and volunteering at her local school and church events."
                 email="erin@xlbenefits.com"
@@ -255,6 +255,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Christine Titus"
                 title="Account Manager"
+                imageUrl="/images/team/christine-headshot.jpeg"
                 expertise={["Account Management", "Client Relations", "Detail-Oriented Service"]}
                 bio="Christine brings an unparalleled energy to XL Benefits. She has a knack for account management bolstered by her warm personality and desire to serve others. She has years of experience in managing reports, forecasting, training and serving as a day to day contact for clients. Utilizing her strengths and personality she seeks to build rapport with co-workers and clients establishing trusted, long term relationships. Christine has a love for decorating, cooking and cleaning. She likes to create welcoming spaces for others. Her eye for detail and the joy of caring for others has contributed to the creation of personalized parties and weddings for many."
                 email="christine@xlbenefits.com"
