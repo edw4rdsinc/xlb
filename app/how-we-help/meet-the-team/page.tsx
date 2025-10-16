@@ -205,6 +205,7 @@ export default function MeetTheTeamPage() {
               <FlipCard
                 name="Steve Caler"
                 title="Stop Loss Sales Consultant"
+                imageUrl="/images/team/steve-headshot.jpeg"
                 expertise={["10+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
                 bio="Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo). He loves watching UFC with his four boys and drinking coffee with his wife and two girls."
                 email="steve@xlbenefits.com"
