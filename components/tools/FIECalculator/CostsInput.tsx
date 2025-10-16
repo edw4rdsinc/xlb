@@ -151,7 +151,7 @@ export default function CostsInput({
               <input
                 type="text"
                 inputMode="decimal"
-                value={(costs.adminPEPM || 0) === 0 ? '' : formatCurrency(costs.adminPEPM)}
+                value={(costs.adminPEPM || 0) === 0 ? '' : formatCurrency(costs.adminPEPM || 0)}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9.]/g, '');
                   onUpdateCosts({ ...costs, adminPEPM: parseFloat(value) || 0 });
@@ -385,7 +385,7 @@ export default function CostsInput({
             <input
               type="text"
               inputMode="decimal"
-              value={costs.aggregateRate === 0 ? '' : formatCurrency(costs.aggregateRate)}
+              value={(costs.aggregateRate || 0) === 0 ? '' : formatCurrency(costs.aggregateRate || 0)}
               onChange={(e) => {
                 const value = e.target.value.replace(/[^0-9.]/g, '');
                 onUpdateCosts({ ...costs, aggregateRate: parseFloat(value) || 0 });
@@ -411,7 +411,7 @@ export default function CostsInput({
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={(costs.specificRates[tier] || 0) === 0 ? '' : formatCurrency(costs.specificRates[tier])}
+                  value={(costs.specificRates[tier] || 0) === 0 ? '' : formatCurrency(costs.specificRates[tier] || 0)}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9.]/g, '');
                     onUpdateCosts({
@@ -462,7 +462,7 @@ export default function CostsInput({
                   <input
                     type="text"
                     inputMode="decimal"
-                    value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : formatCurrency(costs.aggregateFactors[tier])}
+                    value={(costs.aggregateFactors[tier] || 0) === 0 ? '' : formatCurrency(costs.aggregateFactors[tier] || 0)}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9.]/g, '');
                       onUpdateCosts({
