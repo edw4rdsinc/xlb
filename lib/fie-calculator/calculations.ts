@@ -9,21 +9,22 @@ export interface TierConfig {
 }
 
 // Tier configurations for 2, 3, and 4 tier systems
+// aggregateFactor represents expected claims liability per member (in dollars)
 export const TIER_CONFIGURATIONS: Record<number, TierConfig[]> = {
   2: [
-    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
-    { code: 'F', label: 'Family', ratio: 2.50, aggregateFactor: 2.30 }
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 15 },
+    { code: 'F', label: 'Family', ratio: 2.50, aggregateFactor: 35 }
   ],
   3: [
-    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
-    { code: 'E1', label: 'Employee + 1', ratio: 1.90, aggregateFactor: 1.85 },
-    { code: 'F', label: 'Family (2+ deps)', ratio: 2.85, aggregateFactor: 2.70 }
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 15 },
+    { code: 'E1', label: 'Employee + 1', ratio: 1.90, aggregateFactor: 28 },
+    { code: 'F', label: 'Family (2+ deps)', ratio: 2.85, aggregateFactor: 40 }
   ],
   4: [
-    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 1.00 },
-    { code: 'ES', label: 'Employee + Spouse', ratio: 2.15, aggregateFactor: 2.10 },
-    { code: 'EC', label: 'Employee + Child(ren)', ratio: 1.70, aggregateFactor: 1.65 },
-    { code: 'F', label: 'Family', ratio: 2.85, aggregateFactor: 2.75 }
+    { code: 'EO', label: 'Employee Only', ratio: 1.00, aggregateFactor: 15 },
+    { code: 'ES', label: 'Employee + Spouse', ratio: 2.15, aggregateFactor: 32 },
+    { code: 'EC', label: 'Employee + Child(ren)', ratio: 1.70, aggregateFactor: 25 },
+    { code: 'F', label: 'Family', ratio: 2.85, aggregateFactor: 41 }
   ]
 };
 
@@ -65,10 +66,11 @@ export type AdminCostMode = 'simple' | 'detailed';
 export interface DetailedAdminCosts {
   tpaFees: number;
   brokerage: number;
-  consulting: number;
   compliance: number;
-  banking: number;
-  other: number;
+  telemedicine: number;
+  ppoFees: number;
+  other1: number;
+  other2: number;
 }
 
 // Cost components interface with dynamic tier support
@@ -155,10 +157,11 @@ function calculateAdminCosts(costs: CostComponents, totalEmployees: number): num
     const monthlyTotal =
       costs.detailedAdminCosts.tpaFees +
       costs.detailedAdminCosts.brokerage +
-      costs.detailedAdminCosts.consulting +
       costs.detailedAdminCosts.compliance +
-      costs.detailedAdminCosts.banking +
-      costs.detailedAdminCosts.other;
+      costs.detailedAdminCosts.telemedicine +
+      costs.detailedAdminCosts.ppoFees +
+      costs.detailedAdminCosts.other1 +
+      costs.detailedAdminCosts.other2;
     return monthlyTotal * totalEmployees * 12;
   }
   return 0;

@@ -56,6 +56,7 @@ export function RoundResults({ rounds }: RoundResultsProps) {
       const roundScores: RoundScore[] = [];
 
       for (const lineup of lineups || []) {
+        const user = Array.isArray(lineup.user) ? lineup.user[0] : lineup.user;
         const { data: weeklyScores, error: scoresError } = await supabase
           .from('weekly_scores')
           .select('*')
@@ -72,8 +73,8 @@ export function RoundResults({ rounds }: RoundResultsProps) {
         roundScores.push({
           user_id: lineup.user_id,
           lineup_id: lineup.id,
-          team_name: lineup.user.team_name,
-          name: lineup.user.name,
+          team_name: user.team_name,
+          name: user.name,
           round_total: roundTotal,
           def_total: defTotal,
           k_total: kTotal,
