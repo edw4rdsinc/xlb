@@ -62,26 +62,29 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
     });
   });
 
-  // Calculate aggregate premium breakdown
-  const aggregatePremiumDetails: Array<{ plan: string; tier: string; census: number; rate: number; factor: number; annual: number }> = [];
-  let aggregatePremiumTotal = 0;
+  // Calculate aggregate premium (Step 4A) - Simple calculation
+  // Formula: Total Enrollment × Aggregate Rate PEPM × 12
+  const aggregatePremiumTotal = totalEmployees * (costs.aggregateRate || 0) * 12;
+
+  // Calculate aggregate attachment point (Step 4B) - Maximum claims threshold
+  // Formula: Sum of (census × aggregate factor × 12) for each tier
+  const aggregateAttachmentDetails: Array<{ plan: string; tier: string; census: number; factor: number; annual: number }> = [];
+  let aggregateAttachmentTotal = 0;
 
   plans.forEach((plan: any) => {
     tierConfig.forEach((tier: any) => {
       const census = plan.census[tier.code] || 0;
-      const rate = costs.aggregateRate || 0;
       const factor = costs.aggregateFactors[tier.code] || 0;
-      const annual = rate * census * factor * 12;
+      const annual = census * factor * 12;
       if (census > 0) {
-        aggregatePremiumDetails.push({
+        aggregateAttachmentDetails.push({
           plan: plan.name,
           tier: tier.label,
           census,
-          rate,
           factor,
           annual
         });
-        aggregatePremiumTotal += annual;
+        aggregateAttachmentTotal += annual;
       }
     });
   });
@@ -148,20 +151,32 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
         </div>
       </div>
 
-      {/* Step 4: Aggregate Premium */}
+      {/* Step 4A: Aggregate Premium */}
       <div className="border-l-4 border-orange-500 pl-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 4: Annual Aggregate Stop-Loss Premium</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 4A: Annual Aggregate Stop-Loss Premium</h3>
         <div className="bg-gray-50 p-3 rounded">
-          <p className="text-sm text-gray-600 mb-2">Formula: Aggregate Rate × Census × Factor × 12 months</p>
-          <p className="text-sm text-gray-600 mb-3">Aggregate Rate PEPM: ${costs.aggregateRate}</p>
+          <p className="text-sm text-gray-600 mb-2">Formula: Total Enrollment × Aggregate Rate PEPM × 12 months</p>
+          <div className="font-mono text-sm">
+            {totalEmployees} employees × ${costs.aggregateRate?.toFixed(2)} PEPM × 12 months = ${aggregatePremiumTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+          <p className="font-bold mt-3">Total Premium: ${aggregatePremiumTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        </div>
+      </div>
+
+      {/* Step 4B: Aggregate Attachment Point */}
+      <div className="border-l-4 border-amber-500 pl-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Step 4B: Aggregate Attachment Point (Maximum Claims)</h3>
+        <div className="bg-gray-50 p-3 rounded">
+          <p className="text-sm text-gray-600 mb-2">Formula: Census × Aggregate Factor × 12 months (per tier)</p>
+          <p className="text-sm text-gray-600 mb-3">This is the claims threshold where aggregate coverage begins</p>
           <div className="space-y-2 text-xs">
-            {aggregatePremiumDetails.map((detail: any, idx: number) => (
+            {aggregateAttachmentDetails.map((detail: any, idx: number) => (
               <div key={idx} className="font-mono">
-                {detail.plan} - {detail.tier}: ${detail.rate} × {detail.census} × ${detail.factor} × 12 = ${detail.annual.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                {detail.plan} - {detail.tier}: {detail.census} × ${detail.factor.toFixed(2)} × 12 = ${detail.annual.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             ))}
           </div>
-          <p className="font-bold mt-3">Total: ${aggregatePremiumTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+          <p className="font-bold mt-3">Total Attachment Point: ${aggregateAttachmentTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
         </div>
       </div>
 
