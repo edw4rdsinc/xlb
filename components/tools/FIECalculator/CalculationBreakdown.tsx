@@ -206,7 +206,14 @@ export default function CalculationBreakdown({ wizardData, results }: Calculatio
             {laserLiability > 0 && <p>Laser Liability: ${laserLiability.toLocaleString()}</p>}
             <div className="border-t border-gray-300 mt-2 pt-2">
               <p className="font-bold text-lg text-xl-dark-blue">
-                TOTAL: ${totalAnnualLiability.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                TOTAL LIABILITY: ${totalAnnualLiability.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </p>
+            </div>
+            <div className="border-t border-gray-300 mt-3 pt-3">
+              <p className="text-xs text-gray-600 mb-1">Reference (not included in liability):</p>
+              <p className="text-amber-700">Aggregate Attachment Point: ${aggregateAttachmentTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+              <p className="text-xs text-gray-500 italic mt-1">
+                This is the claims threshold where aggregate coverage begins, not a cost.
               </p>
             </div>
           </div>
