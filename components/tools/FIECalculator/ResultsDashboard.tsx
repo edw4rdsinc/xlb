@@ -35,8 +35,11 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
     return acc;
   }, {} as Record<string, string>);
 
-  // Extract plan year from effective date
-  const planYear = new Date(wizardData.effectiveDate).getFullYear();
+  // Extract plan year from effective date and format date properly
+  // Parse as local date to avoid timezone offset issues
+  const [year, month, day] = wizardData.effectiveDate.split('-').map(Number);
+  const effectiveDate = new Date(year, month - 1, day);
+  const planYear = effectiveDate.getFullYear();
 
   const isPositiveSavings = results.savingsPercentage > 0;
 
@@ -86,7 +89,7 @@ export default function ResultsDashboard({ wizardData, results }: ResultsDashboa
           <div>
             <h2 className="text-3xl font-bold mb-2">FIE Rate Analysis Results</h2>
             <p className="text-xl opacity-90">
-              {wizardData.groupName} - Effective {new Date(wizardData.effectiveDate).toLocaleDateString()}
+              {wizardData.groupName} - Effective {effectiveDate.toLocaleDateString()}
             </p>
           </div>
           <div className="mt-4 md:mt-0 text-center md:text-right">
