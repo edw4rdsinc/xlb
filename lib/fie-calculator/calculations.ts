@@ -195,11 +195,22 @@ export function calculateFIERates(
   // Formula: Total Enrollment × Aggregate Rate PEPM × 12
   const aggregatePremium = totalEmployees * costs.aggregateRate * 12;
 
+  // Calculate aggregate attachment point (Step 4B formula)
+  // Formula: Sum of (census × aggregate factor × 12) for each tier
+  let aggregateAttachmentPoint = 0;
+  plans.forEach(plan => {
+    tierConfig.forEach(tier => {
+      const census = plan.census[tier.code] || 0;
+      const factor = costs.aggregateFactors[tier.code] || 0;
+      aggregateAttachmentPoint += census * factor * 12;
+    });
+  });
+
   // Calculate laser liability
   const laserLiability = costs.lasers.reduce((total, laser) => total + laser.amount, 0);
 
-  // Total annual liability
-  const totalAnnualLiability = adminCosts + specificPremium + aggregatePremium + laserLiability;
+  // Total annual liability (maximum liability including attachment point)
+  const totalAnnualLiability = adminCosts + specificPremium + aggregatePremium + aggregateAttachmentPoint + laserLiability;
 
   // Step 2: Distribute to Plans
   const planWeights = plans.map((plan, index) => {
