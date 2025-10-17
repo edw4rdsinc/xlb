@@ -27,58 +27,45 @@ export default function SelfFundingFeasibilityPage() {
         </div>
       </section>
 
-      {/* Interactive Explainer Section */}
+      {/* Video Explainer Section */}
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-4">
               Understanding Self-Funding: A Quick Guide
             </h2>
-            <p className="text-lg text-xl-grey max-w-3xl mx-auto mb-8">
-              Learn how our assessment tool helps you determine if self-funding is right for your clients.
+            <p className="text-lg text-xl-grey max-w-3xl mx-auto">
+              Watch this 3-minute video to understand the key factors that determine self-funding readiness.
             </p>
-            <Link href="/tools/self-funding-explainer">
-              <button className="group bg-xl-bright-blue text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-xl inline-flex items-center">
-                <svg className="w-8 h-8 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                </svg>
-                Watch 30-Second Interactive Explainer
-                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </Link>
           </AnimatedSection>
 
           <AnimatedSection animation="fade-up">
-            <div className="mt-12 grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-xl-bright-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+            <div className="relative bg-xl-light-grey rounded-lg shadow-xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+              {/* Video Placeholder - Replace with actual video embed once available */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-24 h-24 bg-xl-bright-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-12 h-12 text-xl-bright-blue" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Video Coming Soon</h3>
+                  <p className="text-xl-grey max-w-md mx-auto">
+                    We're creating an in-depth explainer video on self-funding readiness assessment. Check back soon!
+                  </p>
                 </div>
-                <h3 className="font-bold text-xl-dark-blue mb-2">Quick Overview</h3>
-                <p className="text-sm text-xl-grey">30-second animated introduction to self-funding concepts</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-xl-bright-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <h3 className="font-bold text-xl-dark-blue mb-2">Interactive Learning</h3>
-                <p className="text-sm text-xl-grey">Pause, replay, and explore at your own pace</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-xl-bright-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-bold text-xl-dark-blue mb-2">See the Tool in Action</h3>
-                <p className="text-sm text-xl-grey">Preview how the assessment works before diving in</p>
-              </div>
+              {/*
+                When video is ready, replace the placeholder above with:
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="YOUR_VIDEO_URL"
+                  title="Self-Funding Assessment Explainer"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              */}
             </div>
           </AnimatedSection>
 
