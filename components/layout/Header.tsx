@@ -58,7 +58,7 @@ export default function Header() {
             </Link>
             <Link
               href="/contact"
-              className="rounded-md bg-xl-bright-blue px-4 py-2 text-sm font-semibold shadow-sm hover:bg-xl-dark-blue transition-colors"
+              className="rounded-md bg-xl-bright-blue px-6 py-3 md:px-4 md:py-2 text-sm font-semibold shadow-sm hover:bg-xl-dark-blue transition-colors"
               style={{ color: 'white' }}
             >
               Contact Us
@@ -69,7 +69,7 @@ export default function Header() {
           <div className="flex md:hidden">
             <button
               type="button"
-              className="text-gray-700"
+              className="p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>

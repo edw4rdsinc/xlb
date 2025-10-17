@@ -6,12 +6,12 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-5 md:py-10 overflow-hidden min-h-[180px] md:min-h-[135px]">
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-8 md:py-12 lg:py-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="grid md:grid-cols-2 gap-8 items-center h-full">
             {/* Left Side - Hero Image */}
             <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[600px] md:h-[938px] parallax-bg">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] parallax-bg">
                 <img
                   src="/images/other-images/xlb-hero.png"
                   alt="Your Sidekick for Stop-Loss Success"

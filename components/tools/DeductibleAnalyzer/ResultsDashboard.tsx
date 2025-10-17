@@ -100,52 +100,52 @@ export default function ResultsDashboard({ data, results, onReset }: ResultsDash
           <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 sm:px-4 py-3 text-left text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Deductible
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider">
                   2022
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider">
                   2023
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider">
                   2024
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider">
                   2025*
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-50">
-                  Average ISL Claims
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-50">
+                  Avg ISL
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
-                  Additional Claims
+                <th className="px-2 sm:px-4 py-3 text-right text-sm md:text-xs font-medium text-gray-500 uppercase tracking-wider bg-yellow-50">
+                  Additional
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {results.claimsAnalysis.map((row, index) => (
                 <tr key={index} className={index === 0 ? 'bg-gray-50 font-semibold' : ''}>
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-sm">
                     {formatCurrency(row.deductibleAmount)}
                     {index === 0 && <span className="ml-2 text-xs text-gray-500">(Current)</span>}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right text-sm">
                     {formatCurrency(row.claims2022)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right text-sm">
                     {formatCurrency(row.claims2023)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right text-sm">
                     {formatCurrency(row.claims2024)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right text-gray-500">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right text-gray-500 text-sm">
                     {formatCurrency(row.claims2025)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right bg-blue-50 font-semibold">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right bg-blue-50 font-semibold text-sm">
                     {formatCurrency(row.averageISLClaims)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-right bg-yellow-50">
+                  <td className="px-2 sm:px-4 py-2 sm:py-3 whitespace-nowrap text-right bg-yellow-50 text-sm">
                     {row.additionalClaims > 0 ? (
                       <span className="text-green-600 font-semibold">
                         {formatCurrency(row.additionalClaims)}
