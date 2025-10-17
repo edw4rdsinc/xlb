@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Play, Pause, RotateCcw, Volume2, VolumeX, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -8,7 +8,7 @@ interface Scene {
   id: string
   duration: number // in seconds
   title: string
-  content: JSX.Element
+  content: React.ReactElement
 }
 
 export default function SelfFundingExplainer() {
@@ -21,7 +21,7 @@ export default function SelfFundingExplainer() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const scenes: Scene[] = [
+  const scenes: Scene[] = useMemo(() => [
     {
       id: 'intro',
       duration: 3,
@@ -240,7 +240,7 @@ export default function SelfFundingExplainer() {
         </div>
       )
     }
-  ]
+  ], [router])
 
   // Calculate total duration
   const totalDuration = scenes.reduce((acc, scene) => acc + scene.duration, 0)
