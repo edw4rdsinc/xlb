@@ -33,7 +33,11 @@ export default function ClaimsEntry({ data, updateData, onNext, onBack, errors }
       newClaimants[index].name = value;
     } else if (field.startsWith('year')) {
       const year = field as keyof ClaimantData['claims'];
-      newClaimants[index].claims[year] = value ? parseFloat(value) : undefined;
+      // Allow decimal inputs with up to 2 decimal places
+      const cleanValue = value.replace(/[^0-9.]/g, '');
+      const parts = cleanValue.split('.');
+      const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+      newClaimants[index].claims[year] = formattedValue ? parseFloat(formattedValue) : undefined;
     }
     updateData({ claimants: newClaimants });
   };
@@ -186,50 +190,51 @@ export default function ClaimsEntry({ data, updateData, onNext, onBack, errors }
                         onChange={(e) => handleClaimantChange(index, 'name', e.target.value)}
                         className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                         placeholder="Claimant name"
+                        tabIndex={index + 1}
                       />
                     </td>
                     <td className="px-3 py-2">
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         value={claimant.claims.year2022 || ''}
                         onChange={(e) => handleClaimantChange(index, 'year2022', e.target.value)}
                         className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                        placeholder="0"
-                        min="0"
-                        step="1000"
+                        placeholder="0.00"
+                        tabIndex={data.claimants.length + index + 1}
                       />
                     </td>
                     <td className="px-3 py-2">
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         value={claimant.claims.year2023 || ''}
                         onChange={(e) => handleClaimantChange(index, 'year2023', e.target.value)}
                         className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                        placeholder="0"
-                        min="0"
-                        step="1000"
+                        placeholder="0.00"
+                        tabIndex={data.claimants.length * 2 + index + 1}
                       />
                     </td>
                     <td className="px-3 py-2">
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         value={claimant.claims.year2024 || ''}
                         onChange={(e) => handleClaimantChange(index, 'year2024', e.target.value)}
                         className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                        placeholder="0"
-                        min="0"
-                        step="1000"
+                        placeholder="0.00"
+                        tabIndex={data.claimants.length * 3 + index + 1}
                       />
                     </td>
                     <td className="px-3 py-2">
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         value={claimant.claims.year2025 || ''}
                         onChange={(e) => handleClaimantChange(index, 'year2025', e.target.value)}
                         className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                        placeholder="0"
-                        min="0"
-                        step="1000"
+                        placeholder="0.00"
+                        tabIndex={data.claimants.length * 4 + index + 1}
                       />
                     </td>
                     <td className="px-3 py-2">
@@ -237,6 +242,7 @@ export default function ClaimsEntry({ data, updateData, onNext, onBack, errors }
                         type="button"
                         onClick={() => removeClaimant(index)}
                         className="text-red-600 hover:text-red-800"
+                        tabIndex={-1}
                       >
                         Remove
                       </button>

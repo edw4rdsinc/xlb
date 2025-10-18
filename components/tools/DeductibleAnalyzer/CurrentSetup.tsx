@@ -38,16 +38,19 @@ export default function CurrentSetup({ data, updateData, onNext, onBack, errors 
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               id="currentDeductible"
-              value={data.currentDeductible}
-              onChange={(e) => updateData({ currentDeductible: parseInt(e.target.value) || 0 })}
+              value={data.currentDeductible || ''}
+              onChange={(e) => {
+                const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+                const parts = cleanValue.split('.');
+                const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+                updateData({ currentDeductible: formattedValue ? parseFloat(formattedValue) : 0 });
+              }}
               className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               required
-              min="50000"
-              max="2000000"
-              step="5000"
-              placeholder="225000"
+              placeholder="225000.00"
             />
           </div>
           <p className="mt-1 text-sm text-gray-500">
@@ -62,15 +65,19 @@ export default function CurrentSetup({ data, updateData, onNext, onBack, errors 
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               id="renewalPremium"
-              value={data.renewalPremium}
-              onChange={(e) => updateData({ renewalPremium: parseInt(e.target.value) || 0 })}
+              value={data.renewalPremium || ''}
+              onChange={(e) => {
+                const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+                const parts = cleanValue.split('.');
+                const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+                updateData({ renewalPremium: formattedValue ? parseFloat(formattedValue) : 0 });
+              }}
               className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               required
-              min="0"
-              step="1000"
-              placeholder="5000000"
+              placeholder="5000000.00"
             />
           </div>
           <p className="mt-1 text-sm text-gray-500">

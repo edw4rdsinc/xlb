@@ -12,7 +12,11 @@ export default function DeductibleOptions({ data, updateData, onNext, onBack, er
   const handleOptionChange = (index: number, field: keyof DeductibleOption, value: any) => {
     const newOptions = [...data.deductibleOptions];
     if (field === 'amount' || field === 'premium') {
-      newOptions[index][field] = parseInt(value) || 0;
+      // Allow decimal inputs with up to 2 decimal places
+      const cleanValue = value.replace(/[^0-9.]/g, '');
+      const parts = cleanValue.split('.');
+      const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+      newOptions[index][field] = formattedValue ? parseFloat(formattedValue) : 0;
     } else {
       newOptions[index][field] = value;
     }
@@ -60,14 +64,12 @@ export default function DeductibleOptions({ data, updateData, onNext, onBack, er
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={option.amount || ''}
                     onChange={(e) => handleOptionChange(index, 'amount', e.target.value)}
                     className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                    min="50000"
-                    max="2000000"
-                    step="25000"
-                    placeholder={`${250000 + (index * 50000)}`}
+                    placeholder={`${250000 + (index * 50000)}.00`}
                   />
                 </div>
               </div>
@@ -92,13 +94,12 @@ export default function DeductibleOptions({ data, updateData, onNext, onBack, er
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={option.premium || ''}
                     onChange={(e) => handleOptionChange(index, 'premium', e.target.value)}
                     className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                    min="0"
-                    step="1000"
-                    placeholder="0"
+                    placeholder="0.00"
                   />
                 </div>
               </div>
