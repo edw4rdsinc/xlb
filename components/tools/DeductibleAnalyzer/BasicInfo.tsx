@@ -59,16 +59,19 @@ export default function BasicInfo({ data, updateData, onNext, errors }: BasicInf
           </label>
           <div className="relative">
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               id="medicalTrendRate"
-              value={(data.medicalTrendRate * 100).toFixed(1)}
-              onChange={(e) => updateData({ medicalTrendRate: parseFloat(e.target.value) / 100 })}
+              value={data.medicalTrendRate ? (data.medicalTrendRate * 100).toFixed(2) : ''}
+              onChange={(e) => {
+                const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+                const parts = cleanValue.split('.');
+                const formattedValue = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+                updateData({ medicalTrendRate: formattedValue ? parseFloat(formattedValue) / 100 : 0 });
+              }}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               required
-              min="0"
-              max="20"
-              step="0.1"
-              placeholder="7.0"
+              placeholder="7.00"
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
           </div>

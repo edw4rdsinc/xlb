@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
-import DeductibleAnalyzer from '@/components/tools/DeductibleAnalyzer'
+import DeductibleAnalyzerSecure from '@/components/tools/DeductibleAnalyzerSecure'
+import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
 
 export const metadata: Metadata = {
   title: 'Stop-Loss Deductible Analyzer | XL Benefits',
@@ -50,9 +51,12 @@ export default function DeductibleOptimizationPage() {
             </p>
           </AnimatedSection>
 
-          <DeductibleAnalyzer />
+          <DeductibleAnalyzerSecure />
         </div>
       </section>
+
+      {/* Featured Expert - Rotating based on IP */}
+      <FeaturedExpertRotator />
 
       {/* Features Section */}
       <section className="py-16 bg-white">
