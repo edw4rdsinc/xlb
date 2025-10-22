@@ -13,9 +13,10 @@ export default function ResourcesPage() {
         className="relative py-32 min-h-[900px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/resources.JPG")',
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat'
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
