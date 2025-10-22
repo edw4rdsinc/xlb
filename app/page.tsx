@@ -38,12 +38,12 @@ export default function HomePage() {
     <div>
       <StructuredData type="organization" />
       {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-8 md:py-12 lg:py-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="grid md:grid-cols-2 gap-8 items-center h-full">
-            {/* Left Side - Hero Image */}
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Hero Image (taller) */}
             <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] parallax-bg">
+              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
                 <img
                   src="/images/other-images/xlb-hero.png"
                   alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
@@ -53,7 +53,7 @@ export default function HomePage() {
               </div>
             </AnimatedSection>
 
-            {/* Right Side - Content */}
+            {/* Right Side - Content (vertically centered against image) */}
             <AnimatedSection animation="slide-left" className="order-1 md:order-2">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
                 Your Sidekick for Stop-Loss Success
