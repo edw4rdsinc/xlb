@@ -1,6 +1,6 @@
 'use client';
 
-import type { WizardData } from '../FIECalculator';
+import type { WizardData } from '../FIECalculatorSecure';
 import type { CalculationResults } from '@/lib/fie-calculator/calculations';
 import { getTierConfig } from '@/lib/fie-calculator/calculations';
 
