@@ -452,6 +452,67 @@ export default function HowWeHelpPage() {
               </div>
             </AnimatedSection>
 
+            <hr className="border-xl-light-grey" />
+
+            {/* Challenge 4: Aggregating Specific Deductibles */}
+            <AnimatedSection animation="fade-up">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="md:order-2">
+                  <div className="inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                    COMMON CHALLENGE
+                  </div>
+                  <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
+                    "Should my client consider aggregating specific deductibles?"
+                  </h3>
+                  <p className="text-xl-grey mb-4 leading-relaxed">
+                    Aggregating specific deductibles can offer significant cost savings for the right groups, but calculating the actual ROI requires complex modeling that most brokers don't have time for.
+                  </p>
+                  <p className="text-xl-grey mb-6 leading-relaxed">
+                    Without accurate analysis, you might miss opportunities to save clients thousands—or recommend a structure that costs them more.
+                  </p>
+                  <Link
+                    href="/solutions/aggregating-specific-analysis"
+                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
+                    style={{ color: 'white' }}
+                  >
+                    Try the Aggregating Specific Calculator
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+                <div className="bg-xl-light-grey rounded-lg p-8 md:order-1">
+                  <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
+                  <ul className="space-y-3 text-xl-grey">
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Compare traditional vs. aggregating specific structures</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Calculate potential savings based on claims history</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Model different claim scenarios to assess risk vs. reward</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Clear ROI analysis to support your recommendations</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </AnimatedSection>
+
           </div>
         </div>
       </section>
