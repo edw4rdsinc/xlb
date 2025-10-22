@@ -214,8 +214,8 @@ export default function HomePage() {
               </div>
             </AnimatedSection>
 
-            {/* Tool 5: Vendor Directory */}
-            <AnimatedSection animation="fade-up" delay={500}>
+            {/* Tool 5: Vendor Directory - HIDDEN UNTIL AVAILABLE */}
+            {/* <AnimatedSection animation="fade-up" delay={500}>
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
@@ -238,10 +238,10 @@ export default function HomePage() {
                   </svg>
                 </Link>
               </div>
-            </AnimatedSection>
+            </AnimatedSection> */}
 
-            {/* Tool 6: Smart Share Calculator */}
-            <AnimatedSection animation="fade-up" delay={600}>
+            {/* Tool 6: Smart Share Calculator - HIDDEN UNTIL AVAILABLE */}
+            {/* <AnimatedSection animation="fade-up" delay={600}>
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
@@ -264,7 +264,7 @@ export default function HomePage() {
                   </svg>
                 </Link>
               </div>
-            </AnimatedSection>
+            </AnimatedSection> */}
           </div>
         </div>
       </section>
