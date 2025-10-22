@@ -1,6 +1,6 @@
 'use client';
 
-import type { WizardData } from '../FIECalculator';
+import type { WizardData } from '../FIECalculatorSecure';
 
 interface GroupSetupProps {
   data: WizardData;

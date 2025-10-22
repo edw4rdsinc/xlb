@@ -16,7 +16,7 @@ import {
 } from 'recharts';
 import { formatCurrency, formatPercentage, getTierConfig } from '@/lib/fie-calculator/calculations';
 import type { CalculationResults } from '@/lib/fie-calculator/calculations';
-import type { WizardData } from '../FIECalculator';
+import type { WizardData } from '../FIECalculatorSecure';
 import CalculationBreakdown from './CalculationBreakdown';
 import { openPrintableReport } from './PrintableReport';
 
