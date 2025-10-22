@@ -1,10 +1,42 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import AnimatedSection from '@/components/shared/AnimatedSection'
+import StructuredData from '@/components/seo/StructuredData'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'XL Benefits | Stop-Loss Insurance Expertise for Brokers',
+  description: 'Interactive tools and expert guidance to help insurance brokers navigate stop-loss challenges. COBRA calculators, deductible analysis, and self-funding assessments.',
+  openGraph: {
+    title: 'XL Benefits | Stop-Loss Insurance Expertise for Brokers',
+    description: 'Interactive tools and expert guidance to help insurance brokers navigate stop-loss challenges. COBRA calculators, deductible analysis, and self-funding assessments.',
+    url: 'https://xlbenefits.com',
+    siteName: 'XL Benefits',
+    type: 'website',
+    images: [
+      {
+        url: 'https://xlbenefits.com/images/other-images/xlb-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'XL Benefits - Stop-Loss Insurance Expertise',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'XL Benefits | Stop-Loss Insurance Expertise for Brokers',
+    description: 'Interactive tools and expert guidance to help insurance brokers navigate stop-loss challenges.',
+    images: ['https://xlbenefits.com/images/other-images/xlb-hero.png'],
+  },
+  alternates: {
+    canonical: 'https://xlbenefits.com',
+  },
+}
 
 export default function HomePage() {
   return (
     <div>
+      <StructuredData type="organization" />
       {/* Hero Section with Hero Image */}
       <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-8 md:py-12 lg:py-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
@@ -14,8 +46,9 @@ export default function HomePage() {
               <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] parallax-bg">
                 <img
                   src="/images/other-images/xlb-hero.png"
-                  alt="Your Sidekick for Stop-Loss Success"
+                  alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
                   className="w-full h-full object-contain"
+                  loading="eager"
                 />
               </div>
             </AnimatedSection>

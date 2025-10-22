@@ -1,13 +1,13 @@
 /**
  * React Hook for Calculator API Calls
- * Handles CAPTCHA, loading states, and error handling
+ * Handles CAPTCHA (Cloudflare Turnstile), loading states, and error handling
  */
 
 import { useState, useCallback, useEffect } from 'react';
 
 declare global {
   interface Window {
-    grecaptcha: any;
+    turnstile: any;
   }
 }
 
@@ -24,18 +24,18 @@ interface CalculatorState {
 }
 
 /**
- * Load reCAPTCHA script
+ * Load Cloudflare Turnstile script
  */
-function loadRecaptchaScript(): Promise<void> {
+function loadTurnstileScript(): Promise<void> {
   return new Promise((resolve) => {
     // Check if already loaded
-    if (window.grecaptcha) {
+    if (window.turnstile) {
       resolve();
       return;
     }
 
     // Check if script tag already exists
-    const existingScript = document.querySelector('script[src*="recaptcha/api.js"]');
+    const existingScript = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
     if (existingScript) {
       existingScript.addEventListener('load', () => resolve());
       return;
@@ -43,7 +43,7 @@ function loadRecaptchaScript(): Promise<void> {
 
     // Create and load script
     const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
     script.async = true;
     script.defer = true;
     script.onload = () => resolve();
@@ -52,7 +52,7 @@ function loadRecaptchaScript(): Promise<void> {
 }
 
 /**
- * Get reCAPTCHA token
+ * Get Turnstile token
  */
 async function getCaptchaToken(action: string): Promise<string> {
   // Skip in development unless explicitly enabled
@@ -61,19 +61,49 @@ async function getCaptchaToken(action: string): Promise<string> {
     return 'development-token';
   }
 
-  await loadRecaptchaScript();
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  if (!siteKey) {
+    console.error('NEXT_PUBLIC_TURNSTILE_SITE_KEY not configured');
+    throw new Error('Security configuration missing');
+  }
+
+  await loadTurnstileScript();
 
   return new Promise((resolve, reject) => {
-    if (!window.grecaptcha) {
-      reject(new Error('reCAPTCHA not loaded'));
+    if (!window.turnstile) {
+      reject(new Error('Turnstile not loaded'));
       return;
     }
 
-    window.grecaptcha.ready(() => {
-      window.grecaptcha
-        .execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action })
-        .then(resolve)
-        .catch(reject);
+    // Create a container for the widget (invisible mode)
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = '-1000px';
+    container.style.left = '-1000px';
+    document.body.appendChild(container);
+
+    // Render the widget
+    const widgetId = window.turnstile.render(container, {
+      sitekey: siteKey,
+      callback: (token: string) => {
+        // Clean up the container
+        document.body.removeChild(container);
+        resolve(token);
+      },
+      'error-callback': () => {
+        // Clean up the container
+        document.body.removeChild(container);
+        reject(new Error('Turnstile verification failed'));
+      },
+      action: action,
+      execution: 'execute',
+      appearance: 'interaction-only'
+    });
+
+    // Execute the challenge immediately (for invisible mode)
+    window.turnstile.execute(container, {
+      sitekey: siteKey,
+      action: action
     });
   });
 }
@@ -88,11 +118,11 @@ export function useCalculatorAPI(options: UseCalculatorOptions) {
     data: null
   });
 
-  // Load reCAPTCHA on mount
+  // Load Turnstile on mount
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' ||
         process.env.NEXT_PUBLIC_ENABLE_CAPTCHA === 'true') {
-      loadRecaptchaScript().catch(console.error);
+      loadTurnstileScript().catch(console.error);
     }
   }, []);
 

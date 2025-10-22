@@ -3,15 +3,45 @@ import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import DeductibleAnalyzerSecure from '@/components/tools/DeductibleAnalyzerSecure'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
+import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
   title: 'Stop-Loss Deductible Analyzer | XL Benefits',
   description: 'Analyze historical claims data to find the optimal stop-loss deductible. Compare premium savings against additional claims liability to maximize your net savings.',
+  openGraph: {
+    title: 'Stop-Loss Deductible Analyzer | XL Benefits',
+    description: 'Analyze historical claims to find optimal stop-loss deductibles. Compare premium savings vs. claims liability.',
+    url: 'https://xlbenefits.com/solutions/deductible-optimization',
+    siteName: 'XL Benefits',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Deductible Analyzer - Optimize Stop-Loss Coverage',
+    description: 'Model different deductible scenarios with actual claims history.',
+  },
+  alternates: {
+    canonical: 'https://xlbenefits.com/solutions/deductible-optimization',
+  },
 }
 
 export default function DeductibleOptimizationPage() {
   return (
     <div>
+      <StructuredData
+        type="software"
+        name="Stop-Loss Deductible Analyzer"
+        description="Analyze historical claims data to find the optimal stop-loss deductible with premium savings comparison and claims liability modeling."
+        category="FinanceApplication"
+      />
+      <StructuredData
+        type="breadcrumb"
+        items={[
+          { name: 'Home', url: 'https://xlbenefits.com' },
+          { name: 'Solutions', url: 'https://xlbenefits.com/solutions' },
+          { name: 'Deductible Analyzer', url: 'https://xlbenefits.com/solutions/deductible-optimization' },
+        ]}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

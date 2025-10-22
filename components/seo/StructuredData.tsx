@@ -30,7 +30,36 @@ interface HowToDataProps {
   }>
 }
 
-type StructuredDataProps = OrganizationDataProps | ArticleDataProps | FAQDataProps | HowToDataProps
+interface BreadcrumbDataProps {
+  type: 'breadcrumb'
+  items: Array<{
+    name: string
+    url: string
+  }>
+}
+
+interface ServiceDataProps {
+  type: 'service'
+  name: string
+  description: string
+  provider?: string
+}
+
+interface SoftwareAppDataProps {
+  type: 'software'
+  name: string
+  description: string
+  category: string
+}
+
+type StructuredDataProps =
+  | OrganizationDataProps
+  | ArticleDataProps
+  | FAQDataProps
+  | HowToDataProps
+  | BreadcrumbDataProps
+  | ServiceDataProps
+  | SoftwareAppDataProps
 
 export default function StructuredData(props: StructuredDataProps) {
   let structuredData: any = {}
@@ -42,8 +71,18 @@ export default function StructuredData(props: StructuredDataProps) {
         '@type': 'Organization',
         name: 'XL Benefits',
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://xlbenefits.com',
-        description: 'Stop-Loss Insurance Expertise for Brokers',
-        logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logos/xl-benefits-logo.png`,
+        description: 'Stop-Loss Insurance Expertise for Brokers - Interactive tools and expert guidance to help insurance brokers navigate stop-loss challenges.',
+        logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://xlbenefits.com'}/images/logos/xl-benefits-logo.png`,
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'Customer Service',
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://xlbenefits.com'}/contact`,
+        },
+        sameAs: [],
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'US',
+        },
       }
       break
 
@@ -88,6 +127,47 @@ export default function StructuredData(props: StructuredDataProps) {
           name: step.name,
           text: step.text,
         })),
+      }
+      break
+
+    case 'breadcrumb':
+      structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: props.items.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      }
+      break
+
+    case 'service':
+      structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: props.name,
+        description: props.description,
+        provider: {
+          '@type': 'Organization',
+          name: props.provider || 'XL Benefits',
+        },
+      }
+      break
+
+    case 'software':
+      structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: props.name,
+        description: props.description,
+        applicationCategory: props.category,
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
       }
       break
   }

@@ -3,6 +3,22 @@
  * Tracks all calculation requests for security and analytics
  */
 
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client for audit logging
+const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+  ? createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false
+        }
+      }
+    )
+  : null;
+
 export interface AuditLog {
   timestamp: Date;
   calculator: 'fie' | 'deductible' | 'assessment';
@@ -29,10 +45,37 @@ export async function logCalculatorRequest(log: AuditLog): Promise<void> {
     // Add to in-memory store
     auditLogs.push(log);
 
-    // In production, save to database
-    if (process.env.NODE_ENV === 'production') {
-      // TODO: Save to Supabase
-      // await supabase.from('audit_logs').insert(log);
+    // Save to Supabase if available
+    if (supabase) {
+      // Convert Date to ISO string for database
+      const dbLog = {
+        ...log,
+        timestamp: log.timestamp.toISOString(),
+        user_agent: log.userAgent,
+        error_message: log.errorMessage,
+        response_time: log.responseTime,
+        captcha_score: log.captchaScore,
+        input_summary: log.inputSummary,
+        result_summary: log.resultSummary
+      };
+
+      // Remove undefined fields and rename to match DB schema
+      delete (dbLog as any).userAgent;
+      delete (dbLog as any).errorMessage;
+      delete (dbLog as any).responseTime;
+      delete (dbLog as any).captchaScore;
+      delete (dbLog as any).inputSummary;
+      delete (dbLog as any).resultSummary;
+
+      const { error } = await supabase
+        .from('audit_logs')
+        .insert(dbLog);
+
+      if (error) {
+        console.error('Failed to save audit log to Supabase:', error);
+      }
+    } else if (process.env.NODE_ENV === 'production') {
+      console.warn('⚠️ Supabase not configured for audit logging. Add SUPABASE_SERVICE_ROLE_KEY to enable.');
     }
 
     // Keep only last 1000 logs in memory

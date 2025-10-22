@@ -5,6 +5,21 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export const metadata: Metadata = {
   title: 'Broker Toolkit | Free Stop-Loss Calculators & Resources',
   description: 'Quick access to interactive stop-loss tools: COBRA calculators, deductible analyzers, self-funding assessments, and vendor directories.',
+  openGraph: {
+    title: 'Broker Toolkit | Free Stop-Loss Calculators & Resources',
+    description: 'Free interactive tools designed for insurance brokers. COBRA calculators, deductible analyzers, and more.',
+    url: 'https://xlbenefits.com/toolkit',
+    siteName: 'XL Benefits',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Broker Toolkit - Free Stop-Loss Calculators',
+    description: 'Interactive stop-loss tools for insurance brokers. No login required.',
+  },
+  alternates: {
+    canonical: 'https://xlbenefits.com/toolkit',
+  },
 }
 
 export default function ToolkitPage() {
