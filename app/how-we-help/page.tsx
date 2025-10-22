@@ -6,12 +6,13 @@ export default function HowWeHelpPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative py-32 min-h-[900px] flex items-center"
+        className="relative py-24 min-h-[600px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/how-we-help.jpg")',
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat'
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
