@@ -3,15 +3,45 @@ import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import FIECalculatorSecure from '@/components/tools/FIECalculatorSecure'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
+import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
   title: 'TrueCost: Fully Insured Equivalent Rate Calculator | XL Benefits',
   description: 'Calculate accurate fully insured equivalent rates for self-funded groups. Compare stop-loss costs to current premiums and identify potential savings with our comprehensive FIE calculator.',
+  openGraph: {
+    title: 'TrueCost: Fully Insured Equivalent Rate Calculator | XL Benefits',
+    description: 'Calculate accurate fully insured equivalent rates for self-funded groups. Compare stop-loss costs to current premiums and identify potential savings.',
+    url: 'https://xlbenefits.com/solutions/truecost-calculator',
+    siteName: 'XL Benefits',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TrueCost Calculator - Fully Insured Equivalent Rates',
+    description: 'Calculate accurate FIE rates for self-funded groups with our comprehensive calculator.',
+  },
+  alternates: {
+    canonical: 'https://xlbenefits.com/solutions/truecost-calculator',
+  },
 }
 
 export default function TrueCostCalculatorPage() {
   return (
     <div>
+      <StructuredData
+        type="software"
+        name="TrueCost Calculator"
+        description="Calculate accurate fully insured equivalent rates for self-funded groups with tier ratio calculations, plan differential weighting, and aggregate corridor analysis."
+        category="FinanceApplication"
+      />
+      <StructuredData
+        type="breadcrumb"
+        items={[
+          { name: 'Home', url: 'https://xlbenefits.com' },
+          { name: 'Solutions', url: 'https://xlbenefits.com/solutions' },
+          { name: 'TrueCost Calculator', url: 'https://xlbenefits.com/solutions/truecost-calculator' },
+        ]}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

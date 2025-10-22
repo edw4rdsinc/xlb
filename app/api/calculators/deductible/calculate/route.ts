@@ -1,6 +1,73 @@
 /**
  * Deductible Analyzer API Endpoint
- * Protected server-side calculation logic
+ * Protected server-side calculation logic for optimizing insurance deductibles
+ *
+ * @route POST /api/calculators/deductible/calculate
+ * @rateLimit 10 requests per minute per IP
+ * @security CAPTCHA verification (when enabled), input validation, output sanitization
+ *
+ * @example Request body:
+ * ```json
+ * {
+ *   "companyName": "Example Corp",
+ *   "effectiveDate": "2024-01-01",
+ *   "numberOfEmployees": 150,
+ *   "currentDeductible": 5000,
+ *   "deductibleOptions": [2500, 5000, 7500, 10000],
+ *   "medicalTrendRate": 7.5,
+ *   "claimsHistory": [
+ *     {
+ *       "year": 2023,
+ *       "totalClaims": 450000,
+ *       "largeClaims": 3,
+ *       "maxClaim": 75000
+ *     }
+ *   ],
+ *   "email": "user@example.com"
+ * }
+ * ```
+ *
+ * @example Success Response (200):
+ * ```json
+ * {
+ *   "success": true,
+ *   "data": {
+ *     "recommendations": [
+ *       {
+ *         "deductible": 7500,
+ *         "expectedSavings": 25000,
+ *         "riskScore": 0.72,
+ *         "confidence": 0.85
+ *       }
+ *     ],
+ *     "analysis": {
+ *       "currentRisk": {...},
+ *       "projectedClaims": {...},
+ *       "savingsBreakdown": {...}
+ *     },
+ *     "calculatedAt": "2024-01-15T12:00:00Z",
+ *     "calculator": "deductible",
+ *     "version": "2.0"
+ *   }
+ * }
+ * ```
+ *
+ * @example Error Response (400):
+ * ```json
+ * {
+ *   "error": "Validation failed",
+ *   "details": {
+ *     "deductibleOptions": ["At least 2 deductible options required"]
+ *   }
+ * }
+ * ```
+ *
+ * @example Rate Limit Response (429):
+ * ```json
+ * {
+ *   "error": "Rate limit exceeded. Please wait 60 seconds."
+ * }
+ * ```
  */
 
 import { createSecureHandler } from '@/lib/api/security/api-handler';
@@ -15,7 +82,8 @@ import fs from 'fs/promises';
 type DeductibleAnalyzerInput = z.infer<typeof deductibleAnalyzerSchema>;
 
 /**
- * Load the Excel template
+ * Load the Excel template for deductible analysis
+ * @returns ArrayBuffer containing the Excel template
  */
 async function loadTemplate(): Promise<ArrayBuffer> {
   // In production, store this in a secure location

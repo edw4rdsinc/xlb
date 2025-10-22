@@ -1,4 +1,5 @@
 import { type PlayerStats } from '../scoring/calculator';
+import { mysportsfeedsAPI } from './mysportsfeeds';
 
 export interface NFLPlayerStats extends PlayerStats {
   player_id: string;
@@ -7,12 +8,9 @@ export interface NFLPlayerStats extends PlayerStats {
   team: string;
 }
 
-// Mock API - Replace with real NFL stats API later
-export class NFLStatsAPI {
+// Mock API - Fallback for testing when MySportsFeeds is unavailable
+class MockNFLStatsAPI {
   async fetchWeeklyStats(weekNumber: number): Promise<NFLPlayerStats[]> {
-    // TODO: Replace with real API call
-    // Examples: ESPN API, Sleeper API, Yahoo Fantasy API, RapidAPI NFL stats
-
     console.log(`[MOCK API] Fetching stats for week ${weekNumber}`);
 
     // Simulate API delay
@@ -78,9 +76,58 @@ export class NFLStatsAPI {
   }
 
   async testConnection(): Promise<boolean> {
-    // TODO: Test real API connection
     console.log('[MOCK API] Testing connection...');
     return true;
+  }
+}
+
+// NFL Stats API - Uses MySportsFeeds (real API) or Mock API (fallback)
+export class NFLStatsAPI {
+  private useMock: boolean;
+  private mockAPI: MockNFLStatsAPI;
+
+  constructor() {
+    // Use mock API if MySportsFeeds credentials aren't configured
+    const hasCredentials = process.env.MYSPORTSFEEDS_API_KEY && process.env.MYSPORTSFEEDS_PASSWORD;
+    this.useMock = !hasCredentials;
+    this.mockAPI = new MockNFLStatsAPI();
+
+    if (this.useMock) {
+      console.warn('[NFL Stats API] MySportsFeeds credentials not found - using MOCK API');
+    } else {
+      console.log('[NFL Stats API] Using MySportsFeeds API');
+    }
+  }
+
+  async fetchWeeklyStats(weekNumber: number): Promise<NFLPlayerStats[]> {
+    if (this.useMock) {
+      return this.mockAPI.fetchWeeklyStats(weekNumber);
+    }
+
+    try {
+      return await mysportsfeedsAPI.fetchWeeklyStats(weekNumber);
+    } catch (error) {
+      console.error('[NFL Stats API] MySportsFeeds failed, falling back to mock API:', error);
+      return this.mockAPI.fetchWeeklyStats(weekNumber);
+    }
+  }
+
+  async testConnection(): Promise<boolean> {
+    if (this.useMock) {
+      return this.mockAPI.testConnection();
+    }
+
+    return await mysportsfeedsAPI.testConnection();
+  }
+
+  /**
+   * Check which API is currently in use
+   */
+  getAPIStatus(): { provider: string; isConfigured: boolean } {
+    return {
+      provider: this.useMock ? 'Mock API' : 'MySportsFeeds',
+      isConfigured: !this.useMock,
+    };
   }
 }
 
