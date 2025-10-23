@@ -109,7 +109,7 @@ export default function HomePage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Tool 1: COBRA Calculator */}
             <AnimatedSection animation="fade-up" delay={100}>
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
@@ -282,7 +282,7 @@ export default function HomePage() {
             <AnimatedSection animation="fade-up" delay={100}>
               <div className="bg-xl-light-grey rounded-lg p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
-                  "Daron Pitts of XL Benefits knowledge of the reinsurance industry is exemplary. He and his firm provides phenomenal service and handles all matters timely and with a sense of professionalism. I believe that XL Benefits would be an excellent partner with any group client and their benefits."
+                  "I believe that XL Benefits would be an excellent partner with any group client and their benefits."
                 </p>
                 <p className="font-semibold text-xl-dark-blue">Gina Cuttone</p>
                 <p className="text-sm text-xl-grey">President, Barthuli & Associates Insurance Services, Inc.</p>
@@ -292,7 +292,7 @@ export default function HomePage() {
             <AnimatedSection animation="fade-up" delay={200}>
               <div className="bg-xl-light-grey rounded-lg p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
-                  "As a TPA we've been approached by a number of stop loss general agents through the years. Recently we were introduced to the XL Benefits team and they have exceeded our expectations, setting a new standard for stop loss marketing. Their carrier relationships, expertise, responsiveness, and flexibility have freed us up to focus on what we do best – plan administration."
+                  "The XL Benefits team has exceeded our expectations, setting a new standard for stop loss marketing."
                 </p>
                 <p className="font-semibold text-xl-dark-blue">Regional Sales Manager</p>
                 <p className="text-sm text-xl-grey">Third-Party Administrator (Northern California)</p>
@@ -302,7 +302,7 @@ export default function HomePage() {
             <AnimatedSection animation="fade-up" delay={300}>
               <div className="bg-xl-light-grey rounded-lg p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
-                  "We consider XL Benefits an extension of our team. From the initial marketing to the final presentation their help is invaluable to our overall success. On more than one occasion they've helped us secure new business via broker of record and transition some of our fully insured clients to self-funding."
+                  "We consider XL Benefits an extension of our team. Their help is invaluable to our overall success."
                 </p>
                 <p className="font-semibold text-xl-dark-blue">Vice President, Benefits</p>
                 <p className="text-sm text-xl-grey">Regional Firm (Fresno, CA)</p>

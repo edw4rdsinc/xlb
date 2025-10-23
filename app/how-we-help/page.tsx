@@ -6,7 +6,7 @@ export default function HowWeHelpPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative py-24 min-h-[600px] flex items-center"
+        className="relative py-20 min-h-[480px] flex items-center"
         style={{
           backgroundImage: 'url("/images/parallax/how-we-help.jpg")',
           backgroundSize: 'contain',
@@ -17,10 +17,10 @@ export default function HowWeHelpPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <AnimatedSection animation="fade-up" className="ml-auto max-w-2xl text-right">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#ebc583', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               How We Help Brokers Win
             </h1>
-            <p className="text-xl drop-shadow-lg" style={{ color: '#ebc583', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-xl drop-shadow-lg text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
               Expert stop-loss guidance, market access, and tools to serve your clients better.
             </p>
           </AnimatedSection>
@@ -282,7 +282,7 @@ export default function HowWeHelpPage() {
                     "How do I calculate fully insured equivalent rates accurately?"
                   </h3>
                   <p className="text-xl-grey mb-4 leading-relaxed">
-                    Fully insured equivalent rates for self-funded plans are notoriously complex. State-specific rules, administrative fee caps, coverage tier variations, and monthly adjustments create a compliance minefield.
+                    Fully insured equivalent rates for self-funded plans are notoriously complex. Coverage tier variations, plan design differences, and monthly adjustments require careful analysis to provide accurate calculations.
                   </p>
                   <p className="text-xl-grey mb-6 leading-relaxed">
                     Let us help.
@@ -305,25 +305,25 @@ export default function HowWeHelpPage() {
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>State-specific compliance rules built in</span>
+                      <span>Rates built on actuarial values and plan design</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Automatic administrative fee calculations (2% cap compliance)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Coverage tier breakdowns (employee, spouse, children, family)</span>
+                      <span>Flexible tier structures (2-tier, 3-tier, 4-tier, 5-tier)</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span>Client-ready PDF reports you can share with confidence</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Automatic COBRA rate calculations included</span>
                     </li>
                   </ul>
                 </div>
@@ -340,13 +340,13 @@ export default function HowWeHelpPage() {
                     COMMON CHALLENGE
                   </div>
                   <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
-                    "Which deductible structure will actually save my client money?"
+                    "How do I find the best specific deductible for my client?"
                   </h3>
                   <p className="text-xl-grey mb-4 leading-relaxed">
-                    Specific deductibles, aggregate deductibles, aggregating specific deductibles—the options multiply quickly, and so does the confusion.
+                    Finding the optimal specific deductible requires analyzing historical claims data and comparing the impact at different deductible levels. Most brokers don't have time for this complex analysis.
                   </p>
                   <p className="text-xl-grey mb-6 leading-relaxed">
-                    Without side-by-side scenario analysis, you're making recommendations based on gut feel instead of data.
+                    Our tool provides historically-based analysis to help you identify the deductible level that would have worked best for your client's specific claims pattern.
                   </p>
                   <Link
                     href="/toolkit#deductible-analyzer"
@@ -366,25 +366,25 @@ export default function HowWeHelpPage() {
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Compare multiple deductible structures side-by-side</span>
+                      <span>Evaluates historical claims data across multiple years</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Model different claims scenarios (best case, worst case, expected)</span>
+                      <span>Compares premium savings at different deductible levels</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>See total cost impact with premium + out-of-pocket breakdowns</span>
+                      <span>Shows historically optimal deductible for your group</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Data-driven recommendations you can defend</span>
+                      <span>Includes disclaimer: Past performance does not guarantee future results</span>
                     </li>
                   </ul>
                 </div>
@@ -465,10 +465,10 @@ export default function HowWeHelpPage() {
                     "Should my client consider aggregating specific deductibles?"
                   </h3>
                   <p className="text-xl-grey mb-4 leading-relaxed">
-                    Aggregating specific deductibles can offer significant cost savings for the right groups, but calculating the actual ROI requires complex modeling that most brokers don't have time for.
+                    Aggregating specific deductibles can offer significant cost savings for the right groups. Many brokers don't think to consider the advantages of adding an aggregating specific deductible.
                   </p>
                   <p className="text-xl-grey mb-6 leading-relaxed">
-                    Without accurate analysis, you might miss opportunities to save clients thousands—or recommend a structure that costs them more.
+                    Without proper analysis, you might miss opportunities to save clients thousands—or recommend a structure that costs them more.
                   </p>
                   <Link
                     href="/solutions/aggregating-specific-analysis"
@@ -488,25 +488,25 @@ export default function HowWeHelpPage() {
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Compare traditional vs. aggregating specific structures</span>
+                      <span>Analyzes historical claims data</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Calculate potential savings based on claims history</span>
+                      <span>Shows what you would have saved historically</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Model different claim scenarios to assess risk vs. reward</span>
+                      <span>Provides clear recommendations and guidance</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Clear ROI analysis to support your recommendations</span>
+                      <span>Helps identify opportunities you might be missing</span>
                     </li>
                   </ul>
                 </div>

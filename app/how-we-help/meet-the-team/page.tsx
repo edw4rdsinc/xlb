@@ -6,7 +6,7 @@ export default function MeetTheTeamPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-20">
+      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6">
@@ -180,7 +180,8 @@ export default function MeetTheTeamPage() {
                   imageUrl="/images/team/daron-headshot.jpeg"
                   expertise={["20+ Years Self-Funding", "Stop Loss General Agent", "CSFS Designation"]}
                   bio="Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop loss field serving brokers and TPAs. In July of 2014, Daron started XL Benefits with the goal to provide his collective expertise, creative solutions and uncommon service to an industry he loves. You could describe Daron as an avid sports fan, audiobook listening, Fall-loving, board game playing, amateur cooking, dedicated husband, and father of three."
-                  email="daron@xlbenefits.com"
+                  email="dpitts@xlbenefits.com"
+                  linkedinUrl="https://www.linkedin.com/in/daron-pitts-b0657063/"
                 />
               </AnimatedSection>
             </div>
@@ -196,7 +197,8 @@ export default function MeetTheTeamPage() {
                 imageUrl="/images/team/jennifer-headshot.jpeg"
                 expertise={["20+ Years Self-Funding", "TPA Experience", "Broker & Consultant Background"]}
                 bio="Jennifer has over 20 years of experience in self-funding, having worked as a TPA professional, employee benefits broker, and now as a stop loss consultant. Her diverse background gives her unique insights into all sides of the self-funding equation. She specializes in helping large companies develop and deploy cost containment strategies including PBM analysis, captive solutions, and risk mitigation. Jennifer joined the XL Benefits team in May 2023 with the goal to become a trusted partner to our broker and TPA communities on the East Coast. She loves most sports, recently became an MLS Soccer fan (Go Charlotte FC), enjoys spending time on the golf course and the lake."
-                email="jennifer@xlbenefits.com"
+                email="jbaird@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/jennifer-baird-flynn-a2aa113a/"
               />
             </AnimatedSection>
 
@@ -208,7 +210,8 @@ export default function MeetTheTeamPage() {
                 imageUrl="/images/team/steve-headshot.jpeg"
                 expertise={["10+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
                 bio="Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo). He loves watching UFC with his four boys and drinking coffee with his wife and two girls."
-                email="steve@xlbenefits.com"
+                email="scaler@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/steve-caler-csfs-852a7451/"
               />
             </AnimatedSection>
 
@@ -219,8 +222,9 @@ export default function MeetTheTeamPage() {
                 title="Stop Loss Sales Consultant"
                 imageUrl="/images/team/sam-headshot.jpeg"
                 expertise={["20+ Years Insurance Experience", "Agency Owner Background", "Tech Startup Contributor"]}
-                bio="Sam brings over 20 years of insurance experience, including a decade running his own agency and most recently contributing to a tech startup. His passion for building relationships, supporting brokers, and improving how we serve our clients makes him a fantastic addition to our team."
-                email="sam@xlbenefits.com"
+                bio="Sam brings over 20 years of insurance experience, including a decade running his own agency and most recently contributing to a tech startup. His passion for building relationships, supporting brokers, and improving how we serve our clients makes him a fantastic addition to our team. You could describe Sam as a Liverpool FC fanatic, board game enthusiast, CrossFit athlete, pickleball player, and devoted husband and father who brings the same competitive energy to serving brokers as he does to everything else in life."
+                email="sedwards@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/samuel-edwards-1baba411a/"
               />
             </AnimatedSection>
           </div>
@@ -235,7 +239,8 @@ export default function MeetTheTeamPage() {
                 imageUrl="/images/team/joe-headshot.jpeg"
                 expertise={["10+ Years Insurance Industry", "P&C Agent Background", "Analytical Expertise"]}
                 bio="Joe has worked in the insurance industry for more than a decade, serving as a property and casualty agent for the first part of his career. Responsible for new business sales of both personal and commercial lines, Joe gained plenty of industry knowledge before transitioning to our world of self-funding. In July of 2015, Joe joined XL Benefits with the goal to apply his analytical mind to the field of medical stop loss. You could describe Joe as an all around great guy. He's our resident fantasy football guru, as well as a garden growing, spicy food eating, deep thinking, board game playing, nature loving, husband of one and father of three."
-                email="joe@xlbenefits.com"
+                email="jlandziak@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/joelandziak/"
               />
             </AnimatedSection>
 
@@ -247,7 +252,8 @@ export default function MeetTheTeamPage() {
                 imageUrl="/images/team/erin-headshot.jpeg"
                 expertise={["Insurance Since 2004", "Large Self-Funded Groups", "RFP & Renewals Specialist"]}
                 bio="Erin joined our team in 2023 with an extensive insurance background that began in 2004, working mainly on large self-funded employer groups, including stop loss insurance. Erin assists with RFP submission, renewals and new business set-up. Erin is bubbly, creative and has a heart for outstanding customer service. When she's not working she is typically out riding horses and camping with her daughter, and enjoys dancing, wine tasting and volunteering at her local school and church events."
-                email="erin@xlbenefits.com"
+                email="emaurer@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/erin-maurer-9295036/"
               />
             </AnimatedSection>
 
@@ -259,7 +265,8 @@ export default function MeetTheTeamPage() {
                 imageUrl="/images/team/christine-headshot.jpeg"
                 expertise={["Account Management", "Client Relations", "Detail-Oriented Service"]}
                 bio="Christine brings an unparalleled energy to XL Benefits. She has a knack for account management bolstered by her warm personality and desire to serve others. She has years of experience in managing reports, forecasting, training and serving as a day to day contact for clients. Utilizing her strengths and personality she seeks to build rapport with co-workers and clients establishing trusted, long term relationships. Christine has a love for decorating, cooking and cleaning. She likes to create welcoming spaces for others. Her eye for detail and the joy of caring for others has contributed to the creation of personalized parties and weddings for many."
-                email="christine@xlbenefits.com"
+                email="ctitus@xlbenefits.com"
+                linkedinUrl="https://www.linkedin.com/in/christine-titus-bb161373/"
               />
             </AnimatedSection>
           </div>
