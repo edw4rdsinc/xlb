@@ -31,8 +31,7 @@ export default function ToolkitPage() {
         style={{
           backgroundImage: 'url("/images/parallax/toolsresources.jpg")',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundPosition: 'center'
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">

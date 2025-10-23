@@ -24,8 +24,7 @@ function ContactPageContent() {
         style={{
           backgroundImage: 'url("/images/parallax/contact.jpg")',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundPosition: 'center'
         }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -39,7 +38,7 @@ function ContactPageContent() {
           {/* Territory Specialist in Hero */}
           {!loading && (
             <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-md mx-auto">
-              <h2 className="text-xl font-bold text-gray-700 mb-3 text-center">
+              <h2 className="text-xl font-bold text-xl-dark-blue mb-3 text-center">
                 Your Territory Specialist
               </h2>
               {location && location.state && (
@@ -48,7 +47,7 @@ function ContactPageContent() {
                 </p>
               )}
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-700 mb-3">{displayRep.name}</h3>
+                <h3 className="text-2xl font-bold text-xl-dark-blue mb-3">{displayRep.name}</h3>
                 <a href={`mailto:${displayRep.email}`} className="block text-xl-bright-blue hover:text-xl-dark-blue mb-2">
                   {displayRep.email}
                 </a>
