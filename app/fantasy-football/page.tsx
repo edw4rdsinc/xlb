@@ -35,7 +35,7 @@ export default function FantasyFootballPage() {
               </Link>
               <Link
                 href="/fantasy-football/results"
-                className="bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 border-2 border-white text-center"
+                className="bg-xl-dark-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-bright-blue transition-all hover:scale-105 border-2 border-white text-center"
               >
                 View Results
               </Link>
