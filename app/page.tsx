@@ -336,7 +336,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white mb-2">Daron Pitts</h3>
                 <p className="text-white/80 text-sm mb-4">President, Founder | CSFS</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Daron is the founder of XL Benefits and a problem solver at heart. With over 20 years of experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop-loss field serving brokers and TPAs, providing creative solutions and uncommon service to an industry he loves.
+                  Daron is the founder of XL Benefits and a problem solver at heart. With over 12 years of specialized experience in self-funding, he holds the Certified Self-Funding Specialist (CSFS) designation. He works primarily in the medical stop-loss field serving brokers and TPAs nationwide, bringing deep carrier relationships and creative problem-solving to every placement, from straightforward renewals to the most challenging cases.
                 </p>
               </div>
             </AnimatedSection>
@@ -372,9 +372,9 @@ export default function HomePage() {
                   />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Steve Caler</h3>
-                <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
+                <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant | CSFS</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop-loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions.
+                  Steve brings over 20 years of management and personal development experience to XL Benefits, including extensive background in relationship building and strategic problem-solving. He holds the Certified Self-Funding Specialist (CSFS) designation and focuses on expanding broker partnerships across the Southwest and South regions, helping brokers understand how stop-loss solutions fit into their overall benefits strategy.
                 </p>
               </div>
             </AnimatedSection>
@@ -393,7 +393,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white mb-2">Samuel Edwards</h3>
                 <p className="text-white/80 text-sm mb-4">Stop Loss Sales Consultant</p>
                 <p className="text-white/90 leading-relaxed text-sm">
-                  Sam brings a unique combination of technical expertise and industry knowledge to XL Benefits. With experience in both technology and stop-loss consulting, he helps brokers leverage innovative solutions while providing expert guidance on complex self-funding scenarios across the Mountain, Plains, and Midwest regions.
+                  Sam brings a unique combination of technical expertise and industry knowledge to XL Benefits, with extensive experience in both technology and stop-loss consulting. He helps brokers leverage innovative solutions while providing expert guidance on complex self-funding scenarios, specializing in the Mountain, Plains, and Midwest regions where he assists brokers navigate unique regulatory and market conditions across diverse states.
                 </p>
               </div>
             </AnimatedSection>
