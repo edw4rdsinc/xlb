@@ -323,7 +323,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[420px] flex flex-col">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[500px] flex flex-col">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
                   <Image
                     src="/images/team/daron-headshot.jpeg"
@@ -342,7 +342,7 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[420px] flex flex-col">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[500px] flex flex-col">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
                   <Image
                     src="/images/team/jennifer-headshot.jpeg"
@@ -361,7 +361,7 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[420px] flex flex-col">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[500px] flex flex-col">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
                   <Image
                     src="/images/team/steve-headshot.jpeg"
@@ -380,7 +380,7 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={400}>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[420px] flex flex-col">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:h-[500px] flex flex-col">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-4 mx-auto border-4 border-white/20">
                   <Image
                     src="/images/team/sam-headshot.jpeg"
