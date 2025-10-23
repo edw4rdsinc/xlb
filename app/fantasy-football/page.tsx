@@ -4,45 +4,42 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 export default function FantasyFootballPage() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Hero Image */}
-            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
-                <img
-                  src="/images/parallax/fantasy-football.jpeg"
-                  alt="XL Benefits Fantasy Football Challenge"
-                  className="w-full h-full object-cover rounded-lg"
-                  loading="eager"
-                />
-              </div>
-            </AnimatedSection>
+      {/* Hero Section - Background Image with Overlay */}
+      <section
+        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        style={{
+          backgroundImage: 'url(/images/parallax/fantasy-football.jpeg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/50"></div>
 
-            {/* Right Side - Content */}
-            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                XL Benefits Fantasy Football Challenge
-              </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                18 weeks. 3 rounds. Over $1,000 in prizes. Free to play.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/fantasy-football/submit"
-                  className="bg-white text-primary-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg text-center"
-                >
-                  Submit Your Lineup
-                </Link>
-                <Link
-                  href="/fantasy-football/results"
-                  className="bg-primary-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-primary-900 transition-all hover:scale-105 border-2 border-white text-center"
-                >
-                  View Results
-                </Link>
-              </div>
-            </AnimatedSection>
+        {/* Overlaid Content - Centered */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+              FANTASY FOOTBALL CHALLENGE
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl mb-10 md:mb-12 text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+              18 weeks. 3 rounds. Over $1,000 in prizes. Free to play.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
+              <Link
+                href="/fantasy-football/submit"
+                className="bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-2xl text-center"
+              >
+                Submit Your Lineup
+              </Link>
+              <Link
+                href="/fantasy-football/results"
+                className="bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 border-2 border-white text-center"
+              >
+                View Results
+              </Link>
+            </div>
           </div>
         </div>
       </section>

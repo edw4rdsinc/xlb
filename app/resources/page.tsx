@@ -10,29 +10,44 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div>
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Hero Image */}
-            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
-                <img
-                  src="/images/parallax/resources.JPG"
-                  alt="Resources for brokers"
-                  className="w-full h-full object-cover rounded-lg"
-                  loading="eager"
-                />
-              </div>
-            </AnimatedSection>
+      <section
+        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        style={{
+          backgroundImage: 'url(/images/parallax/toolsresources.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/50"></div>
 
-            {/* Right Side - Content */}
-            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Resources for Brokers
+        {/* Overlaid Content - Centered */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <AnimatedSection animation="fade-up">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+                RESOURCES
               </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                White papers, guides, and insights to help you serve your clients better.
+              <p className="text-xl sm:text-2xl md:text-3xl mb-10 md:mb-12 text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+                White papers, guides, and insights to help you serve your clients better
               </p>
+
+              {/* Featured Tool Buttons - Stacked */}
+              <div className="flex flex-col gap-4 max-w-xl mx-auto">
+                <Link
+                  href="/solutions/truecost-calculator"
+                  className="bg-xl-dark-blue/90 backdrop-blur-sm text-white px-8 py-4 rounded-md font-semibold text-lg md:text-xl hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-2xl"
+                >
+                  TAX SAVINGS CALCULATOR
+                </Link>
+                <Link
+                  href="/solutions/commission-fee-comparison"
+                  className="bg-xl-dark-blue/90 backdrop-blur-sm text-white px-8 py-4 rounded-md font-semibold text-lg md:text-xl hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-2xl"
+                >
+                  COMMISSION VS. FEE CALCULATOR
+                </Link>
+              </div>
             </AnimatedSection>
           </div>
         </div>

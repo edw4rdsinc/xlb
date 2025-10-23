@@ -5,29 +5,17 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function MeetTheTeamPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Hero Image */}
-            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
-                <img
-                  src="/images/parallax/team.jpg"
-                  alt="Meet our expert team"
-                  className="w-full h-full object-cover rounded-lg"
-                  loading="eager"
-                />
-              </div>
-            </AnimatedSection>
-
-            {/* Right Side - Content */}
-            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Meet the Team
+      {/* Hero - Gradient Background with Centered Content */}
+      <section className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]">
+        {/* Overlaid Content - Centered */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <AnimatedSection animation="fade-up">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+                MEET THE TEAM
               </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                Expert specialists committed to your success and your clients' well-being.
+              <p className="text-xl sm:text-2xl md:text-3xl text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+                Expert specialists committed to your success and your clients' well-being
               </p>
             </AnimatedSection>
           </div>

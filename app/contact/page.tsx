@@ -18,61 +18,58 @@ function ContactPageContent() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Hero Image */}
-            <div className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
-                <img
-                  src="/images/parallax/contact.jpg"
-                  alt="Contact us for stop-loss guidance"
-                  className="w-full h-full object-cover rounded-lg"
-                  loading="eager"
-                />
-              </div>
-            </div>
+      {/* Hero Section - Matching Live Site with Background Image */}
+      <section
+        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        style={{
+          backgroundImage: 'url(/images/parallax/contact.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
-            {/* Right Side - Content and Territory Specialist */}
-            <div className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Contact Us
-              </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                Ready to discuss your stop-loss needs? We're here to help.
-              </p>
+        {/* Overlaid Content */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-white drop-shadow-2xl">
+              LET'S TALK
+            </h1>
+            <p className="text-xl sm:text-2xl md:text-3xl mb-8 md:mb-12 text-white drop-shadow-lg">
+              WE'RE EXCITED TO HEAR HOW WE CAN HELP YOU
+            </p>
 
-              {/* Territory Specialist Card */}
-              {!loading && (
-                <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                  <h2 className="text-lg font-bold text-xl-dark-blue mb-2 text-center">
-                    Your Territory Specialist
-                  </h2>
-                  {location && location.state && (
-                    <p className="text-xs text-xl-grey mb-3 text-center">
-                      Based on your location
+            {/* Territory Specialist Card - Centered in Hero */}
+            {!loading && (
+              <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-6 md:p-8 max-w-md mx-auto">
+                <h2 className="text-xl md:text-2xl font-bold text-xl-dark-blue mb-2 text-center">
+                  Your Territory Specialist
+                </h2>
+                {location && location.state && (
+                  <p className="text-sm text-xl-grey mb-4 text-center">
+                    Based on your location
+                  </p>
+                )}
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-xl-dark-blue mb-3">{displayRep.name}</h3>
+                  <a href={`mailto:${displayRep.email}`} className="block text-base text-xl-bright-blue hover:text-xl-dark-blue mb-2">
+                    {displayRep.email}
+                  </a>
+                  {displayRep.phone && (
+                    <a href={`tel:${displayRep.phone}`} className="block text-base text-xl-bright-blue hover:text-xl-dark-blue mb-4">
+                      {displayRep.phone}
+                    </a>
+                  )}
+                  {!displayRep.bookingUrl && (
+                    <p className="text-sm text-xl-grey mt-3">
+                      Reach out via email or phone to schedule a consultation
                     </p>
                   )}
-                  <div className="text-center">
-                    <h3 className="text-xl font-bold text-xl-dark-blue mb-2">{displayRep.name}</h3>
-                    <a href={`mailto:${displayRep.email}`} className="block text-sm text-xl-bright-blue hover:text-xl-dark-blue mb-1">
-                      {displayRep.email}
-                    </a>
-                    {displayRep.phone && (
-                      <a href={`tel:${displayRep.phone}`} className="block text-sm text-xl-bright-blue hover:text-xl-dark-blue mb-3">
-                        {displayRep.phone}
-                      </a>
-                    )}
-                    {!displayRep.bookingUrl && (
-                      <p className="text-xs text-xl-grey mt-3">
-                        Reach out via email or phone to schedule a consultation
-                      </p>
-                    )}
-                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
