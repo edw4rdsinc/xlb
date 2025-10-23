@@ -37,45 +37,48 @@ export default function HomePage() {
   return (
     <div>
       <StructuredData type="organization" />
-      {/* Hero Section with Hero Image */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Hero Image (taller) */}
-            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
-                <img
-                  src="/images/other-images/xlb-hero.png"
-                  alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
-                  className="w-full h-full object-contain"
-                  loading="eager"
-                />
-              </div>
-            </AnimatedSection>
+      {/* Hero Section with Absolute Positioning - Matching Live Site */}
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]">
+        {/* Background with Hero Image */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative w-full h-full max-w-7xl mx-auto">
+            <img
+              src="/images/other-images/xlb-hero.png"
+              alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
+              className="absolute left-0 bottom-0 h-[80%] md:h-[90%] w-auto object-contain drop-shadow-2xl"
+              style={{ maxHeight: '600px' }}
+              loading="eager"
+            />
+          </div>
+        </div>
 
-            {/* Right Side - Content (vertically centered against image) */}
-            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Your Sidekick for Stop-Loss Success
-              </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                Expert guidance and interactive tools designed exclusively for insurance brokers navigating stop-loss challenges.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/toolkit"
-                  className="bg-white text-primary-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg text-center"
-                >
-                  Explore the Toolkit
-                </Link>
-                <Link
-                  href="/contact"
-                  className="bg-primary-800 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-primary-900 transition-all hover:scale-105 border-2 border-white text-center"
-                >
-                  Talk to an Expert
-                </Link>
-              </div>
-            </AnimatedSection>
+        {/* Overlaid Content */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="md:ml-auto md:w-1/2 text-center md:text-left">
+              <AnimatedSection animation="fade-up">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-white drop-shadow-lg">
+                  Your Sidekick for Stop-Loss Success
+                </h1>
+                <p className="text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 text-white/95 drop-shadow-md">
+                  Expert guidance and interactive tools designed exclusively for insurance brokers navigating stop-loss challenges.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <Link
+                    href="/toolkit"
+                    className="bg-white text-primary-600 px-6 md:px-8 py-3 md:py-4 rounded-md font-semibold text-base md:text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-lg text-center"
+                  >
+                    Explore the Toolkit
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="bg-primary-800 text-white px-6 md:px-8 py-3 md:py-4 rounded-md font-semibold text-base md:text-lg hover:bg-primary-900 transition-all hover:scale-105 border-2 border-white text-center"
+                  >
+                    Talk to an Expert
+                  </Link>
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
       </section>

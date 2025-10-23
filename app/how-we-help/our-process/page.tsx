@@ -4,27 +4,21 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function OurProcessPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left Side - Decorative gradient box */}
-            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
-              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px] bg-gradient-to-br from-xl-dark-blue to-xl-bright-blue rounded-lg flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="text-6xl sm:text-7xl md:text-8xl font-bold text-white/20 mb-4">40</div>
-                  <div className="text-2xl sm:text-3xl font-bold text-white">Point Inspection</div>
-                </div>
+      {/* Hero - Gradient Background with Centered Content */}
+      <section className="relative bg-gradient-to-br from-xl-dark-blue via-primary-600 to-xl-bright-blue text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]">
+        {/* Overlaid Content - Centered */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <AnimatedSection animation="fade-up">
+              <div className="mb-8">
+                <div className="text-7xl sm:text-8xl md:text-9xl font-bold text-white/30 mb-4">40</div>
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/80 mb-8">POINT INSPECTION</div>
               </div>
-            </AnimatedSection>
-
-            {/* Right Side - Content */}
-            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-                Our Process: The 40-Point Inspection
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+                OUR PROCESS
               </h1>
-              <p className="text-xl sm:text-2xl mb-8 text-white/90">
-                Meticulous analysis and expert RFP management that gives you confidence in every presentation.
+              <p className="text-xl sm:text-2xl md:text-3xl text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+                Meticulous analysis and expert RFP management that gives you confidence in every presentation
               </p>
             </AnimatedSection>
           </div>
