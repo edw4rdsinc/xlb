@@ -26,23 +26,31 @@ export default function ToolkitPage() {
   return (
     <div>
       {/* Hero */}
-      <section
-        className="relative py-32 min-h-[900px] flex items-center"
-        style={{
-          backgroundImage: 'url("/images/parallax/toolsresources.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <AnimatedSection animation="fade-up" className="max-w-xl text-left">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              Your Stop-Loss Toolkit
-            </h1>
-            <p className="text-xl drop-shadow-lg" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              Free interactive tools designed for insurance brokers. No login required—just click and use.
-            </p>
-          </AnimatedSection>
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Hero Image */}
+            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
+              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
+                <img
+                  src="/images/parallax/toolsresources.jpg"
+                  alt="Stop-loss toolkit for brokers"
+                  className="w-full h-full object-cover rounded-lg"
+                  loading="eager"
+                />
+              </div>
+            </AnimatedSection>
+
+            {/* Right Side - Content */}
+            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Your Stop-Loss Toolkit
+              </h1>
+              <p className="text-xl sm:text-2xl mb-8 text-white/90">
+                Free interactive tools designed for insurance brokers. No login required—just click and use.
+              </p>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 

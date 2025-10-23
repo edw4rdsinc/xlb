@@ -5,24 +5,31 @@ export default function HowWeHelpPage() {
   return (
     <div>
       {/* Hero */}
-      <section
-        className="relative py-6 md:py-9 lg:py-12 flex items-center"
-        style={{
-          backgroundImage: 'url("/images/parallax/how-we-help.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <AnimatedSection animation="fade-up" className="ml-auto max-w-2xl text-right">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              How We Help Brokers Win
-            </h1>
-            <p className="text-xl drop-shadow-lg text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              Expert stop-loss guidance, market access, and tools to serve your clients better.
-            </p>
-          </AnimatedSection>
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Hero Image */}
+            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
+              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
+                <img
+                  src="/images/parallax/how-we-help.jpg"
+                  alt="How we help brokers win with expert stop-loss guidance"
+                  className="w-full h-full object-cover rounded-lg"
+                  loading="eager"
+                />
+              </div>
+            </AnimatedSection>
+
+            {/* Right Side - Content */}
+            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                How We Help Brokers Win
+              </h1>
+              <p className="text-xl sm:text-2xl mb-8 text-white/90">
+                Expert stop-loss guidance, market access, and tools to serve your clients better.
+              </p>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
