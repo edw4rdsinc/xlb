@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import AnimatedSection from '@/components/shared/AnimatedSection'
 
 export const metadata: Metadata = {
   title: 'Resources | XL Benefits',
@@ -9,23 +10,30 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div>
-      <section
-        className="relative py-26 min-h-[720px] flex items-center"
-        style={{
-          backgroundImage: 'url("/images/parallax/resources.JPG")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="ml-auto max-w-2xl text-right">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 drop-shadow-lg" style={{ color: '#e5bf64', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              Resources for Brokers
-            </h1>
-            <p className="text-xl drop-shadow-lg" style={{ color: '#e5bf64', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              White papers, guides, and insights to help you serve your clients better.
-            </p>
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-6 md:py-9 lg:py-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Hero Image */}
+            <AnimatedSection animation="slide-right" className="order-2 md:order-1">
+              <div className="relative w-full h-[225px] sm:h-[300px] md:h-[375px] lg:h-[450px] xl:h-[525px]">
+                <img
+                  src="/images/parallax/resources.JPG"
+                  alt="Resources for brokers"
+                  className="w-full h-full object-cover rounded-lg"
+                  loading="eager"
+                />
+              </div>
+            </AnimatedSection>
+
+            {/* Right Side - Content */}
+            <AnimatedSection animation="slide-left" className="order-1 md:order-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Resources for Brokers
+              </h1>
+              <p className="text-xl sm:text-2xl mb-8 text-white/90">
+                White papers, guides, and insights to help you serve your clients better.
+              </p>
+            </AnimatedSection>
           </div>
         </div>
       </section>
