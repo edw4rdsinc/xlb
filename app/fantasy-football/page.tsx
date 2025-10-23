@@ -10,8 +10,7 @@ export default function FantasyFootballPage() {
         style={{
           backgroundImage: 'url("/images/parallax/fantasy-football.jpeg")',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundPosition: 'center'
         }}
       >
         {/* Dark overlay */}
