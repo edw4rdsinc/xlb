@@ -25,18 +25,18 @@ export default function FantasyFootballPage() {
             </h1>
             <p className="text-xl md:text-2xl mb-8 drop-shadow-lg"
                style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              18 weeks. 3 rounds. Over $1,000 in prizes.
+              18 weeks. 3 rounds. Over $1,000 in prizes. Free to play.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/fantasy-football/submit"
-                className="bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-white hover:text-xl-dark-blue transition-all hover:scale-105 shadow-lg"
+                className="bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-white/10 hover:text-white transition-all hover:scale-105 shadow-lg"
               >
                 Submit Your Lineup
               </Link>
               <Link
                 href="/fantasy-football/results"
-                className="bg-white/10 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-white hover:text-xl-dark-blue transition-all hover:scale-105"
+                className="bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-white/10 hover:text-white transition-all hover:scale-105 shadow-lg"
               >
                 View Results
               </Link>
@@ -77,8 +77,7 @@ export default function FantasyFootballPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Weekly Prizes */}
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 h-full border-2 border-blue-200">
-                <div className="text-4xl mb-4">🏆</div>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Weekly Winner</h3>
                 <div className="text-3xl font-bold text-xl-bright-blue mb-2">$25</div>
                 <p className="text-gray-700 text-sm">
@@ -92,13 +91,12 @@ export default function FantasyFootballPage() {
 
             {/* Round Prizes */}
             <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 h-full border-2 border-green-200">
-                <div className="text-4xl mb-4">🥇</div>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Round Winners</h3>
                 <div className="space-y-1 mb-2">
-                  <div className="font-bold text-lg">🥇 1st: $75</div>
-                  <div className="font-bold text-lg">🥈 2nd: $50</div>
-                  <div className="font-bold text-lg">🥉 3rd: $25</div>
+                  <div className="font-bold text-lg">1st: $75</div>
+                  <div className="font-bold text-lg">2nd: $50</div>
+                  <div className="font-bold text-lg">3rd: $25</div>
                 </div>
                 <p className="text-gray-700 text-sm">
                   Cumulative 6-week totals
@@ -108,13 +106,12 @@ export default function FantasyFootballPage() {
 
             {/* Grand Prize */}
             <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 h-full border-2 border-yellow-300">
-                <div className="text-4xl mb-4">👑</div>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Grand Prize</h3>
                 <div className="space-y-1 mb-2">
-                  <div className="font-bold text-lg">🥇 1st: $400</div>
-                  <div className="font-bold text-lg">🥈 2nd: $300</div>
-                  <div className="font-bold text-lg">🥉 3rd: $200</div>
+                  <div className="font-bold text-lg">1st: $400</div>
+                  <div className="font-bold text-lg">2nd: $300</div>
+                  <div className="font-bold text-lg">3rd: $200</div>
                   <div className="font-bold text-lg">4th: $100</div>
                 </div>
                 <p className="text-gray-700 text-sm">
@@ -125,10 +122,9 @@ export default function FantasyFootballPage() {
 
             {/* Total Prizes */}
             <AnimatedSection animation="fade-up" delay={400}>
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 h-full border-2 border-purple-200">
-                <div className="text-4xl mb-4">💰</div>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Total Pool</h3>
-                <div className="text-4xl font-bold text-purple-600 mb-2">$1,450+</div>
+                <div className="text-4xl font-bold text-xl-bright-blue mb-2">$1,450+</div>
                 <p className="text-gray-700 text-sm mb-4">
                   In prizes this season
                 </p>
@@ -336,8 +332,7 @@ export default function FantasyFootballPage() {
           <div className="grid md:grid-cols-3 gap-6">
             <AnimatedSection animation="fade-up" delay={100}>
               <Link href="/fantasy-football/submit" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center">
-                  <div className="text-4xl mb-4">📝</div>
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Submit Lineup</h3>
                   <p className="text-gray-600 text-sm">
                     Enter your team for the current round
@@ -348,8 +343,7 @@ export default function FantasyFootballPage() {
 
             <AnimatedSection animation="fade-up" delay={200}>
               <Link href="/fantasy-football/results" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center">
-                  <div className="text-4xl mb-4">📊</div>
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Results</h3>
                   <p className="text-gray-600 text-sm">
                     Check weekly, round, and season standings
@@ -360,8 +354,7 @@ export default function FantasyFootballPage() {
 
             <AnimatedSection animation="fade-up" delay={300}>
               <Link href="/fantasy-football/rosters" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center">
-                  <div className="text-4xl mb-4">👥</div>
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Rosters</h3>
                   <p className="text-gray-600 text-sm">
                     See all submitted lineups

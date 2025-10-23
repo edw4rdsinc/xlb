@@ -20,8 +20,8 @@ const teamMembers: TeamMember[] = [
     title: 'Director of Business Development',
     region: 'Southwest/South Region',
     image: '/images/team/steve-headshot.jpg',
-    linkedin: 'https://linkedin.com/in/steve-caler',
-    email: 'steve@xlbenefits.com',
+    linkedin: 'https://www.linkedin.com/in/steve-caler-csfs-852a7451/',
+    email: 'scaler@xlbenefits.com',
     bio: [
       'Steve brings over 20 years of management and personal development experience to XL Benefits. His background spans real estate sales and family ministry leadership, giving him unique insights into relationship building and strategic problem-solving.',
       'At XL Benefits, Steve focuses on expanding broker partnerships and ensuring our services align with market needs. His consultative approach helps brokers understand how stop-loss solutions fit into their overall benefits strategy.',
@@ -30,12 +30,12 @@ const teamMembers: TeamMember[] = [
     states: ['CA', 'NV', 'AZ', 'TX', 'OK', 'AR', 'LA', 'MS', 'AL', 'KY', 'TN']
   },
   {
-    name: 'Sam',
+    name: 'Sam Edwards',
     title: 'Stop Loss Sales Consultant',
     region: 'Mountain/Plains/Midwest Region',
     image: '/images/team/sam-headshot.jpg',
-    linkedin: 'https://linkedin.com/in/sam',
-    email: 'sam@xlbenefits.com',
+    linkedin: 'https://www.linkedin.com/in/samuel-edwards-1baba411a/',
+    email: 'sedwards@xlbenefits.com',
     bio: [
       'Sam brings a unique combination of technical expertise and industry knowledge to XL Benefits. With experience in both technology and stop-loss consulting, he helps brokers leverage innovative solutions while providing expert guidance on complex self-funding scenarios.',
       'Specializing in the Mountain, Plains, and Midwest regions, Sam works closely with brokers to navigate the unique regulatory and market conditions across these diverse states.',
@@ -44,12 +44,12 @@ const teamMembers: TeamMember[] = [
     states: ['OR', 'WA', 'ID', 'MT', 'WY', 'CO', 'UT', 'NM', 'ND', 'SD', 'NE', 'KS', 'MN', 'WI', 'IA', 'MO', 'IL', 'IN', 'MI', 'OH', 'AK', 'HI']
   },
   {
-    name: 'Jennifer Baird',
+    name: 'Jennifer Baird-Flynn',
     title: 'Stop Loss Sales Consultant',
     region: 'Eastern Seaboard Region',
     image: '/images/team/jennifer-headshot.jpg',
-    linkedin: 'https://linkedin.com/in/jennifer-baird',
-    email: 'jennifer@xlbenefits.com',
+    linkedin: 'https://www.linkedin.com/in/jennifer-baird-flynn-a2aa113a/',
+    email: 'jbaird@xlbenefits.com',
     bio: [
       'Jennifer brings over 20 years of experience in the employee benefits industry, with 4½ years as a benefits consultant and 19 years working directly with a TPA. She specializes in self-funded health plans and cost containment strategies.',
       'Her deep understanding of claims processing, plan administration, and stop-loss coordination helps brokers identify potential issues before they become problems. Jennifer joined XL Benefits in May 2023.',
@@ -65,8 +65,8 @@ const daronPitts: TeamMember = {
   title: 'President & Founder',
   region: 'National',
   image: '/images/team/daron-headshot.jpeg',
-  linkedin: 'https://www.linkedin.com/in/daron-pitts-csfs-60482033/',
-  email: 'daron@xlbenefits.com',
+  linkedin: 'https://www.linkedin.com/in/daron-pitts-b0657063/',
+  email: 'dpitts@xlbenefits.com',
   bio: [
     'Daron founded XL Benefits in July 2014 with a mission to bring uncommon service and creative problem-solving to the medical stop-loss industry. With over 12 years of specialized experience, he holds the Certified Self-Funding Specialist (CSFS) designation.',
     'His expertise spans complex rate analysis, multi-carrier RFP management, and helping brokers navigate challenging placements. Daron works primarily with insurance brokers and TPAs across the country, providing the technical depth and carrier relationships needed to serve self-funded groups.',
