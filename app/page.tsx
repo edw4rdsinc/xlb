@@ -38,7 +38,7 @@ export default function HomePage() {
     <div>
       <StructuredData type="organization" />
       {/* Hero Section with Absolute Positioning - Matching Live Site */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]">
+      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white overflow-hidden aspect-[16/9]">
         {/* Background with Hero Image */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative w-full h-full max-w-7xl mx-auto">

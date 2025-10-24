@@ -20,7 +20,7 @@ function ContactPageContent() {
     <div>
       {/* Hero Section - Matching Live Site with Background Image */}
       <section
-        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        className="relative text-white overflow-hidden aspect-[16/9]"
         style={{
           backgroundImage: 'url(/images/parallax/contact.jpg)',
           backgroundSize: 'cover',

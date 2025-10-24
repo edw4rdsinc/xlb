@@ -6,7 +6,7 @@ export default function HowWeHelpPage() {
     <div>
       {/* Hero - Background Image with Overlay */}
       <section
-        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        className="relative text-white overflow-hidden aspect-[16/9]"
         style={{
           backgroundImage: 'url(/images/parallax/how-we-help.jpg)',
           backgroundSize: 'cover',
