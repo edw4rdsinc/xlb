@@ -6,7 +6,7 @@ export default function FantasyFootballPage() {
     <div>
       {/* Hero Section - Background Image with Overlay */}
       <section
-        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px]"
+        className="relative text-white overflow-hidden aspect-[16/9]"
         style={{
           backgroundImage: 'url(/images/parallax/fantasy-football.jpeg)',
           backgroundSize: 'cover',

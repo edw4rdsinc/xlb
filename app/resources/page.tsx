@@ -11,7 +11,7 @@ export default function ResourcesPage() {
   return (
     <div>
       <section
-        className="relative text-white overflow-hidden h-[500px] sm:h-[600px] md:h-[700px] bg-xl-dark-blue"
+        className="relative text-white overflow-hidden aspect-[16/9] bg-xl-dark-blue"
         style={{
           backgroundImage: 'url(/images/parallax/resources.JPG)',
           backgroundSize: 'contain',
