@@ -79,7 +79,7 @@ export default function HomePage() {
         </section>
 
         {/* Why Brokers Choose XL Benefits */}
-        <section className="relative py-16">
+        <section className="relative py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6 drop-shadow-lg">
