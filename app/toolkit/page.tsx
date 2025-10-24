@@ -29,7 +29,7 @@ export default function ToolkitPage() {
       <section
         className="relative text-white overflow-hidden aspect-[16/9]"
         style={{
-          backgroundImage: 'url(/images/parallax/toolsresources.jpg)',
+          backgroundImage: 'url(/images/parallax/toolkit.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
