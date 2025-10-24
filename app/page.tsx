@@ -49,7 +49,7 @@ export default function HomePage() {
         }}
       >
         {/* Hero Section - Upper portion */}
-        <section className="relative text-white min-h-[50vh] flex items-start pt-16 md:pt-24">
+        <section className="relative text-white min-h-[50vh] flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="md:ml-auto md:w-1/2 text-center md:text-left">
               <AnimatedSection animation="fade-up">
