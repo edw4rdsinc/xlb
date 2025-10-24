@@ -40,15 +40,13 @@ export default function HomePage() {
       {/* Hero Section with Absolute Positioning - Matching Live Site */}
       <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white overflow-hidden aspect-[16/9]">
         {/* Background with Hero Image */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-full h-full max-w-7xl mx-auto">
-            <img
-              src="/images/other-images/xlb-hero.png"
-              alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
-              className="absolute left-0 bottom-0 h-full w-auto object-contain drop-shadow-2xl"
-              loading="eager"
-            />
-          </div>
+        <div className="absolute inset-0">
+          <img
+            src="/images/other-images/xlb-hero.png"
+            alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
+            className="w-full h-full object-cover drop-shadow-2xl"
+            loading="eager"
+          />
         </div>
 
         {/* Overlaid Content */}
