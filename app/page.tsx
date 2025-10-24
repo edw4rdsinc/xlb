@@ -45,8 +45,7 @@ export default function HomePage() {
             <img
               src="/images/other-images/xlb-hero.png"
               alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
-              className="absolute left-0 bottom-0 h-[80%] md:h-[90%] w-auto object-contain drop-shadow-2xl"
-              style={{ maxHeight: '600px' }}
+              className="absolute left-0 bottom-0 h-full w-auto object-contain drop-shadow-2xl"
               loading="eager"
             />
           </div>
