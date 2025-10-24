@@ -78,8 +78,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Why Brokers Choose XL Benefits - Semi-transparent overlay */}
-        <section className="relative py-16 bg-white/90 backdrop-blur-sm">
+        {/* Why Brokers Choose XL Benefits */}
+        <section className="relative py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
