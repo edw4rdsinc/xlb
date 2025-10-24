@@ -4,8 +4,19 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function OurProcessPage() {
   return (
     <div>
-      {/* Hero - Gradient Background with Centered Content */}
-      <section className="relative bg-gradient-to-br from-xl-dark-blue via-primary-600 to-xl-bright-blue text-white overflow-hidden aspect-[16/9]">
+      {/* Hero - Background Image with Centered Content */}
+      <section
+        className="relative text-white overflow-hidden aspect-[16/9]"
+        style={{
+          backgroundImage: 'url(/images/parallax/40pt.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
+
         {/* Overlaid Content - Centered */}
         <div className="relative h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
