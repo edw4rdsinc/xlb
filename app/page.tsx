@@ -37,20 +37,19 @@ export default function HomePage() {
   return (
     <div>
       <StructuredData type="organization" />
-      {/* Hero Section with Absolute Positioning - Matching Live Site */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white overflow-hidden aspect-[16/9]">
-        {/* Background with Hero Image */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/other-images/xlb-hero.png"
-            alt="XL Benefits superhero character representing expert stop-loss insurance guidance for brokers"
-            className="w-full h-full object-cover drop-shadow-2xl"
-            loading="eager"
-          />
-        </div>
 
-        {/* Overlaid Content */}
-        <div className="relative h-full flex items-center justify-center">
+      {/* Extended Background Container - Hero Image spans both sections */}
+      <div
+        className="relative bg-gradient-to-r from-primary-600 to-primary-700"
+        style={{
+          backgroundImage: 'url(/images/other-images/xlb-hero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Hero Section - Upper portion */}
+        <section className="relative text-white min-h-[50vh] flex items-start pt-16 md:pt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="md:ml-auto md:w-1/2 text-center md:text-left">
               <AnimatedSection animation="fade-up">
@@ -77,11 +76,10 @@ export default function HomePage() {
               </AnimatedSection>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Why Brokers Choose XL Benefits */}
-      <section className="py-16 bg-white">
+        {/* Why Brokers Choose XL Benefits - Semi-transparent overlay */}
+        <section className="relative py-16 bg-white/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
@@ -96,6 +94,7 @@ export default function HomePage() {
           </AnimatedSection>
         </div>
       </section>
+      </div>
 
       {/* Featured Tools */}
       <section className="py-16 bg-xl-light-grey">
