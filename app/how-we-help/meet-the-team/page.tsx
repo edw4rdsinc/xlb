@@ -5,10 +5,12 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function MeetTheTeamPage() {
   return (
     <div>
-      {/* Hero - Gradient Background with Centered Content */}
-      <section className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white overflow-hidden aspect-[16/9]">
-        {/* Overlaid Content - Centered */}
-        <div className="relative h-full flex items-center justify-center">
+      {/* Extended Background Container */}
+      <div className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue">
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Overlaid Content - Centered */}
+          <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <AnimatedSection animation="fade-up">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
@@ -19,11 +21,11 @@ export default function MeetTheTeamPage() {
               </p>
             </AnimatedSection>
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* About Us Section */}
-      <section className="py-16 bg-white">
+        {/* About Us Section - Frosted */}
+        <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
             <p className="text-xl text-xl-grey leading-relaxed mb-6 text-center">
@@ -35,6 +37,7 @@ export default function MeetTheTeamPage() {
           </AnimatedSection>
         </div>
       </section>
+      </div>
 
       {/* Core Values Section */}
       <section className="py-16 bg-xl-light-grey">

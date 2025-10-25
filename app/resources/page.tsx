@@ -10,8 +10,9 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div>
-      <section
-        className="relative text-white overflow-hidden aspect-[16/9] bg-xl-dark-blue"
+      {/* Extended Background Container */}
+      <div
+        className="relative bg-xl-dark-blue"
         style={{
           backgroundImage: 'url(/images/parallax/resources.JPG)',
           backgroundSize: 'contain',
@@ -19,11 +20,13 @@ export default function ResourcesPage() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
 
-        {/* Overlaid Content - Centered */}
-        <div className="relative h-full flex items-center justify-center">
+          {/* Overlaid Content - Centered */}
+          <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <AnimatedSection animation="fade-up">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
@@ -50,10 +53,11 @@ export default function ResourcesPage() {
               </div>
             </AnimatedSection>
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section className="py-16">
+        {/* Resources Grid - Frosted */}
+        <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Link href="/resources/white-papers" className="group">
@@ -154,6 +158,7 @@ export default function ResourcesPage() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   )
 }
