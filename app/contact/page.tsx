@@ -18,9 +18,9 @@ function ContactPageContent() {
 
   return (
     <div>
-      {/* Hero Section - Matching Live Site with Background Image */}
-      <section
-        className="relative text-white overflow-hidden aspect-[16/9]"
+      {/* Extended Background Container */}
+      <div
+        className="relative"
         style={{
           backgroundImage: 'url(/images/parallax/contact.jpg)',
           backgroundSize: 'cover',
@@ -28,11 +28,13 @@ function ContactPageContent() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Overlaid Content */}
-        <div className="relative h-full flex items-center justify-center">
+          {/* Overlaid Content */}
+          <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-white drop-shadow-2xl">
               LET'S TALK
@@ -71,14 +73,13 @@ function ContactPageContent() {
               </div>
             )}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <div className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* All Team Members */}
-        <div className="bg-xl-light-grey rounded-lg p-8">
+        {/* All Team Members - Frosted Section */}
+        <section className="relative py-16 bg-white/30 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white/80 rounded-lg p-8 shadow-lg">
           <h3 className="text-2xl font-bold text-xl-dark-blue mb-6 text-center">
             Or Connect With Any Team Member
           </h3>
@@ -106,17 +107,18 @@ function ContactPageContent() {
               </svg>
             </Link>
           </div>
-        </div>
+            </div>
 
-        {/* Office Information */}
-        <div className="mt-8 bg-white rounded-lg shadow-lg p-8">
+            {/* Office Information */}
+            <div className="mt-8 bg-white/80 rounded-lg shadow-lg p-8">
           <h3 className="text-xl font-bold text-xl-dark-blue mb-4 text-center">Office Information</h3>
           <div className="space-y-2 text-xl-grey text-center">
             <p>Hours: Monday - Friday, 8:00 AM - 5:00 PM CST</p>
             <p>General Inquiries: <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:text-xl-dark-blue">info@xlbenefits.com</a></p>
           </div>
-        </div>
-        </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )
