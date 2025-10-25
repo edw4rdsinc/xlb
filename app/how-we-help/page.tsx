@@ -4,9 +4,9 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function HowWeHelpPage() {
   return (
     <div>
-      {/* Hero - Background Image with Overlay */}
-      <section
-        className="relative text-white overflow-hidden aspect-[16/9]"
+      {/* Extended Background Container */}
+      <div
+        className="relative"
         style={{
           backgroundImage: 'url(/images/parallax/how-we-help.jpg)',
           backgroundSize: 'cover',
@@ -14,11 +14,13 @@ export default function HowWeHelpPage() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Overlaid Content - Centered */}
-        <div className="relative h-full flex items-center justify-center">
+          {/* Overlaid Content - Centered */}
+          <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <AnimatedSection animation="fade-up">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
@@ -29,11 +31,11 @@ export default function HowWeHelpPage() {
               </p>
             </AnimatedSection>
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Intro Section */}
-      <section className="py-16 bg-white">
+        {/* Intro Section - Frosted */}
+        <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
             <p className="text-lg text-xl-grey leading-relaxed mb-4">
@@ -45,6 +47,7 @@ export default function HowWeHelpPage() {
           </AnimatedSection>
         </div>
       </section>
+      </div>
 
       {/* Services Section */}
       <section className="py-16 bg-xl-light-grey">

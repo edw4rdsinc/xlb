@@ -4,9 +4,9 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 export default function FantasyFootballPage() {
   return (
     <div>
-      {/* Hero Section - Background Image with Overlay */}
-      <section
-        className="relative text-white overflow-hidden aspect-[16/9]"
+      {/* Extended Background Container */}
+      <div
+        className="relative"
         style={{
           backgroundImage: 'url(/images/parallax/fantasy-football.jpeg)',
           backgroundSize: 'cover',
@@ -14,11 +14,13 @@ export default function FantasyFootballPage() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/50"></div>
 
-        {/* Overlaid Content - Centered */}
-        <div className="relative h-full flex items-center justify-center">
+          {/* Overlaid Content - Centered */}
+          <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
               FANTASY FOOTBALL CHALLENGE
@@ -41,11 +43,11 @@ export default function FantasyFootballPage() {
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Current Week/Round Banner */}
-      <section className="bg-xl-dark-blue text-white py-4">
+        {/* Current Week/Round Banner - Frosted */}
+        <section className="relative bg-xl-dark-blue/60 backdrop-blur-sm text-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-2">
             <div>
@@ -60,6 +62,7 @@ export default function FantasyFootballPage() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Prize Structure */}
       <section className="py-16 bg-white">
