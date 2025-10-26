@@ -173,11 +173,8 @@ export default function StateGuidesPage() {
             <h1 className="text-4xl sm:text-5xl font-bold mb-6">
               Stop-Loss Insurance State Guides
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-4">
+            <p className="text-xl text-white/90 max-w-3xl mx-auto">
               State-specific regulations and attachment point requirements
-            </p>
-            <p className="text-sm text-white/75 max-w-4xl mx-auto">
-              NOTE: Trustmark self-funded health plan designs may not be available for all states listed. Check product availability at TrustmarkSFS.com
             </p>
           </AnimatedSection>
         </div>
