@@ -213,9 +213,13 @@ export default function ToolkitPage() {
       <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">
-              How It Works
-            </h2>
+            <div className="flex justify-center mb-8">
+              <div className="bg-white/80 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg">
+                <h2 className="text-4xl font-bold text-xl-dark-blue text-center">
+                  How It Works
+                </h2>
+              </div>
+            </div>
 
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white rounded-lg p-6 text-center">
@@ -256,9 +260,13 @@ export default function ToolkitPage() {
       <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">
-              Frequently Asked Questions
-            </h2>
+            <div className="flex justify-center mb-8">
+              <div className="bg-white/80 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg">
+                <h2 className="text-4xl font-bold text-xl-dark-blue text-center">
+                  Frequently Asked Questions
+                </h2>
+              </div>
+            </div>
 
             <div className="space-y-4">
               <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
