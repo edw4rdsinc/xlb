@@ -183,29 +183,6 @@ export default function StateGuidesPage() {
         </div>
       </section>
 
-      {/* Important Notice */}
-      <section className="py-8 bg-xl-light-grey border-b-2 border-xl-bright-blue">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection animation="fade-up">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-xl-dark-blue mb-4">Understanding Attachment Points</h2>
-              <div className="grid md:grid-cols-2 gap-6 text-sm text-xl-grey">
-                <div>
-                  <h3 className="font-bold text-xl-dark-blue mb-2">Specific Attachment Point</h3>
-                  <p>The aggregate attachment point is the renewal amount of claims for which the group is responsible and is equal to the renewal amount at the predominant amount of the underlying aggregate deductibles.</p>
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl-dark-blue mb-2">Minimum Attachment Point Before "Aggregate Only" May Apply</h3>
-                  <p className="mb-3">State-Defined Minimum Aggregate Attachment Point</p>
-                  <h3 className="font-bold text-xl-dark-blue mb-2">Trustmark Life Insurance Company Standard Percent of Expected Claims</h3>
-                  <p>Group Size | Percent</p>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* State Reference Table */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
