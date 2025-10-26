@@ -334,7 +334,7 @@ export default function FantasyFootballPage() {
           <div className="grid md:grid-cols-3 gap-6">
             <AnimatedSection animation="fade-up" delay={100} className="h-full">
               <Link href="/fantasy-football/submit" className="block h-full">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Submit Lineup</h3>
                   <p className="text-gray-600 text-sm">
                     Enter your team for the current round
@@ -345,7 +345,7 @@ export default function FantasyFootballPage() {
 
             <AnimatedSection animation="fade-up" delay={200} className="h-full">
               <Link href="/fantasy-football/results" className="block h-full">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Results</h3>
                   <p className="text-gray-600 text-sm">
                     Check weekly, round, and season standings
@@ -356,7 +356,7 @@ export default function FantasyFootballPage() {
 
             <AnimatedSection animation="fade-up" delay={300} className="h-full">
               <Link href="/fantasy-football/rosters" className="block h-full">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Rosters</h3>
                   <p className="text-gray-600 text-sm">
                     See all submitted lineups
