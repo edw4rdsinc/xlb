@@ -177,8 +177,8 @@ export default function MeetTheTeamPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Top Row - Daron Only */}
-          <div className="flex justify-center mb-8">
-            <div className="w-full max-w-md">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div className="md:col-start-1 lg:col-start-2">
               <AnimatedSection animation="fade-up" delay={100}>
                 <FlipCard
                   name="Daron Pitts"
