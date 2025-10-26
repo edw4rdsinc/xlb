@@ -32,25 +32,9 @@ export default function ResourcesPage() {
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
                 RESOURCES
               </h1>
-              <p className="text-xl sm:text-2xl md:text-3xl mb-10 md:mb-12 text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+              <p className="text-xl sm:text-2xl md:text-3xl text-white/95 drop-shadow-lg max-w-2xl mx-auto">
                 White papers, guides, and insights to help you serve your clients better
               </p>
-
-              {/* Featured Tool Buttons - Stacked */}
-              <div className="flex flex-col gap-4 max-w-xl mx-auto">
-                <Link
-                  href="/solutions/truecost-calculator"
-                  className="bg-xl-dark-blue/90 backdrop-blur-sm text-white px-8 py-4 rounded-md font-semibold text-lg md:text-xl hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-2xl"
-                >
-                  TAX SAVINGS CALCULATOR
-                </Link>
-                <Link
-                  href="/solutions/commission-fee-comparison"
-                  className="bg-xl-dark-blue/90 backdrop-blur-sm text-white px-8 py-4 rounded-md font-semibold text-lg md:text-xl hover:bg-xl-dark-blue transition-all hover:scale-105 shadow-2xl"
-                >
-                  COMMISSION VS. FEE CALCULATOR
-                </Link>
-              </div>
             </AnimatedSection>
           </div>
           </div>
