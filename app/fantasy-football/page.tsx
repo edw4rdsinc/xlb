@@ -332,9 +332,9 @@ export default function FantasyFootballPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-6">
-            <AnimatedSection animation="fade-up" delay={100}>
-              <Link href="/fantasy-football/submit" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
+            <AnimatedSection animation="fade-up" delay={100} className="h-full">
+              <Link href="/fantasy-football/submit" className="block h-full">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Submit Lineup</h3>
                   <p className="text-gray-600 text-sm">
                     Enter your team for the current round
@@ -343,9 +343,9 @@ export default function FantasyFootballPage() {
               </Link>
             </AnimatedSection>
 
-            <AnimatedSection animation="fade-up" delay={200}>
-              <Link href="/fantasy-football/results" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
+            <AnimatedSection animation="fade-up" delay={200} className="h-full">
+              <Link href="/fantasy-football/results" className="block h-full">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Results</h3>
                   <p className="text-gray-600 text-sm">
                     Check weekly, round, and season standings
@@ -354,9 +354,9 @@ export default function FantasyFootballPage() {
               </Link>
             </AnimatedSection>
 
-            <AnimatedSection animation="fade-up" delay={300}>
-              <Link href="/fantasy-football/rosters" className="block">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
+            <AnimatedSection animation="fade-up" delay={300} className="h-full">
+              <Link href="/fantasy-football/rosters" className="block h-full">
+                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue flex flex-col justify-center">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Rosters</h3>
                   <p className="text-gray-600 text-sm">
                     See all submitted lineups
