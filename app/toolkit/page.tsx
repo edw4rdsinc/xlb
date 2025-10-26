@@ -204,6 +204,36 @@ export default function ToolkitPage() {
               </div>
             </AnimatedSection>
 
+            {/* Tool 6: Request Custom Tool */}
+            <AnimatedSection animation="fade-up" delay={600}>
+              <Link href="/contact">
+                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-xl-dark-blue">
+                        Request a Custom Tool
+                      </h3>
+                      <span className="text-xs text-xl-bright-blue font-semibold uppercase tracking-wide">CONTACT US</span>
+                    </div>
+                  </div>
+                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
+                    Need a specific calculator or analysis? Our team builds custom tools for unique self-funding scenarios.
+                  </p>
+                  <div className="text-xl-bright-blue font-semibold text-sm group-hover:text-xl-dark-blue inline-flex items-center">
+                    Contact Team
+                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </AnimatedSection>
+
           </div>
         </div>
       </section>
