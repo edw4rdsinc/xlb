@@ -213,7 +213,7 @@ export default function ToolkitPage() {
       <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl font-bold text-xl-dark-blue mb-8 text-center">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">
               How It Works
             </h2>
 
@@ -256,43 +256,43 @@ export default function ToolkitPage() {
       <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">
               Frequently Asked Questions
             </h2>
 
-            <div className="space-y-6">
-              <div className="border-l-4 border-white/50 pl-6">
-                <h3 className="font-bold text-white mb-2">Do I need to create an account?</h3>
-                <p className="text-white/90">
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
+                <h3 className="font-bold text-xl-dark-blue mb-2">Do I need to create an account?</h3>
+                <p className="text-xl-grey">
                   No. All tools are free and require no login or registration. Just click and use.
                 </p>
               </div>
 
-              <div className="border-l-4 border-white/50 pl-6">
-                <h3 className="font-bold text-white mb-2">Are the calculations accurate?</h3>
-                <p className="text-white/90">
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
+                <h3 className="font-bold text-xl-dark-blue mb-2">Are the calculations accurate?</h3>
+                <p className="text-xl-grey">
                   Yes. Our tools are built by stop-loss experts with 20+ years of industry experience and are regularly updated to reflect current regulations and carrier practices.
                 </p>
               </div>
 
-              <div className="border-l-4 border-white/50 pl-6">
-                <h3 className="font-bold text-white mb-2">Can I share results with clients?</h3>
-                <p className="text-white/90">
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
+                <h3 className="font-bold text-xl-dark-blue mb-2">Can I share results with clients?</h3>
+                <p className="text-xl-grey">
                   Absolutely. All tools generate PDF reports you can download or email directly to clients.
                 </p>
               </div>
 
-              <div className="border-l-4 border-white/50 pl-6">
-                <h3 className="font-bold text-white mb-2">What if I have questions about my results?</h3>
-                <p className="text-white/90">
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
+                <h3 className="font-bold text-xl-dark-blue mb-2">What if I have questions about my results?</h3>
+                <p className="text-xl-grey">
                   Every tool includes a "Talk to an Expert" button. Our team is available to help you interpret results and handle complex scenarios.
                 </p>
               </div>
 
-              <div className="border-l-4 border-white/50 pl-6">
-                <h3 className="font-bold text-white mb-2">Will you add more tools?</h3>
-                <p className="text-white/90">
-                  Yes. We're continuously building new tools based on broker feedback. If there's a tool you need, <Link href="/contact" className="text-white hover:underline">let us know</Link>.
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-xl-bright-blue">
+                <h3 className="font-bold text-xl-dark-blue mb-2">Will you add more tools?</h3>
+                <p className="text-xl-grey">
+                  Yes. We're continuously building new tools based on broker feedback. If there's a tool you need, <Link href="/contact" className="text-xl-bright-blue hover:text-xl-dark-blue hover:underline">let us know</Link>.
                 </p>
               </div>
             </div>
