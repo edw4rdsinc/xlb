@@ -25,16 +25,19 @@ export const metadata: Metadata = {
 export default function ToolkitPage() {
   return (
     <div>
-      {/* Extended Background Container */}
+      {/* Fixed Background for Parallax */}
       <div
-        className="relative"
+        className="fixed inset-0 -z-10"
         style={{
           backgroundImage: 'url(/images/parallax/toolkit.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
-      >
+      />
+
+      {/* Content Container */}
+      <div className="relative">
         {/* Hero Section */}
         <section className="relative text-white min-h-[50vh] flex items-center">
           {/* Dark overlay for better text readability */}
@@ -207,7 +210,7 @@ export default function ToolkitPage() {
       </div>
 
       {/* Usage Guide */}
-      <section className="py-16 bg-xl-light-grey">
+      <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
             <h2 className="text-3xl font-bold text-xl-dark-blue mb-8 text-center">
@@ -250,7 +253,7 @@ export default function ToolkitPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white/30 backdrop-blur-sm border-t border-white/20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
             <h2 className="text-3xl font-bold text-xl-dark-blue mb-8 text-center">
@@ -298,7 +301,7 @@ export default function ToolkitPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white">
+      <section className="py-16 bg-gradient-to-r from-xl-dark-blue/95 to-xl-bright-blue/95 backdrop-blur-sm text-white border-t border-white/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection animation="fade-up">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
