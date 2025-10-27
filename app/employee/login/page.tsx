@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase/client'
 
 export default function EmployeeLoginPage() {
   const [email, setEmail] = useState('')
@@ -27,6 +28,18 @@ export default function EmployeeLoginPage() {
 
       if (!res.ok) {
         throw new Error(data.error || 'Login failed')
+      }
+
+      // Store the session in the Supabase client
+      if (data.session && supabase) {
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        })
+
+        if (sessionError) {
+          throw new Error('Failed to establish session')
+        }
       }
 
       // Redirect to employee dashboard

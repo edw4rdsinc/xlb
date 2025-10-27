@@ -3,12 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Upload, FileText, Mail, Loader2, CheckCircle, AlertCircle, X, Briefcase } from 'lucide-react'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { supabase } from '@/lib/supabase/client'
 
 interface BrokerProfile {
   id: string
@@ -62,6 +57,8 @@ export default function ConflictAnalyzerPage() {
   }, [])
 
   const loadBrokerProfiles = async () => {
+    if (!supabase) return
+
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
@@ -164,6 +161,10 @@ export default function ConflictAnalyzerPage() {
       }
 
       // Step 4: Create job in database
+      if (!supabase) {
+        throw new Error('Database connection not available')
+      }
+
       const { data: { user }, error: authError } = await supabase.auth.getUser()
 
       if (authError || !user) {
