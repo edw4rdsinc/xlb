@@ -130,8 +130,8 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
           })
         }
 
-        // Add 600ms delay between emails to stay under 2 emails/second limit
-        await new Promise(resolve => setTimeout(resolve, 600))
+        // Add 1000ms delay between emails to stay safely under 2 emails/second limit
+        await new Promise(resolve => setTimeout(resolve, 1000))
       } catch (error: any) {
         console.error(`❌ Exception sending to ${email}:`, error)
         results.push({

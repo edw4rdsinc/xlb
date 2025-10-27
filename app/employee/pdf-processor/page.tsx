@@ -112,25 +112,10 @@ export default function PDFProcessorPage() {
       const { text } = extractData
       console.log(`✅ Extracted ${text.length} characters from ${fileName}`)
 
-      // Step 3: Structure text with AI
-      updateFileProgress(index, { status: 'structuring', message: 'Formatting sections...', extractedText: text })
-
-      const structureRes = await fetch('/api/employee/structure-text', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, fileName }),
-      })
-
-      let sections: Section[] = []
-      if (structureRes.ok) {
-        const structureData = await structureRes.json()
-        sections = structureData.sections || []
-        console.log(`✅ Structured ${sections.length} sections for ${fileName}`)
-      } else {
-        const errorData = await structureRes.json()
-        console.warn(`Structuring failed for ${fileName}, continuing without sections:`, errorData)
-        // Continue without sections rather than failing completely
-      }
+      // Step 3: Skip AI structuring (disabled - API key doesn't have model access)
+      // TODO: Re-enable when Anthropic API key is configured with correct model access
+      const sections: Section[] = []
+      console.log(`⏭️  Skipping AI structuring for ${fileName} (feature disabled)`)
 
       // Step 4: Send emails
       updateFileProgress(index, { status: 'emailing', message: 'Sending emails...', sections })
@@ -203,24 +188,12 @@ export default function PDFProcessorPage() {
     // Parse emails
     const emails = teamEmails.split(',').map(e => e.trim()).filter(Boolean)
 
-    // Process files in batches of 3 to avoid overwhelming the serverless function
-    const BATCH_SIZE = 3
-    for (let i = 0; i < files.length; i += BATCH_SIZE) {
-      const batch = files.slice(i, i + BATCH_SIZE)
-      const batchIndices = Array.from({ length: batch.length }, (_, idx) => i + idx)
-
-      console.log(`Processing batch ${Math.floor(i / BATCH_SIZE) + 1} of ${Math.ceil(files.length / BATCH_SIZE)}`)
-
-      await Promise.all(
-        batch.map((file, batchIdx) => processSingleFile(file, batchIndices[batchIdx], emails))
-      )
-
-      // Add 2 second delay between batches to avoid rate limiting
-      // (each PDF sends emails sequentially with delays, but batches process in parallel)
-      if (i + BATCH_SIZE < files.length) {
-        console.log('Waiting 2 seconds before next batch to avoid rate limits...')
-        await new Promise(resolve => setTimeout(resolve, 2000))
-      }
+    // Process files sequentially to avoid Resend rate limiting (2 emails/second)
+    // Each PDF sends multiple emails, so we can't process PDFs in parallel
+    console.log(`Processing ${files.length} PDFs sequentially...`)
+    for (let i = 0; i < files.length; i++) {
+      console.log(`Processing PDF ${i + 1} of ${files.length}`)
+      await processSingleFile(files[i], i, emails)
     }
 
     setIsProcessing(false)
