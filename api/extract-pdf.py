@@ -1,8 +1,8 @@
 from http.server import BaseHTTPRequestHandler
 import json
-import base64
 import tempfile
 import os
+from urllib.request import urlopen
 
 try:
     import pdfplumber
@@ -22,14 +22,15 @@ class handler(BaseHTTPRequestHandler):
                 self.send_error(500, 'pdfplumber not installed')
                 return
 
-            # Get base64 encoded PDF data
-            pdf_base64 = data.get('pdf_data')
-            if not pdf_base64:
-                self.send_error(400, 'No PDF data provided')
+            # Get PDF URL (signed URL from Wasabi)
+            pdf_url = data.get('pdf_url')
+            if not pdf_url:
+                self.send_error(400, 'No PDF URL provided')
                 return
 
-            # Decode base64 PDF
-            pdf_bytes = base64.b64decode(pdf_base64)
+            # Download PDF from URL
+            with urlopen(pdf_url) as response:
+                pdf_bytes = response.read()
 
             # Create temporary file
             with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:

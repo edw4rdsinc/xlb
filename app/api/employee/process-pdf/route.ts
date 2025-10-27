@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 export const runtime = 'nodejs' // Force Node.js runtime instead of Edge
 
@@ -23,27 +24,13 @@ export async function POST(request: Request) {
       )
     }
 
-    // Download PDF from Wasabi
+    // Generate signed URL for Wasabi (valid for 15 minutes)
     const command = new GetObjectCommand({
       Bucket: process.env.WASABI_BUCKET || 'xl-benefits',
       Key: fileName,
     })
 
-    const response = await wasabiClient.send(command)
-
-    if (!response.Body) {
-      throw new Error('Failed to download file from Wasabi')
-    }
-
-    // Convert stream to buffer
-    const chunks: Uint8Array[] = []
-    for await (const chunk of response.Body as any) {
-      chunks.push(chunk)
-    }
-    const buffer = Buffer.concat(chunks)
-
-    // Convert buffer to base64 for Python serverless function
-    const pdfBase64 = buffer.toString('base64')
+    const signedUrl = await getSignedUrl(wasabiClient, command, { expiresIn: 900 })
 
     // Call Python serverless function to extract text
     const extractUrl = process.env.VERCEL_URL
@@ -53,7 +40,7 @@ export async function POST(request: Request) {
     const extractRes = await fetch(extractUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pdf_data: pdfBase64 }),
+      body: JSON.stringify({ pdf_url: signedUrl }),
     })
 
     if (!extractRes.ok) {
