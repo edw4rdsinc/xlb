@@ -160,33 +160,22 @@ export default function ConflictAnalyzerPage() {
         }
       }
 
-      // Step 4: Create job in database
-      if (!supabase) {
-        throw new Error('Database connection not available')
-      }
+      // Step 4: Create job via API (no client-side auth needed)
+      // Try to get user info from session if available
+      let userId = null
+      let userEmail = null
 
-      // Debug: Check localStorage
-      console.log('localStorage before getUser:', localStorage.getItem('xlb-employee-auth'))
-
-      // Debug: Check session
-      const { data: { session } } = await supabase.auth.getSession()
-      console.log('Current session:', { hasSession: !!session, userId: session?.user?.id })
-
-      const { data: { user }, error: authError } = await supabase.auth.getUser()
-
-      console.log('Auth check:', {
-        user: user ? { id: user.id, email: user.email } : null,
-        authError: authError?.message,
-        hasLocalStorage: !!localStorage.getItem('xlb-employee-auth')
-      })
-
-      if (authError || !user) {
-        throw new Error(`You must be logged in to submit jobs. Please refresh the page and log in again. Debug: ${authError?.message || 'No user found'}`)
+      if (supabase) {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          userId = user.id
+          userEmail = user.email
+        }
       }
 
       const jobData = {
-        user_id: user.id,
-        user_email: user.email,
+        user_id: userId,
+        user_email: userEmail,
         spd_url: spdData.fileUrl,
         spd_filename: spdData.fileName,
         handbook_url: handbookData.fileUrl,
@@ -206,18 +195,23 @@ export default function ConflictAnalyzerPage() {
         status: 'pending',
       }
 
-      const { data: job, error: jobError } = await supabase
-        .from('conflict_analysis_jobs')
-        .insert([jobData])
-        .select()
-        .single()
+      const jobRes = await fetch('/api/employee/create-conflict-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobData),
+      })
 
-      if (jobError) throw jobError
+      if (!jobRes.ok) {
+        const errorData = await jobRes.json()
+        throw new Error(errorData.error || 'Failed to create job')
+      }
+
+      const { job } = await jobRes.json()
 
       // Step 5: Optionally save broker profile
-      if (saveProfile && !selectedProfileId && user) {
+      if (saveProfile && !selectedProfileId && userId && supabase) {
         await supabase.from('broker_profiles').insert([{
-          user_id: user.id,
+          user_id: userId,
           broker_name: brokerName,
           logo_url: logoUrl,
           primary_color: primaryColor,
