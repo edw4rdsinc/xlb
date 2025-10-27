@@ -91,26 +91,36 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
     `
 
     // Send email to all recipients with detailed error tracking
-    const results = await Promise.allSettled(
-      emails.map(async (email) => {
-        try {
-          const result = await resend.emails.send({
-            from: 'XL Benefits Portal <sam@updates.edw4rds.com>',
-            to: email,
-            subject: `PDF Extracted: ${fileName.split('/').pop()}`,
-            html: htmlContent,
-          })
-          return { email, status: 'success', result }
-        } catch (error: any) {
-          return { email, status: 'failed', error: error.message }
-        }
-      })
-    )
+    // Send sequentially with delays to avoid rate limiting
+    console.log(`Attempting to send to ${emails.length} recipients:`, emails)
+
+    const results = []
+    for (const email of emails) {
+      try {
+        console.log(`Sending to ${email}...`)
+        const result = await resend.emails.send({
+          from: 'XL Benefits Portal <sam@updates.edw4rds.com>',
+          to: email,
+          subject: `PDF Extracted: ${fileName.split('/').pop()}`,
+          html: htmlContent,
+        })
+        console.log(`✅ Resend response for ${email}:`, result)
+        results.push({ status: 'fulfilled', value: { email, status: 'success', result, resendId: result.data?.id } })
+
+        // Add 100ms delay between emails to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100))
+      } catch (error: any) {
+        console.error(`❌ Resend error for ${email}:`, error)
+        results.push({ status: 'rejected', value: { email, status: 'failed', error: error.message } })
+      }
+    }
 
     const successful = results.filter(r => r.status === 'fulfilled').length
     const failed = results.filter(r => r.status === 'rejected').length
 
-    console.log('Email results:', JSON.stringify(results, null, 2))
+    console.log('=== FULL EMAIL RESULTS ===')
+    console.log(JSON.stringify(results, null, 2))
+    console.log(`Successful: ${successful}, Failed: ${failed}`)
 
     return NextResponse.json({
       success: true,
