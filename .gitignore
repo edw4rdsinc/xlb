@@ -32,3 +32,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python virtual environment
+pdf_env/
+
+# Test files
+test-*.js
+test-*.ts
+
+# Documentation
+EMPLOYEE_PORTAL_SETUP.md
+SETUP_NOW.md

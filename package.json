@@ -18,6 +18,7 @@
   "author": "XL Benefits",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.917.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
@@ -36,6 +37,8 @@
     "next": "^15.5.4",
     "next-auth": "^4.24.11",
     "next-seo": "^6.8.0",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^5.4.296",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
