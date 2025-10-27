@@ -91,7 +91,7 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
     `
 
     // Send email to all recipients with detailed error tracking
-    // Send sequentially with delays to avoid rate limiting
+    // Send sequentially with delays to avoid rate limiting (Resend free tier = 2 emails/second)
     console.log(`Attempting to send to ${emails.length} recipients:`, emails)
 
     const results = []
@@ -104,14 +104,44 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
           subject: `PDF Extracted: ${fileName.split('/').pop()}`,
           html: htmlContent,
         })
-        console.log(`✅ Resend response for ${email}:`, result)
-        results.push({ status: 'fulfilled', value: { email, status: 'success', result, resendId: result.data?.id } })
 
-        // Add 100ms delay between emails to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Check if Resend returned an error (rate limit, validation, etc.)
+        if (result.error) {
+          console.error(`❌ Resend returned error for ${email}:`, result.error)
+          results.push({
+            status: 'rejected',
+            value: {
+              email,
+              status: 'failed',
+              error: result.error.message || 'Resend API error',
+              errorCode: result.error.statusCode || result.error.name
+            }
+          })
+        } else {
+          console.log(`✅ Sent successfully to ${email} (ID: ${result.data?.id})`)
+          results.push({
+            status: 'fulfilled',
+            value: {
+              email,
+              status: 'success',
+              result,
+              resendId: result.data?.id
+            }
+          })
+        }
+
+        // Add 600ms delay between emails to stay under 2 emails/second limit
+        await new Promise(resolve => setTimeout(resolve, 600))
       } catch (error: any) {
-        console.error(`❌ Resend error for ${email}:`, error)
-        results.push({ status: 'rejected', value: { email, status: 'failed', error: error.message } })
+        console.error(`❌ Exception sending to ${email}:`, error)
+        results.push({
+          status: 'rejected',
+          value: {
+            email,
+            status: 'failed',
+            error: error.message
+          }
+        })
       }
     }
 

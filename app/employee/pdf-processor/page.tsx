@@ -214,6 +214,13 @@ export default function PDFProcessorPage() {
       await Promise.all(
         batch.map((file, batchIdx) => processSingleFile(file, batchIndices[batchIdx], emails))
       )
+
+      // Add 2 second delay between batches to avoid rate limiting
+      // (each PDF sends emails sequentially with delays, but batches process in parallel)
+      if (i + BATCH_SIZE < files.length) {
+        console.log('Waiting 2 seconds before next batch to avoid rate limits...')
+        await new Promise(resolve => setTimeout(resolve, 2000))
+      }
     }
 
     setIsProcessing(false)
