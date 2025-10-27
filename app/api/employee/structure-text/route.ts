@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
     // Use Claude to identify sections and add proper spacing
     const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-3-5-sonnet-20240620',
       max_tokens: 4096,
       messages: [
         {
