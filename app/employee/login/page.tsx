@@ -31,15 +31,24 @@ export default function EmployeeLoginPage() {
       }
 
       // Store the session in the Supabase client
+      console.log('Login response:', { hasSession: !!data.session, hasSupabase: !!supabase })
+
       if (data.session && supabase) {
+        console.log('Setting session in Supabase client...')
         const { error: sessionError } = await supabase.auth.setSession({
           access_token: data.session.access_token,
           refresh_token: data.session.refresh_token,
         })
 
         if (sessionError) {
+          console.error('Session error:', sessionError)
           throw new Error('Failed to establish session')
         }
+
+        console.log('Session stored successfully')
+        console.log('localStorage check:', localStorage.getItem('xlb-employee-auth'))
+      } else {
+        console.error('Missing session or supabase client:', { hasSession: !!data.session, hasSupabase: !!supabase })
       }
 
       // Redirect to employee dashboard

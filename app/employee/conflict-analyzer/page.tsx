@@ -165,9 +165,20 @@ export default function ConflictAnalyzerPage() {
         throw new Error('Database connection not available')
       }
 
+      // Debug: Check localStorage
+      console.log('localStorage before getUser:', localStorage.getItem('xlb-employee-auth'))
+
+      // Debug: Check session
+      const { data: { session } } = await supabase.auth.getSession()
+      console.log('Current session:', { hasSession: !!session, userId: session?.user?.id })
+
       const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-      console.log('Auth check:', { user, authError })
+      console.log('Auth check:', {
+        user: user ? { id: user.id, email: user.email } : null,
+        authError: authError?.message,
+        hasLocalStorage: !!localStorage.getItem('xlb-employee-auth')
+      })
 
       if (authError || !user) {
         throw new Error(`You must be logged in to submit jobs. Please refresh the page and log in again. Debug: ${authError?.message || 'No user found'}`)
