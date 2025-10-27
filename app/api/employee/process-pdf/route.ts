@@ -1,12 +1,5 @@
 import { NextResponse } from 'next/server'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import { exec } from 'child_process'
-import { promisify } from 'util'
-import { writeFile, unlink } from 'fs/promises'
-import path from 'path'
-import os from 'os'
-
-const execPromise = promisify(exec)
 
 export const runtime = 'nodejs' // Force Node.js runtime instead of Edge
 
@@ -20,8 +13,6 @@ const wasabiClient = new S3Client({
 })
 
 export async function POST(request: Request) {
-  let tempFilePath: string | null = null
-
   try {
     const { fileName } = await request.json()
 
@@ -51,21 +42,26 @@ export async function POST(request: Request) {
     }
     const buffer = Buffer.concat(chunks)
 
-    // Save to temp file
-    tempFilePath = path.join(os.tmpdir(), `pdf-${Date.now()}.pdf`)
-    await writeFile(tempFilePath, buffer)
+    // Convert buffer to base64 for Python serverless function
+    const pdfBase64 = buffer.toString('base64')
 
-    // Call Python script to extract text
-    const scriptPath = path.join(process.cwd(), 'scripts', 'extract-pdf-text.py')
-    const pythonPath = path.join(process.cwd(), 'pdf_env', 'bin', 'python3')
+    // Call Python serverless function to extract text
+    const extractUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/api/extract-pdf`
+      : 'http://localhost:3000/api/extract-pdf'
 
-    const { stdout, stderr } = await execPromise(`${pythonPath} ${scriptPath} "${tempFilePath}"`)
+    const extractRes = await fetch(extractUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdf_data: pdfBase64 }),
+    })
 
-    if (stderr) {
-      console.error('Python stderr:', stderr)
+    if (!extractRes.ok) {
+      const errorText = await extractRes.text()
+      throw new Error(`PDF extraction failed: ${errorText}`)
     }
 
-    const result = JSON.parse(stdout)
+    const result = await extractRes.json()
 
     if (!result.success) {
       throw new Error(result.error)
@@ -83,14 +79,5 @@ export async function POST(request: Request) {
       { error: 'Failed to process PDF', details: error.message },
       { status: 500 }
     )
-  } finally {
-    // Clean up temp file
-    if (tempFilePath) {
-      try {
-        await unlink(tempFilePath)
-      } catch (err) {
-        console.error('Failed to delete temp file:', err)
-      }
-    }
   }
 }
