@@ -3,9 +3,14 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
+interface Section {
+  title: string
+  content: string
+}
+
 export async function POST(request: Request) {
   try {
-    const { emails, fileName, text, fileUrl } = await request.json()
+    const { emails, fileName, text, sections, fileUrl } = await request.json()
 
     if (!emails || !Array.isArray(emails) || emails.length === 0) {
       return NextResponse.json(
@@ -21,7 +26,24 @@ export async function POST(request: Request) {
       )
     }
 
-    // Create email HTML content
+    // Create email HTML content with sections
+    const sectionsHTML = sections && sections.length > 0
+      ? sections.map((section: Section) => `
+          <div style="margin-bottom: 24px;">
+            <div style="background: #0066cc; color: white; padding: 12px 20px; border-radius: 6px 6px 0 0; font-weight: bold; font-size: 14px;">
+              ${section.title}
+            </div>
+            <div style="background: white; padding: 20px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 6px 6px; font-family: monospace; white-space: pre-wrap; font-size: 12px; line-height: 1.8;">
+${section.content}
+            </div>
+          </div>
+        `).join('')
+      : `
+          <div class="text-box" style="background: white; padding: 20px; border-left: 4px solid #0066cc; margin: 20px 0; font-family: monospace; white-space: pre-wrap; max-height: 400px; overflow-y: auto;">
+${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full content available in Wasabi]' : text}
+          </div>
+        `
+
     const htmlContent = `
       <!DOCTYPE html>
       <html>
@@ -31,9 +53,7 @@ export async function POST(request: Request) {
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
             .header { background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; }
             .content { background: #f9f9f9; padding: 30px; border: 1px solid #ddd; }
-            .text-box { background: white; padding: 20px; border-left: 4px solid #0066cc; margin: 20px 0; font-family: monospace; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
             .footer { background: #f1f1f1; padding: 20px; text-align: center; font-size: 12px; color: #666; border-radius: 0 0 8px 8px; }
-            .button { display: inline-block; padding: 12px 24px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; margin: 10px 0; }
           </style>
         </head>
         <body>
@@ -48,12 +68,10 @@ export async function POST(request: Request) {
               <p><strong>File Name:</strong> ${fileName.split('/').pop()}</p>
               <p><strong>Processed:</strong> ${new Date().toLocaleString()}</p>
 
-              <h3 style="color: #0066cc;">Extracted Text</h3>
-              <div class="text-box">
-${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full content available in Wasabi]' : text}
-              </div>
+              <h3 style="color: #0066cc; margin-top: 30px;">Extracted Content</h3>
+              ${sectionsHTML}
 
-              <p style="margin-top: 20px;">
+              <p style="margin-top: 30px;">
                 <strong>Total Characters:</strong> ${text.length.toLocaleString()}<br>
                 <strong>Estimated Pages:</strong> ${Math.ceil(text.length / 2000)}
               </p>

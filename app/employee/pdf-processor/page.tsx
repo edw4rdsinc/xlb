@@ -2,13 +2,19 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Upload, FileText, Mail, Loader2, CheckCircle, AlertCircle, X } from 'lucide-react'
+import { ArrowLeft, Upload, FileText, Mail, Loader2, CheckCircle, AlertCircle, X, Copy, Check } from 'lucide-react'
+
+interface Section {
+  title: string
+  content: string
+}
 
 interface FileProgress {
   file: File
-  status: 'pending' | 'uploading' | 'extracting' | 'emailing' | 'complete' | 'error'
+  status: 'pending' | 'uploading' | 'extracting' | 'structuring' | 'emailing' | 'complete' | 'error'
   message: string
   extractedText?: string
+  sections?: Section[]
   fileName?: string
   fileUrl?: string
 }
@@ -18,6 +24,7 @@ export default function PDFProcessorPage() {
   const [teamEmails, setTeamEmails] = useState<string>('')
   const [fileProgress, setFileProgress] = useState<FileProgress[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
+  const [copiedIndex, setCopiedIndex] = useState<string | null>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -53,6 +60,16 @@ export default function PDFProcessorPage() {
     })
   }
 
+  const copyToClipboard = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedIndex(id)
+      setTimeout(() => setCopiedIndex(null), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
+  }
+
   const processSingleFile = async (file: File, index: number, emails: string[]) => {
     try {
       // Step 1: Upload to Wasabi
@@ -85,8 +102,23 @@ export default function PDFProcessorPage() {
       const extractData = await extractRes.json()
       const { text } = extractData
 
-      // Step 3: Send emails
-      updateFileProgress(index, { status: 'emailing', message: 'Sending emails...', extractedText: text })
+      // Step 3: Structure text with AI
+      updateFileProgress(index, { status: 'structuring', message: 'Formatting sections...', extractedText: text })
+
+      const structureRes = await fetch('/api/employee/structure-text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, fileName }),
+      })
+
+      let sections: Section[] = []
+      if (structureRes.ok) {
+        const structureData = await structureRes.json()
+        sections = structureData.sections || []
+      }
+
+      // Step 4: Send emails
+      updateFileProgress(index, { status: 'emailing', message: 'Sending emails...', sections })
 
       const emailRes = await fetch('/api/employee/send-email', {
         method: 'POST',
@@ -95,6 +127,7 @@ export default function PDFProcessorPage() {
           emails,
           fileName,
           text,
+          sections,
           fileUrl,
         }),
       })
@@ -161,7 +194,7 @@ export default function PDFProcessorPage() {
             PDF Text Extractor
           </h1>
           <p className="text-sm text-xl-grey mt-1">
-            Upload PDF documents and extract text automatically
+            Upload PDF documents and extract text with proper section formatting
           </p>
         </div>
       </header>
@@ -271,7 +304,7 @@ export default function PDFProcessorPage() {
                 </p>
               </div>
 
-              <div className="space-y-2 max-h-96 overflow-y-auto">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto">
                 {fileProgress.map((progress, index) => (
                   <div
                     key={index}
@@ -284,7 +317,7 @@ export default function PDFProcessorPage() {
                     <div className="flex items-start gap-3">
                       {progress.status === 'error' && <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />}
                       {progress.status === 'complete' && <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />}
-                      {(progress.status === 'uploading' || progress.status === 'extracting' || progress.status === 'emailing') && (
+                      {(progress.status === 'uploading' || progress.status === 'extracting' || progress.status === 'structuring' || progress.status === 'emailing') && (
                         <Loader2 className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5 animate-spin" />
                       )}
                       {progress.status === 'pending' && <FileText className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />}
@@ -305,8 +338,68 @@ export default function PDFProcessorPage() {
                           {progress.message}
                         </p>
 
-                        {/* Show preview for completed files */}
-                        {progress.status === 'complete' && progress.extractedText && (
+                        {/* Show sections for completed files */}
+                        {progress.status === 'complete' && progress.sections && progress.sections.length > 0 && (
+                          <div className="mt-4 space-y-3">
+                            {/* Copy All Button */}
+                            <button
+                              onClick={() => {
+                                const allText = progress.sections!
+                                  .map(s => `${s.title}\n\n${s.content}`)
+                                  .join('\n\n\n')
+                                copyToClipboard(allText, `${index}-all`)
+                              }}
+                              className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-xl-bright-blue hover:bg-white rounded-md transition-colors"
+                            >
+                              {copiedIndex === `${index}-all` ? (
+                                <>
+                                  <Check className="w-3 h-3" />
+                                  Copied All!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3 h-3" />
+                                  Copy All Sections
+                                </>
+                              )}
+                            </button>
+
+                            {/* Individual Sections */}
+                            {progress.sections.map((section, sectionIdx) => (
+                              <div key={sectionIdx} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                                <div className="flex items-center justify-between bg-gray-50 px-4 py-2 border-b border-gray-200">
+                                  <h4 className="text-sm font-semibold text-xl-dark-blue">
+                                    {section.title}
+                                  </h4>
+                                  <button
+                                    onClick={() => copyToClipboard(section.content, `${index}-${sectionIdx}`)}
+                                    className="flex items-center gap-1.5 px-2 py-1 text-xs font-medium text-xl-bright-blue hover:bg-white rounded transition-colors"
+                                  >
+                                    {copiedIndex === `${index}-${sectionIdx}` ? (
+                                      <>
+                                        <Check className="w-3 h-3" />
+                                        Copied!
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Copy className="w-3 h-3" />
+                                        Copy
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                                <div className="p-4">
+                                  <pre className="text-xs text-gray-700 whitespace-pre-wrap font-mono leading-relaxed">
+                                    {section.content}
+                                  </pre>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Fallback: Show raw text if no sections */}
+                        {progress.status === 'complete' && (!progress.sections || progress.sections.length === 0) && progress.extractedText && (
                           <details className="mt-2">
                             <summary className="text-xs text-gray-600 cursor-pointer hover:text-xl-bright-blue">
                               View extracted text preview

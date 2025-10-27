@@ -3,5 +3,11 @@
     "api/extract-pdf.py": {
       "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/process-conflict-jobs",
+      "schedule": "* * * * *"
+    }
+  ]
 }

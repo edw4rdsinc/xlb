@@ -18,6 +18,7 @@
   "author": "XL Benefits",
   "license": "ISC",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.67.0",
     "@aws-sdk/client-s3": "^3.917.0",
     "@aws-sdk/s3-request-presigner": "^3.917.0",
     "@hookform/resolvers": "^5.2.2",
