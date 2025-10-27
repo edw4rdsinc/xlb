@@ -1,10 +1,21 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
+
+const wasabiClient = new S3Client({
+  endpoint: process.env.WASABI_ENDPOINT || 'https://s3.us-west-1.wasabisys.com',
+  region: process.env.WASABI_REGION || 'us-west-1',
+  credentials: {
+    accessKeyId: process.env.WASABI_ACCESS_KEY!,
+    secretAccessKey: process.env.WASABI_SECRET_KEY!,
+  },
+})
 
 // This endpoint is called by Vercel Cron every minute
 export async function GET(request: Request) {
@@ -192,19 +203,45 @@ async function processJob(job: any) {
 }
 
 async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text: string; pages: number }> {
-  // Call the existing Python PDF extraction endpoint
+  // Extract the S3 key from the URL (handle both full URLs and paths)
+  // URLs can be like:
+  // - "https://s3.us-west-1.wasabisys.com/xl-benefits/pdf-uploads/xxx.pdf"
+  // - "/xl-benefits/pdf-uploads/xxx.pdf"
+  // - "pdf-uploads/xxx.pdf"
+  let s3Key = fileName
+
+  if (pdfUrl.includes('pdf-uploads/')) {
+    // Extract just the key part after the bucket name
+    const match = pdfUrl.match(/pdf-uploads\/.*\.pdf/)
+    if (match) {
+      s3Key = match[0]
+    }
+  }
+
+  console.log(`Extracting PDF: ${fileName}`)
+  console.log(`Original URL: ${pdfUrl}`)
+  console.log(`S3 Key: ${s3Key}`)
+
+  // Generate signed URL for Wasabi (valid for 15 minutes)
+  const command = new GetObjectCommand({
+    Bucket: process.env.WASABI_BUCKET || 'xl-benefits',
+    Key: s3Key,
+  })
+
+  const signedUrl = await getSignedUrl(wasabiClient, command, { expiresIn: 900 })
+  console.log(`Generated signed URL (first 100 chars): ${signedUrl.substring(0, 100)}...`)
+
+  // Call the Python PDF extraction endpoint
   const extractUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}/api/extract-pdf`
     : `${process.env.NEXT_PUBLIC_SITE_URL}/api/extract-pdf`
 
-  console.log(`Extracting PDF: ${fileName}`)
-  console.log(`PDF URL: ${pdfUrl}`)
   console.log(`Extract endpoint: ${extractUrl}`)
 
   const response = await fetch(extractUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ pdf_url: pdfUrl }),
+    body: JSON.stringify({ pdf_url: signedUrl }),
   })
 
   const data = await response.json()
