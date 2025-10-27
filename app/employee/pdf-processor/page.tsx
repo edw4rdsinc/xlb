@@ -112,10 +112,25 @@ export default function PDFProcessorPage() {
       const { text } = extractData
       console.log(`✅ Extracted ${text.length} characters from ${fileName}`)
 
-      // Step 3: Skip AI structuring (disabled - API key doesn't have model access)
-      // TODO: Re-enable when Anthropic API key is configured with correct model access
-      const sections: Section[] = []
-      console.log(`⏭️  Skipping AI structuring for ${fileName} (feature disabled)`)
+      // Step 3: Structure text with AI
+      updateFileProgress(index, { status: 'structuring', message: 'Formatting sections...', extractedText: text })
+
+      const structureRes = await fetch('/api/employee/structure-text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, fileName }),
+      })
+
+      let sections: Section[] = []
+      if (structureRes.ok) {
+        const structureData = await structureRes.json()
+        sections = structureData.sections || []
+        console.log(`✅ Structured ${sections.length} sections for ${fileName}`)
+      } else {
+        const errorData = await structureRes.json()
+        console.warn(`Structuring failed for ${fileName}, continuing without sections:`, errorData)
+        // Continue without sections rather than failing completely
+      }
 
       // Step 4: Send emails
       updateFileProgress(index, { status: 'emailing', message: 'Sending emails...', sections })
