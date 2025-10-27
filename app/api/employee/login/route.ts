@@ -6,7 +6,22 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    // Get raw body text for debugging
+    const bodyText = await request.text()
+    console.log('Raw request body:', bodyText)
+
+    let email, password
+    try {
+      const parsed = JSON.parse(bodyText)
+      email = parsed.email
+      password = parsed.password
+    } catch (parseError: any) {
+      console.error('JSON parse error:', parseError.message)
+      return NextResponse.json(
+        { error: 'Invalid request format', details: parseError.message },
+        { status: 400 }
+      )
+    }
 
     if (!email || !password) {
       return NextResponse.json(
