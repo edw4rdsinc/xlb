@@ -90,21 +90,33 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
       </html>
     `
 
-    // Send email to all recipients
-    const results = await Promise.all(
-      emails.map(email =>
-        resend.emails.send({
-          from: 'XL Benefits Portal <sam@updates.edw4rds.com>',
-          to: email,
-          subject: `PDF Extracted: ${fileName.split('/').pop()}`,
-          html: htmlContent,
-        })
-      )
+    // Send email to all recipients with detailed error tracking
+    const results = await Promise.allSettled(
+      emails.map(async (email) => {
+        try {
+          const result = await resend.emails.send({
+            from: 'XL Benefits Portal <sam@updates.edw4rds.com>',
+            to: email,
+            subject: `PDF Extracted: ${fileName.split('/').pop()}`,
+            html: htmlContent,
+          })
+          return { email, status: 'success', result }
+        } catch (error: any) {
+          return { email, status: 'failed', error: error.message }
+        }
+      })
     )
+
+    const successful = results.filter(r => r.status === 'fulfilled').length
+    const failed = results.filter(r => r.status === 'rejected').length
+
+    console.log('Email results:', JSON.stringify(results, null, 2))
 
     return NextResponse.json({
       success: true,
-      emailsSent: results.length,
+      emailsSent: successful,
+      totalRecipients: emails.length,
+      failed,
       results,
     })
   } catch (error: any) {

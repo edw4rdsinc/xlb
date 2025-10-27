@@ -83,10 +83,15 @@ export default function PDFProcessorPage() {
         body: formData,
       })
 
-      if (!uploadRes.ok) throw new Error('Upload failed')
+      if (!uploadRes.ok) {
+        const errorData = await uploadRes.json()
+        console.error(`Upload failed for ${file.name}:`, errorData)
+        throw new Error(`Upload failed: ${errorData.error || 'Unknown error'}`)
+      }
 
       const uploadData = await uploadRes.json()
       const { fileUrl, fileName } = uploadData
+      console.log(`✅ Uploaded ${file.name} to ${fileUrl}`)
 
       // Step 2: Extract text
       updateFileProgress(index, { status: 'extracting', message: 'Extracting text...', fileName, fileUrl })
@@ -97,10 +102,15 @@ export default function PDFProcessorPage() {
         body: JSON.stringify({ fileUrl, fileName }),
       })
 
-      if (!extractRes.ok) throw new Error('Extraction failed')
+      if (!extractRes.ok) {
+        const errorData = await extractRes.json()
+        console.error(`Extraction failed for ${fileName}:`, errorData)
+        throw new Error(`Extraction failed: ${errorData.error || 'Unknown error'}`)
+      }
 
       const extractData = await extractRes.json()
       const { text } = extractData
+      console.log(`✅ Extracted ${text.length} characters from ${fileName}`)
 
       // Step 3: Structure text with AI
       updateFileProgress(index, { status: 'structuring', message: 'Formatting sections...', extractedText: text })
@@ -115,6 +125,11 @@ export default function PDFProcessorPage() {
       if (structureRes.ok) {
         const structureData = await structureRes.json()
         sections = structureData.sections || []
+        console.log(`✅ Structured ${sections.length} sections for ${fileName}`)
+      } else {
+        const errorData = await structureRes.json()
+        console.warn(`Structuring failed for ${fileName}, continuing without sections:`, errorData)
+        // Continue without sections rather than failing completely
       }
 
       // Step 4: Send emails
@@ -132,12 +147,34 @@ export default function PDFProcessorPage() {
         }),
       })
 
-      if (!emailRes.ok) throw new Error('Email failed')
+      if (!emailRes.ok) {
+        const errorData = await emailRes.json()
+        console.error(`Email failed for ${fileName}:`, errorData)
+        throw new Error(`Email failed: ${errorData.error || 'Unknown error'}`)
+      }
 
-      // Complete
-      updateFileProgress(index, { status: 'complete', message: `Sent to ${emails.length} recipient(s)` })
+      const emailData = await emailRes.json()
+      console.log(`✅ Email results for ${fileName}:`, emailData)
+
+      // Complete with detailed status
+      const successCount = emailData.emailsSent || 0
+      const failedCount = emailData.failed || 0
+
+      if (failedCount > 0) {
+        updateFileProgress(index, {
+          status: 'complete',
+          message: `⚠️ Sent to ${successCount}/${emails.length} recipients (${failedCount} failed)`
+        })
+        console.warn('Some emails failed to send:', emailData.results)
+      } else {
+        updateFileProgress(index, {
+          status: 'complete',
+          message: `✅ Sent to all ${emails.length} recipient(s)`
+        })
+      }
 
     } catch (error: any) {
+      console.error(`❌ Processing failed for ${file.name}:`, error)
       updateFileProgress(index, { status: 'error', message: error.message || 'Processing failed' })
     }
   }
@@ -166,10 +203,18 @@ export default function PDFProcessorPage() {
     // Parse emails
     const emails = teamEmails.split(',').map(e => e.trim()).filter(Boolean)
 
-    // Process all files in parallel
-    await Promise.all(
-      files.map((file, index) => processSingleFile(file, index, emails))
-    )
+    // Process files in batches of 3 to avoid overwhelming the serverless function
+    const BATCH_SIZE = 3
+    for (let i = 0; i < files.length; i += BATCH_SIZE) {
+      const batch = files.slice(i, i + BATCH_SIZE)
+      const batchIndices = Array.from({ length: batch.length }, (_, idx) => i + idx)
+
+      console.log(`Processing batch ${Math.floor(i / BATCH_SIZE) + 1} of ${Math.ceil(files.length / BATCH_SIZE)}`)
+
+      await Promise.all(
+        batch.map((file, batchIdx) => processSingleFile(file, batchIndices[batchIdx], emails))
+      )
+    }
 
     setIsProcessing(false)
   }
