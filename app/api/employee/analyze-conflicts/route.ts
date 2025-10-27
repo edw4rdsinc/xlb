@@ -54,7 +54,7 @@ ${handbookText.substring(0, 100000)}
 `
 
     const extractionResponse = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20240620',
+      model: 'claude-3-5-sonnet-latest',
       max_tokens: 8192,
       messages: [{ role: 'user', content: sectionExtractionPrompt }],
     })
@@ -126,7 +126,7 @@ ${JSON.stringify(sections, null, 2)}
 `
 
     const analysisResponse = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20240620',
+      model: 'claude-3-5-sonnet-latest',
       max_tokens: 8192,
       messages: [{ role: 'user', content: conflictAnalysisPrompt }],
     })

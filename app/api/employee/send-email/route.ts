@@ -114,7 +114,7 @@ ${text.length > 5000 ? text.substring(0, 5000) + '\n\n[Text truncated - full con
               email,
               status: 'failed',
               error: result.error.message || 'Resend API error',
-              errorCode: result.error.statusCode || result.error.name
+              errorCode: (result.error as any).statusCode || result.error.name
             }
           })
         } else {
