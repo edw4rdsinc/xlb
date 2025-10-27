@@ -30,8 +30,12 @@ export async function POST(request: Request) {
       )
     }
 
-    // Initialize Supabase client with anon key for auth
-    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+    // Initialize Supabase client for server-side auth
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: false, // Server-side doesn't need session persistence
+      }
+    })
 
     // Authenticate user
     const { data, error } = await supabase.auth.signInWithPassword({

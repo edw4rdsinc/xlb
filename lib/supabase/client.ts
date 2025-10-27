@@ -6,7 +6,13 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 // Create client only if environment variables are available
 // This allows the build to succeed even without Supabase credentials
 export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        storageKey: 'xlb-employee-auth',
+        storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      }
+    })
   : null as any; // Runtime checks will catch missing client
 
 // Database types

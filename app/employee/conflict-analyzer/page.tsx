@@ -167,8 +167,10 @@ export default function ConflictAnalyzerPage() {
 
       const { data: { user }, error: authError } = await supabase.auth.getUser()
 
+      console.log('Auth check:', { user, authError })
+
       if (authError || !user) {
-        throw new Error('You must be logged in to submit jobs. Please refresh the page and log in again.')
+        throw new Error(`You must be logged in to submit jobs. Please refresh the page and log in again. Debug: ${authError?.message || 'No user found'}`)
       }
 
       const jobData = {
