@@ -164,11 +164,15 @@ export default function ConflictAnalyzerPage() {
       }
 
       // Step 4: Create job in database
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+      if (authError || !user) {
+        throw new Error('You must be logged in to submit jobs. Please refresh the page and log in again.')
+      }
 
       const jobData = {
-        user_id: user?.id,
-        user_email: user?.email,
+        user_id: user.id,
+        user_email: user.email,
         spd_url: spdData.fileUrl,
         spd_filename: spdData.fileName,
         handbook_url: handbookData.fileUrl,
