@@ -68,13 +68,21 @@ class handler(BaseHTTPRequestHandler):
                     os.unlink(tmp_path)
 
         except Exception as e:
+            import traceback
+            error_traceback = traceback.format_exc()
+
+            print(f"PDF extraction error: {str(e)}", flush=True)
+            print(f"Traceback: {error_traceback}", flush=True)
+
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
 
             response = {
                 'success': False,
-                'error': str(e)
+                'error': str(e),
+                'error_type': type(e).__name__,
+                'traceback': error_traceback
             }
 
             self.wfile.write(json.dumps(response).encode('utf-8'))

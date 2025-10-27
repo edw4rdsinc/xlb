@@ -197,17 +197,28 @@ async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text:
     ? `https://${process.env.VERCEL_URL}/api/extract-pdf`
     : `${process.env.NEXT_PUBLIC_SITE_URL}/api/extract-pdf`
 
+  console.log(`Extracting PDF: ${fileName}`)
+  console.log(`PDF URL: ${pdfUrl}`)
+  console.log(`Extract endpoint: ${extractUrl}`)
+
   const response = await fetch(extractUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ pdf_url: pdfUrl }),
   })
 
-  if (!response.ok) {
-    throw new Error(`PDF extraction failed for ${fileName}`)
+  const data = await response.json()
+
+  if (!response.ok || !data.success) {
+    const errorMsg = data.error || 'Unknown error'
+    console.error(`PDF extraction error for ${fileName}:`, errorMsg)
+    console.error(`Response status: ${response.status}`)
+    console.error(`Full response:`, data)
+    throw new Error(`PDF extraction failed for ${fileName}: ${errorMsg}`)
   }
 
-  const data = await response.json()
+  console.log(`Successfully extracted ${data.pages} pages from ${fileName}`)
+
   return {
     text: data.text,
     pages: data.pages || 0,
