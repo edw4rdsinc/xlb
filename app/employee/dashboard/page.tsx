@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FileText, Upload, Settings, LogOut } from 'lucide-react'
+import { FileText, Upload, Settings, LogOut, Scale } from 'lucide-react'
 
 export default function EmployeeDashboard() {
   const handleLogout = () => {
@@ -66,21 +66,23 @@ export default function EmployeeDashboard() {
             </div>
           </Link>
 
-          {/* Placeholder for Future Tools */}
-          <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6 opacity-60">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <Upload className="w-6 h-6 text-gray-400" />
+          {/* Document Conflict Analyzer */}
+          <Link href="/employee/conflict-analyzer">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-xl-bright-blue p-6 transition-all hover:shadow-lg group cursor-pointer">
+              <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-xl-bright-blue/20 transition-colors">
+                <Scale className="w-6 h-6 text-xl-bright-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-xl-dark-blue mb-2 group-hover:text-xl-bright-blue transition-colors">
+                Document Conflict Analyzer
+              </h3>
+              <p className="text-sm text-xl-grey mb-4">
+                Compare SPD vs Employee Handbook to identify benefits misalignments. Get branded reports via email.
+              </p>
+              <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">
+                Ready to Use
+              </span>
             </div>
-            <h3 className="text-xl font-bold text-gray-500 mb-2">
-              Document Converter
-            </h3>
-            <p className="text-sm text-gray-400 mb-4">
-              Convert documents between formats (PDF, DOCX, Excel)
-            </p>
-            <span className="text-xs text-gray-400 font-semibold uppercase tracking-wide">
-              Coming Soon
-            </span>
-          </div>
+          </Link>
 
           <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6 opacity-60">
             <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
