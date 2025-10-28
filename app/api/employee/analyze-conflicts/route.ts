@@ -16,6 +16,14 @@ export async function POST(request: Request) {
   try {
     const { spdText, handbookText, focusAreas, clientName } = await request.json() as ConflictAnalysisRequest
 
+    console.log('Conflict analysis request:')
+    console.log(`- Client: ${clientName}`)
+    console.log(`- Focus areas: ${focusAreas.join(', ')}`)
+    console.log(`- SPD text length: ${spdText?.length || 0} characters`)
+    console.log(`- Handbook text length: ${handbookText?.length || 0} characters`)
+    console.log(`- SPD first 500 chars: ${spdText?.substring(0, 500)}`)
+    console.log(`- Handbook first 500 chars: ${handbookText?.substring(0, 500)}`)
+
     if (!spdText || !handbookText) {
       return NextResponse.json(
         { error: 'Both SPD and Handbook text required' },
@@ -53,6 +61,7 @@ Handbook Document:
 ${handbookText.substring(0, 100000)}
 `
 
+    console.log('Step 1: Extracting sections from documents...')
     const extractionResponse = await anthropic.messages.create({
       model: 'claude-sonnet-4-5-20250929',
       max_tokens: 8192,
@@ -64,12 +73,17 @@ ${handbookText.substring(0, 100000)}
       throw new Error('Unexpected response type from Claude')
     }
 
+    console.log('Claude extraction response (first 1000 chars):', extractionContent.text.substring(0, 1000))
+
     const jsonMatch = extractionContent.text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) {
+      console.error('Failed to extract JSON from Claude response')
+      console.error('Full response:', extractionContent.text)
       throw new Error('Could not parse section extraction response')
     }
 
     const sections = JSON.parse(jsonMatch[0])
+    console.log(`Extracted sections - SPD: ${sections.spd_sections?.length || 0}, Handbook: ${sections.handbook_sections?.length || 0}`)
 
     // Step 2: Analyze conflicts between extracted sections
     const conflictAnalysisPrompt = `You are a benefits compliance expert analyzing conflicts between an SPD (Summary Plan Description - what is actually insured) and an Employee Handbook (what employees are promised).
@@ -124,6 +138,9 @@ Return JSON:
 Extracted Sections:
 ${JSON.stringify(sections, null, 2)}
 `
+
+    console.log('Step 2: Analyzing conflicts...')
+    console.log('Sections being analyzed:', JSON.stringify(sections, null, 2).substring(0, 2000))
 
     const analysisResponse = await anthropic.messages.create({
       model: 'claude-sonnet-4-5-20250929',
