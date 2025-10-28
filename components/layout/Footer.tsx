@@ -1,8 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const pathname = usePathname()
+  const isTeamPage = pathname === '/how-we-help/meet-the-team'
 
   return (
     <footer className="bg-gray-700 text-white">
@@ -85,6 +90,13 @@ export default function Footer() {
                   Our Team
                 </Link>
               </li>
+              {isTeamPage && (
+                <li>
+                  <Link href="/employee/login" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
+                    EE Toolkit
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
                   Contact
