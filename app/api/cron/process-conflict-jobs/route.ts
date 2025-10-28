@@ -108,7 +108,11 @@ async function processJob(job: any) {
       .eq('id', job.id)
 
     // Step 3: Analyze conflicts
-    const analysisRes = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts`, {
+    const analysisUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts`
+      : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts`
+
+    const analysisRes = await fetch(analysisUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -264,7 +268,11 @@ async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text:
 
 async function generateReport(data: any): Promise<string> {
   // Generate branded HTML report
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/generate-conflict-report`, {
+  const reportUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/employee/generate-conflict-report`
+    : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/generate-conflict-report`
+
+  const response = await fetch(reportUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -285,7 +293,11 @@ async function sendReportEmail(data: {
   spdFilename: string
   handbookFilename: string
 }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/send-conflict-report`, {
+  const emailUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/employee/send-conflict-report`
+    : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/send-conflict-report`
+
+  const response = await fetch(emailUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
