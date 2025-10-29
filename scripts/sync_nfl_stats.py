@@ -28,7 +28,7 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+load_dotenv('.env.local')
 
 # Supabase client
 SUPABASE_URL = os.getenv('NEXT_PUBLIC_SUPABASE_URL')
@@ -208,18 +208,18 @@ def calculate_points(stats: Dict) -> float:
     """
     points = 0.0
 
-    # Passing: 4 pts/TD, 1 pt per 25 yards
-    points += stats['passing_tds'] * 4
-    points += (stats['passing_yards'] // 25)
+    # Passing: 6 pts/TD, 1 pt per 25 yards (rounded)
+    points += stats['passing_tds'] * 6
+    points += round(stats['passing_yards'] / 25)
 
-    # Rushing: 6 pts/TD, 1 pt per 10 yards
+    # Rushing: 6 pts/TD, 1 pt per 10 yards (rounded)
     points += stats['rushing_tds'] * 6
-    points += (stats['rushing_yards'] // 10)
+    points += round(stats['rushing_yards'] / 10)
 
-    # Receiving (PPR): 6 pts/TD, 1 pt/reception, 1 pt per 10 yards
+    # Receiving (PPR): 6 pts/TD, 1 pt/reception, 1 pt per 10 yards (rounded)
     points += stats['receiving_tds'] * 6
     points += stats['receptions'] * 1  # PPR
-    points += (stats['receiving_yards'] // 10)
+    points += round(stats['receiving_yards'] / 10)
 
     # Two-point conversions
     points += stats['two_point_conversions'] * 2
@@ -228,11 +228,11 @@ def calculate_points(stats: Dict) -> float:
     points += stats['field_goals'] * 3
     points += stats['pats'] * 1
 
-    # Defense: 6 pts/TD, 2 pts/INT, 2 pts/safety, 1 pt/sack
+    # Defense: 6 pts/TD, 2 pts/INT, 2 pts/safety, 3 pts/sack
     points += stats['def_tds'] * 6
     points += stats['interceptions'] * 2
     points += stats['safeties'] * 2
-    points += stats['sacks'] * 1
+    points += stats['sacks'] * 3
 
     return round(points, 2)
 

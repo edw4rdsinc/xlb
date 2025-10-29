@@ -1,7 +1,7 @@
 // PPR Scoring Rules
 export const SCORING_RULES = {
   // Passing
-  PASSING_TD: 4,
+  PASSING_TD: 6,
   PASSING_YARDS_PER_POINT: 25, // 1 point per 25 yards
   TWO_PT_CONVERSION: 2,
 
@@ -22,7 +22,7 @@ export const SCORING_RULES = {
   DEF_TD: 6,
   INTERCEPTION: 2,
   SAFETY: 2,
-  SACK: 1,
+  SACK: 3,
 };
 
 export interface PlayerStats {
@@ -52,16 +52,16 @@ export function calculatePlayerPoints(stats: PlayerStats): number {
 
   // Passing
   if (stats.passing_tds) points += stats.passing_tds * SCORING_RULES.PASSING_TD;
-  if (stats.passing_yards) points += Math.floor(stats.passing_yards / SCORING_RULES.PASSING_YARDS_PER_POINT);
+  if (stats.passing_yards) points += Math.round(stats.passing_yards / SCORING_RULES.PASSING_YARDS_PER_POINT);
 
   // Rushing
   if (stats.rushing_tds) points += stats.rushing_tds * SCORING_RULES.RUSHING_TD;
-  if (stats.rushing_yards) points += Math.floor(stats.rushing_yards / SCORING_RULES.RUSHING_YARDS_PER_POINT);
+  if (stats.rushing_yards) points += Math.round(stats.rushing_yards / SCORING_RULES.RUSHING_YARDS_PER_POINT);
 
   // Receiving (PPR)
   if (stats.receiving_tds) points += stats.receiving_tds * SCORING_RULES.RECEIVING_TD;
   if (stats.receptions) points += stats.receptions * SCORING_RULES.RECEPTION;
-  if (stats.receiving_yards) points += Math.floor(stats.receiving_yards / SCORING_RULES.RECEIVING_YARDS_PER_POINT);
+  if (stats.receiving_yards) points += Math.round(stats.receiving_yards / SCORING_RULES.RECEIVING_YARDS_PER_POINT);
 
   // Two-point conversions
   if (stats.two_point_conversions) points += stats.two_point_conversions * SCORING_RULES.TWO_PT_CONVERSION;
