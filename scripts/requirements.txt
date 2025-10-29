@@ -1,0 +1,18 @@
+# Fantasy Football Python Scripts Requirements
+
+# NFL Data
+nflreadpy>=0.1.0
+
+# Database
+supabase>=2.0.0
+
+# Data Processing
+pandas>=2.0.0
+polars>=0.19.0
+
+# Fuzzy Matching for Player Names
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.21.0
+
+# Environment Variables
+python-dotenv>=1.0.0
