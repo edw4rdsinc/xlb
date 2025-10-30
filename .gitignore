@@ -43,3 +43,4 @@ test-*.ts
 # Documentation
 EMPLOYEE_PORTAL_SETUP.md
 SETUP_NOW.md
+scripts/venv/
