@@ -95,8 +95,8 @@ export async function validateMagicLink(token: string): Promise<{
     valid: true,
     userId: link.user_id,
     roundId: link.round_id,
-    userEmail: link.users.email,
-    teamName: link.users.team_name,
+    userEmail: link.users?.[0]?.email || '',
+    teamName: link.users?.[0]?.team_name || '',
   };
 }
 

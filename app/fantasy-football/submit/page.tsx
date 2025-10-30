@@ -284,8 +284,6 @@ export default function SubmitLineupPage() {
         <LineupForm
           players={players}
           currentRound={currentRound}
-          existingLineup={existingLineup}
-          userData={userData}
           onSuccess={handleSuccess}
         />
       </div>

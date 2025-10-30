@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateMagicLink } from '@/lib/auth/magic-link';
 import { cookies } from 'next/headers';
+import { ApiResponses } from '@/lib/api/utils/responses';
+import { logger } from '@/lib/utils/logger';
 
 /**
  * GET /api/auth/magic-link?token=abc123
@@ -12,20 +14,14 @@ export async function GET(request: NextRequest) {
   const token = searchParams.get('token');
 
   if (!token) {
-    return NextResponse.json(
-      { error: 'Token is required' },
-      { status: 400 }
-    );
+    return ApiResponses.badRequest('Token is required');
   }
 
   try {
     const validation = await validateMagicLink(token);
 
     if (!validation.valid) {
-      return NextResponse.json(
-        { error: validation.error || 'Invalid token' },
-        { status: 401 }
-      );
+      return ApiResponses.unauthorized(validation.error || 'Invalid token');
     }
 
     // Create session cookie (expires in 6 weeks = 42 days)
@@ -46,8 +42,7 @@ export async function GET(request: NextRequest) {
       path: '/',
     });
 
-    return NextResponse.json({
-      success: true,
+    return ApiResponses.success({
       user: {
         id: validation.userId,
         email: validation.userEmail,
@@ -56,10 +51,7 @@ export async function GET(request: NextRequest) {
       roundId: validation.roundId,
     });
   } catch (error) {
-    console.error('Magic link validation error:', error);
-    return NextResponse.json(
-      { error: 'Failed to validate magic link' },
-      { status: 500 }
-    );
+    logger.error('Magic link validation error', error);
+    return ApiResponses.serverError('Failed to validate magic link');
   }
 }

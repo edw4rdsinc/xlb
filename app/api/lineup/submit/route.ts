@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { markMagicLinkUsed } from '@/lib/auth/magic-link';
 import { cookies } from 'next/headers';
+import { ApiResponses } from '@/lib/api/utils/responses';
+import { logger } from '@/lib/utils/logger';
 
 interface LineupSubmission {
   qb: string;
@@ -27,10 +29,7 @@ export async function POST(request: NextRequest) {
     const sessionCookie = cookieStore.get('ff_session');
 
     if (!sessionCookie) {
-      return NextResponse.json(
-        { error: 'No active session. Please use your magic link.' },
-        { status: 401 }
-      );
+      return ApiResponses.unauthorized('No active session. Please use your magic link.');
     }
 
     const session = JSON.parse(sessionCookie.value);
@@ -43,10 +42,7 @@ export async function POST(request: NextRequest) {
     const requiredPositions = ['qb', 'rb1', 'rb2', 'wr1', 'wr2', 'te', 'k', 'def'];
     for (const position of requiredPositions) {
       if (!body[position as keyof LineupSubmission]) {
-        return NextResponse.json(
-          { error: `Missing ${position}` },
-          { status: 400 }
-        );
+        return ApiResponses.badRequest(`Missing ${position}`);
       }
     }
 
@@ -79,10 +75,7 @@ export async function POST(request: NextRequest) {
         .limit(1);
 
       if (playerError || !players || players.length === 0) {
-        return NextResponse.json(
-          { error: `Player not found: ${playerName} (${dbPosition})` },
-          { status: 404 }
-        );
+        return ApiResponses.notFound(`Player not found: ${playerName} (${dbPosition})`);
       }
 
       playerIds[`${position}_id`] = players[0].id;
@@ -103,11 +96,8 @@ export async function POST(request: NextRequest) {
       });
 
     if (lineupError) {
-      console.error('Lineup submission error:', lineupError);
-      return NextResponse.json(
-        { error: 'Failed to save lineup' },
-        { status: 500 }
-      );
+      logger.error('Lineup submission error', lineupError);
+      return ApiResponses.serverError('Failed to save lineup');
     }
 
     // Mark magic link as used (first submission only)
@@ -115,19 +105,13 @@ export async function POST(request: NextRequest) {
       await markMagicLinkUsed(token);
     } catch (error) {
       // Non-fatal - link might already be marked as used
-      console.log('Magic link already marked as used:', error);
+      logger.debug('Magic link already marked as used', { error });
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Lineup submitted successfully',
-    });
+    return ApiResponses.success(null, 'Lineup submitted successfully');
   } catch (error) {
-    console.error('Lineup submission error:', error);
-    return NextResponse.json(
-      { error: 'Failed to submit lineup' },
-      { status: 500 }
-    );
+    logger.error('Lineup submission error', error);
+    return ApiResponses.serverError('Failed to submit lineup');
   }
 }
 
@@ -143,10 +127,7 @@ export async function GET(request: NextRequest) {
     const sessionCookie = cookieStore.get('ff_session');
 
     if (!sessionCookie) {
-      return NextResponse.json(
-        { error: 'No active session' },
-        { status: 401 }
-      );
+      return ApiResponses.unauthorized('No active session');
     }
 
     const session = JSON.parse(sessionCookie.value);
@@ -173,15 +154,12 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (error || !lineup) {
-      return NextResponse.json({ lineup: null });
+      return ApiResponses.success({ lineup: null });
     }
 
-    return NextResponse.json({ lineup });
+    return ApiResponses.success({ lineup });
   } catch (error) {
-    console.error('Get lineup error:', error);
-    return NextResponse.json(
-      { error: 'Failed to get lineup' },
-      { status: 500 }
-    );
+    logger.error('Get lineup error', error);
+    return ApiResponses.serverError('Failed to get lineup');
   }
 }

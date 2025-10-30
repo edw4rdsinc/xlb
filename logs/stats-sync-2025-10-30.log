@@ -1,0 +1,200 @@
+================================================
+NFL Stats Sync - Thu Oct 30 04:01:01 PM PDT 2025
+================================================
+Current NFL Week: 9
+Syncing stats for Week: 8
+
+Running stats sync...
+============================================================
+🏈 XL Benefits Fantasy Football - NFL Stats Sync
+============================================================
+Season: 2025
+Week: 8
+Mode: LIVE
+Time: 2025-10-30 16:01:02
+============================================================
+
+🗓️  Checking for bye weeks in 2025 Week 8...
+✅ Found 6 teams on bye: ARI, DET, JAX, LA, LV, SEA
+
+📊 Fetching NFL stats for 2025 Week 8 from nflreadpy...
+✅ Found 892 players with stats for Week 8
+
+🛡️  Aggregating team defense stats...
+✅ Aggregated defense stats for 1 teams
+✅ Combined 892 player stats + 1 team defense stats
+
+🔍 Fetching players from database...
+✅ Found 1000 players in database
+
+🔄 Transforming stats to database schema...
+Traceback (most recent call last):
+  File "/home/sam/Documents/github-repos/xlb/xlb/scripts/sync_nfl_stats.py", line 474, in <module>
+    main()
+  File "/home/sam/Documents/github-repos/xlb/xlb/scripts/sync_nfl_stats.py", line 458, in main
+    records = transform_stats_to_schema(combined_stats, db_players, args.week, bye_teams)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sam/Documents/github-repos/xlb/xlb/scripts/sync_nfl_stats.py", line 329, in transform_stats_to_schema
+    'interceptions': int(row.get('interceptions', 0) or 0),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot convert float NaN to integer
+
+================================================
+❌ Stats sync failed with exit code: 
+   Check log file: /home/sam/Documents/github-repos/xlb/xlb/logs/stats-sync-2025-10-30.log
+================================================
+NFL Stats Sync - Thu Oct 30 04:01:51 PM PDT 2025
+================================================
+Current NFL Week: 9
+Syncing stats for Week: 8
+
+Running stats sync...
+============================================================
+🏈 XL Benefits Fantasy Football - NFL Stats Sync
+============================================================
+Season: 2025
+Week: 8
+Mode: LIVE
+Time: 2025-10-30 16:01:52
+============================================================
+
+🗓️  Checking for bye weeks in 2025 Week 8...
+✅ Found 6 teams on bye: ARI, DET, JAX, LA, LV, SEA
+
+📊 Fetching NFL stats for 2025 Week 8 from nflreadpy...
+✅ Found 892 players with stats for Week 8
+
+🛡️  Aggregating team defense stats...
+✅ Aggregated defense stats for 1 teams
+✅ Combined 892 player stats + 1 team defense stats
+
+🔍 Fetching players from database...
+✅ Found 1000 players in database
+
+🔄 Transforming stats to database schema...
+✅ Matched 306 players to database
+
+⚠️  587 players not matched:
+   - Thomas Morstead (P)
+   - Cameron Jordan (DE)
+   - Cameron Heyward (DT)
+   - Nick Bellore (LB)
+   - Johnny Hekker (P)
+   - Bobby Wagner (MLB)
+   - Lavonte David (OLB)
+   - Harrison Smith (FS)
+   - Demario Davis (OLB)
+   - Greg Van Roten (G)
+   ... and 577 more
+
+💾 Upserting 306 records to database...
+✅ Successfully upserted 306 player stats
+
+============================================================
+✅ SYNC COMPLETE
+============================================================
+Records processed: 306
+Week: 8
+Next steps: Go to /admin/scoring and click 'Calculate Scores'
+============================================================
+
+================================================
+✅ Stats sync completed successfully
+   Week 8 stats imported to Supabase
+================================================
+NFL Stats Sync - Thu Oct 30 04:19:45 PM PDT 2025
+================================================
+Current NFL Week: 9
+Syncing stats for Week: 8
+
+Running stats sync...
+============================================================
+🏈 XL Benefits Fantasy Football - NFL Stats Sync
+============================================================
+Season: 2025
+Week: 8
+Mode: LIVE
+Time: 2025-10-30 16:19:46
+============================================================
+
+🗓️  Checking for bye weeks in 2025 Week 8...
+✅ Found 6 teams on bye: ARI, DET, JAX, LA, LV, SEA
+
+📊 Fetching NFL stats for 2025 Week 8 from nflreadpy...
+✅ Found 892 players with stats for Week 8
+
+🛡️  Aggregating team defense stats...
+✅ Aggregated defense stats for 1 teams
+✅ Combined 892 player stats + 1 team defense stats
+
+🔍 Fetching players from database...
+✅ Found 1000 players in database
+
+🔄 Transforming stats to database schema...
+✅ Matched 306 players to database
+
+⚠️  587 players not matched:
+   - Thomas Morstead (P)
+   - Cameron Jordan (DE)
+   - Cameron Heyward (DT)
+   - Nick Bellore (LB)
+   - Johnny Hekker (P)
+   - Bobby Wagner (MLB)
+   - Lavonte David (OLB)
+   - Harrison Smith (FS)
+   - Demario Davis (OLB)
+   - Greg Van Roten (G)
+   ... and 577 more
+
+💾 Upserting 306 records to database...
+✅ Successfully upserted 306 player stats
+
+============================================================
+✅ SYNC COMPLETE
+============================================================
+Records processed: 306
+Week: 8
+Next steps: Go to /admin/scoring and click 'Calculate Scores'
+============================================================
+
+================================================
+✅ Stats sync completed successfully
+   Week 8 stats imported to Supabase
+
+Running score calculation...
+============================================================
+🏈 XL Benefits Fantasy Football - Score Calculation
+============================================================
+Season: 2025
+Week: 8
+Mode: LIVE
+Time: 2025-10-30 16:19:48
+============================================================
+
+📋 Fetching all lineups from database...
+✅ Found 5 lineups
+📊 Fetching player stats for Week 8...
+✅ Found stats for 324 players
+
+🔢 Calculating scores for 5 lineups...
+✅ Calculated scores for 5 lineups
+
+📈 Calculating cumulative scores...
+✅ Found Round 2 (Weeks 7-12)
+✅ Calculated cumulative scores
+
+💾 Upserting 5 score records to database...
+✅ Successfully upserted 5 score records
+
+============================================================
+✅ SCORE CALCULATION COMPLETE
+============================================================
+Lineups processed: 5
+Week: 8
+Next steps: Scores are now visible to users via their magic links
+============================================================
+
+
+================================================
+✅ Score calculation completed successfully
+   Week 8 scores calculated for all lineups
