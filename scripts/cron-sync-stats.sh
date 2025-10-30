@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Cron job wrapper for NFL stats sync
-# Runs every Tuesday at 9:00 AM ET
+# Runs every Tuesday at 7:00 AM PST
 #
 # This script:
 # 1. Calculates current NFL week based on season start date

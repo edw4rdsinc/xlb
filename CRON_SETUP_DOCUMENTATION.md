@@ -2,7 +2,7 @@
 
 ## 📅 Overview
 
-The NFL stats sync runs **automatically every Tuesday at 9:00 AM ET** to import the previous week's player statistics from nflreadpy and update the fantasy football scores.
+The NFL stats sync runs **automatically every Tuesday at 7:00 AM PST** to import the previous week's player statistics from nflreadpy and update the fantasy football scores.
 
 ## ✅ Installation Status
 
@@ -32,7 +32,7 @@ The cron script automatically calculates which NFL week to sync based on:
 ### 2. Script Flow
 
 ```bash
-Tuesday 9:00 AM
+Tuesday 7:00 AM PST
   ↓
 Calculate current NFL week (e.g., Week 9)
   ↓
@@ -376,7 +376,7 @@ echo "Stats sync failed. Check logs at $LOG_FILE" | mail -s "❌ NFL Stats Sync 
 
 After each Tuesday sync:
 
-- ✅ Cron job executes at 9:00 AM
+- ✅ Cron job executes at 7:00 AM PST
 - ✅ Log file created: `logs/stats-sync-YYYY-MM-DD.log`
 - ✅ ~300-400 player stats imported to `player_weekly_stats`
 - ✅ All lineup scores calculated and written to `weekly_scores`
@@ -386,18 +386,18 @@ After each Tuesday sync:
 
 ## 🎯 What Happens Automatically
 
-**Every Tuesday at 9:00 AM:**
+**Every Tuesday at 7:00 AM PST:**
 1. ✅ **Stats Sync** - NFL player stats imported from nflreadpy
 2. ✅ **Score Calculation** - All lineup scores calculated automatically
 3. ✅ **Cumulative Updates** - Round and season totals updated
 4. ✅ **Immediate Visibility** - Scores visible to users via magic links
 5. ✅ **Logging** - Complete process logged to `logs/stats-sync-YYYY-MM-DD.log`
 
-**No manual intervention required!** Users can check their magic links anytime after 9:00 AM Tuesday to see their scores.
+**No manual intervention required!** Users can check their magic links anytime after 7:00 AM PST Tuesday to see their scores.
 
 ---
 
 **Installation Date:** October 30, 2025
 **Installed By:** Sam Edwards
-**Cron Expression:** `0 9 * * 2` (Every Tuesday at 9:00 AM)
+**Cron Expression:** `0 9 * * 2` (Every Tuesday at 7:00 AM PST)
 **Status:** ✅ Active and Working

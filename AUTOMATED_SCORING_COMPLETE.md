@@ -13,7 +13,7 @@ Your XL Benefits Fantasy Football league now has **fully automated** stats sync 
 
 ---
 
-## 🔄 What Happens Every Tuesday at 9:00 AM
+## 🔄 What Happens Every Tuesday at 7:00 AM PST
 
 ### Step 1: Stats Sync (Automatic)
 ```
@@ -146,7 +146,7 @@ season_cumulative_points: 642.10
 
 ## 📋 Cron Job Details
 
-**Schedule:** Every Tuesday at 9:00 AM ET
+**Schedule:** Every Tuesday at 7:00 AM PST
 
 **Cron Expression:**
 ```
@@ -169,7 +169,7 @@ crontab -l | grep "Fantasy Football"
 
 Should show:
 ```
-# XL Benefits Fantasy Football - NFL Stats Sync (Every Tuesday at 9:00 AM)
+# XL Benefits Fantasy Football - NFL Stats Sync (Every Tuesday at 7:00 AM PST)
 0 9 * * 2 /home/sam/Documents/github-repos/xlb/xlb/scripts/cron-sync-stats.sh
 ```
 
@@ -195,14 +195,14 @@ Should show:
 
 **Week 8 (Oct 30 - Nov 3):**
 - ✅ All 3 users submit lineups
-- ✅ Wait for Tuesday Nov 4 at 9:00 AM
+- ✅ Wait for Tuesday Nov 4 at 7:00 AM PST
 - ✅ Verify stats sync runs automatically
 - ✅ Verify scores calculate automatically
 - ✅ Check magic links to see scores
 
 **Week 9 (Nov 4 - Nov 10):**
 - ✅ Verify previous week scores are visible
-- ✅ Wait for Tuesday Nov 11 at 9:00 AM
+- ✅ Wait for Tuesday Nov 11 at 7:00 AM PST
 - ✅ Verify Week 9 scores appear
 
 **Week 10 (Nov 11 - Nov 17):**
@@ -315,7 +315,7 @@ deactivate
 - ✅ Complete logging for monitoring
 - ✅ Zero manual intervention required
 
-**Every Tuesday at 9:00 AM:**
+**Every Tuesday at 7:00 AM PST:**
 - Stats for previous week automatically imported
 - All lineup scores automatically calculated
 - Cumulative totals automatically updated
@@ -333,4 +333,4 @@ deactivate
 
 **Installation Date:** October 30, 2025
 **Last Tested:** October 30, 2025 (Week 8)
-**Next Auto Run:** Tuesday, November 4, 2025 at 9:00 AM
+**Next Auto Run:** Tuesday, November 4, 2025 at 7:00 AM PST

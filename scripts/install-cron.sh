@@ -54,8 +54,8 @@ fi
 
 # Add new cron job
 # Format: minute hour day month weekday command
-# 0 9 * * 2 = Every Tuesday at 9:00 AM
-(crontab -l 2>/dev/null; echo "# XL Benefits Fantasy Football - NFL Stats Sync (Every Tuesday at 9:00 AM)"; echo "0 9 * * 2 $CRON_SCRIPT") | crontab -
+# 0 7 * * 2 = Every Tuesday at 7:00 AM PST
+(crontab -l 2>/dev/null; echo "# XL Benefits Fantasy Football - NFL Stats Sync (Every Tuesday at 7:00 AM PST)"; echo "0 7 * * 2 $CRON_SCRIPT") | crontab -
 
 echo "✅ Added cron job to crontab"
 echo ""
@@ -63,7 +63,7 @@ echo "================================================"
 echo "Installation Complete!"
 echo "================================================"
 echo ""
-echo "Cron Schedule: Every Tuesday at 9:00 AM ET"
+echo "Cron Schedule: Every Tuesday at 7:00 AM PST"
 echo "Script: $CRON_SCRIPT"
 echo "Logs: $PROJECT_DIR/logs/stats-sync-YYYY-MM-DD.log"
 echo ""
