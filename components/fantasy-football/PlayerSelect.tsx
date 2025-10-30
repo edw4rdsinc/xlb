@@ -13,6 +13,7 @@ interface PlayerSelectProps {
   canSelectPlayer: (playerId: string) => boolean;
   excludePlayerIds?: string[];
   onAddCustom: () => void;
+  disabled?: boolean;
 }
 
 export function PlayerSelect({
@@ -25,6 +26,7 @@ export function PlayerSelect({
   canSelectPlayer,
   excludePlayerIds = [],
   onAddCustom,
+  disabled = false,
 }: PlayerSelectProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -76,21 +78,29 @@ export function PlayerSelect({
       {/* Selected Player Display / Dropdown Trigger */}
       <button
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={() => !disabled && setOpen(!open)}
+        disabled={disabled}
         className={`w-full px-4 py-3 border rounded-lg text-left focus:ring-2 focus:ring-blue-500 focus:border-transparent flex items-center justify-between ${
           error ? 'border-red-500' : 'border-slate-300'
-        } ${!selectedPlayer ? 'text-slate-400' : 'text-slate-900'}`}
+        } ${!selectedPlayer ? 'text-slate-400' : 'text-slate-900'} ${disabled ? 'bg-slate-100 cursor-not-allowed' : ''}`}
       >
         {selectedPlayer ? (
           <div className="flex items-center">
-            <span className="font-medium">{selectedPlayer.name}</span>
+            <span className={selectedPlayer.is_elite ? 'font-bold text-amber-600' : 'font-medium'}>
+              {selectedPlayer.name}
+            </span>
+            {selectedPlayer.is_elite && (
+              <span className="ml-1.5 px-1.5 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase">
+                Elite
+              </span>
+            )}
             {selectedPlayer.team && (
               <span className="ml-2 text-sm text-slate-500">({selectedPlayer.team})</span>
             )}
-            {selectedPlayer.is_elite && (
-              <svg className="w-4 h-4 ml-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
+            {(selectedPlayer as any).week_points !== null && (selectedPlayer as any).week_points !== undefined && (
+              <span className="ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                {(selectedPlayer as any).week_points.toFixed(1)} pts
+              </span>
             )}
             {selectedPlayer.is_custom && (
               <span className="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">Custom</span>
@@ -137,17 +147,24 @@ export function PlayerSelect({
                     } ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     <div className="flex items-center">
-                      <span className="font-medium">{player.name}</span>
+                      <span className={player.is_elite ? 'font-bold text-amber-600' : 'font-medium'}>
+                        {player.name}
+                      </span>
+                      {player.is_elite && (
+                        <span className="ml-1.5 px-1.5 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase">
+                          Elite
+                        </span>
+                      )}
                       {player.team && (
                         <span className="ml-2 text-sm text-slate-500">({player.team})</span>
                       )}
+                      {(player as any).week_points !== null && (player as any).week_points !== undefined && (
+                        <span className="ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                          {(player as any).week_points.toFixed(1)} pts
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center">
-                      {player.is_elite && (
-                        <svg className="w-4 h-4 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      )}
                       {player.is_custom && (
                         <span className="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">Custom</span>
                       )}

@@ -42,6 +42,55 @@ if not SUPABASE_URL or not SUPABASE_KEY:
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
+def fetch_bye_week_teams(season: int, week: int) -> List[str]:
+    """
+    Fetch list of teams on bye for a given week
+
+    Returns list of team abbreviations (e.g., ['BAL', 'PIT'])
+    """
+    print(f"\n🗓️  Checking for bye weeks in {season} Week {week}...")
+
+    try:
+        # Load schedule data
+        schedule = nfl.load_schedules([season])
+
+        # Convert Polars to Pandas if needed
+        if hasattr(schedule, 'to_pandas'):
+            schedule = schedule.to_pandas()
+
+        # Get all teams that played this week
+        week_schedule = schedule[schedule['week'] == week]
+        teams_playing = set()
+
+        if 'home_team' in week_schedule.columns:
+            teams_playing.update(week_schedule['home_team'].dropna().tolist())
+        if 'away_team' in week_schedule.columns:
+            teams_playing.update(week_schedule['away_team'].dropna().tolist())
+
+        # Get all 32 NFL teams (approximate - nflreadpy has team data)
+        all_teams_schedule = schedule[schedule['week'].between(1, 18)]
+        all_teams = set()
+        if 'home_team' in all_teams_schedule.columns:
+            all_teams.update(all_teams_schedule['home_team'].dropna().unique())
+        if 'away_team' in all_teams_schedule.columns:
+            all_teams.update(all_teams_schedule['away_team'].dropna().unique())
+
+        # Teams on bye = all teams - teams playing
+        bye_teams = list(all_teams - teams_playing)
+
+        if bye_teams:
+            print(f"✅ Found {len(bye_teams)} teams on bye: {', '.join(sorted(bye_teams))}")
+        else:
+            print(f"✅ No bye weeks for Week {week}")
+
+        return bye_teams
+
+    except Exception as e:
+        print(f"⚠️  Warning: Could not fetch bye weeks: {e}")
+        print(f"   Continuing without bye week detection...")
+        return []
+
+
 def fetch_nfl_stats(season: int, week: int) -> pd.DataFrame:
     """
     Fetch weekly player stats from nflreadpy
@@ -73,6 +122,76 @@ def fetch_nfl_stats(season: int, week: int) -> pd.DataFrame:
     except Exception as e:
         print(f"❌ Error fetching stats from nflreadpy: {e}")
         sys.exit(1)
+
+
+def aggregate_team_defense_stats(nfl_stats: pd.DataFrame, week: int) -> pd.DataFrame:
+    """
+    Aggregate individual defensive player stats by team to create team defense stats
+
+    Returns DataFrame with team defense aggregated stats:
+    - team, def_tds (sum), interceptions (sum), safeties (sum), sacks (sum)
+    """
+    print(f"\n🛡️  Aggregating team defense stats...")
+
+    # Get team column name (can vary)
+    team_col = 'recent_team' if 'recent_team' in nfl_stats.columns else 'team'
+
+    if team_col not in nfl_stats.columns:
+        print(f"⚠️  Warning: No team column found, skipping defense aggregation")
+        return pd.DataFrame()
+
+    # Aggregate defensive stats by team
+    # Try different possible column names from nflreadpy
+    def_td_col = 'def_tds' if 'def_tds' in nfl_stats.columns else 'def_td' if 'def_td' in nfl_stats.columns else None
+
+    agg_dict = {}
+    if def_td_col:
+        agg_dict[def_td_col] = 'sum'
+    if 'interceptions' in nfl_stats.columns:
+        agg_dict['interceptions'] = 'sum'
+    if 'safeties' in nfl_stats.columns:
+        agg_dict['safeties'] = 'sum'
+    if 'sacks' in nfl_stats.columns:
+        agg_dict['sacks'] = 'sum'
+
+    if not agg_dict:
+        print(f"⚠️  Warning: No defensive stat columns found")
+        return pd.DataFrame()
+
+    defense_stats = nfl_stats.groupby(team_col).agg(agg_dict).reset_index()
+
+    # Rename columns to standardize
+    rename_map = {team_col: 'team'}
+    if def_td_col:
+        rename_map[def_td_col] = 'def_tds'
+
+    defense_stats = defense_stats.rename(columns=rename_map)
+
+    # Add week number
+    defense_stats['week'] = week
+
+    # Add position
+    defense_stats['position'] = 'DEF'
+
+    # Add player_display_name (team name for defense)
+    defense_stats['player_display_name'] = defense_stats['team'] + ' Defense'
+
+    # Add default values for missing columns (to match player stats schema)
+    for col in ['def_tds', 'interceptions', 'safeties', 'sacks']:
+        if col not in defense_stats.columns:
+            defense_stats[col] = 0
+
+    # Filter out teams with no defensive stats
+    defense_stats = defense_stats[
+        (defense_stats.get('def_tds', 0) > 0) |
+        (defense_stats.get('interceptions', 0) > 0) |
+        (defense_stats.get('safeties', 0) > 0) |
+        (defense_stats.get('sacks', 0) > 0)
+    ]
+
+    print(f"✅ Aggregated defense stats for {len(defense_stats)} teams")
+
+    return defense_stats
 
 
 def get_database_players() -> List[Dict]:
@@ -126,7 +245,7 @@ def match_player_to_database(nfl_name: str, nfl_position: str, db_players: List[
     return best_match
 
 
-def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], week: int) -> List[Dict]:
+def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], week: int, bye_teams: List[str]) -> List[Dict]:
     """
     Transform nflreadpy stats to your database schema
 
@@ -137,10 +256,12 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
     records = []
     matched_count = 0
     unmatched_players = []
+    bye_week_count = 0
 
     for idx, row in nfl_stats.iterrows():
         player_name = row.get('player_display_name') or row.get('player_name', '')
         position = row.get('position', '')
+        team = row.get('recent_team', '') or row.get('team', '')
 
         # Map position codes (nflreadpy uses different codes sometimes)
         position_map = {
@@ -162,34 +283,71 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
 
         matched_count += 1
 
-        # Transform stats to your schema
-        record = {
-            'player_id': player_id,
-            'week_number': week,
-            'passing_tds': int(row.get('passing_tds', 0) or 0),
-            'passing_yards': int(row.get('passing_yards', 0) or 0),
-            'rushing_tds': int(row.get('rushing_tds', 0) or 0),
-            'rushing_yards': int(row.get('rushing_yards', 0) or 0),
-            'receiving_tds': int(row.get('receiving_tds', 0) or 0),
-            'receptions': int(row.get('receptions', 0) or 0),
-            'receiving_yards': int(row.get('receiving_yards', 0) or 0),
-            'two_point_conversions': int(row.get('two_point_conversions', 0) or 0),
-            # Kicker stats
-            'field_goals': int(row.get('fg_made', 0) or 0),
-            'pats': int(row.get('pat_made', 0) or 0),
-            # Defense stats (if DEF position)
-            'def_tds': int(row.get('def_tds', 0) or 0),
-            'interceptions': int(row.get('interceptions', 0) or 0),
-            'safeties': int(row.get('safeties', 0) or 0),
-            'sacks': int(row.get('sacks', 0) or 0),
-        }
+        # Check if player's team is on bye
+        is_bye_week = team in bye_teams
 
-        # Calculate points using your PPR scoring rules
-        record['calculated_points'] = calculate_points(record)
+        if is_bye_week:
+            bye_week_count += 1
+            # Create zero-stats record for bye week
+            record = {
+                'player_id': player_id,
+                'week_number': week,
+                'passing_tds': 0,
+                'passing_yards': 0,
+                'rushing_tds': 0,
+                'rushing_yards': 0,
+                'receiving_tds': 0,
+                'receptions': 0,
+                'receiving_yards': 0,
+                'two_point_conversions': 0,
+                'field_goals': 0,
+                'pats': 0,
+                'def_tds': 0,
+                'interceptions': 0,
+                'safeties': 0,
+                'sacks': 0,
+                'calculated_points': 0.0,
+            }
+        else:
+            # Helper function to safely convert to int, handling NaN
+            def safe_int(value, default=0):
+                if pd.isna(value):
+                    return default
+                try:
+                    return int(value or default)
+                except (ValueError, TypeError):
+                    return default
+
+            # Transform stats to your schema
+            record = {
+                'player_id': player_id,
+                'week_number': week,
+                'passing_tds': safe_int(row.get('passing_tds', 0)),
+                'passing_yards': safe_int(row.get('passing_yards', 0)),
+                'rushing_tds': safe_int(row.get('rushing_tds', 0)),
+                'rushing_yards': safe_int(row.get('rushing_yards', 0)),
+                'receiving_tds': safe_int(row.get('receiving_tds', 0)),
+                'receptions': safe_int(row.get('receptions', 0)),
+                'receiving_yards': safe_int(row.get('receiving_yards', 0)),
+                'two_point_conversions': safe_int(row.get('two_point_conversions', 0)),
+                # Kicker stats
+                'field_goals': safe_int(row.get('fg_made', 0)),
+                'pats': safe_int(row.get('pat_made', 0)),
+                # Defense stats (if DEF position)
+                'def_tds': safe_int(row.get('def_tds', 0)),
+                'interceptions': safe_int(row.get('interceptions', 0)),
+                'safeties': safe_int(row.get('safeties', 0)),
+                'sacks': safe_int(row.get('sacks', 0)),
+            }
+
+            # Calculate points using your PPR scoring rules
+            record['calculated_points'] = calculate_points(record)
 
         records.append(record)
 
     print(f"✅ Matched {matched_count} players to database")
+    if bye_week_count > 0:
+        print(f"📅 Set {bye_week_count} players to 0 points (bye week)")
 
     if unmatched_players:
         print(f"\n⚠️  {len(unmatched_players)} players not matched:")
@@ -270,7 +428,7 @@ def upsert_stats_to_database(records: List[Dict], dry_run: bool = False) -> int:
 def main():
     parser = argparse.ArgumentParser(description='Sync NFL player stats from nflreadpy')
     parser.add_argument('--week', type=int, required=True, help='NFL week number (1-18)')
-    parser.add_argument('--season', type=int, default=2024, help='NFL season year (default: 2024)')
+    parser.add_argument('--season', type=int, default=2025, help='NFL season year (default: 2025)')
     parser.add_argument('--dry-run', action='store_true', help='Preview changes without writing to database')
 
     args = parser.parse_args()
@@ -284,16 +442,31 @@ def main():
     print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
 
-    # Step 1: Fetch NFL stats
+    # Step 1: Check for bye weeks
+    bye_teams = fetch_bye_week_teams(args.season, args.week)
+
+    # Step 2: Fetch NFL stats
     nfl_stats = fetch_nfl_stats(args.season, args.week)
 
-    # Step 2: Get database players
+    # Step 3: Aggregate team defense stats
+    defense_stats = aggregate_team_defense_stats(nfl_stats, args.week)
+
+    # Step 4: Combine player stats with defense stats
+    if not defense_stats.empty:
+        # Append defense stats to player stats
+        combined_stats = pd.concat([nfl_stats, defense_stats], ignore_index=True)
+        print(f"✅ Combined {len(nfl_stats)} player stats + {len(defense_stats)} team defense stats")
+    else:
+        combined_stats = nfl_stats
+        print(f"⚠️  No team defense stats aggregated, using player stats only")
+
+    # Step 5: Get database players
     db_players = get_database_players()
 
-    # Step 3: Transform and match
-    records = transform_stats_to_schema(nfl_stats, db_players, args.week)
+    # Step 6: Transform and match (with bye week detection)
+    records = transform_stats_to_schema(combined_stats, db_players, args.week, bye_teams)
 
-    # Step 4: Upsert to database
+    # Step 7: Upsert to database
     count = upsert_stats_to_database(records, dry_run=args.dry_run)
 
     # Summary

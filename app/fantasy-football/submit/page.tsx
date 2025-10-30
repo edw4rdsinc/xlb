@@ -11,17 +11,76 @@ export default function SubmitLineupPage() {
   const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<any>(null);
+  const [existingLineup, setExistingLineup] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
     loadData();
+    checkForExistingLineup();
   }, []);
+
+  async function checkForExistingLineup() {
+    try {
+      // Get token from URL
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+
+      if (!token) return;
+
+      // Get magic link data
+      const { data: magicLinkData, error: magicLinkError } = await supabase
+        .from('magic_links')
+        .select(`
+          user_id,
+          round_id,
+          users (
+            id,
+            name,
+            email,
+            team_name
+          )
+        `)
+        .eq('token', token)
+        .single();
+
+      if (magicLinkError || !magicLinkData) return;
+
+      setUserData(magicLinkData.users);
+
+      // Check for existing lineup
+      const { data: lineupData, error: lineupError } = await supabase
+        .from('lineups')
+        .select(`
+          *,
+          lineup_players (
+            position,
+            player_id,
+            players (
+              id,
+              name,
+              position,
+              team
+            )
+          )
+        `)
+        .eq('user_id', magicLinkData.user_id)
+        .eq('round_id', magicLinkData.round_id)
+        .single();
+
+      if (lineupError || !lineupData) return;
+
+      setExistingLineup(lineupData);
+    } catch (error) {
+      console.error('Error checking for existing lineup:', error);
+    }
+  }
 
   async function loadData() {
     try {
       setLoading(true);
 
       // Get active round
-      const { data: roundData, error: roundError } = await supabase
+      const { data: roundData, error: roundError} = await supabase
         .from('rounds')
         .select('*')
         .eq('is_active', true)
@@ -30,14 +89,80 @@ export default function SubmitLineupPage() {
       if (roundError) throw roundError;
       setCurrentRound(roundData);
 
-      // Get all players
-      const { data: playersData, error: playersError } = await supabase
+      // Determine current NFL week and if we should show scores
+      const today = new Date();
+      const dayOfWeek = today.getDay(); // 0 = Sunday, 2 = Tuesday
+      const showWeeklyScores = dayOfWeek >= 2; // Show on Tuesday (2) or later
+
+      // Calculate current week (simplified - assumes season started Sept 4, 2025)
+      const seasonStart = new Date('2025-09-04');
+      const daysSinceStart = Math.floor((today.getTime() - seasonStart.getTime()) / (1000 * 60 * 60 * 24));
+      const currentWeek = Math.min(Math.floor(daysSinceStart / 7) + 1, 18); // Cap at week 18
+
+      // Get players with stats, limit to top 40 per position, elites first
+      const { data: allPlayersData, error: playersError } = await supabase
         .from('players')
-        .select('*')
+        .select(`
+          *,
+          player_weekly_stats(calculated_points)
+        `)
+        .order('is_elite', { ascending: false })
         .order('name', { ascending: true });
 
       if (playersError) throw playersError;
-      setPlayers(playersData || []);
+
+      // Filter and rank by position
+      const playersByPosition: Record<string, Player[]> = {};
+      const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'];
+
+      // Group by position and calculate total points
+      for (const player of (allPlayersData || [])) {
+        const weeklyStats = (player as any).player_weekly_stats || [];
+
+        const totalPoints = weeklyStats.reduce(
+          (sum: number, stat: any) => sum + (parseFloat(stat.calculated_points) || 0),
+          0
+        ) || 0;
+
+        // Find this week's points if we should show scores
+        let weekPoints = null;
+        if (showWeeklyScores) {
+          const thisWeekStat = weeklyStats.find((stat: any) => stat.week_number === currentWeek);
+          if (thisWeekStat) {
+            weekPoints = parseFloat(thisWeekStat.calculated_points) || 0;
+          }
+        }
+
+        if (positions.includes(player.position)) {
+          if (!playersByPosition[player.position]) {
+            playersByPosition[player.position] = [];
+          }
+          playersByPosition[player.position].push({
+            ...player,
+            total_points: totalPoints,
+            week_points: weekPoints
+          } as Player);
+        }
+      }
+
+      // Sort each position by: elite first, then by total points, limit to top 20
+      const topPlayers: Player[] = [];
+      for (const position of positions) {
+        const posPlayers = playersByPosition[position] || [];
+        posPlayers.sort((a: any, b: any) => {
+          // Elite players first
+          if (a.is_elite !== b.is_elite) {
+            return a.is_elite ? -1 : 1;
+          }
+          // Then by total points
+          return (b.total_points || 0) - (a.total_points || 0);
+        });
+
+        // Take top 40
+        topPlayers.push(...posPlayers.slice(0, 40));
+      }
+
+      setPlayers(topPlayers);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -132,7 +257,24 @@ export default function SubmitLineupPage() {
             <div className="ml-3">
               <h3 className="text-sm font-medium text-amber-800">Elite Player Limit</h3>
               <p className="text-sm text-amber-700 mt-1">
-                You may select a maximum of 2 elite players in your lineup. Elite players are marked with a star badge.
+                You may select a maximum of 2 elite players in your lineup. Elite players are shown in <span className="font-bold text-amber-600">gold text</span> with an <span className="px-1.5 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase">Elite</span> badge.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Player Not Listed Info */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-blue-800">Player Not Listed?</h3>
+              <p className="text-sm text-blue-700 mt-1">
+                Each position shows the top 40 players. If your preferred player isn't listed, please email the XL Benefits team and we can make a manual update to your lineup.
               </p>
             </div>
           </div>
@@ -142,6 +284,8 @@ export default function SubmitLineupPage() {
         <LineupForm
           players={players}
           currentRound={currentRound}
+          existingLineup={existingLineup}
+          userData={userData}
           onSuccess={handleSuccess}
         />
       </div>

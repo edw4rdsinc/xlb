@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS lineups (
   te_id UUID NOT NULL REFERENCES players(id),
   k_id UUID NOT NULL REFERENCES players(id),
   def_id UUID NOT NULL REFERENCES players(id),
+  is_locked BOOLEAN DEFAULT FALSE,
   submitted_at TIMESTAMP DEFAULT NOW(),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
@@ -66,6 +67,7 @@ CREATE TABLE IF NOT EXISTS lineups (
 
 CREATE INDEX IF NOT EXISTS idx_lineups_user ON lineups(user_id);
 CREATE INDEX IF NOT EXISTS idx_lineups_round ON lineups(round_id);
+CREATE INDEX IF NOT EXISTS idx_lineups_locked ON lineups(is_locked);
 
 -- Weekly_Scores Table
 CREATE TABLE IF NOT EXISTS weekly_scores (
