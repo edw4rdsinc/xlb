@@ -59,7 +59,8 @@ export default function MeetTheTeamPage() {
             </h2>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {/* First Row - 2 items */}
+          <div className="grid md:grid-cols-2 gap-8 mb-8 max-w-4xl mx-auto">
             <AnimatedSection animation="fade-up" delay={100}>
               <div className="bg-white rounded-lg shadow-md p-8 h-full text-center">
                 <div className="w-16 h-16 bg-xl-bright-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -81,7 +82,10 @@ export default function MeetTheTeamPage() {
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Constant Innovation</h3>
               </div>
             </AnimatedSection>
+          </div>
 
+          {/* Second Row - 3 items */}
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
             <AnimatedSection animation="fade-up" delay={300}>
               <div className="bg-white rounded-lg shadow-md p-8 h-full text-center">
                 <div className="w-16 h-16 bg-xl-bright-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
