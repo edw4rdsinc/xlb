@@ -9,7 +9,7 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 ## 🎨 IMAGES TO CREATE
 
 ### ☐ 1. Self-Funding Quiz Image
-- **Filename:** `/public/images/og-self-funding-quiz.jpg`
+- **Filename:** `/public/images/og/self-funding-quiz.jpg`
 - **Size:** 1200x630px
 - **Title Text:** "Self-Funding Readiness Assessment"
 - **Subtitle:** "Is Your Client Ready? Find Out in 10 Minutes"
@@ -17,7 +17,7 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 - **Status:** ❌ NOT CREATED
 
 ### ☐ 2. TrueCost Calculator Image
-- **Filename:** `/public/images/og-truecost-calculator.jpg`
+- **Filename:** `/public/images/og/truecost-calculator.jpg`
 - **Size:** 1200x630px
 - **Title Text:** "TrueCost Calculator"
 - **Subtitle:** "Calculate Fully Insured Equivalent Rates"
@@ -25,7 +25,7 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 - **Status:** ❌ NOT CREATED
 
 ### ☐ 3. Deductible Analyzer Image
-- **Filename:** `/public/images/og-deductible-analyzer.jpg`
+- **Filename:** `/public/images/og/deductible-analyzer.jpg`
 - **Size:** 1200x630px
 - **Title Text:** "Stop-Loss Deductible Analyzer"
 - **Subtitle:** "Optimize Your Deductible Strategy"
@@ -33,7 +33,7 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 - **Status:** ❌ NOT CREATED
 
 ### ☐ 4. Glossary Image
-- **Filename:** `/public/images/og-glossary.jpg`
+- **Filename:** `/public/images/og/glossary.jpg`
 - **Size:** 1200x630px
 - **Title Text:** "Stop-Loss Insurance Glossary"
 - **Subtitle:** "100+ Terms Defined"
@@ -47,7 +47,7 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 1. **Open:** [LINKEDIN_SHARING_SETUP.md](./LINKEDIN_SHARING_SETUP.md)
 2. **Copy:** The Stable Diffusion prompt
 3. **Generate:** 4 images at 1200x630px
-4. **Save:** In `/public/images/` with exact filenames above
+4. **Save:** In `/public/images/og/` with exact filenames above
 5. **Test:** Use LinkedIn Post Inspector to verify
 6. **Deploy:** Push to production
 

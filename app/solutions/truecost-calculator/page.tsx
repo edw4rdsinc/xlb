@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-truecost-calculator.jpg',
+        url: '/images/og/truecost-calculator.jpg',
         width: 1200,
         height: 630,
         alt: 'TrueCost Calculator - Fully Insured Equivalent Rates',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'TrueCost Calculator - Fully Insured Equivalent Rates',
     description: 'Calculate accurate FIE rates for self-funded groups with our comprehensive calculator.',
-    images: ['/images/og-truecost-calculator.jpg'],
+    images: ['/images/og/truecost-calculator.jpg'],
   },
   alternates: {
     canonical: 'https://xlbenefits.com/solutions/truecost-calculator',

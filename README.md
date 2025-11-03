@@ -10,10 +10,10 @@
 📖 **READ THIS FIRST:** [LINKEDIN_SHARING_SETUP.md](./LINKEDIN_SHARING_SETUP.md)
 
 **Required Images (1200x630px):**
-- `/public/images/og-self-funding-quiz.jpg` ❌ MISSING
-- `/public/images/og-truecost-calculator.jpg` ❌ MISSING
-- `/public/images/og-deductible-analyzer.jpg` ❌ MISSING
-- `/public/images/og-glossary.jpg` ❌ MISSING
+- `/public/images/og/self-funding-quiz.jpg` ❌ MISSING
+- `/public/images/og/truecost-calculator.jpg` ❌ MISSING
+- `/public/images/og/deductible-analyzer.jpg` ❌ MISSING
+- `/public/images/og/glossary.jpg` ❌ MISSING
 
 **Status:** All code implemented, awaiting image creation (see linked file for Stable Diffusion prompts)
 

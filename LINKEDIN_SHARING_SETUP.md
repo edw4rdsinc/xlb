@@ -8,9 +8,9 @@ All LinkedIn sharing functionality has been implemented BUT requires 4 Open Grap
 
 ## 📸 REQUIRED IMAGES (Must Create)
 
-You need to create **4 images** at **1200x630px** and place them in `/public/images/`:
+You need to create **4 images** at **1200x630px** and place them in `/public/images/og/`:
 
-### 1. `/public/images/og-self-funding-quiz.jpg`
+### 1. `/public/images/og/self-funding-quiz.jpg`
 **For:** Self-Funding Readiness Assessment
 **Content:**
 - Title: "Self-Funding Readiness Assessment"
@@ -18,7 +18,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Gauge/speedometer showing readiness zones (red/yellow/green)
 - XL Benefits branding
 
-### 2. `/public/images/og-truecost-calculator.jpg`
+### 2. `/public/images/og/truecost-calculator.jpg`
 **For:** TrueCost Calculator
 **Content:**
 - Title: "TrueCost Calculator"
@@ -26,7 +26,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Calculator icon with cost comparison charts
 - XL Benefits branding
 
-### 3. `/public/images/og-deductible-analyzer.jpg`
+### 3. `/public/images/og/deductible-analyzer.jpg`
 **For:** Stop-Loss Deductible Analyzer
 **Content:**
 - Title: "Stop-Loss Deductible Analyzer"
@@ -34,7 +34,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Data analysis graphs with optimization theme
 - XL Benefits branding
 
-### 4. `/public/images/og-glossary.jpg`
+### 4. `/public/images/og/glossary.jpg`
 **For:** Stop-Loss Insurance Glossary
 **Content:**
 - Title: "Stop-Loss Insurance Glossary"
@@ -166,7 +166,7 @@ openGraph: {
   url: 'https://xlbenefits.com/solutions/tool-name',
   images: [
     {
-      url: '/images/og-tool-name.jpg',  // ⚠️ IMAGE MUST EXIST
+      url: '/images/og/tool-name.jpg',  // ⚠️ IMAGE MUST EXIST
       width: 1200,
       height: 630,
       alt: 'Tool Name Description',
@@ -229,7 +229,7 @@ import LinkedInShareButton from '@/components/shared/LinkedInShareButton'
 ## ⚡ IMMEDIATE NEXT STEPS
 
 1. **Generate the 4 OG images** using Stable Diffusion or Canva
-2. **Save them** in `/public/images/` with exact filenames listed above
+2. **Save them** in `/public/images/og/` with exact filenames listed above
 3. **Test on staging** - Share a link on LinkedIn to verify OG images appear
 4. **Deploy to production**
 

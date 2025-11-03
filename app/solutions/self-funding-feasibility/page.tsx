@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     url: 'https://xlbenefits.com/solutions/self-funding-feasibility',
     images: [
       {
-        url: '/images/og-self-funding-quiz.jpg', // We'll need to create this
+        url: '/images/og/self-funding-quiz.jpg',
         width: 1200,
         height: 630,
         alt: 'Self-Funding Readiness Assessment Tool',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Self-Funding Readiness Assessment | XL Benefits',
     description: 'Free 10-minute quiz: Is your client ready for self-funded health insurance?',
-    images: ['/images/og-self-funding-quiz.jpg'],
+    images: ['/images/og/self-funding-quiz.jpg'],
   },
 }
 
