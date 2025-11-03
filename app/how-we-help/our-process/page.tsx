@@ -42,12 +42,14 @@ export default function OurProcessPage() {
         <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <p className="text-lg text-xl-grey leading-relaxed mb-4">
-              Stop-loss placements fail when critical details get overlooked. A missing contract provision. An incorrectly structured deductible. An SPD that doesn't mirror the policy. These aren't small issues—they're the difference between a solution that works and one that creates problems down the road.
-            </p>
-            <p className="text-lg text-xl-grey leading-relaxed">
-              Our 40-point inspection ensures nothing gets missed. From stop-loss contract analysis to pharmacy benefits evaluation to financial reserve planning, we examine every element that impacts your client's success. The result? Clean RFPs, competitive quotes, and presentations you can deliver with complete confidence.
-            </p>
+            <div className="bg-white rounded-lg shadow-md p-8">
+              <p className="text-lg text-xl-grey leading-relaxed mb-4">
+                Stop-loss placements fail when critical details get overlooked. A missing contract provision. An incorrectly structured deductible. An SPD that doesn't mirror the policy. These aren't small issues—they're the difference between a solution that works and one that creates problems down the road.
+              </p>
+              <p className="text-lg text-xl-grey leading-relaxed">
+                Our 40-point inspection ensures nothing gets missed. From stop-loss contract analysis to pharmacy benefits evaluation to financial reserve planning, we examine every element that impacts your client's success. The result? Clean RFPs, competitive quotes, and presentations you can deliver with complete confidence.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
