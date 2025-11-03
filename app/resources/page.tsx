@@ -15,7 +15,7 @@ export default function ResourcesPage() {
         className="relative"
         style={{
           backgroundImage: 'url(/images/parallax/resources.JPG)',
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}

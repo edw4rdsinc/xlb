@@ -82,15 +82,17 @@ export default function HomePage() {
         <section className="relative py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6 drop-shadow-lg">
-              Why Brokers Choose XL Benefits
-            </h2>
-            <p className="text-lg text-xl-grey leading-relaxed drop-shadow-md">
-              When your clients need stop-loss solutions, you need a partner who understands the complexities you face every day. XL Benefits brings deep carrier relationships, meticulous RFP management, and genuine expertise to every placement—from straightforward renewals to the most challenging cases.
-            </p>
-            <p className="text-lg text-xl-grey leading-relaxed mt-4 drop-shadow-md">
-              We don't just find coverage. We help you present solutions with confidence.
-            </p>
+            <div className="bg-white rounded-lg shadow-md p-8">
+              <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
+                Why Brokers Choose XL Benefits
+              </h2>
+              <p className="text-lg text-xl-grey leading-relaxed">
+                When your clients need stop-loss solutions, you need a partner who understands the complexities you face every day. XL Benefits brings deep carrier relationships, meticulous RFP management, and genuine expertise to every placement—from straightforward renewals to the most challenging cases.
+              </p>
+              <p className="text-lg text-xl-grey leading-relaxed mt-4">
+                We don't just find coverage. We help you present solutions with confidence.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
