@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     url: 'https://xlbenefits.com/resources/glossary',
     images: [
       {
-        url: '/images/og/glossary.jpg',
+        url: '/images/og/xlb-glossary.png',
         width: 1200,
         height: 630,
         alt: 'Stop-Loss Insurance Glossary',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Stop-Loss Insurance Glossary | XL Benefits',
     description: 'Comprehensive stop-loss and self-funding terminology reference for insurance brokers.',
-    images: ['/images/og/glossary.jpg'],
+    images: ['/images/og/xlb-glossary.png'],
   },
 }
 

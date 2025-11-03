@@ -18,7 +18,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Gauge/speedometer showing readiness zones (red/yellow/green)
 - XL Benefits branding
 
-### 2. `/public/images/og/truecost-calculator.jpg`
+### 2. `/public/images/og/truecost-calculator.png` ✅ CREATED
 **For:** TrueCost Calculator
 **Content:**
 - Title: "TrueCost Calculator"
@@ -34,7 +34,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Data analysis graphs with optimization theme
 - XL Benefits branding
 
-### 4. `/public/images/og/glossary.jpg`
+### 4. `/public/images/og/xlb-glossary.png` ✅ CREATED
 **For:** Stop-Loss Insurance Glossary
 **Content:**
 - Title: "Stop-Loss Insurance Glossary"

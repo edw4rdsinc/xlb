@@ -11,9 +11,9 @@
 
 **Required Images (1200x630px):**
 - `/public/images/og/self-funding-readiness-assessment.png` ✅ CREATED
-- `/public/images/og/truecost-calculator.jpg` ❌ MISSING
+- `/public/images/og/truecost-calculator.png` ✅ CREATED
 - `/public/images/og/deductible-analyzer.jpg` ❌ MISSING
-- `/public/images/og/glossary.jpg` ❌ MISSING
+- `/public/images/og/xlb-glossary.png` ✅ CREATED
 
 **Status:** All code implemented, awaiting image creation (see linked file for Stable Diffusion prompts)
 

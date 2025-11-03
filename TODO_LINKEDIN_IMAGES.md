@@ -16,13 +16,13 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 - **Visual:** Gauge/speedometer with red/yellow/green zones
 - **Status:** ✅ CREATED
 
-### ☐ 2. TrueCost Calculator Image
-- **Filename:** `/public/images/og/truecost-calculator.jpg`
+### ✅ 2. TrueCost Calculator Image
+- **Filename:** `/public/images/og/truecost-calculator.png`
 - **Size:** 1200x630px
 - **Title Text:** "TrueCost Calculator"
 - **Subtitle:** "Calculate Fully Insured Equivalent Rates"
 - **Visual:** Calculator icon with comparison charts
-- **Status:** ❌ NOT CREATED
+- **Status:** ✅ CREATED
 
 ### ☐ 3. Deductible Analyzer Image
 - **Filename:** `/public/images/og/deductible-analyzer.jpg`
@@ -32,13 +32,13 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 - **Visual:** Data analysis graphs
 - **Status:** ❌ NOT CREATED
 
-### ☐ 4. Glossary Image
-- **Filename:** `/public/images/og/glossary.jpg`
+### ✅ 4. Glossary Image
+- **Filename:** `/public/images/og/xlb-glossary.png`
 - **Size:** 1200x630px
 - **Title Text:** "Stop-Loss Insurance Glossary"
 - **Subtitle:** "100+ Terms Defined"
 - **Visual:** Book/dictionary with insurance icons
-- **Status:** ❌ NOT CREATED
+- **Status:** ✅ CREATED
 
 ---
 

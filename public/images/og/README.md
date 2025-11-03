@@ -7,9 +7,9 @@ This directory contains social media preview images for LinkedIn sharing.
 Place these 4 images (1200x630px) in this directory:
 
 1. ✅ **self-funding-readiness-assessment.png** - Self-Funding Readiness Assessment preview
-2. **truecost-calculator.jpg** - TrueCost Calculator preview
+2. ✅ **truecost-calculator.png** - TrueCost Calculator preview
 3. **deductible-analyzer.jpg** - Deductible Analyzer preview
-4. **glossary.jpg** - Stop-Loss Glossary preview
+4. ✅ **xlb-glossary.png** - Stop-Loss Glossary preview
 
 ## Image Specifications
 
