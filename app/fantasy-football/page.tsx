@@ -1,7 +1,54 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase/client';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 
 export default function FantasyFootballPage() {
+  const [currentRound, setCurrentRound] = useState<any>(null);
+  const [currentWeek, setCurrentWeek] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadCurrentState();
+  }, []);
+
+  async function loadCurrentState() {
+    try {
+      // Get active round
+      const { data: activeRound } = await supabase
+        .from('rounds')
+        .select('*')
+        .eq('is_active', true)
+        .single();
+
+      if (activeRound) {
+        setCurrentRound(activeRound);
+      }
+
+      // Get the most recent week with scores to determine current week
+      const { data: latestScore } = await supabase
+        .from('weekly_scores')
+        .select('week_number')
+        .order('week_number', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (latestScore) {
+        // Current week is the latest scored week + 1 (upcoming week)
+        setCurrentWeek(latestScore.week_number);
+      } else if (activeRound) {
+        // No scores yet, use start week of active round
+        setCurrentWeek(activeRound.start_week);
+      }
+    } catch (error) {
+      console.error('Error loading current state:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div>
       {/* Extended Background Container */}
@@ -49,17 +96,26 @@ export default function FantasyFootballPage() {
         {/* Current Week/Round Banner - Frosted */}
         <section className="relative bg-xl-dark-blue/60 backdrop-blur-sm text-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-2">
-            <div>
-              <span className="font-semibold">Current Round:</span> Round 1 (Weeks 1-6)
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
             </div>
-            <div>
-              <span className="font-semibold">Current Week:</span> Week 1
+          ) : (
+            <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-2">
+              <div>
+                <span className="font-semibold">Current Round:</span>{' '}
+                {currentRound
+                  ? `Round ${currentRound.round_number} (Weeks ${currentRound.start_week}-${currentRound.end_week})`
+                  : 'Loading...'}
+              </div>
+              <div>
+                <span className="font-semibold">Current Week:</span> Week {currentWeek || '...'}
+              </div>
+              <div className="bg-green-500 px-4 py-2 rounded-full text-sm font-bold">
+                ✓ Submissions Open
+              </div>
             </div>
-            <div className="bg-green-500 px-4 py-2 rounded-full text-sm font-bold">
-              ✓ Submissions Open
-            </div>
-          </div>
+          )}
         </div>
       </section>
       </div>
