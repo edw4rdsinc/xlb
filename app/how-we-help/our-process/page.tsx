@@ -23,12 +23,8 @@ export default function OurProcessPage() {
           <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <AnimatedSection animation="fade-up">
-              <div className="mb-8">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white/30 mb-4">40</div>
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white/80 mb-8">POINT INSPECTION</div>
-              </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-white drop-shadow-lg">
-                OUR PROCESS
+                OUR PROCESS: The 40 Point Inspection
               </h1>
               <p className="text-lg sm:text-xl md:text-2xl text-white/95 drop-shadow-md max-w-2xl mx-auto">
                 Meticulous analysis and expert RFP management that gives you confidence in every presentation
