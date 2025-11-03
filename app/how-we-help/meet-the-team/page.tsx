@@ -37,12 +37,14 @@ export default function MeetTheTeamPage() {
         <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <p className="text-xl text-xl-grey leading-relaxed mb-6 text-center">
-              XL Benefits is a stop-loss insurance specialist dedicated to helping brokers serve their clients better through expert guidance, market access, and innovative tools.
-            </p>
-            <p className="text-lg text-xl-grey leading-relaxed text-center">
-              Stop-loss expertise isn't just about knowing products—it's about understanding the challenges brokers face, building genuine partnerships, and delivering solutions that actually work. Our team brings decades of combined experience, deep carrier relationships, and a commitment to making your job easier.
-            </p>
+            <div className="bg-white rounded-lg shadow-md p-8">
+              <p className="text-xl text-xl-grey leading-relaxed mb-6 text-center">
+                XL Benefits is a stop-loss insurance specialist dedicated to helping brokers serve their clients better through expert guidance, market access, and innovative tools.
+              </p>
+              <p className="text-lg text-xl-grey leading-relaxed text-center">
+                Stop-loss expertise isn't just about knowing products—it's about understanding the challenges brokers face, building genuine partnerships, and delivering solutions that actually work. Our team brings decades of combined experience, deep carrier relationships, and a commitment to making your job easier.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
