@@ -10,7 +10,7 @@ All LinkedIn sharing functionality has been implemented BUT requires 4 Open Grap
 
 You need to create **4 images** at **1200x630px** and place them in `/public/images/og/`:
 
-### 1. `/public/images/og/self-funding-quiz.jpg`
+### 1. `/public/images/og/self-funding-readiness-assessment.png` ✅ CREATED
 **For:** Self-Funding Readiness Assessment
 **Content:**
 - Title: "Self-Funding Readiness Assessment"

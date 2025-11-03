@@ -10,7 +10,7 @@
 📖 **READ THIS FIRST:** [LINKEDIN_SHARING_SETUP.md](./LINKEDIN_SHARING_SETUP.md)
 
 **Required Images (1200x630px):**
-- `/public/images/og/self-funding-quiz.jpg` ❌ MISSING
+- `/public/images/og/self-funding-readiness-assessment.png` ✅ CREATED
 - `/public/images/og/truecost-calculator.jpg` ❌ MISSING
 - `/public/images/og/deductible-analyzer.jpg` ❌ MISSING
 - `/public/images/og/glossary.jpg` ❌ MISSING

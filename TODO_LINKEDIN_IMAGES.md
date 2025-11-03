@@ -8,13 +8,13 @@ All LinkedIn sharing functionality is implemented and ready. You just need to cr
 
 ## 🎨 IMAGES TO CREATE
 
-### ☐ 1. Self-Funding Quiz Image
-- **Filename:** `/public/images/og/self-funding-quiz.jpg`
+### ✅ 1. Self-Funding Quiz Image
+- **Filename:** `/public/images/og/self-funding-readiness-assessment.png`
 - **Size:** 1200x630px
 - **Title Text:** "Self-Funding Readiness Assessment"
 - **Subtitle:** "Is Your Client Ready? Find Out in 10 Minutes"
 - **Visual:** Gauge/speedometer with red/yellow/green zones
-- **Status:** ❌ NOT CREATED
+- **Status:** ✅ CREATED
 
 ### ☐ 2. TrueCost Calculator Image
 - **Filename:** `/public/images/og/truecost-calculator.jpg`
