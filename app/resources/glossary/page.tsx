@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import MetaTags from '@/components/seo/MetaTags';
 import StructuredData from '@/components/seo/StructuredData';
+import LinkedInShareButton from '@/components/shared/LinkedInShareButton';
 import {
   glossaryTerms,
   glossaryCategories,
@@ -70,20 +71,31 @@ export default function GlossaryPage() {
         }))}
       />
 
-      <div className="py-16 bg-xl-light-grey">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-xl-dark-blue mb-4">
+      {/* Hero Section */}
+      <div
+        className="relative bg-gradient-to-r from-primary-600 to-primary-700"
+        style={{
+          backgroundImage: 'url(/images/parallax/glossary-hero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <section className="relative text-white min-h-[40vh] flex items-center">
+          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
               Stop-Loss Insurance Glossary
             </h1>
-            <p className="text-xl text-xl-grey max-w-3xl">
-              Your comprehensive, searchable guide to stop-loss insurance terminology.
-              From self-funding basics to complex pharmacy benefit terms, find clear definitions
-              for over {glossaryTerms.length} industry terms.
+            <p className="text-lg sm:text-xl md:text-2xl text-white/95 drop-shadow-md max-w-3xl mx-auto">
+              Your comprehensive, searchable guide to stop-loss insurance terminology
             </p>
           </div>
+        </section>
+      </div>
 
+      <div className="py-16 bg-xl-light-grey">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search Bar */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <div className="flex flex-col md:flex-row gap-4">
@@ -276,6 +288,15 @@ export default function GlossaryPage() {
                 })}
               </div>
             )}
+          </div>
+
+          {/* Share This Resource */}
+          <div className="mt-12 max-w-3xl mx-auto">
+            <LinkedInShareButton
+              url="https://xlbenefits.com/resources/glossary"
+              title="Stop-Loss Insurance Glossary"
+              description="Check out this comprehensive Stop-Loss Insurance Glossary from XL Benefits! Over 100+ terms defined - from specific deductibles to aggregate corridors. Essential resource for any broker working with self-funded groups:"
+            />
           </div>
 
           {/* CTA Section */}

@@ -25,9 +25,9 @@ export const metadata: Metadata = {
 export default function ToolkitPage() {
   return (
     <div>
-      {/* Fixed Background for Parallax */}
+      {/* Static Background */}
       <div
-        className="fixed inset-0 -z-10"
+        className="absolute inset-0 -z-10"
         style={{
           backgroundImage: 'url(/images/parallax/toolkit.jpg)',
           backgroundSize: 'cover',

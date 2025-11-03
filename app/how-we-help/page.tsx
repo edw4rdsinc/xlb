@@ -38,12 +38,14 @@ export default function HowWeHelpPage() {
         <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <p className="text-lg text-xl-grey leading-relaxed mb-4">
-              The difference between a good stop-loss placement and a great one often comes down to the details most people miss. XL Benefits exists to handle that complexity for you—bringing meticulous analysis, deep carrier relationships, and genuine partnership to every case.
-            </p>
-            <p className="text-lg text-xl-grey leading-relaxed">
-              Whether you're managing a straightforward renewal or navigating a challenging placement, we provide the expertise and access you need to present confident solutions to your clients.
-            </p>
+            <div className="bg-white rounded-lg shadow-md p-8">
+              <p className="text-lg text-xl-grey leading-relaxed mb-4">
+                The difference between a good stop-loss placement and a great one often comes down to the details most people miss. XL Benefits exists to handle that complexity for you—bringing meticulous analysis, deep carrier relationships, and genuine partnership to every case.
+              </p>
+              <p className="text-lg text-xl-grey leading-relaxed">
+                Whether you're managing a straightforward renewal or navigating a challenging placement, we provide the expertise and access you need to present confident solutions to your clients.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>

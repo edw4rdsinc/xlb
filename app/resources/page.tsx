@@ -12,7 +12,7 @@ export default function ResourcesPage() {
     <div>
       {/* Extended Background Container */}
       <div
-        className="relative bg-xl-dark-blue"
+        className="relative"
         style={{
           backgroundImage: 'url(/images/parallax/resources.JPG)',
           backgroundSize: 'contain',

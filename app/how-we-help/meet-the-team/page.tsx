@@ -6,9 +6,18 @@ export default function MeetTheTeamPage() {
   return (
     <div>
       {/* Extended Background Container */}
-      <div className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue">
+      <div
+        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue"
+        style={{
+          backgroundImage: 'url(/images/parallax/team-page.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         {/* Hero Section */}
         <section className="relative text-white min-h-[50vh] flex items-center">
+          <div className="absolute inset-0 bg-black/40"></div>
           {/* Overlaid Content - Centered */}
           <div className="relative w-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">

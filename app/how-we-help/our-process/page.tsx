@@ -24,13 +24,13 @@ export default function OurProcessPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <AnimatedSection animation="fade-up">
               <div className="mb-8">
-                <div className="text-7xl sm:text-8xl md:text-9xl font-bold text-white/30 mb-4">40</div>
-                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/80 mb-8">POINT INSPECTION</div>
+                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white/30 mb-4">40</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white/80 mb-8">POINT INSPECTION</div>
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-white drop-shadow-lg">
                 OUR PROCESS
               </h1>
-              <p className="text-xl sm:text-2xl md:text-3xl text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+              <p className="text-lg sm:text-xl md:text-2xl text-white/95 drop-shadow-md max-w-2xl mx-auto">
                 Meticulous analysis and expert RFP management that gives you confidence in every presentation
               </p>
             </AnimatedSection>
@@ -57,7 +57,7 @@ export default function OurProcessPage() {
       <section className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl font-bold text-xl-dark-blue mb-12 text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-12 text-center">
               What We Examine
             </h2>
           </AnimatedSection>

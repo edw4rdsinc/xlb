@@ -1,16 +1,51 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import SelfFundingQuizSecure from '@/components/tools/SelfFundingQuizSecure'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
+
+export const metadata: Metadata = {
+  title: 'Self-Funding Readiness Assessment for Group Health Plans',
+  description: 'Free 10-minute assessment to evaluate if your client is ready for self-funded health insurance. Get personalized recommendations on financial readiness, claims patterns, and administrative capabilities.',
+  openGraph: {
+    title: 'Self-Funding Readiness Assessment | XL Benefits',
+    description: 'Is your client ready for self-funding? Take our free 10-minute assessment and get personalized recommendations on financial readiness, risk tolerance, and administrative infrastructure.',
+    type: 'website',
+    url: 'https://xlbenefits.com/solutions/self-funding-feasibility',
+    images: [
+      {
+        url: '/images/og-self-funding-quiz.jpg', // We'll need to create this
+        width: 1200,
+        height: 630,
+        alt: 'Self-Funding Readiness Assessment Tool',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Self-Funding Readiness Assessment | XL Benefits',
+    description: 'Free 10-minute quiz: Is your client ready for self-funded health insurance?',
+    images: ['/images/og-self-funding-quiz.jpg'],
+  },
+}
 
 export default function SelfFundingFeasibilityPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section
+        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16"
+        style={{
+          backgroundImage: 'url(/images/parallax/self-funding-assessment.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-white">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-white drop-shadow-lg">
               Self-Funding Readiness Assessment for Group Health Plans
             </h1>
             <div className="text-lg text-white/90 leading-relaxed space-y-4">
