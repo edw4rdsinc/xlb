@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import DeductibleAnalyzerSecure from '@/components/tools/DeductibleAnalyzerSecure'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
+import LinkedInShareButton from '@/components/shared/LinkedInShareButton'
 import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
@@ -14,11 +15,20 @@ export const metadata: Metadata = {
     url: 'https://xlbenefits.com/solutions/deductible-optimization',
     siteName: 'XL Benefits',
     type: 'website',
+    images: [
+      {
+        url: '/images/og-deductible-analyzer.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Stop-Loss Deductible Analyzer Tool',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Deductible Analyzer - Optimize Stop-Loss Coverage',
     description: 'Model different deductible scenarios with actual claims history.',
+    images: ['/images/og-deductible-analyzer.jpg'],
   },
   alternates: {
     canonical: 'https://xlbenefits.com/solutions/deductible-optimization',
@@ -82,6 +92,17 @@ export default function DeductibleOptimizationPage() {
           </AnimatedSection>
 
           <DeductibleAnalyzerSecure />
+        </div>
+      </section>
+
+      {/* Share This Tool */}
+      <section className="py-12 bg-xl-light-grey">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <LinkedInShareButton
+            url="https://xlbenefits.com/solutions/deductible-optimization"
+            title="Deductible Analyzer"
+            description="I just used the Stop-Loss Deductible Analyzer from XL Benefits to optimize deductible levels for a client. This tool makes modeling different deductible scenarios with actual claims data so much easier. Check it out:"
+          />
         </div>
       </section>
 

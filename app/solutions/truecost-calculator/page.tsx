@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import FIECalculatorSecure from '@/components/tools/FIECalculatorSecure'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
+import LinkedInShareButton from '@/components/shared/LinkedInShareButton'
 import StructuredData from '@/components/seo/StructuredData'
 
 export const metadata: Metadata = {
@@ -14,11 +15,20 @@ export const metadata: Metadata = {
     url: 'https://xlbenefits.com/solutions/truecost-calculator',
     siteName: 'XL Benefits',
     type: 'website',
+    images: [
+      {
+        url: '/images/og-truecost-calculator.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'TrueCost Calculator - Fully Insured Equivalent Rates',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TrueCost Calculator - Fully Insured Equivalent Rates',
     description: 'Calculate accurate FIE rates for self-funded groups with our comprehensive calculator.',
+    images: ['/images/og-truecost-calculator.jpg'],
   },
   alternates: {
     canonical: 'https://xlbenefits.com/solutions/truecost-calculator',
@@ -165,6 +175,17 @@ export default function TrueCostCalculatorPage() {
               Talk to an Expert About Your Results
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Share This Tool */}
+      <section className="py-12 bg-xl-light-grey">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <LinkedInShareButton
+            url="https://xlbenefits.com/solutions/truecost-calculator"
+            title="TrueCost Calculator"
+            description="I just used the TrueCost Calculator from XL Benefits to calculate fully insured equivalent rates. This tool makes comparing self-funded vs. fully-insured costs so much easier. Check it out:"
+          />
         </div>
       </section>
 
