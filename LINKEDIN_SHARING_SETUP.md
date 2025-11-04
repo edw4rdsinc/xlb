@@ -26,7 +26,7 @@ You need to create **4 images** at **1200x630px** and place them in `/public/ima
 - Visual: Calculator icon with cost comparison charts
 - XL Benefits branding
 
-### 3. `/public/images/og/deductible-analyzer.jpg`
+### 3. `/public/images/og/deductible-analyzer.png` ✅ CREATED
 **For:** Stop-Loss Deductible Analyzer
 **Content:**
 - Title: "Stop-Loss Deductible Analyzer"

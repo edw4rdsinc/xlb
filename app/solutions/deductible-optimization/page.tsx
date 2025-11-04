@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og/deductible-analyzer.jpg',
+        url: '/images/og/deductible-analyzer.png',
         width: 1200,
         height: 630,
         alt: 'Stop-Loss Deductible Analyzer Tool',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Deductible Analyzer - Optimize Stop-Loss Coverage',
     description: 'Model different deductible scenarios with actual claims history.',
-    images: ['/images/og/deductible-analyzer.jpg'],
+    images: ['/images/og/deductible-analyzer.png'],
   },
   alternates: {
     canonical: 'https://xlbenefits.com/solutions/deductible-optimization',
