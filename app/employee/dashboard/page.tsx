@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FileText, Upload, Settings, LogOut, Scale } from 'lucide-react'
+import { FileText, Upload, Settings, LogOut, Scale, Trophy } from 'lucide-react'
 
 export default function EmployeeDashboard() {
   const handleLogout = () => {
@@ -77,6 +77,24 @@ export default function EmployeeDashboard() {
               </h3>
               <p className="text-sm text-xl-grey mb-4">
                 Compare SPD vs Employee Handbook to identify benefits misalignments. Get branded reports via email.
+              </p>
+              <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">
+                Ready to Use
+              </span>
+            </div>
+          </Link>
+
+          {/* Fantasy Football Admin */}
+          <Link href="/employee/fantasy-football">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-xl-bright-blue p-6 transition-all hover:shadow-lg group cursor-pointer">
+              <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-xl-bright-blue/20 transition-colors">
+                <Trophy className="w-6 h-6 text-xl-bright-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-xl-dark-blue mb-2 group-hover:text-xl-bright-blue transition-colors">
+                Fantasy Football Admin
+              </h3>
+              <p className="text-sm text-xl-grey mb-4">
+                Manage fantasy football lineups, lock/unlock submissions, and view participant details.
               </p>
               <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">
                 Ready to Use
