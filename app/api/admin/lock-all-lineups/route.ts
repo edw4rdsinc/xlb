@@ -65,7 +65,7 @@ export async function POST(request: Request) {
       message: `Successfully locked ${updatedLineups?.length || 0} lineups`,
       lockedCount: updatedLineups?.length || 0,
       totalLocked,
-      lineupIds: updatedLineups?.map(l => l.id) || [],
+      lineupIds: updatedLineups?.map((l: { id: string }) => l.id) || [],
     });
   } catch (error: any) {
     console.error('Error in lock-all-lineups:', error);
