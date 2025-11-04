@@ -1,19 +1,33 @@
 import Link from 'next/link'
 import AnimatedSection from '@/components/shared/AnimatedSection'
+import ResponsiveHero from '@/components/shared/ResponsiveHero'
 
 export default function HowWeHelpPage() {
   return (
     <div>
       {/* Extended Background Container */}
-      <div
-        className="relative"
-        style={{
-          backgroundImage: 'url(/images/parallax/how-we-help.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="relative">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/how-we-help.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/how-we-help.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 40%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         {/* Hero Section */}
         <section className="relative text-white min-h-[50vh] flex items-center">
           {/* Dark overlay for better text readability */}

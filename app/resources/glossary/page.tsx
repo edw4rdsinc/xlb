@@ -72,15 +72,28 @@ export default function GlossaryPage() {
       />
 
       {/* Hero Section */}
-      <div
-        className="relative bg-gradient-to-r from-primary-600 to-primary-700"
-        style={{
-          backgroundImage: 'url(/images/parallax/glossary-hero.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="relative bg-gradient-to-r from-primary-600 to-primary-700">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/glossary-hero.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/glossary-hero.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 30%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         <section className="relative text-white min-h-[40vh] flex items-center">
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">

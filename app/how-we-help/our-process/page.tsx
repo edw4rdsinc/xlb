@@ -5,15 +5,28 @@ export default function OurProcessPage() {
   return (
     <div>
       {/* Extended Background Container */}
-      <div
-        className="relative"
-        style={{
-          backgroundImage: 'url(/images/parallax/40pt.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="relative">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/40pt.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/40pt.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 35%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         {/* Hero Section */}
         <section className="relative text-white min-h-[50vh] flex items-center">
           {/* Dark overlay for better text readability */}

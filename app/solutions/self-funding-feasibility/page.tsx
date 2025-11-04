@@ -33,15 +33,27 @@ export default function SelfFundingFeasibilityPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section
-        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16"
-        style={{
-          backgroundImage: 'url(/images/parallax/self-funding-assessment.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <section className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/self-funding-assessment.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/self-funding-assessment.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 35%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">

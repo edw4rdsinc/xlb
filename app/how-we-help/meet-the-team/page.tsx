@@ -6,15 +6,28 @@ export default function MeetTheTeamPage() {
   return (
     <div>
       {/* Extended Background Container */}
-      <div
-        className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue"
-        style={{
-          backgroundImage: 'url(/images/parallax/team-page.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/team-page.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/team-page.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 30%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         {/* Hero Section */}
         <section className="relative text-white min-h-[50vh] flex items-center">
           <div className="absolute inset-0 bg-black/40"></div>

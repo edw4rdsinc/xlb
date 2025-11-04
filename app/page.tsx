@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import AnimatedSection from '@/components/shared/AnimatedSection'
+import ResponsiveHero from '@/components/shared/ResponsiveHero'
 import StructuredData from '@/components/seo/StructuredData'
 import type { Metadata } from 'next'
 
@@ -39,15 +40,28 @@ export default function HomePage() {
       <StructuredData type="organization" />
 
       {/* Extended Background Container - Hero Image spans both sections */}
-      <div
-        className="relative bg-gradient-to-r from-primary-600 to-primary-700"
-        style={{
-          backgroundImage: 'url(/images/other-images/xlb-hero.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="relative bg-gradient-to-r from-primary-600 to-primary-700">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/other-images/xlb-hero.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/other-images/xlb-hero.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         {/* Hero Section - Upper portion */}
         <section className="relative text-white min-h-[50vh] flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

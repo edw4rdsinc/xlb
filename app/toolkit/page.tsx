@@ -25,13 +25,23 @@ export const metadata: Metadata = {
 export default function ToolkitPage() {
   return (
     <div>
-      {/* Static Background */}
+      {/* Static Background - Desktop */}
       <div
-        className="absolute inset-0 -z-10"
+        className="hidden md:block absolute inset-0 -z-10"
         style={{
           backgroundImage: 'url(/images/parallax/toolkit.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      {/* Static Background - Mobile */}
+      <div
+        className="md:hidden absolute inset-0 -z-10"
+        style={{
+          backgroundImage: 'url(/images/parallax/toolkit.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
           backgroundRepeat: 'no-repeat'
         }}
       />
