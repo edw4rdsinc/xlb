@@ -116,6 +116,14 @@ export async function POST(request: Request) {
     let lineupId: string;
 
     if (existingLineup) {
+      // Check if lineup is locked
+      if (existingLineup.is_locked) {
+        return NextResponse.json(
+          { error: 'Lineup is locked and cannot be modified. Please contact support if you need assistance.' },
+          { status: 403 }
+        );
+      }
+
       // Update existing lineup
       lineupId = existingLineup.id;
       const { error: updateLineupError } = await supabase
