@@ -9,20 +9,21 @@ export async function POST(request: Request) {
   try {
     const supabase = await createClient();
 
-    // Get count of unlocked lineups first
-    const { count: unlockedCount, error: countError } = await supabase
+    // Get unlocked lineups (fetch actual data to avoid count issues)
+    const { data: unlockedLineups, error: fetchError } = await supabase
       .from('lineups')
-      .select('*', { count: 'exact', head: true })
+      .select('id, is_locked')
       .eq('is_locked', false);
 
-    if (countError) {
-      console.error('Error counting unlocked lineups:', countError);
+    if (fetchError) {
+      console.error('Error fetching unlocked lineups:', fetchError);
       return NextResponse.json(
-        { error: 'Failed to count unlocked lineups', details: countError },
+        { error: 'Failed to fetch unlocked lineups', details: fetchError },
         { status: 500 }
       );
     }
 
+    const unlockedCount = unlockedLineups?.length || 0;
     console.log(`Found ${unlockedCount} unlocked lineups`);
 
     if (unlockedCount === 0) {
@@ -86,34 +87,32 @@ export async function GET() {
   try {
     const supabase = await createClient();
 
-    const { count: totalLineups, error: totalError } = await supabase
+    // Fetch all lineups to count statuses
+    const { data: allLineups, error: fetchError } = await supabase
       .from('lineups')
-      .select('*', { count: 'exact', head: true });
+      .select('id, is_locked');
 
-    const { count: lockedLineups, error: lockedError } = await supabase
-      .from('lineups')
-      .select('*', { count: 'exact', head: true })
-      .eq('is_locked', true);
-
-    const { count: unlockedLineups, error: unlockedError } = await supabase
-      .from('lineups')
-      .select('*', { count: 'exact', head: true })
-      .eq('is_locked', false);
-
-    if (totalError || lockedError || unlockedError) {
+    if (fetchError) {
+      console.error('Error fetching lineups for status:', fetchError);
       return NextResponse.json(
-        { error: 'Failed to fetch lineup status' },
+        { error: 'Failed to fetch lineup status', details: fetchError },
         { status: 500 }
       );
     }
 
+    const lineups = allLineups || [];
+    const total = lineups.length;
+    const locked = lineups.filter(l => l.is_locked).length;
+    const unlocked = lineups.filter(l => !l.is_locked).length;
+
     return NextResponse.json({
-      total: totalLineups || 0,
-      locked: lockedLineups || 0,
-      unlocked: unlockedLineups || 0,
-      allLocked: unlockedLineups === 0,
+      total,
+      locked,
+      unlocked,
+      allLocked: unlocked === 0,
     });
   } catch (error: any) {
+    console.error('Error in GET lock status:', error);
     return NextResponse.json(
       { error: error.message || 'Internal server error' },
       { status: 500 }
