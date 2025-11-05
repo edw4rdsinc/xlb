@@ -16,7 +16,7 @@ export async function POST(
     // Check if lineup exists and is locked
     const { data: lineup, error: fetchError } = await supabase
       .from('lineups')
-      .select('id, is_locked, user:users!inner(name, team_name)')
+      .select('id, is_locked, user_id, users!user_id(name, team_name)')
       .eq('id', lineupId)
       .single();
 
@@ -43,7 +43,7 @@ export async function POST(
         updated_at: new Date().toISOString(),
       })
       .eq('id', lineupId)
-      .select('id, is_locked, user:users!inner(name, team_name)')
+      .select('id, is_locked, user_id')
       .single();
 
     if (updateError) {
@@ -54,9 +54,13 @@ export async function POST(
       );
     }
 
+    // Get user info for the message
+    const userInfo = lineup.users as any;
+    const teamName = userInfo?.team_name || 'user';
+
     return NextResponse.json({
       success: true,
-      message: `Successfully unlocked lineup for ${updatedLineup.user.team_name}`,
+      message: `Successfully unlocked lineup for ${teamName}`,
       lineup: updatedLineup,
     });
   } catch (error: any) {
