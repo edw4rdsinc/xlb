@@ -22,7 +22,12 @@ export async function GET(request: Request) {
   try {
     // Verify this is called by Vercel Cron
     const authHeader = request.headers.get('authorization')
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      console.log('Cron auth failed:', {
+        hasAuthHeader: !!authHeader,
+        hasCronSecret: !!process.env.CRON_SECRET,
+        authHeader: authHeader?.substring(0, 20) + '...',
+      })
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
