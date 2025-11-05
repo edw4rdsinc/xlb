@@ -67,8 +67,8 @@ function generateReportHTML(
   const lowConflicts = conflicts.filter(c => c.severity === 'LOW')
 
   const logoHTML = branding.logo_url
-    ? `<img src="${branding.logo_url}" alt="${branding.broker_name}" style="max-height: 60px; max-width: 200px;" />`
-    : `<h2 style="margin: 0; color: white;">${branding.broker_name}</h2>`
+    ? `<img src="${branding.logo_url}" alt="${branding.broker_name}" style="max-height: 50px; max-width: 180px;" />`
+    : ''
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -137,10 +137,13 @@ function generateReportHTML(
     }
 
     .executive-summary {
-      background: #f8f9fa;
+      background: linear-gradient(to right,
+        rgba(${hexToRgb(branding.primary_color)}, 0.05),
+        rgba(${hexToRgb(branding.primary_color)}, 0.02));
       border-left: 5px solid var(--primary-color);
       padding: 20px;
       margin-bottom: 30px;
+      border-radius: 8px;
     }
 
     .summary-grid {
@@ -155,6 +158,7 @@ function generateReportHTML(
       padding: 15px;
       border-radius: 8px;
       text-align: center;
+      border: 2px solid rgba(${hexToRgb(branding.primary_color)}, 0.2);
     }
 
     .summary-item .number {
@@ -177,15 +181,20 @@ function generateReportHTML(
     }
 
     .conflict-card.critical {
-      border-color: #dc3545;
+      border-color: var(--primary-color);
+      border-width: 3px;
     }
 
     .conflict-card.medium {
-      border-color: #ffc107;
+      border-color: var(--primary-color);
+      border-width: 2px;
+      opacity: 0.85;
     }
 
     .conflict-card.low {
-      border-color: #17a2b8;
+      border-color: var(--secondary-color);
+      border-width: 1px;
+      opacity: 0.9;
     }
 
     .conflict-header {
@@ -198,16 +207,17 @@ function generateReportHTML(
     }
 
     .conflict-card.critical .conflict-header {
-      background: #dc3545;
+      background: var(--primary-color);
     }
 
     .conflict-card.medium .conflict-header {
-      background: #ffc107;
-      color: #333;
+      background: linear-gradient(135deg,
+        rgba(${hexToRgb(branding.primary_color)}, 0.8),
+        rgba(${hexToRgb(branding.secondary_color)}, 0.8));
     }
 
     .conflict-card.low .conflict-header {
-      background: #17a2b8;
+      background: var(--secondary-color);
     }
 
     .severity-badge {
@@ -259,24 +269,27 @@ function generateReportHTML(
     }
 
     .issue-box {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
+      background: rgba(${hexToRgb(branding.primary_color)}, 0.08);
+      border-left: 4px solid var(--primary-color);
       padding: 15px;
       margin: 15px 0;
+      border-radius: 4px;
     }
 
     .risk-box {
-      background: #f8d7da;
-      border-left: 4px solid #dc3545;
+      background: rgba(${hexToRgb(branding.primary_color)}, 0.12);
+      border-left: 4px solid var(--primary-color);
       padding: 15px;
       margin: 15px 0;
+      border-radius: 4px;
     }
 
     .recommendations {
-      background: #d1ecf1;
-      border-left: 4px solid #17a2b8;
+      background: rgba(${hexToRgb(branding.secondary_color)}, 0.08);
+      border-left: 4px solid var(--secondary-color);
       padding: 15px;
       margin: 15px 0;
+      border-radius: 4px;
     }
 
     .recommendations ul {
@@ -289,8 +302,8 @@ function generateReportHTML(
     }
 
     .alignment-card {
-      background: #d4edda;
-      border: 2px solid #28a745;
+      background: rgba(${hexToRgb(branding.secondary_color)}, 0.05);
+      border: 2px solid var(--secondary-color);
       border-radius: 8px;
       padding: 15px 20px;
       margin-bottom: 15px;
@@ -298,12 +311,12 @@ function generateReportHTML(
 
     .alignment-card h4 {
       margin: 0 0 8px 0;
-      color: #155724;
+      color: var(--primary-color);
     }
 
     .alignment-card p {
       margin: 0;
-      color: #155724;
+      color: #333;
     }
 
     .footer {
@@ -352,16 +365,23 @@ function generateReportHTML(
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <div class="header-content">
-        <h1>Benefits Alignment Report</h1>
-        <p>
-          <strong>${job.client_name || 'Client Name'}</strong>
-          ${job.group_name ? `<br/>Group: ${job.group_name}` : ''}
-          <br/>${new Date(job.review_date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      <div class="header-content" style="flex: 1;">
+        <h1 style="margin-bottom: 20px;">Benefits Alignment Report</h1>
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+          <span style="font-size: 18px; opacity: 0.95;">Prepared by</span>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px;">
+            ${logoHTML}
+            <span style="font-size: 18px; font-weight: bold; color: white;">${branding.broker_name}</span>
+          </div>
+          <span style="font-size: 18px; opacity: 0.95;">for</span>
+          <span style="font-size: 20px; font-weight: bold;">
+            ${job.client_name || 'Client Name'}
+            ${job.group_name ? ` - ${job.group_name}` : ''}
+          </span>
+        </div>
+        <p style="margin-top: 15px; opacity: 0.9;">
+          ${new Date(job.review_date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
-      </div>
-      <div class="logo">
-        ${logoHTML}
       </div>
     </div>
 
@@ -378,21 +398,21 @@ function generateReportHTML(
             <div class="label">Total Conflicts</div>
           </div>
           <div class="summary-item">
-            <div class="number" style="color: #dc3545;">${executive_summary.critical}</div>
+            <div class="number" style="color: var(--primary-color); font-weight: bold;">${executive_summary.critical}</div>
             <div class="label">Critical</div>
           </div>
           <div class="summary-item">
-            <div class="number" style="color: #ffc107;">${executive_summary.medium}</div>
+            <div class="number" style="color: var(--primary-color); opacity: 0.8;">${executive_summary.medium}</div>
             <div class="label">Medium</div>
           </div>
           <div class="summary-item">
-            <div class="number" style="color: #17a2b8;">  ${executive_summary.low}</div>
+            <div class="number" style="color: var(--secondary-color);">${executive_summary.low}</div>
             <div class="label">Low</div>
           </div>
         </div>
 
         <p style="margin-top: 20px;"><strong>Overall Risk Level:</strong>
-          <span style="color: ${executive_summary.overall_risk === 'HIGH' ? '#dc3545' : executive_summary.overall_risk === 'MEDIUM' ? '#ffc107' : '#28a745'}; font-weight: bold;">
+          <span style="color: ${executive_summary.overall_risk === 'HIGH' ? branding.primary_color : executive_summary.overall_risk === 'MEDIUM' ? branding.primary_color : branding.secondary_color}; font-weight: bold;">
             ${executive_summary.overall_risk}
           </span>
         </p>
@@ -505,4 +525,16 @@ function escapeHtml(text: string): string {
     "'": '&#039;'
   }
   return text.replace(/[&<>"']/g, m => map[m])
+}
+
+function hexToRgb(hex: string): string {
+  // Remove the # if present
+  hex = hex.replace('#', '')
+
+  // Parse the hex values
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
+
+  return `${r}, ${g}, ${b}`
 }
