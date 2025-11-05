@@ -354,7 +354,11 @@ function generateReportHTML(
     <div class="header">
       <div class="header-content">
         <h1>Benefits Alignment Report</h1>
-        <p>${job.client_name || 'Client Name'} • ${new Date(job.review_date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        <p>
+          <strong>${job.client_name || 'Client Name'}</strong>
+          ${job.group_name ? `<br/>Group: ${job.group_name}` : ''}
+          <br/>${new Date(job.review_date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
       </div>
       <div class="logo">
         ${logoHTML}

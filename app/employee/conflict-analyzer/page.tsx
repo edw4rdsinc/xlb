@@ -19,6 +19,7 @@ export default function ConflictAnalyzerPage() {
   const [handbookFile, setHandbookFile] = useState<File | null>(null)
   const [focusAreas, setFocusAreas] = useState<string[]>(['Short-Term Disability', 'Long-Term Disability'])
   const [clientName, setClientName] = useState('')
+  const [groupName, setGroupName] = useState('')
   const [reviewerName, setReviewerName] = useState('')
   const [teamEmails, setTeamEmails] = useState('')
 
@@ -182,6 +183,7 @@ export default function ConflictAnalyzerPage() {
         handbook_filename: handbookData.fileName,
         focus_areas: focusAreas,
         client_name: clientName,
+        group_name: groupName || null,
         reviewer_name: reviewerName || null,
         review_date: new Date().toISOString().split('T')[0],
         branding: {
@@ -228,6 +230,7 @@ export default function ConflictAnalyzerPage() {
       setSpdFile(null)
       setHandbookFile(null)
       setClientName('')
+      setGroupName('')
       setReviewerName('')
 
     } catch (error: any) {
@@ -361,19 +364,33 @@ export default function ConflictAnalyzerPage() {
                 />
               </div>
               <div>
-                <label htmlFor="reviewer-name" className="block text-sm font-medium text-xl-dark-blue mb-2">
-                  Reviewer Name (Optional)
+                <label htmlFor="group-name" className="block text-sm font-medium text-xl-dark-blue mb-2">
+                  Group Name (Optional)
                 </label>
                 <input
-                  id="reviewer-name"
+                  id="group-name"
                   type="text"
-                  value={reviewerName}
-                  onChange={(e) => setReviewerName(e.target.value)}
-                  placeholder="Your name"
+                  value={groupName}
+                  onChange={(e) => setGroupName(e.target.value)}
+                  placeholder="e.g., Group 123456"
                   disabled={isSubmitting}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none disabled:opacity-50"
                 />
               </div>
+            </div>
+            <div className="mt-4">
+              <label htmlFor="reviewer-name" className="block text-sm font-medium text-xl-dark-blue mb-2">
+                Reviewer Name (Optional)
+              </label>
+              <input
+                id="reviewer-name"
+                type="text"
+                value={reviewerName}
+                onChange={(e) => setReviewerName(e.target.value)}
+                placeholder="Your name"
+                disabled={isSubmitting}
+                className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none disabled:opacity-50"
+              />
             </div>
           </div>
 
