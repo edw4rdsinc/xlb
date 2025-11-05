@@ -11,7 +11,7 @@ export default function MeetTheTeamPage() {
         <div
           className="hidden md:block absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/team-page.png)',
+            backgroundImage: 'url(/images/parallax/team-page-november.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
@@ -21,7 +21,7 @@ export default function MeetTheTeamPage() {
         <div
           className="md:hidden absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/team-page.png)',
+            backgroundImage: 'url(/images/parallax/team-page-november.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center 30%',
             backgroundRepeat: 'no-repeat'
