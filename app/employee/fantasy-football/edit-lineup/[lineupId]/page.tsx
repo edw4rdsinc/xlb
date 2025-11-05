@@ -127,14 +127,74 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
 
   async function loadDraftPool(roundId: string) {
     try {
-      const response = await fetch(`/api/admin/draft-pools/update-elite?roundId=${roundId}`);
-      const data = await response.json();
+      // Fetch draft pool directly from Supabase
+      const { data: draftPoolData, error } = await supabase
+        .from('draft_pools')
+        .select(`
+          *,
+          players!inner(name, team)
+        `)
+        .eq('round_id', roundId)
+        .order('position')
+        .order('rank');
 
-      if (response.ok) {
-        setDraftPool(data.draftPool);
+      if (error) {
+        console.error('Error loading draft pool:', error);
+        return;
       }
+
+      // Group by position and add K and DEF options
+      const byPosition: Record<string, DraftPlayer[]> = {
+        QB: [],
+        RB: [],
+        WR: [],
+        TE: [],
+        K: [],
+        DEF: [],
+      };
+
+      // Process database players
+      for (const entry of draftPoolData || []) {
+        const player = entry.players as any;
+        if (byPosition[entry.position]) {
+          byPosition[entry.position].push({
+            id: entry.player_id,
+            name: player.name,
+            team: player.team,
+            position: entry.position,
+            rank: entry.rank,
+            totalPoints: entry.total_points || 0,
+            isElite: entry.is_elite || false,
+          });
+        }
+      }
+
+      // Add placeholder kickers if none exist
+      if (byPosition.K.length === 0) {
+        byPosition.K = [
+          { id: 'k1', name: 'Justin Tucker', team: 'BAL', position: 'K', rank: 1, totalPoints: 150, isElite: false },
+          { id: 'k2', name: 'Harrison Butker', team: 'KC', position: 'K', rank: 2, totalPoints: 145, isElite: false },
+          { id: 'k3', name: 'Tyler Bass', team: 'BUF', position: 'K', rank: 3, totalPoints: 140, isElite: false },
+          { id: 'k4', name: 'Jake Elliott', team: 'PHI', position: 'K', rank: 4, totalPoints: 135, isElite: false },
+          { id: 'k5', name: 'Daniel Carlson', team: 'LV', position: 'K', rank: 5, totalPoints: 130, isElite: false },
+        ];
+      }
+
+      // Add placeholder defenses if none exist
+      if (byPosition.DEF.length === 0) {
+        byPosition.DEF = [
+          { id: 'def1', name: 'San Francisco 49ers', team: 'SF', position: 'DEF', rank: 1, totalPoints: 180, isElite: false },
+          { id: 'def2', name: 'Baltimore Ravens', team: 'BAL', position: 'DEF', rank: 2, totalPoints: 175, isElite: false },
+          { id: 'def3', name: 'Buffalo Bills', team: 'BUF', position: 'DEF', rank: 3, totalPoints: 170, isElite: false },
+          { id: 'def4', name: 'Dallas Cowboys', team: 'DAL', position: 'DEF', rank: 4, totalPoints: 165, isElite: false },
+          { id: 'def5', name: 'New York Jets', team: 'NYJ', position: 'DEF', rank: 5, totalPoints: 160, isElite: false },
+        ];
+      }
+
+      setDraftPool(byPosition);
     } catch (err) {
       console.error('Failed to load draft pool:', err);
+      setError('Failed to load player options');
     }
   }
 
