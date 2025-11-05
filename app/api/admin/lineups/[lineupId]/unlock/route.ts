@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/server';
 
 /**
  * Unlock a specific lineup for manual editing
@@ -11,7 +11,8 @@ export async function POST(
 ) {
   try {
     const { lineupId } = await params;
-    const supabase = await createClient();
+    // Use admin client with service role to bypass RLS
+    const supabase = createAdminClient();
 
     // Check if lineup exists and is locked
     const { data: lineup, error: fetchError } = await supabase

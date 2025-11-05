@@ -348,10 +348,10 @@ export default function FantasyFootballAdminPage() {
                         <div className="flex items-center gap-2">
                           <Link
                             href={`/employee/fantasy-football/edit-lineup/${lineup.id}`}
-                            className="inline-flex items-center gap-1 px-3 py-1 rounded bg-xl-bright-blue hover:bg-xl-dark-blue text-white transition-colors"
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded bg-xl-bright-blue hover:bg-xl-dark-blue text-white font-medium transition-colors"
                           >
                             <Pencil className="w-3 h-3" />
-                            Edit
+                            <span className="text-white">Edit</span>
                           </Link>
                           <button
                             onClick={() => toggleLineupLock(lineup)}

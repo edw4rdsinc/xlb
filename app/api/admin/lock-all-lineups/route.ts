@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/server';
 
 /**
  * Lock all fantasy football lineups
@@ -7,7 +7,10 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function POST(request: Request) {
   try {
-    const supabase = await createClient();
+    // Use admin client with service role to bypass RLS
+    const supabase = createAdminClient();
+
+    console.log('Fetching unlocked lineups with admin client...');
 
     // Get unlocked lineups (fetch actual data to avoid count issues)
     const { data: unlockedLineups, error: fetchError } = await supabase
@@ -16,9 +19,19 @@ export async function POST(request: Request) {
       .eq('is_locked', false);
 
     if (fetchError) {
-      console.error('Error fetching unlocked lineups:', fetchError);
+      console.error('Error fetching unlocked lineups:', {
+        message: fetchError.message,
+        details: fetchError.details,
+        hint: fetchError.hint,
+        code: fetchError.code
+      });
       return NextResponse.json(
-        { error: 'Failed to fetch unlocked lineups', details: fetchError },
+        {
+          error: 'Failed to fetch unlocked lineups',
+          details: fetchError.message,
+          hint: fetchError.hint,
+          code: fetchError.code
+        },
         { status: 500 }
       );
     }
@@ -85,7 +98,8 @@ export async function POST(request: Request) {
  */
 export async function GET() {
   try {
-    const supabase = await createClient();
+    // Use admin client with service role to bypass RLS
+    const supabase = createAdminClient();
 
     // Fetch all lineups to count statuses
     const { data: allLineups, error: fetchError } = await supabase
@@ -93,9 +107,19 @@ export async function GET() {
       .select('id, is_locked');
 
     if (fetchError) {
-      console.error('Error fetching lineups for status:', fetchError);
+      console.error('Error fetching lineups for status:', {
+        message: fetchError.message,
+        details: fetchError.details,
+        hint: fetchError.hint,
+        code: fetchError.code
+      });
       return NextResponse.json(
-        { error: 'Failed to fetch lineup status', details: fetchError },
+        {
+          error: 'Failed to fetch lineup status',
+          details: fetchError.message,
+          hint: fetchError.hint,
+          code: fetchError.code
+        },
         { status: 500 }
       );
     }
