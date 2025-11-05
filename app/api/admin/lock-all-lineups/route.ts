@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * Lock all fantasy football lineups
@@ -7,6 +7,8 @@ import { supabase } from '@/lib/supabase/client';
  */
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+
     // Get count of unlocked lineups first
     const { count: unlockedCount, error: countError } = await supabase
       .from('lineups')
@@ -82,6 +84,8 @@ export async function POST(request: Request) {
  */
 export async function GET() {
   try {
+    const supabase = await createClient();
+
     const { count: totalLineups, error: totalError } = await supabase
       .from('lineups')
       .select('*', { count: 'exact', head: true });

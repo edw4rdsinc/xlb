@@ -140,12 +140,26 @@ export default function FantasyFootballAdminPage() {
 
     setActionLoading(lineup.id)
     try {
-      const { error } = await supabase
-        .from('lineups')
-        .update({ is_locked: newLockState, updated_at: new Date().toISOString() })
-        .eq('id', lineup.id)
+      if (newLockState) {
+        // Locking: use direct update (simpler for now)
+        const { error } = await supabase
+          .from('lineups')
+          .update({ is_locked: true, updated_at: new Date().toISOString() })
+          .eq('id', lineup.id)
 
-      if (error) throw error
+        if (error) throw error
+      } else {
+        // Unlocking: use API route for proper permissions
+        const response = await fetch(`/api/admin/lineups/${lineup.id}/unlock`, {
+          method: 'POST'
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to unlock lineup')
+        }
+      }
 
       await loadData()
     } catch (error: any) {
