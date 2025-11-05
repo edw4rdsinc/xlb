@@ -19,8 +19,7 @@ export default function ConflictAnalyzerPage() {
   const [handbookFile, setHandbookFile] = useState<File | null>(null)
   const [focusAreas, setFocusAreas] = useState<string[]>(['Short-Term Disability', 'Long-Term Disability'])
   const [clientName, setClientName] = useState('')
-  const [groupName, setGroupName] = useState('')
-  const [reviewerName, setReviewerName] = useState('')
+  const [clientLogoFile, setClientLogoFile] = useState<File | null>(null)
   const [teamEmails, setTeamEmails] = useState('')
 
   // Broker branding
@@ -144,7 +143,7 @@ export default function ConflictAnalyzerPage() {
       if (!handbookUploadRes.ok) throw new Error('Handbook upload failed')
       const handbookData = await handbookUploadRes.json()
 
-      // Step 3: Upload logo if provided
+      // Step 3: Upload broker logo if provided
       let logoUrl = null
       if (logoFile) {
         const logoFormData = new FormData()
@@ -161,7 +160,24 @@ export default function ConflictAnalyzerPage() {
         }
       }
 
-      // Step 4: Create job via API (no client-side auth needed)
+      // Step 4: Upload client logo if provided
+      let clientLogoUrl = null
+      if (clientLogoFile) {
+        const clientLogoFormData = new FormData()
+        clientLogoFormData.append('file', clientLogoFile)
+
+        const clientLogoUploadRes = await fetch('/api/employee/upload-pdf', {
+          method: 'POST',
+          body: clientLogoFormData,
+        })
+
+        if (clientLogoUploadRes.ok) {
+          const clientLogoData = await clientLogoUploadRes.json()
+          clientLogoUrl = clientLogoData.fileUrl
+        }
+      }
+
+      // Step 5: Create job via API (no client-side auth needed)
       // Try to get user info from session if available
       let userId = null
       let userEmail = null
@@ -183,8 +199,7 @@ export default function ConflictAnalyzerPage() {
         handbook_filename: handbookData.fileName,
         focus_areas: focusAreas,
         client_name: clientName,
-        group_name: groupName || null,
-        reviewer_name: reviewerName || null,
+        client_logo_url: clientLogoUrl || null,
         review_date: new Date().toISOString().split('T')[0],
         branding: {
           broker_name: brokerName,
@@ -210,7 +225,7 @@ export default function ConflictAnalyzerPage() {
 
       const { job } = await jobRes.json()
 
-      // Step 5: Optionally save broker profile
+      // Step 6: Optionally save broker profile
       if (saveProfile && !selectedProfileId && userId && supabase) {
         await supabase.from('broker_profiles').insert([{
           user_id: userId,
@@ -230,8 +245,7 @@ export default function ConflictAnalyzerPage() {
       setSpdFile(null)
       setHandbookFile(null)
       setClientName('')
-      setGroupName('')
-      setReviewerName('')
+      setClientLogoFile(null)
 
     } catch (error: any) {
       console.error('Submission error:', error)
@@ -364,33 +378,23 @@ export default function ConflictAnalyzerPage() {
                 />
               </div>
               <div>
-                <label htmlFor="group-name" className="block text-sm font-medium text-xl-dark-blue mb-2">
-                  Group Name (Optional)
+                <label htmlFor="client-logo" className="block text-sm font-medium text-xl-dark-blue mb-2">
+                  Client Logo (Optional)
                 </label>
                 <input
-                  id="group-name"
-                  type="text"
-                  value={groupName}
-                  onChange={(e) => setGroupName(e.target.value)}
-                  placeholder="e.g., Group 123456"
+                  id="client-logo"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setClientLogoFile(e.target.files?.[0] || null)}
                   disabled={isSubmitting}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none disabled:opacity-50"
                 />
+                {clientLogoFile && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Selected: {clientLogoFile.name}
+                  </p>
+                )}
               </div>
-            </div>
-            <div className="mt-4">
-              <label htmlFor="reviewer-name" className="block text-sm font-medium text-xl-dark-blue mb-2">
-                Reviewer Name (Optional)
-              </label>
-              <input
-                id="reviewer-name"
-                type="text"
-                value={reviewerName}
-                onChange={(e) => setReviewerName(e.target.value)}
-                placeholder="Your name"
-                disabled={isSubmitting}
-                className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none disabled:opacity-50"
-              />
             </div>
           </div>
 
