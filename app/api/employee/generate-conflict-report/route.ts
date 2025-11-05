@@ -34,12 +34,22 @@ export async function POST(request: Request) {
   try {
     const { job, analysis, spdPages, handbookPages } = await request.json()
 
-    const branding = job.branding || {
-      broker_name: 'XL Benefits',
-      logo_url: null,
-      primary_color: '#0066cc',
-      secondary_color: '#003d7a',
+    console.log('Generating report with job data:', {
+      client_name: job.client_name,
+      client_logo_url: job.client_logo_url,
+      branding: job.branding,
+      broker_profile_id: job.broker_profile_id,
+    })
+
+    // Ensure branding has all required fields with defaults
+    const branding = {
+      broker_name: job.branding?.broker_name || 'XL Benefits',
+      logo_url: job.branding?.logo_url || null,
+      primary_color: job.branding?.primary_color || '#0066cc',
+      secondary_color: job.branding?.secondary_color || '#003d7a',
     }
+
+    console.log('Using branding:', branding)
 
     const html = generateReportHTML(job, analysis, branding, spdPages, handbookPages)
 
@@ -66,8 +76,13 @@ function generateReportHTML(
   const mediumConflicts = conflicts.filter(c => c.severity === 'MEDIUM')
   const lowConflicts = conflicts.filter(c => c.severity === 'LOW')
 
+  console.log('Generating logos with:', {
+    broker_logo: branding.logo_url,
+    client_logo: job.client_logo_url,
+  })
+
   const logoHTML = branding.logo_url
-    ? `<img src="${branding.logo_url}" alt="${branding.broker_name}" style="max-height: 50px; max-width: 180px;" />`
+    ? `<img src="${branding.logo_url}" alt="${branding.broker_name || 'Broker'}" style="max-height: 50px; max-width: 180px;" />`
     : ''
 
   const clientLogoHTML = job.client_logo_url
@@ -82,8 +97,8 @@ function generateReportHTML(
   <title>Benefits Alignment Report - ${job.client_name || 'Client'}</title>
   <style>
     :root {
-      --primary-color: ${branding.primary_color};
-      --secondary-color: ${branding.secondary_color};
+      --primary-color: ${branding.primary_color || '#0066cc'};
+      --secondary-color: ${branding.secondary_color || '#003d7a'};
     }
 
     * { box-sizing: border-box; }
@@ -142,8 +157,8 @@ function generateReportHTML(
 
     .executive-summary {
       background: linear-gradient(to right,
-        rgba(${hexToRgb(branding.primary_color)}, 0.05),
-        rgba(${hexToRgb(branding.primary_color)}, 0.02));
+        rgba(${hexToRgb(branding.primary_color || '#0066cc')}, 0.05),
+        rgba(${hexToRgb(branding.primary_color || '#0066cc')}, 0.02));
       border-left: 5px solid var(--primary-color);
       padding: 20px;
       margin-bottom: 30px;
@@ -531,13 +546,24 @@ function escapeHtml(text: string): string {
 }
 
 function hexToRgb(hex: string): string {
-  // Remove the # if present
-  hex = hex.replace('#', '')
+  try {
+    // Remove the # if present
+    hex = hex.replace('#', '')
 
-  // Parse the hex values
-  const r = parseInt(hex.substring(0, 2), 16)
-  const g = parseInt(hex.substring(2, 4), 16)
-  const b = parseInt(hex.substring(4, 6), 16)
+    // Validate hex format
+    if (!/^[0-9A-Fa-f]{6}$/.test(hex)) {
+      console.warn(`Invalid hex color: ${hex}, using fallback`)
+      return '0, 102, 204' // Fallback to primary blue
+    }
 
-  return `${r}, ${g}, ${b}`
+    // Parse the hex values
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+
+    return `${r}, ${g}, ${b}`
+  } catch (error) {
+    console.error('Error converting hex to RGB:', error)
+    return '0, 102, 204' // Fallback to primary blue
+  }
 }

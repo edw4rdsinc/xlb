@@ -268,6 +268,12 @@ async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text:
 
 async function generateReport(data: any): Promise<string> {
   // Generate branded HTML report
+  console.log('Passing to report generator:', {
+    client_name: data.job.client_name,
+    client_logo_url: data.job.client_logo_url,
+    branding: data.job.branding,
+  })
+
   const reportUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}/api/employee/generate-conflict-report`
     : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/generate-conflict-report`

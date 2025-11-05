@@ -18,8 +18,11 @@ export async function POST(request: Request) {
 
     console.log('Creating conflict analysis job:', {
       client_name: jobData.client_name,
+      client_logo_url: jobData.client_logo_url,
       focus_areas: jobData.focus_areas,
       email_recipients: jobData.email_recipients,
+      branding: jobData.branding,
+      broker_profile_id: jobData.broker_profile_id,
     })
 
     // Insert job using service role (bypasses RLS)
