@@ -64,7 +64,7 @@ export default function SearchablePlayerDropdown({
       >
         <span className={value ? 'text-slate-900' : 'text-slate-500'}>
           {selectedPlayer
-            ? `#${selectedPlayer.rank} ${selectedPlayer.name} (${selectedPlayer.team}) ${selectedPlayer.isElite ? '⭐' : ''}`
+            ? `${selectedPlayer.name} (${selectedPlayer.team}) ${selectedPlayer.isElite ? '⭐' : ''}`
             : `Select ${position.toUpperCase()}`}
         </span>
         <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -135,7 +135,7 @@ export default function SearchablePlayerDropdown({
                     <div className="flex items-center justify-between">
                       <div>
                         <span className="font-medium">
-                          #{player.rank} {player.name}
+                          {player.name}
                         </span>
                         <span className={`ml-2 ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>
                           ({player.team})
