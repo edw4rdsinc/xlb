@@ -141,18 +141,13 @@ export default function SearchablePlayerDropdown({
                           ({player.team})
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {player.isElite && (
-                          <span className={`px-2 py-0.5 text-xs font-bold rounded ${
-                            isSelected ? 'bg-white/20 text-white' : 'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            ELITE
-                          </span>
-                        )}
-                        <span className={`${isSelected ? 'text-white/80' : 'text-slate-600'}`}>
-                          {player.totalPoints.toFixed(0)} pts
+                      {player.isElite && (
+                        <span className={`px-2 py-0.5 text-xs font-bold rounded ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          ELITE
                         </span>
-                      </div>
+                      )}
                     </div>
                     {!canSelect && !isSelected && (
                       <div className="text-xs text-red-600 mt-1">
