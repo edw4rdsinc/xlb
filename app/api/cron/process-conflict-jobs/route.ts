@@ -31,13 +31,29 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Find pending jobs (limit to 5 per run to avoid timeout)
+    // First, reset any jobs stuck in processing for more than 10 minutes
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString()
+    const { error: resetError } = await supabase
+      .from('conflict_analysis_jobs')
+      .update({
+        status: 'pending',
+        error_message: 'Reset from stuck processing state',
+        progress: { step: 'pending', percent: 0 }
+      })
+      .eq('status', 'processing')
+      .lt('updated_at', tenMinutesAgo)
+
+    if (resetError) {
+      console.error('Error resetting stuck jobs:', resetError)
+    }
+
+    // Find pending jobs (limit to 2 per run to avoid timeout)
     const { data: jobs, error } = await supabase
       .from('conflict_analysis_jobs')
       .select('*')
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
-      .limit(5)
+      .limit(2)
 
     if (error) {
       console.error('Error fetching jobs:', error)
@@ -50,10 +66,36 @@ export async function GET(request: Request) {
 
     console.log(`Found ${jobs.length} pending jobs`)
 
-    // Process each job
-    const results = await Promise.allSettled(
-      jobs.map(job => processJob(job))
-    )
+    // Process jobs sequentially to avoid overwhelming the system
+    const results = []
+    for (const job of jobs) {
+      try {
+        // Add timeout of 2 minutes per job to prevent hanging
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Job processing timeout after 2 minutes')), 120000)
+        )
+
+        await Promise.race([
+          processJob(job),
+          timeoutPromise
+        ])
+
+        results.push({ status: 'fulfilled' })
+      } catch (error: any) {
+        console.error(`Job ${job.id} failed:`, error.message)
+        results.push({ status: 'rejected', error })
+
+        // Mark job as error if it failed
+        await supabase
+          .from('conflict_analysis_jobs')
+          .update({
+            status: 'error',
+            error_message: error.message || 'Processing failed',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', job.id)
+      }
+    }
 
     const successful = results.filter(r => r.status === 'fulfilled').length
     const failed = results.filter(r => r.status === 'rejected').length
