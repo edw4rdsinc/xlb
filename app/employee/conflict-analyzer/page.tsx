@@ -200,6 +200,8 @@ export default function ConflictAnalyzerPage() {
         focus_areas: focusAreas,
         client_name: clientName,
         client_logo_url: clientLogoUrl || null,
+        group_name: null,  // Optional field, kept for DB compatibility
+        reviewer_name: null,  // Optional field, kept for DB compatibility
         review_date: new Date().toISOString().split('T')[0],
         branding: {
           broker_name: brokerName,
