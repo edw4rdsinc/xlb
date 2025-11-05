@@ -108,7 +108,6 @@ export function RosterList({ lineups }: RosterListProps) {
                   <td className="px-4 py-4 sticky left-0 bg-white hover:bg-slate-50 z-10">
                     <div className="min-w-max">
                       <p className="font-semibold text-slate-900">{lineup.user.team_name}</p>
-                      <p className="text-sm text-slate-500">{lineup.user.name}</p>
                       {eliteCount > 0 && (
                         <div className="flex items-center mt-1">
                           <svg className="w-3 h-3 text-yellow-600 mr-1" fill="currentColor" viewBox="0 0 20 20">

@@ -52,10 +52,9 @@ export function RosterGrid({ lineups }: RosterGridProps) {
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-              <h3 className="text-xl font-bold text-white mb-1">
+              <h3 className="text-xl font-bold text-white">
                 {lineup.user.team_name}
               </h3>
-              <p className="text-blue-100 text-sm">{lineup.user.name}</p>
             </div>
 
             {/* Elite Counter */}

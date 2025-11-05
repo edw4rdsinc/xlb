@@ -31,17 +31,28 @@ export default function ResultsPage() {
       if (roundsError) throw roundsError;
       setRounds(roundsData || []);
 
-      // Get active round to determine current week
-      const { data: activeRound } = await supabase
-        .from('rounds')
-        .select('*')
-        .eq('is_active', true)
+      // Get the most recent week with scores
+      const { data: latestScore, error: scoreError } = await supabase
+        .from('weekly_scores')
+        .select('week_number')
+        .order('week_number', { ascending: false })
+        .limit(1)
         .single();
 
-      if (activeRound) {
-        // In a real app, you'd calculate current week based on today's date
-        // For now, we'll use the start week of the active round
-        setCurrentWeek(activeRound.start_week);
+      if (!scoreError && latestScore) {
+        // Set to the most recent week that has scores
+        setCurrentWeek(latestScore.week_number);
+      } else {
+        // Fallback: use active round's start week if no scores found
+        const { data: activeRound } = await supabase
+          .from('rounds')
+          .select('*')
+          .eq('is_active', true)
+          .single();
+
+        if (activeRound) {
+          setCurrentWeek(activeRound.start_week);
+        }
       }
     } catch (error) {
       console.error('Error loading initial data:', error);

@@ -347,10 +347,7 @@ export function WeeklyResults({ currentWeek, rounds }: WeeklyResultsProps) {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <div>
-                        <div className="font-semibold text-slate-900">{score.user.team_name}</div>
-                        <div className="text-sm text-slate-500">{score.user.name}</div>
-                      </div>
+                      <div className="font-semibold text-slate-900">{score.user.team_name}</div>
                     </td>
                     <td className="px-4 py-3 text-right">
                       <span className={`font-bold text-lg ${isWinner ? 'text-yellow-700' : 'text-slate-900'}`}>

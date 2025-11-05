@@ -38,27 +38,23 @@ TODAY=$(date +%Y-%m-%d)
 DAYS_SINCE_START=$(( ($(date -d "$TODAY" +%s) - $(date -d "$SEASON_START" +%s)) / 86400 ))
 
 # Calculate week number (1-18)
-CURRENT_WEEK=$(( ($DAYS_SINCE_START / 7) + 1 ))
+# Since this runs on Tuesday, the current calendar week's games finished yesterday (Monday)
+# So we want to sync the current calculated week, not current - 1
+WEEK_TO_SYNC=$(( ($DAYS_SINCE_START / 7) + 1 ))
 
 # Cap at week 18 (regular season)
-if [ $CURRENT_WEEK -gt 18 ]; then
-    CURRENT_WEEK=18
+if [ $WEEK_TO_SYNC -gt 18 ]; then
+    WEEK_TO_SYNC=18
 fi
 
-# If season hasn't started yet, exit
-if [ $CURRENT_WEEK -lt 1 ]; then
+# If season hasn't started yet or it's Week 1 Tuesday (no games finished yet), exit
+if [ $WEEK_TO_SYNC -lt 1 ]; then
     echo "NFL season hasn't started yet. Exiting." | tee -a "$LOG_FILE"
     exit 0
 fi
 
-# Sync stats for the PREVIOUS week (games just finished Monday night)
-WEEK_TO_SYNC=$(( $CURRENT_WEEK - 1 ))
-
-# If we're in Week 1 Tuesday, there's nothing to sync yet
-if [ $WEEK_TO_SYNC -lt 1 ]; then
-    echo "Week 1 hasn't completed yet. Exiting." | tee -a "$LOG_FILE"
-    exit 0
-fi
+# For display purposes, calculate which week we're currently in
+CURRENT_WEEK=$WEEK_TO_SYNC
 
 echo "Current NFL Week: $CURRENT_WEEK" | tee -a "$LOG_FILE"
 echo "Syncing stats for Week: $WEEK_TO_SYNC" | tee -a "$LOG_FILE"

@@ -147,12 +147,12 @@ def aggregate_team_defense_stats(nfl_stats: pd.DataFrame, week: int) -> pd.DataF
     agg_dict = {}
     if def_td_col:
         agg_dict[def_td_col] = 'sum'
-    if 'interceptions' in nfl_stats.columns:
-        agg_dict['interceptions'] = 'sum'
-    if 'safeties' in nfl_stats.columns:
-        agg_dict['safeties'] = 'sum'
-    if 'sacks' in nfl_stats.columns:
-        agg_dict['sacks'] = 'sum'
+    if 'def_interceptions' in nfl_stats.columns:
+        agg_dict['def_interceptions'] = 'sum'
+    if 'def_safeties' in nfl_stats.columns:
+        agg_dict['def_safeties'] = 'sum'
+    if 'def_sacks' in nfl_stats.columns:
+        agg_dict['def_sacks'] = 'sum'
 
     if not agg_dict:
         print(f"⚠️  Warning: No defensive stat columns found")
@@ -161,14 +161,25 @@ def aggregate_team_defense_stats(nfl_stats: pd.DataFrame, week: int) -> pd.DataF
     defense_stats = nfl_stats.groupby(team_col).agg(agg_dict).reset_index()
 
     # Rename columns to standardize
-    rename_map = {team_col: 'team'}
+    # Keep def_ prefix so transform_stats_to_schema() can find them
+    rename_map = {
+        team_col: 'team'
+    }
     if def_td_col:
         rename_map[def_td_col] = 'def_tds'
 
     defense_stats = defense_stats.rename(columns=rename_map)
 
-    # Add week number
+    # Normalize team abbreviations (nflreadpy uses different codes)
+    team_mapping = {
+        'LA': 'LAR',  # Los Angeles Rams
+        # Add other mappings if needed
+    }
+    defense_stats['team'] = defense_stats['team'].replace(team_mapping)
+
+    # Add week number (must match nflreadpy column name 'week' for consistency)
     defense_stats['week'] = week
+    # Note: nflreadpy uses 'week', but transform expects 'week' too
 
     # Add position
     defense_stats['position'] = 'DEF'
@@ -177,16 +188,16 @@ def aggregate_team_defense_stats(nfl_stats: pd.DataFrame, week: int) -> pd.DataF
     defense_stats['player_display_name'] = defense_stats['team'] + ' Defense'
 
     # Add default values for missing columns (to match player stats schema)
-    for col in ['def_tds', 'interceptions', 'safeties', 'sacks']:
+    for col in ['def_tds', 'def_interceptions', 'def_safeties', 'def_sacks']:
         if col not in defense_stats.columns:
             defense_stats[col] = 0
 
     # Filter out teams with no defensive stats
     defense_stats = defense_stats[
         (defense_stats.get('def_tds', 0) > 0) |
-        (defense_stats.get('interceptions', 0) > 0) |
-        (defense_stats.get('safeties', 0) > 0) |
-        (defense_stats.get('sacks', 0) > 0)
+        (defense_stats.get('def_interceptions', 0) > 0) |
+        (defense_stats.get('def_safeties', 0) > 0) |
+        (defense_stats.get('def_sacks', 0) > 0)
     ]
 
     print(f"✅ Aggregated defense stats for {len(defense_stats)} teams")
@@ -197,15 +208,33 @@ def aggregate_team_defense_stats(nfl_stats: pd.DataFrame, week: int) -> pd.DataF
 def get_database_players() -> List[Dict]:
     """
     Fetch all players from database for name matching
+    Uses pagination to get all records (Supabase has 1000 row default limit)
     """
     print("\n🔍 Fetching players from database...")
 
     try:
-        response = supabase.table('players').select('*').execute()
-        players = response.data
+        all_players = []
+        page_size = 1000
+        offset = 0
 
-        print(f"✅ Found {len(players)} players in database")
-        return players
+        while True:
+            response = supabase.table('players').select('*').range(offset, offset + page_size - 1).execute()
+
+            if not response.data:
+                break
+
+            all_players.extend(response.data)
+
+            # If we got less than page_size, we're done
+            if len(response.data) < page_size:
+                break
+
+            offset += page_size
+
+        # Debug: Count DEF players
+        def_count = sum(1 for p in all_players if p.get('position') == 'DEF')
+        print(f"✅ Found {len(all_players)} players in database ({def_count} DEF)")
+        return all_players
 
     except Exception as e:
         print(f"❌ Error fetching players from database: {e}")
@@ -218,12 +247,40 @@ def match_player_to_database(nfl_name: str, nfl_position: str, db_players: List[
 
     Returns player_id if match found, None otherwise
     """
+    # Debug: Count DEF players on first call
+    global _debug_def_count_done
+    if nfl_position == 'DEF' and '_debug_def_count_done' not in globals():
+        _debug_def_count_done = True
+        total_def = sum(1 for p in db_players if p.get('position') == 'DEF')
+        print(f"DEBUG: Total DEF players in db_players list: {total_def}")
+        none_position = sum(1 for p in db_players if p.get('position') is None)
+        print(f"DEBUG: Players with None position: {none_position}")
+
     # Filter by position first
     position_matches = [p for p in db_players if p['position'] == nfl_position]
 
     if not position_matches:
         return None
 
+    # For DEF position, require exact match only (fuzzy matching doesn't work well for short team names)
+    if nfl_position == 'DEF':
+        # Debug failing defenses
+        if nfl_name in ['ARI Defense', 'ATL Defense', 'PIT Defense']:
+            print(f"DEBUG match_player: Looking for '{nfl_name}'")
+            print(f"DEBUG match_player: Found {len(position_matches)} DEF position matches")
+            print(f"DEBUG match_player: First 3 names: {[p.get('name', 'NO NAME') for p in position_matches[:3]]}")
+
+        for player in position_matches:
+            if nfl_name.lower() == player['name'].lower():
+                return player['id']
+
+        # Debug: Show why it failed
+        if nfl_name in ['ARI Defense', 'ATL Defense', 'PIT Defense']:
+            print(f"DEBUG match_player: No exact match found for '{nfl_name}'")
+
+        return None  # No exact match found for defense
+
+    # For other positions, use fuzzy matching
     # Find best name match
     best_match = None
     best_score = 0
@@ -258,10 +315,17 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
     unmatched_players = []
     bye_week_count = 0
 
+    def_matched = []
+    def_not_matched = []
+
     for idx, row in nfl_stats.iterrows():
         player_name = row.get('player_display_name') or row.get('player_name', '')
         position = row.get('position', '')
         team = row.get('recent_team', '') or row.get('team', '')
+
+        # Debug: Print first few defense records
+        if position == 'DEF' and idx < 5:
+            print(f"DEBUG Row {idx}: position='{position}', player_display_name='{row.get('player_display_name')}', player_name='{row.get('player_name')}', final name='{player_name}'")
 
         # Map position codes (nflreadpy uses different codes sometimes)
         position_map = {
@@ -279,7 +343,15 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
 
         if not player_id:
             unmatched_players.append(f"{player_name} ({position})")
+            if position == 'DEF':
+                def_not_matched.append(player_name)
+                # Debug: Print details for failing defense
+                if player_name in ['ARI Defense', 'ATL Defense', 'PIT Defense']:
+                    print(f"DEBUG: Failed to match - Name: '{player_name}', Position: '{position}', Name empty: {not player_name}, Position empty: {not position}")
             continue
+
+        if position == 'DEF':
+            def_matched.append(player_name)
 
         matched_count += 1
 
@@ -335,9 +407,9 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
                 'pats': safe_int(row.get('pat_made', 0)),
                 # Defense stats (if DEF position)
                 'def_tds': safe_int(row.get('def_tds', 0)),
-                'interceptions': safe_int(row.get('interceptions', 0)),
-                'safeties': safe_int(row.get('safeties', 0)),
-                'sacks': safe_int(row.get('sacks', 0)),
+                'interceptions': safe_int(row.get('def_interceptions', 0)),
+                'safeties': safe_int(row.get('def_safeties', 0)),
+                'sacks': safe_int(row.get('def_sacks', 0)),
             }
 
             # Calculate points using your PPR scoring rules
@@ -348,6 +420,12 @@ def transform_stats_to_schema(nfl_stats: pd.DataFrame, db_players: List[Dict], w
     print(f"✅ Matched {matched_count} players to database")
     if bye_week_count > 0:
         print(f"📅 Set {bye_week_count} players to 0 points (bye week)")
+
+    # Debug defense matching
+    if def_matched:
+        print(f"🛡️  Matched {len(def_matched)} defenses: {', '.join(sorted(def_matched))}")
+    if def_not_matched:
+        print(f"❌ Did NOT match {len(def_not_matched)} defenses: {', '.join(sorted(def_not_matched))}")
 
     if unmatched_players:
         print(f"\n⚠️  {len(unmatched_players)} players not matched:")
