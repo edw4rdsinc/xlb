@@ -6,7 +6,7 @@
   },
   "crons": [
     {
-      "path": "/api/cron/process-conflict-jobs",
+      "path": "/api/cron/process-conflict-jobs-v2",
       "schedule": "* * * * *"
     }
   ]
