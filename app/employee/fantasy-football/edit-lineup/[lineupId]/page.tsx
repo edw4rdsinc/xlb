@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { ArrowLeft, Save } from 'lucide-react';
 import Link from 'next/link';
+import SearchablePlayerDropdown from '@/components/fantasy-football/SearchablePlayerDropdown';
 
 interface DraftPlayer {
   id: string;
@@ -500,26 +501,14 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                   </div>
                 )}
 
-                {/* Player Selection */}
-                <select
+                {/* Player Selection with Search */}
+                <SearchablePlayerDropdown
+                  players={players}
                   value={lineup[position]}
-                  onChange={(e) => setLineup({ ...lineup, [position]: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent"
-                >
-                  <option value="">Select {posLabel}</option>
-                  {players.map(player => {
-                    const canSelect = canSelectPlayer(player.id, position);
-                    return (
-                      <option
-                        key={player.id}
-                        value={player.id}
-                        disabled={!canSelect}
-                      >
-                        #{player.rank} {player.name} ({player.team}) {player.isElite ? '⭐ ELITE' : ''} - {player.totalPoints.toFixed(1)} pts
-                      </option>
-                    );
-                  })}
-                </select>
+                  onChange={(playerId) => setLineup({ ...lineup, [position]: playerId })}
+                  position={posLabel}
+                  canSelectPlayer={(playerId) => canSelectPlayer(playerId, position)}
+                />
               </div>
             );
           })}
