@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Lock, Unlock, RefreshCw, Users, CheckCircle2, XCircle } from 'lucide-react'
+import { ArrowLeft, Lock, Unlock, RefreshCw, Users, CheckCircle2, XCircle, Pencil } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
 
 interface Lineup {
@@ -345,24 +345,33 @@ export default function FantasyFootballAdminPage() {
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <button
-                          onClick={() => toggleLineupLock(lineup)}
-                          disabled={actionLoading === lineup.id}
-                          className={`inline-flex items-center gap-1 px-3 py-1 rounded ${
-                            lineup.is_locked
-                              ? 'bg-green-600 hover:bg-green-700 text-white'
-                              : 'bg-red-600 hover:bg-red-700 text-white'
-                          } disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors`}
-                        >
-                          {actionLoading === lineup.id ? (
-                            <RefreshCw className="w-3 h-3 animate-spin" />
-                          ) : lineup.is_locked ? (
-                            <Unlock className="w-3 h-3" />
-                          ) : (
-                            <Lock className="w-3 h-3" />
-                          )}
-                          {lineup.is_locked ? 'Unlock' : 'Lock'}
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/employee/fantasy-football/edit-lineup/${lineup.id}`}
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded bg-xl-bright-blue hover:bg-xl-dark-blue text-white transition-colors"
+                          >
+                            <Pencil className="w-3 h-3" />
+                            Edit
+                          </Link>
+                          <button
+                            onClick={() => toggleLineupLock(lineup)}
+                            disabled={actionLoading === lineup.id}
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded ${
+                              lineup.is_locked
+                                ? 'bg-green-600 hover:bg-green-700 text-white'
+                                : 'bg-red-600 hover:bg-red-700 text-white'
+                            } disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors`}
+                          >
+                            {actionLoading === lineup.id ? (
+                              <RefreshCw className="w-3 h-3 animate-spin" />
+                            ) : lineup.is_locked ? (
+                              <Unlock className="w-3 h-3" />
+                            ) : (
+                              <Lock className="w-3 h-3" />
+                            )}
+                            {lineup.is_locked ? 'Unlock' : 'Lock'}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
