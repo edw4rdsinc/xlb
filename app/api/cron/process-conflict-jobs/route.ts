@@ -70,19 +70,34 @@ export async function GET(request: Request) {
     const results = []
     for (const job of jobs) {
       try {
-        // Add timeout of 2 minutes per job to prevent hanging
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Job processing timeout after 2 minutes')), 120000)
-        )
+        // Create AbortController for proper timeout handling
+        const abortController = new AbortController()
 
-        await Promise.race([
-          processJob(job),
+        // Process job with a longer timeout (4 minutes for large PDFs)
+        let timeoutId: NodeJS.Timeout | null = null
+        let jobCompleted = false
+
+        const timeoutPromise = new Promise((_, reject) => {
+          timeoutId = setTimeout(() => {
+            console.log(`Job ${job.id} timing out after 4 minutes`)
+            abortController.abort() // Abort all fetch requests
+            reject(new Error('Job processing timeout after 4 minutes'))
+          }, 240000)
+        })
+
+        const result = await Promise.race([
+          processJob(job, abortController.signal).then(res => {
+            jobCompleted = true
+            if (timeoutId) clearTimeout(timeoutId)
+            return res
+          }),
           timeoutPromise
         ])
 
         results.push({ status: 'fulfilled' })
       } catch (error: any) {
         console.error(`Job ${job.id} failed:`, error.message)
+        console.error('Full error:', error)
         results.push({ status: 'rejected', error })
 
         // Mark job as error if it failed
@@ -91,6 +106,12 @@ export async function GET(request: Request) {
           .update({
             status: 'error',
             error_message: error.message || 'Processing failed',
+            error_details: {
+              stack: error.stack,
+              message: error.message,
+              timestamp: new Date().toISOString(),
+              aborted: error.name === 'AbortError'
+            },
             completed_at: new Date().toISOString()
           })
           .eq('id', job.id)
@@ -115,10 +136,15 @@ export async function GET(request: Request) {
   }
 }
 
-async function processJob(job: any) {
+async function processJob(job: any, signal?: AbortSignal) {
   const startTime = Date.now()
 
   try {
+    // Check if already aborted
+    if (signal?.aborted) {
+      throw new Error('Job aborted before starting')
+    }
+
     console.log(`Processing job ${job.id}`)
 
     // Update status to processing
@@ -131,7 +157,7 @@ async function processJob(job: any) {
       .eq('id', job.id)
 
     // Step 1: Extract SPD text
-    const spdExtraction = await extractPDFText(job.spd_url, job.spd_filename)
+    const spdExtraction = await extractPDFText(job.spd_url, job.spd_filename, signal)
 
     await supabase
       .from('conflict_analysis_jobs')
@@ -142,8 +168,13 @@ async function processJob(job: any) {
       })
       .eq('id', job.id)
 
+    // Check if aborted before continuing
+    if (signal?.aborted) {
+      throw new Error('Job aborted during SPD extraction')
+    }
+
     // Step 2: Extract Handbook text
-    const handbookExtraction = await extractPDFText(job.handbook_url, job.handbook_filename)
+    const handbookExtraction = await extractPDFText(job.handbook_url, job.handbook_filename, signal)
 
     await supabase
       .from('conflict_analysis_jobs')
@@ -153,6 +184,11 @@ async function processJob(job: any) {
         progress: { step: 'analyzing_conflicts', percent: 60 },
       })
       .eq('id', job.id)
+
+    // Check if aborted before continuing
+    if (signal?.aborted) {
+      throw new Error('Job aborted during handbook extraction')
+    }
 
     // Step 3: Analyze conflicts
     const analysisUrl = process.env.VERCEL_URL
@@ -168,6 +204,7 @@ async function processJob(job: any) {
         focusAreas: job.focus_areas || [],
         clientName: job.client_name,
       }),
+      signal, // Pass abort signal to fetch
     })
 
     if (!analysisRes.ok) {
@@ -185,13 +222,18 @@ async function processJob(job: any) {
       })
       .eq('id', job.id)
 
+    // Check if aborted before continuing
+    if (signal?.aborted) {
+      throw new Error('Job aborted during analysis')
+    }
+
     // Step 4: Generate HTML report
     const reportHTML = await generateReport({
       job,
       analysis: analysisData.analysis,
       spdPages: spdExtraction.pages,
       handbookPages: handbookExtraction.pages,
-    })
+    }, signal)
 
     await supabase
       .from('conflict_analysis_jobs')
@@ -201,6 +243,11 @@ async function processJob(job: any) {
       })
       .eq('id', job.id)
 
+    // Check if aborted before continuing
+    if (signal?.aborted) {
+      throw new Error('Job aborted during report generation')
+    }
+
     // Step 5: Send email
     await sendReportEmail({
       recipients: job.email_recipients,
@@ -208,7 +255,7 @@ async function processJob(job: any) {
       reportHTML,
       spdFilename: job.spd_filename,
       handbookFilename: job.handbook_filename,
-    })
+    }, signal)
 
     // Mark as complete
     const processingTime = Math.floor((Date.now() - startTime) / 1000)
@@ -253,7 +300,12 @@ async function processJob(job: any) {
   }
 }
 
-async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text: string; pages: number }> {
+async function extractPDFText(pdfUrl: string, fileName: string, signal?: AbortSignal): Promise<{ text: string; pages: number }> {
+  // Check if already aborted
+  if (signal?.aborted) {
+    throw new Error('PDF extraction aborted')
+  }
+
   // Extract the S3 key from the URL (handle both full URLs and paths)
   // URLs can be like:
   // - "https://s3.us-west-1.wasabisys.com/xl-benefits/pdf-uploads/xxx.pdf"
@@ -293,6 +345,7 @@ async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text:
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ pdf_url: signedUrl }),
+    signal, // Pass abort signal to fetch
   })
 
   const data = await response.json()
@@ -313,7 +366,12 @@ async function extractPDFText(pdfUrl: string, fileName: string): Promise<{ text:
   }
 }
 
-async function generateReport(data: any): Promise<string> {
+async function generateReport(data: any, signal?: AbortSignal): Promise<string> {
+  // Check if already aborted
+  if (signal?.aborted) {
+    throw new Error('Report generation aborted')
+  }
+
   // Generate branded HTML report
   console.log('Passing to report generator:', {
     client_name: data.job.client_name,
@@ -329,6 +387,7 @@ async function generateReport(data: any): Promise<string> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
+    signal, // Pass abort signal to fetch
   })
 
   if (!response.ok) {
@@ -345,7 +404,12 @@ async function sendReportEmail(data: {
   reportHTML: string
   spdFilename: string
   handbookFilename: string
-}) {
+}, signal?: AbortSignal) {
+  // Check if already aborted
+  if (signal?.aborted) {
+    throw new Error('Email sending aborted')
+  }
+
   const emailUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}/api/employee/send-conflict-report`
     : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/send-conflict-report`
@@ -354,6 +418,7 @@ async function sendReportEmail(data: {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
+    signal, // Pass abort signal to fetch
   })
 
   if (!response.ok) {
