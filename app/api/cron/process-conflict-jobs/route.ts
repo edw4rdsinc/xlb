@@ -47,13 +47,13 @@ export async function GET(request: Request) {
       console.error('Error resetting stuck jobs:', resetError)
     }
 
-    // Find pending jobs (limit to 2 per run to avoid timeout)
+    // Find pending jobs (limit to 1 per run due to Vercel 5-minute limit)
     const { data: jobs, error } = await supabase
       .from('conflict_analysis_jobs')
       .select('*')
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
-      .limit(2)
+      .limit(1)
 
     if (error) {
       console.error('Error fetching jobs:', error)
@@ -73,16 +73,16 @@ export async function GET(request: Request) {
         // Create AbortController for proper timeout handling
         const abortController = new AbortController()
 
-        // Process job with a longer timeout (4 minutes for large PDFs)
+        // Process job with timeout (4.5 minutes to stay within Vercel's 5-minute limit)
         let timeoutId: NodeJS.Timeout | null = null
         let jobCompleted = false
 
         const timeoutPromise = new Promise((_, reject) => {
           timeoutId = setTimeout(() => {
-            console.log(`Job ${job.id} timing out after 4 minutes`)
+            console.log(`Job ${job.id} timing out after 4.5 minutes`)
             abortController.abort() // Abort all fetch requests
-            reject(new Error('Job processing timeout after 4 minutes'))
-          }, 240000)
+            reject(new Error('Job processing timeout after 4.5 minutes'))
+          }, 270000) // 4.5 minutes - must be less than Vercel's 5-minute limit
         })
 
         const result = await Promise.race([
