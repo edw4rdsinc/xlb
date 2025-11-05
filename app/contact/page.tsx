@@ -58,7 +58,7 @@ function ContactPageContent() {
 
             {/* Territory Specialist Card - Centered in Hero */}
             {!loading && (
-              <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-6 md:p-8 max-w-md mx-auto">
+              <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-6 md:p-8 max-w-md mx-auto text-slate-900">
                 <h2 className="text-xl md:text-2xl font-bold text-xl-dark-blue mb-2 text-center">
                   Your Territory Specialist
                 </h2>
