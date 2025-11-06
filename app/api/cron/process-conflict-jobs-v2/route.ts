@@ -292,53 +292,41 @@ async function analyzeWithV2(job: any) {
 
   const result = await response.json()
 
-    if (result.complete) {
-      console.log(`Analysis complete for job ${job.id}`)
+  if (result.complete) {
+    console.log(`V2: Analysis complete for job ${job.id}`)
 
-      // Generate report and send email
-      await generateAndSendReport(job)
+    // Generate report and send email
+    await generateAndSendReport(job)
 
-      // Mark as complete
-      await supabase
-        .from('conflict_analysis_jobs')
-        .update({
-          status: 'complete',
-          completed_at: new Date().toISOString(),
-          progress: { step: 'complete', percent: 100 },
-        })
-        .eq('id', job.id)
-
-      // Update broker profile usage
-      if (job.broker_profile_id) {
-        const { data: profile } = await supabase
-          .from('broker_profiles')
-          .select('use_count')
-          .eq('id', job.broker_profile_id)
-          .single()
-
-        await supabase
-          .from('broker_profiles')
-          .update({
-            last_used: new Date().toISOString(),
-            use_count: (profile?.use_count || 0) + 1,
-          })
-          .eq('id', job.broker_profile_id)
-      }
-    } else {
-      // More chunks to process
-      console.log(`Processed chunks ${result.processedChunks}/${result.totalChunks} for job ${job.id}`)
-    }
-
-  } catch (error: any) {
-    console.error(`Analysis failed for job ${job.id}:`, error)
+    // Mark as complete
     await supabase
       .from('conflict_analysis_jobs')
       .update({
-        status: 'error',
-        error_message: `Analysis failed: ${error.message}`,
-        completed_at: new Date().toISOString()
+        status: 'complete',
+        completed_at: new Date().toISOString(),
+        progress: { step: 'complete', percent: 100 },
       })
       .eq('id', job.id)
+
+    // Update broker profile usage
+    if (job.broker_profile_id) {
+      const { data: profile } = await supabase
+        .from('broker_profiles')
+        .select('use_count')
+        .eq('id', job.broker_profile_id)
+        .single()
+
+      await supabase
+        .from('broker_profiles')
+        .update({
+          last_used: new Date().toISOString(),
+          use_count: (profile?.use_count || 0) + 1,
+        })
+        .eq('id', job.broker_profile_id)
+    }
+  } else {
+    // More chunks to process
+    console.log(`V2: Processed chunks ${result.processedChunks}/${result.totalChunks} for job ${job.id}`)
   }
 }
 
