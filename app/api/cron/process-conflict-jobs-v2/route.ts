@@ -178,31 +178,119 @@ async function continueExtraction(job: any) {
 
 async function continueAnalysis(job: any) {
   try {
-    const state = job.processing_state || {}
-    const nextChunk = state.processedChunks || 0
+    // Smart routing: V3 (fast single-call) for typical documents, V2 (chunked) for massive ones
+    const combinedLength = (job.spd_text?.length || 0) + (job.handbook_text?.length || 0)
+    const estimatedTokens = combinedLength / 4 // Rough estimate: 4 chars = 1 token
 
-    console.log(`Processing chunk ${nextChunk + 1} for job ${job.id}`)
+    console.log(`Job ${job.id}: Combined length ${combinedLength} chars (~${estimatedTokens} tokens)`)
 
-    // Call the chunked analysis API
-    const analysisUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts-v2`
-      : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts-v2`
+    // Most SPDs/handbooks are 50-150 pages = 50k-200k chars = 12k-50k tokens
+    // Claude Sonnet 3.5 handles 200k tokens easily
+    // Use V3 for typical documents (95% of cases), V2 for massive ones
+    const useV3 = estimatedTokens < 150000 // ~600k chars combined
 
-    const response = await fetch(analysisUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        jobId: job.id,
-        chunkIndex: nextChunk,
-        totalChunks: state.totalChunks
-      }),
-    })
-
-    if (!response.ok) {
-      throw new Error('Analysis failed')
+    if (useV3) {
+      console.log(`Using V3 (single-call) approach for job ${job.id}`)
+      return await analyzeWithV3(job)
+    } else {
+      console.log(`Using V2 (chunked) approach for job ${job.id} - document is very large`)
+      return await analyzeWithV2(job)
     }
 
-    const result = await response.json()
+  } catch (error: any) {
+    console.error(`Analysis failed for job ${job.id}:`, error)
+    await supabase
+      .from('conflict_analysis_jobs')
+      .update({
+        status: 'error',
+        error_message: `Analysis failed: ${error.message}`,
+        completed_at: new Date().toISOString()
+      })
+      .eq('id', job.id)
+  }
+}
+
+// V3: Single-call analysis (fast, simple, works for 95% of documents)
+async function analyzeWithV3(job: any) {
+  const analysisUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts-v3`
+    : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts-v3`
+
+  const response = await fetch(analysisUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jobId: job.id }),
+  })
+
+  if (!response.ok) {
+    const error = await response.text()
+    throw new Error(`V3 analysis failed: ${error}`)
+  }
+
+  const result = await response.json()
+
+  if (result.complete) {
+    console.log(`V3 analysis complete for job ${job.id}`)
+
+    // Generate report and send email
+    await generateAndSendReport(job)
+
+    // Mark as complete
+    await supabase
+      .from('conflict_analysis_jobs')
+      .update({
+        status: 'complete',
+        completed_at: new Date().toISOString(),
+        progress: { step: 'complete', percent: 100 },
+      })
+      .eq('id', job.id)
+
+    // Update broker profile usage
+    if (job.broker_profile_id) {
+      const { data: profile } = await supabase
+        .from('broker_profiles')
+        .select('use_count')
+        .eq('id', job.broker_profile_id)
+        .single()
+
+      await supabase
+        .from('broker_profiles')
+        .update({
+          last_used: new Date().toISOString(),
+          use_count: (profile?.use_count || 0) + 1,
+        })
+        .eq('id', job.broker_profile_id)
+    }
+  }
+}
+
+// V2: Chunked analysis (fallback for massive documents)
+async function analyzeWithV2(job: any) {
+  const state = job.processing_state || {}
+  const nextChunk = state.processedChunks || 0
+
+  console.log(`V2: Processing chunk ${nextChunk + 1} for job ${job.id}`)
+
+  // Call the chunked analysis API
+  const analysisUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts-v2`
+    : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts-v2`
+
+  const response = await fetch(analysisUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      jobId: job.id,
+      chunkIndex: nextChunk,
+      totalChunks: state.totalChunks
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error('V2 analysis failed')
+  }
+
+  const result = await response.json()
 
     if (result.complete) {
       console.log(`Analysis complete for job ${job.id}`)
