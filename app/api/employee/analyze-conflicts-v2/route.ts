@@ -227,11 +227,24 @@ ${spdChunk}
 Handbook Chunk:
 ${handbookChunk}`
 
-  const response = await anthropic.messages.create({
-    model: 'claude-haiku-3-20240307', // Use faster model for extraction
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }],
-  })
+  let response
+  try {
+    response = await anthropic.messages.create({
+      model: 'claude-haiku-3-20240307', // Use faster model for extraction
+      max_tokens: 4096,
+      messages: [{ role: 'user', content: prompt }],
+    })
+  } catch (apiError: any) {
+    console.error('Claude Haiku API error during extraction:', {
+      error: apiError.message,
+      status: apiError.status,
+      type: apiError.error?.type,
+      message: apiError.error?.message,
+      chunkNumber
+    })
+    // Return empty array to continue processing other chunks
+    return []
+  }
 
   const content = response.content[0]
   if (content.type !== 'text') return []
@@ -293,11 +306,22 @@ ${JSON.stringify(spdSections, null, 2)}
 Handbook Sections:
 ${JSON.stringify(handbookSections, null, 2)}`
 
-  const response = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 8192,
-    messages: [{ role: 'user', content: prompt }],
-  })
+  let response
+  try {
+    response = await anthropic.messages.create({
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 8192,
+      messages: [{ role: 'user', content: prompt }],
+    })
+  } catch (apiError: any) {
+    console.error('Claude API error details:', {
+      error: apiError.message,
+      status: apiError.status,
+      type: apiError.error?.type,
+      message: apiError.error?.message
+    })
+    throw new Error(`Claude API failed: ${apiError.message}`)
+  }
 
   const content = response.content[0]
   if (content.type !== 'text') {
@@ -306,8 +330,15 @@ ${JSON.stringify(handbookSections, null, 2)}`
 
   const jsonMatch = content.text.match(/\{[\s\S]*\}/)
   if (!jsonMatch) {
+    console.error('Failed to parse Claude response:', content.text.substring(0, 500))
     throw new Error('Could not parse analysis response')
   }
 
-  return JSON.parse(jsonMatch[0])
+  try {
+    return JSON.parse(jsonMatch[0])
+  } catch (parseError: any) {
+    console.error('JSON parse error:', parseError.message)
+    console.error('Attempted to parse:', jsonMatch[0].substring(0, 500))
+    throw new Error(`Failed to parse JSON response: ${parseError.message}`)
+  }
 }
