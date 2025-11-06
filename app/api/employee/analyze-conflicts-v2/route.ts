@@ -19,7 +19,7 @@ interface ConflictAnalysisRequest {
 
 // Break documents into 30k character chunks for efficient processing
 const CHUNK_SIZE = 30000
-const MAX_CHUNKS_PER_RUN = 3
+const MAX_CHUNKS_PER_RUN = 1 // Reduced from 3 to prevent Vercel timeout (5min limit)
 
 export async function POST(request: Request) {
   try {
