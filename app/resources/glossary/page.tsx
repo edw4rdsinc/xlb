@@ -72,40 +72,18 @@ export default function GlossaryPage() {
       />
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-primary-600 to-primary-700">
-        {/* Desktop Background */}
-        <div
-          className="hidden md:block absolute inset-0"
-          style={{
-            backgroundImage: 'url(/images/parallax/glossary-hero.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
-        {/* Mobile Background - adjusted positioning */}
-        <div
-          className="md:hidden absolute inset-0"
-          style={{
-            backgroundImage: 'url(/images/parallax/glossary-hero.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 30%',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
-
-        <section className="relative text-white min-h-[40vh] flex items-center">
-          <div className="absolute inset-0 bg-black/40"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
+      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6">
               Stop-Loss Insurance Glossary
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/95 drop-shadow-md max-w-3xl mx-auto">
+            <p className="text-xl text-white/90">
               Your comprehensive, searchable guide to stop-loss insurance terminology
             </p>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <div className="py-16 bg-xl-light-grey">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

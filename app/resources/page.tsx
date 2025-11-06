@@ -16,7 +16,7 @@ export default function ResourcesPage() {
         <div
           className="hidden md:block absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/resources.JPG)',
+            backgroundImage: 'url(/images/parallax/resources.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
@@ -26,7 +26,7 @@ export default function ResourcesPage() {
         <div
           className="md:hidden absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/resources.JPG)',
+            backgroundImage: 'url(/images/parallax/resources.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center 35%',
             backgroundRepeat: 'no-repeat'
@@ -133,22 +133,6 @@ export default function ResourcesPage() {
                 </h2>
                 <p className="text-gray-600">
                   State-specific regulations, carriers, and compliance requirements.
-                </p>
-              </div>
-            </Link>
-
-            <Link href="/resources/carrier-directory" className="group">
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow h-full">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary-600">
-                  Carrier Directory
-                </h2>
-                <p className="text-gray-600">
-                  Carrier ratings, specialties, and group size focus areas.
                 </p>
               </div>
             </Link>

@@ -4,30 +4,62 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 export default function WhyBrokersChooseUsPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection animation="fade-up" className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">
-              Why Brokers Choose XL Benefits
-            </h1>
-            <p className="text-xl text-white/90">
-              What sets us apart: meticulous process, genuine partnership, and 25+ carrier relationships.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+      {/* Extended Background Container */}
+      <div className="relative">
+        {/* Desktop Background */}
+        <div
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/why-choose-us.jpeg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        {/* Mobile Background - adjusted positioning */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/parallax/why-choose-us.jpeg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 30%',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
 
-      {/* Intro Section */}
-      <section className="py-16 bg-white">
+        {/* Hero Section */}
+        <section className="relative text-white min-h-[50vh] flex items-center">
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
+
+          {/* Overlaid Content - Centered */}
+          <div className="relative w-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <AnimatedSection animation="fade-up">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
+                WHY BROKERS CHOOSE XL BENEFITS
+              </h1>
+              <p className="text-xl sm:text-2xl md:text-3xl text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+                What sets us apart: meticulous process, genuine partnership, and 25+ carrier relationships.
+              </p>
+            </AnimatedSection>
+          </div>
+          </div>
+        </section>
+
+        {/* Intro Section - Frosted */}
+        <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <p className="text-lg text-xl-grey leading-relaxed text-center">
-              In an industry full of general agents claiming expertise, brokers need to know what actually makes a partner worth working with. Here's what sets XL Benefits apart—and why brokers continue to trust us with their most challenging cases.
-            </p>
+            <div className="bg-white rounded-lg shadow-md p-8">
+              <p className="text-lg text-xl-grey leading-relaxed text-center">
+                In an industry full of general agents claiming expertise, brokers need to know what actually makes a partner worth working with. Here's what sets XL Benefits apart—and why brokers continue to trust us with their most challenging cases.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
+      </div>
 
       {/* Section: RFPs That Carriers Love */}
       <section className="py-16 bg-xl-light-grey">
@@ -172,7 +204,7 @@ export default function WhyBrokersChooseUsPage() {
               An Extension of Your Team, Not Just a Vendor
             </h2>
             <p className="text-lg text-xl-grey leading-relaxed mb-6">
-              We don't disappear after placement. Throughout the year, we're available for plan design questions, claims issues, and strategic planning. Our goal is to make you more successful—period.
+              We don't disappear after placement. Throughout the year, we're available for plan design questions, claims issues, and strategic planning. Our goal is for you to be more successful—period.
             </p>
             <div className="bg-xl-light-grey rounded-lg p-6 shadow-md">
               <h3 className="text-xl font-bold text-xl-dark-blue mb-4">What partnership looks like:</h3>
@@ -199,7 +231,7 @@ export default function WhyBrokersChooseUsPage() {
                   <svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span className="text-xl-grey">Honest recommendations even when it means less revenue for us</span>
+                  <span className="text-xl-grey">Honest recommendations even when it means less from a case for us</span>
                 </li>
               </ul>
             </div>
@@ -315,8 +347,8 @@ export default function WhyBrokersChooseUsPage() {
                   "Many general agents claim to know the excess loss business, but none truly know the nuances of stop loss quite like XL Benefit Insurance Services. We have worked with several general agents over the last ten years and the service and expertise from XL is unmatched. The peace of mind we get from XL is business done right."
                 </p>
                 <div className="border-t border-gray-300 pt-4">
-                  <p className="font-bold text-xl-dark-blue">Jenni Villane, President</p>
-                  <p className="text-sm text-xl-grey">Ahart Insurance Services</p>
+                  <p className="font-bold text-xl-dark-blue">Jenni Villane, Senior Vice President</p>
+                  <p className="text-sm text-xl-grey">Relation Insurance Services</p>
                 </div>
               </div>
             </AnimatedSection>

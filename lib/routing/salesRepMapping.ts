@@ -12,8 +12,7 @@ export interface SalesRep {
 export const salesReps: Record<string, SalesRep> = {
   steve: {
     name: 'Steve Caler',
-    email: 'steve@xlbenefits.com',
-    phone: '(555) 123-4567', // Update with actual phone
+    email: 'scaler@xlbenefits.com',
     bookingUrl: '', // No booking link - contact via email/phone
     territory: [
       // Southwest/South Region - HQ: California
@@ -23,8 +22,7 @@ export const salesReps: Record<string, SalesRep> = {
   },
   sam: {
     name: 'Samuel Edwards',
-    email: 'sam@xlbenefits.com',
-    phone: '(555) 345-6789', // Update with actual phone
+    email: 'sedwards@xlbenefits.com',
     bookingUrl: 'https://outlook.office.com/bookwithme/user/1a47160b5696400daebe957e6952dbe7@foundationrp.net/meetingtype/TYZOJFFz3UK835t3s89qWA2?anonymous&ismsaljsauthenabled&ep=mlink',
     territory: [
       // Mountain/Plains/Midwest Region - HQ: Oregon
@@ -35,8 +33,7 @@ export const salesReps: Record<string, SalesRep> = {
   },
   jennifer: {
     name: 'Jennifer Baird',
-    email: 'jennifer@xlbenefits.com',
-    phone: '(555) 234-5678', // Update with actual phone
+    email: 'jbaird@xlbenefits.com',
     bookingUrl: 'https://outlook.office.com/bookwithme/user/4222c27974ba40aa8cd9fa739cfd7d6a@xlbenefits.com?anonymous&ismsaljsauthenabled&ep=pcard',
     territory: [
       // Eastern Seaboard Region - HQ: North Carolina

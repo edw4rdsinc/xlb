@@ -136,7 +136,7 @@ export default function MeetTheTeamPage() {
           <AnimatedSection animation="fade-up">
             <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
               <p className="text-lg text-xl-grey leading-relaxed">
-                If you've done business with XL Benefits, you know that we are a strong friendly team of professionals committed to making your job easier. If you're new to XL Benefits, we invite you to experience our extraordinary knowledge, customized solutions, and outstanding service. We are an industry leader in stop loss negotiation and alternative risk management with an extensive portfolio of "A" rated insurance partners providing excellence in stop loss coverage. Whether you're a local agency or a national firm, you'll find us fast and flexible problem solvers, eager to address your clients' needs with the goal to simplify your stop loss experience. This "customer first" philosophy permeates everything we do and it's responsible for our explosive growth and success.
+                If you've done business with XL Benefits, you know that we are a strong, friendly team of professionals committed to making your job easier. If you're new to XL Benefits, we invite you to experience our extraordinary knowledge, customized solutions, and outstanding service. We are an industry leader in stop loss negotiation and alternative risk management with an extensive portfolio of "A" rated insurance partners providing excellence in stop loss coverage. Whether you're a local agency or a national firm, you'll find us fast and flexible problem solvers, eager to address your clients' needs with the goal to simplify your stop loss experience. This "customer first" philosophy permeates everything we do and it's responsible for our explosive growth and success.
               </p>
             </div>
           </AnimatedSection>
@@ -197,6 +197,18 @@ export default function MeetTheTeamPage() {
               </div>
             </div>
           </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={600}>
+            <div className="flex justify-center mt-6">
+              <div className="bg-white rounded-lg shadow-md p-6 max-w-md">
+                <div className="flex items-start">
+                  <svg className="w-6 h-6 text-xl-bright-blue mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-xl-grey">Stop loss is all we do... Seriously... Nothing else.</span>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -242,7 +254,7 @@ export default function MeetTheTeamPage() {
                 name="Steve Caler"
                 title="Stop Loss Sales Consultant"
                 imageUrl="/images/team/steve-headshot.jpeg"
-                expertise={["10+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
+                expertise={["9+ Years Self-Funding", "CSFS Designation", "Strategic Problem-Solving"]}
                 bio="Steve brings over 10 years of experience in self-funding to the XL Benefits team and holds the Certified Self-Funding Specialist (CSFS) designation. His expertise in the medical stop loss arena helps him recognize the true needs of clients and provide strategic problem-solving solutions. Steve is a sports fanatic, a committed bookworm, and has a passion for business development and a good laugh. He can't pass up eating Mexican food or Cold Stone Creamery (Mud Pie Mojo). He loves watching UFC with his four boys and drinking coffee with his wife and two girls."
                 email="scaler@xlbenefits.com"
                 linkedinUrl="https://www.linkedin.com/in/steve-caler-csfs-852a7451/"
@@ -271,7 +283,7 @@ export default function MeetTheTeamPage() {
                 name="Joe Landziak"
                 title="Account Executive"
                 imageUrl="/images/team/joe-headshot.jpeg"
-                expertise={["10+ Years Insurance Industry", "P&C Agent Background", "Analytical Expertise"]}
+                expertise={["10+ Years Insurance Industry", "CSFS Designation", "Analytical Expertise"]}
                 bio="Joe has worked in the insurance industry for more than a decade, serving as a property and casualty agent for the first part of his career. Responsible for new business sales of both personal and commercial lines, Joe gained plenty of industry knowledge before transitioning to our world of self-funding. In July of 2015, Joe joined XL Benefits with the goal to apply his analytical mind to the field of medical stop loss. You could describe Joe as an all around great guy. He's our resident fantasy football guru, as well as a garden growing, spicy food eating, deep thinking, board game playing, nature loving, husband of one and father of three."
                 email="jlandziak@xlbenefits.com"
                 linkedinUrl="https://www.linkedin.com/in/joelandziak/"
@@ -284,7 +296,7 @@ export default function MeetTheTeamPage() {
                 name="Erin Maurer"
                 title="Account Executive"
                 imageUrl="/images/team/erin-headshot.jpeg"
-                expertise={["Insurance Since 2004", "Large Self-Funded Groups", "RFP & Renewals Specialist"]}
+                expertise={["20+ Years Health Insurance Industry", "TPA and Brokerage Experience", "RFP & Renewals Specialist"]}
                 bio="Erin joined our team in 2023 with an extensive insurance background that began in 2004, working mainly on large self-funded employer groups, including stop loss insurance. Erin assists with RFP submission, renewals and new business set-up. Erin is bubbly, creative and has a heart for outstanding customer service. When she's not working she is typically out riding horses and camping with her daughter, and enjoys dancing, wine tasting and volunteering at her local school and church events."
                 email="emaurer@xlbenefits.com"
                 linkedinUrl="https://www.linkedin.com/in/erin-maurer-9295036/"
@@ -297,7 +309,7 @@ export default function MeetTheTeamPage() {
                 name="Christine Titus"
                 title="Account Manager"
                 imageUrl="/images/team/christine-headshot.jpeg"
-                expertise={["Account Management", "Client Relations", "Detail-Oriented Service"]}
+                expertise={["9+ Years Self-Funding Experience", "Client Relations", "Detail-Oriented Service"]}
                 bio="Christine brings an unparalleled energy to XL Benefits. She has a knack for account management bolstered by her warm personality and desire to serve others. She has years of experience in managing reports, forecasting, training and serving as a day to day contact for clients. Utilizing her strengths and personality she seeks to build rapport with co-workers and clients establishing trusted, long term relationships. Christine has a love for decorating, cooking and cleaning. She likes to create welcoming spaces for others. Her eye for detail and the joy of caring for others has contributed to the creation of personalized parties and weddings for many."
                 email="ctitus@xlbenefits.com"
                 linkedinUrl="https://www.linkedin.com/in/christine-titus-bb161373/"

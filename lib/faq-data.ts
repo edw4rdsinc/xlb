@@ -194,7 +194,7 @@ Some MGAs charge for premium tools or dedicated support—we don't. Whether you 
 
 We've also invested heavily in tools and resources that make your job easier. Our online calculators, white papers, glossary, and case studies are designed to help you educate clients, model scenarios, and position yourself as a trusted expert. Many brokers tell us they use our tools even when they're not actively quoting stop-loss.
 
-Finally, we prioritize relationships over transactions. You'll work with the same team members—Daron, Jennifer, and Steve—who get to know your book of business and can provide personalized guidance. We're not a call center; we're a boutique MGA that treats every broker relationship as a long-term partnership.`,
+Finally, we prioritize relationships over transactions. You'll work with the same team members—Daron, Jennifer, Sam, and Steve—who get to know your book of business and can provide personalized guidance. We're not a call center; we're a boutique MGA that treats every broker relationship as a long-term partnership.`,
     category: 'Working with XL Benefits',
     relatedLinks: [
       { title: 'Meet the Team', url: '/team', type: 'team' },
@@ -204,7 +204,7 @@ Finally, we prioritize relationships over transactions. You'll work with the sam
   {
     id: 'quote-speed',
     question: 'How quickly can I get a stop-loss quote?',
-    answer: `For most standard cases, we can turn around initial quotes within 24-48 hours of receiving complete census and claims data. "Complete" is the key word—incomplete submissions slow everything down. We need accurate employee census (age, gender, zip code), 12-24 months of claims history, and current plan design details.
+    answer: `For most standard cases, we can turn around initial quotes within 5-7 business days of receiving complete census and claims data. "Complete" is the key word—incomplete submissions slow everything down. We need accurate employee census (age, gender, zip code), 12-24 months of claims history, and current plan design details.
 
 Complex cases—like groups with known large claimants, pending medical leaves, or unique plan designs—may take 3-5 business days as we work with carriers to get proper underwriting. We'll always communicate timelines upfront so you can set expectations with your client.
 
@@ -215,19 +215,9 @@ Want faster quotes? Submit clean data. We've created a submission checklist that
     ],
   },
   {
-    id: 'state-coverage',
-    question: 'Do you work with brokers in all states?',
-    answer: `Yes, we work with brokers nationwide. Stop-loss insurance is regulated at the state level, and carrier availability varies by state, but we have access to a broad panel of carriers with coverage in all 50 states.
-
-Some states have unique regulatory requirements—California, New York, and New Jersey have more restrictive rules around self-funding and stop-loss—but we navigate those complexities regularly. We'll guide you through state-specific requirements and connect you with carriers that have appetite and expertise in your market.
-
-We also handle multi-state groups, which can be tricky since stop-loss contracts need to comply with regulations in each state where employees are located. If you have a multi-state case, let us know upfront so we can engage carriers with the right licensing and experience.`,
-    category: 'Working with XL Benefits',
-  },
-  {
     id: 'post-placement-support',
     question: 'What kind of support do you provide after placement?',
-    answer: `Our support doesn't end when the policy is bound. We assist with mid-year changes (additions, terminations, plan design adjustments), renewal strategy, claims issue resolution, and carrier communication throughout the policy year.
+    answer: `Our support doesn't end when the policy is bound. We assist with mid-year plan adjustments, renewal strategy, claims issue resolution, and carrier communication throughout the policy year.
 
 If a large claim hits and you need help navigating the claims reimbursement process, we're there. If your client is frustrated with their TPA and wants to explore alternatives, we can introduce options. If you're unsure how to position the renewal when claims are up 20%, we'll help you model scenarios and craft the narrative.
 
@@ -253,20 +243,6 @@ When you do have a case you'd like to quote, we're here. But in the meantime, us
 
   // Technical & Advanced Topics
   {
-    id: 'calculate-aggregate-attachment',
-    question: 'How do I calculate aggregate attachment points?',
-    answer: `The aggregate attachment point is calculated by taking your expected claims for the policy year and multiplying by a margin factor (typically 110%-130%). For example, if your expected claims are $1 million and you choose a 125% attachment point, your aggregate deductible is $1.25 million.
-
-Expected claims are typically provided by your TPA based on historical claims experience, adjusted for plan changes, demographic shifts, and trend. Carriers may adjust this number based on their underwriting, especially if they see risk factors the TPA didn't account for.
-
-The margin you choose (110% vs. 125% vs. 130%) directly impacts your premium and risk. A 110% margin means the carrier starts reimbursing sooner but charges a higher premium. A 130% margin reduces premium but increases your financial exposure. We recommend modeling multiple scenarios to find the sweet spot for your client's risk tolerance and budget.`,
-    category: 'Technical & Advanced Topics',
-    relatedLinks: [
-      { title: 'Aggregating Specific Calculator', url: '/toolkit/aggregating-specific', type: 'tool' },
-      { title: 'Schedule a Strategy Call', url: '/contact', type: 'page' },
-    ],
-  },
-  {
     id: 'carrier-evaluation',
     question: 'What should I look for in a stop-loss carrier?',
     answer: `Financial stability is non-negotiable—you need a carrier with strong AM Best ratings (A- or better) because they'll be on the hook for potentially millions in claims reimbursements. Beyond financials, consider the carrier's reputation for claims payment speed and accuracy. A carrier that slow-pays or disputes legitimate claims creates headaches for you and your client.
@@ -276,7 +252,6 @@ Also evaluate their underwriting appetite and expertise in your client's industr
 Finally, consider service and communication. Do they have dedicated account managers? How responsive are they to mid-year changes and inquiries? We maintain relationships with a broad panel of carriers and can guide you toward those that align best with your client's needs and your service expectations.`,
     category: 'Technical & Advanced Topics',
     relatedLinks: [
-      { title: 'Carrier Directory', url: '/resources/carrier-directory', type: 'page' },
       { title: 'Talk to Daron Pitts', url: '/team', type: 'team' },
     ],
   },
@@ -302,7 +277,7 @@ Always review the policy's exclusions and limitations carefully, especially for 
   },
   {
     id: 'explain-to-client',
-    question: 'How do I explain stop-loss to a self-funded client?',
+    question: 'How do I explain stop-loss to a fully-insured client?',
     answer: `Use simple analogies. We often explain it like this: "You're self-insuring your health plan, which means you pay claims directly instead of paying premiums to an insurance company. Stop-loss is your safety net—it caps your maximum financial exposure by reimbursing you when claims get unexpectedly high."
 
 Then break down specific vs. aggregate: "Specific stop-loss protects you from individual catastrophic claims, like if an employee has a premature baby or gets diagnosed with cancer. Aggregate protects you from lots of smaller claims adding up to more than you expected—like a bad flu season."

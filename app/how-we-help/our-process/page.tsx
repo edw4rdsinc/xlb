@@ -56,7 +56,7 @@ export default function OurProcessPage() {
                 Stop-loss placements fail when critical details get overlooked. A missing contract provision. An incorrectly structured deductible. An SPD that doesn't mirror the policy. These aren't small issues—they're the difference between a solution that works and one that creates problems down the road.
               </p>
               <p className="text-lg text-xl-grey leading-relaxed">
-                Our 40-point inspection ensures nothing gets missed. From stop-loss contract analysis to pharmacy benefits evaluation to financial reserve planning, we examine every element that impacts your client's success. The result? Clean RFPs, competitive quotes, and presentations you can deliver with complete confidence.
+                Our 40-point inspection ensures nothing gets missed. From stop-loss contract analysis to pharmacy benefits evaluation to financial reserve planning, we can examine every element that impacts your client's success. The result? Clean RFPs, competitive quotes, and presentations you can deliver with complete confidence.
               </p>
             </div>
           </AnimatedSection>
@@ -213,7 +213,7 @@ export default function OurProcessPage() {
                   <div className="flex items-start"><svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg><div><span className="font-semibold text-xl-dark-blue">Stabilization Reserves</span><span className="text-xl-grey"> - Reserve requirements for claim volatility</span></div></div>
                   <div className="flex items-start"><svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg><div><span className="font-semibold text-xl-dark-blue">Fee Based Versus Commission Analysis</span><span className="text-xl-grey"> - Evaluation of fee-based and commission structures</span></div></div>
                   <div className="flex items-start"><svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg><div><span className="font-semibold text-xl-dark-blue">Contribution Strategy</span><span className="text-xl-grey"> - Employer/employee cost-sharing optimization</span></div></div>
-                  <div className="flex items-start"><svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg><div><span className="font-semibold text-xl-dark-blue">Tax Savings Estimates</span><span className="text-xl-grey"> - FICA tax savings quantification</span></div></div>
+                  <div className="flex items-start"><svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg><div><span className="font-semibold text-xl-dark-blue">Tax Savings Estimates</span><span className="text-xl-grey"> - State premium tax savings quantification</span></div></div>
                 </div>
               </div>
             </AnimatedSection>
@@ -284,9 +284,26 @@ export default function OurProcessPage() {
                 <h3 className="text-xl font-bold text-xl-dark-blue mb-3">
                   Result:
                 </h3>
-                <p className="text-xl-grey leading-relaxed">
-                  RFPs that carriers love to quote. Presentations you can deliver with confidence. Solutions that actually work.
-                </p>
+                <ul className="space-y-2 text-xl-grey">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    RFPs that carriers love to quote
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Presentations you can deliver with confidence
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-xl-bright-blue mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Solutions that actually work
+                  </li>
+                </ul>
               </div>
             </div>
           </AnimatedSection>

@@ -72,14 +72,9 @@ function ContactPageContent() {
                   <a href={`mailto:${displayRep.email}`} className="block text-base text-xl-bright-blue hover:text-xl-dark-blue mb-2">
                     {displayRep.email}
                   </a>
-                  {displayRep.phone && (
-                    <a href={`tel:${displayRep.phone}`} className="block text-base text-xl-bright-blue hover:text-xl-dark-blue mb-4">
-                      {displayRep.phone}
-                    </a>
-                  )}
                   {!displayRep.bookingUrl && (
                     <p className="text-sm text-xl-grey mt-3">
-                      Reach out via email or phone to schedule a consultation
+                      Reach out via email to schedule a consultation
                     </p>
                   )}
                 </div>
@@ -126,7 +121,7 @@ function ContactPageContent() {
             <div className="mt-8 bg-white/80 rounded-lg shadow-lg p-8">
           <h3 className="text-xl font-bold text-xl-dark-blue mb-4 text-center">Office Information</h3>
           <div className="space-y-2 text-xl-grey text-center">
-            <p>Hours: Monday - Friday, 8:00 AM - 5:00 PM CST</p>
+            <p>Hours: Monday - Friday, 8:00 AM - 5:00 PM</p>
             <p>General Inquiries: <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:text-xl-dark-blue">info@xlbenefits.com</a></p>
           </div>
             </div>

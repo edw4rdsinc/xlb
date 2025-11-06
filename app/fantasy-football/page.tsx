@@ -90,14 +90,8 @@ export default function FantasyFootballPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
               <Link
-                href="/fantasy-football/submit"
-                className="bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-2xl text-center"
-              >
-                Submit Your Lineup
-              </Link>
-              <Link
                 href="/fantasy-football/results"
-                className="bg-xl-dark-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-bright-blue transition-all hover:scale-105 border-2 border-white text-center"
+                className="bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-2xl text-center"
               >
                 View Results
               </Link>
@@ -400,19 +394,8 @@ export default function FantasyFootballPage() {
       {/* Quick Links */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <AnimatedSection animation="fade-up" delay={100} className="h-full">
-              <Link href="/fantasy-football/submit" className="block h-full">
-                <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
-                  <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Submit Lineup</h3>
-                  <p className="text-gray-600 text-sm">
-                    Enter your team for the current round
-                  </p>
-                </div>
-              </Link>
-            </AnimatedSection>
-
-            <AnimatedSection animation="fade-up" delay={200} className="h-full">
               <Link href="/fantasy-football/results" className="block h-full">
                 <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Results</h3>
@@ -423,7 +406,7 @@ export default function FantasyFootballPage() {
               </Link>
             </AnimatedSection>
 
-            <AnimatedSection animation="fade-up" delay={300} className="h-full">
+            <AnimatedSection animation="fade-up" delay={200} className="h-full">
               <Link href="/fantasy-football/rosters" className="block h-full">
                 <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow h-full text-center border-2 border-xl-bright-blue">
                   <h3 className="text-xl font-bold text-xl-dark-blue mb-2">View Rosters</h3>
@@ -434,29 +417,6 @@ export default function FantasyFootballPage() {
               </Link>
             </AnimatedSection>
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <AnimatedSection animation="fade-up">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Ready to Join the Competition?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Submit your lineup now and compete for over $1,000 in prizes!
-            </p>
-            <Link
-              href="/fantasy-football/submit"
-              className="inline-flex items-center bg-white text-xl-dark-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-xl"
-            >
-              Submit Your Lineup
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </AnimatedSection>
         </div>
       </section>
     </div>
