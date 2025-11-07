@@ -12,6 +12,7 @@ export default function ResultsPage() {
   const [activeTab, setActiveTab] = useState<Tab>('weekly');
   const [loading, setLoading] = useState(true);
   const [currentWeek, setCurrentWeek] = useState(1);
+  const [currentRoundId, setCurrentRoundId] = useState<string>('');
   const [rounds, setRounds] = useState<any[]>([]);
 
   useEffect(() => {
@@ -30,6 +31,15 @@ export default function ResultsPage() {
 
       if (roundsError) throw roundsError;
       setRounds(roundsData || []);
+
+      // Find the active round and set it as current
+      const activeRound = roundsData?.find((r: any) => r.is_active);
+      if (activeRound) {
+        setCurrentRoundId(activeRound.id);
+      } else if (roundsData && roundsData.length > 0) {
+        // Fallback to first round if no active round
+        setCurrentRoundId(roundsData[0].id);
+      }
 
       // Get the most recent week with scores
       const { data: latestScore, error: scoreError } = await supabase
@@ -118,7 +128,7 @@ export default function ResultsPage() {
               <WeeklyResults currentWeek={currentWeek} rounds={rounds} />
             )}
             {activeTab === 'round' && (
-              <RoundResults rounds={rounds} />
+              <RoundResults rounds={rounds} currentRoundId={currentRoundId} />
             )}
             {activeTab === 'season' && (
               <SeasonResults />

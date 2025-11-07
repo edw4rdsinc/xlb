@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase/client';
 
 interface RoundResultsProps {
   rounds: any[];
+  currentRoundId: string;
 }
 
 interface RoundScore {
@@ -18,11 +19,18 @@ interface RoundScore {
   weeks_played: number;
 }
 
-export function RoundResults({ rounds }: RoundResultsProps) {
-  const [selectedRound, setSelectedRound] = useState(rounds[0]?.id || '');
+export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
+  const [selectedRound, setSelectedRound] = useState(currentRoundId || rounds[0]?.id || '');
   const [scores, setScores] = useState<RoundScore[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
+
+  // Update selectedRound when currentRoundId changes
+  useEffect(() => {
+    if (currentRoundId && currentRoundId !== selectedRound) {
+      setSelectedRound(currentRoundId);
+    }
+  }, [currentRoundId]);
 
   useEffect(() => {
     if (selectedRound) {
@@ -126,7 +134,7 @@ export function RoundResults({ rounds }: RoundResultsProps) {
             {rounds.map(round => (
               <option key={round.id} value={round.id}>
                 Round {round.round_number} (Weeks {round.start_week}-{round.end_week})
-                {round.is_active ? ' - Active' : ''}
+                {round.id === currentRoundId ? ' (Current)' : ''}
               </option>
             ))}
           </select>
