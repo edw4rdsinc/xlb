@@ -10,7 +10,7 @@ export default function WhyBrokersChooseUsPage() {
         <div
           className="hidden md:block absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/why-choose-us.jpeg)',
+            backgroundImage: 'url(/images/parallax/why-choose-us.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
@@ -20,7 +20,7 @@ export default function WhyBrokersChooseUsPage() {
         <div
           className="md:hidden absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/parallax/why-choose-us.jpeg)',
+            backgroundImage: 'url(/images/parallax/why-choose-us.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center 30%',
             backgroundRepeat: 'no-repeat'
