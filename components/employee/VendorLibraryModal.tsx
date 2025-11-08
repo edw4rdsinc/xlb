@@ -20,22 +20,22 @@ interface OverviewData {
   progress: string;
 }
 
-const VENDOR_TIERS = [
-  { id: 1, name: 'Claims Cost Management', description: 'RBP, repricing, payment integrity' },
-  { id: 2, name: 'Stop-Loss & Risk Partnership', description: 'Carriers, captives, consulting' },
-  { id: 3, name: 'Pharmacy Transparency', description: 'Pass-through PBMs, specialty RX' },
-  { id: 4, name: 'High-Cost Conditions', description: 'Cancer, dialysis, transplant, gene therapy' },
-  { id: 5, name: 'High-Prevalence Conditions', description: 'Diabetes, MSK, cardiovascular' },
-  { id: 6, name: 'Care Access & Delivery', description: 'Telemedicine, primary care, COEs' },
-  { id: 7, name: 'Navigation & Advocacy', description: 'Patient navigation, second opinions' },
-  { id: 8, name: 'Behavioral Health', description: 'Mental health, EAPs, digital therapeutics' },
-  { id: 9, name: 'Utilization Governance', description: 'Prior auth, UR, appropriateness' },
-  { id: 10, name: 'Compliance & Administration', description: 'ERISA, HSA/FSA, transparency' },
-  { id: 11, name: 'Data & Analytics', description: 'Independent analytics, benchmarking' },
-  { id: 12, name: 'TPAs', description: 'Full-service, tech-forward, specialized' },
-  { id: 13, name: 'Emerging Solutions', description: 'AI assistants, SDOH, longevity' },
-  { id: 14, name: 'Integration & Interoperability', description: 'APIs, care coordination' },
-  { id: 15, name: 'Governance & Stewardship', description: 'Fiduciary advisors, vendor mgmt' },
+const VENDOR_CATEGORIES = [
+  { id: 1, name: 'Claims Cost Management', description: 'RBP, repricing, payment integrity', query: 'claims cost management RBP' },
+  { id: 2, name: 'Stop-Loss & Risk Partnership', description: 'Carriers, captives, consulting', query: 'stop-loss risk captive' },
+  { id: 3, name: 'Pharmacy Transparency', description: 'Pass-through PBMs, specialty RX', query: 'pharmacy PBM transparency' },
+  { id: 4, name: 'High-Cost Conditions', description: 'Cancer, dialysis, transplant, gene therapy', query: 'high-cost cancer dialysis transplant' },
+  { id: 5, name: 'High-Prevalence Conditions', description: 'Diabetes, MSK, cardiovascular', query: 'diabetes MSK cardiovascular' },
+  { id: 6, name: 'Care Access & Delivery', description: 'Telemedicine, primary care, COEs', query: 'care delivery telemedicine primary care' },
+  { id: 7, name: 'Navigation & Advocacy', description: 'Patient navigation, second opinions', query: 'navigation advocacy patient' },
+  { id: 8, name: 'Behavioral Health', description: 'Mental health, EAPs, digital therapeutics', query: 'behavioral mental health' },
+  { id: 9, name: 'Utilization Governance', description: 'Prior auth, UR, appropriateness', query: 'utilization prior authorization' },
+  { id: 10, name: 'Compliance & Administration', description: 'ERISA, HSA/FSA, transparency', query: 'compliance ERISA administration' },
+  { id: 11, name: 'Data & Analytics', description: 'Independent analytics, benchmarking', query: 'analytics data benchmarking' },
+  { id: 12, name: 'TPAs', description: 'Full-service, tech-forward, specialized', query: 'TPA third-party administrator' },
+  { id: 13, name: 'Emerging Solutions', description: 'AI assistants, SDOH, longevity', query: 'emerging AI longevity' },
+  { id: 14, name: 'Integration & Interoperability', description: 'APIs, care coordination', query: 'integration interoperability API' },
+  { id: 15, name: 'Governance & Stewardship', description: 'Fiduciary advisors, vendor mgmt', query: 'governance fiduciary stewardship' },
 ];
 
 export default function VendorLibraryModal({ isOpen, onClose }: VendorLibraryModalProps) {
@@ -72,28 +72,32 @@ export default function VendorLibraryModal({ isOpen, onClose }: VendorLibraryMod
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
+  const handleCategoryClick = (category: typeof VENDOR_CATEGORIES[0]) => {
+    // Switch to chat tab
+    setView('chat');
 
+    // Add user message
     const userMessage: Message = {
       role: 'user',
-      content: inputMessage,
+      content: `Tell me about ${category.name}`,
       timestamp: new Date(),
     };
-
     setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
+
+    // Search using the category query
+    searchVendors(category.query);
+  };
+
+  const searchVendors = async (query: string) => {
     setIsLoading(true);
 
     try {
-      // Search vendor library for relevant content
       const searchResponse = await fetch(
-        `/api/vendor-library?action=search&query=${encodeURIComponent(inputMessage)}`
+        `/api/vendor-library?action=search&query=${encodeURIComponent(query)}`
       );
       const searchData = await searchResponse.json();
 
-      // Create AI response based on search results
-      const assistantResponse = generateResponse(inputMessage, searchData);
+      const assistantResponse = generateResponse(query, searchData);
 
       const assistantMessage: Message = {
         role: 'assistant',
@@ -115,11 +119,27 @@ export default function VendorLibraryModal({ isOpen, onClose }: VendorLibraryMod
     }
   };
 
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim()) return;
+
+    const userMessage: Message = {
+      role: 'user',
+      content: inputMessage,
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    const query = inputMessage;
+    setInputMessage('');
+
+    searchVendors(query);
+  };
+
   const generateResponse = (query: string, searchData: any): string => {
     if (!searchData.results || searchData.results.length === 0) {
       return `I couldn't find specific information about "${query}" in the vendor library.
 
-The library contains research on 15 healthcare vendor tiers including pharmacy transparency, claims management, care delivery, and more.
+The library contains research on 15 healthcare vendor categories including pharmacy transparency, claims management, care delivery, and more.
 
 Could you try rephrasing your question or ask about a specific vendor category?`;
     }
@@ -251,24 +271,25 @@ Could you try rephrasing your question or ask about a specific vendor category?`
                     </div>
                   </div>
 
-                  {/* 15 Vendor Tiers */}
+                  {/* 15 Vendor Categories */}
                   <div>
-                    <h3 className="text-2xl font-bold text-xl-dark-blue mb-4">15 Vendor Tiers</h3>
+                    <h3 className="text-2xl font-bold text-xl-dark-blue mb-4">15 Vendor Categories</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {VENDOR_TIERS.map((tier) => (
+                      {VENDOR_CATEGORIES.map((category) => (
                         <div
-                          key={tier.id}
+                          key={category.id}
+                          onClick={() => handleCategoryClick(category)}
                           className="bg-white border-2 border-gray-200 hover:border-xl-bright-blue rounded-lg p-4 transition-all hover:shadow-md group cursor-pointer"
                         >
                           <div className="flex items-start gap-3">
                             <div className="w-8 h-8 bg-xl-bright-blue/10 group-hover:bg-xl-bright-blue/20 rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-xl-bright-blue text-sm">
-                              {tier.id}
+                              {category.id}
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-bold text-xl-dark-blue text-sm mb-1 group-hover:text-xl-bright-blue transition-colors">
-                                {tier.name}
+                                {category.name}
                               </h4>
-                              <p className="text-xs text-gray-600">{tier.description}</p>
+                              <p className="text-xs text-gray-600">{category.description}</p>
                             </div>
                           </div>
                         </div>
@@ -297,7 +318,7 @@ Could you try rephrasing your question or ask about a specific vendor category?`
                     <p className="text-lg font-semibold mb-2">Ask me about healthcare vendors</p>
                     <p className="text-sm">I can help you search through our comprehensive vendor research library</p>
                     <div className="mt-6 space-y-2 text-left max-w-md mx-auto">
-                      <p className="text-xs text-gray-400">Try asking:</p>
+                      <p className="text-xs text-gray-400">Try asking or click a category on the Overview tab:</p>
                       <div className="bg-gray-50 rounded-lg p-3 text-sm">
                         "What transparent PBM options are available?"
                       </div>
