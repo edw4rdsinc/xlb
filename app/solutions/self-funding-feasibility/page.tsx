@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import AnimatedSection from '@/components/shared/AnimatedSection'
-import SelfFundingQuizSecure from '@/components/tools/SelfFundingQuizSecure'
+import SelfFundingQuiz from '@/components/tools/SelfFundingQuiz'
 import FeaturedExpertRotator from '@/components/shared/FeaturedExpertRotator'
 
 export const metadata: Metadata = {
@@ -139,7 +139,7 @@ export default function SelfFundingFeasibilityPage() {
             </p>
           </AnimatedSection>
 
-          <SelfFundingQuizSecure />
+          <SelfFundingQuiz />
         </div>
       </section>
 
