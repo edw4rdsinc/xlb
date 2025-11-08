@@ -47,6 +47,13 @@ export async function GET(request: NextRequest) {
       case 'overview':
         return await getOverview();
 
+      case 'category':
+        const categoryId = searchParams.get('id');
+        if (!categoryId) {
+          return NextResponse.json({ error: 'Category ID required' }, { status: 400 });
+        }
+        return await getCategoryData(categoryId);
+
       default:
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
@@ -200,4 +207,141 @@ async function getOverview() {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Get category data including explanation and ranked vendors
+ */
+async function getCategoryData(categoryId: string) {
+  // Map category IDs to their file paths
+  const categoryMap: Record<string, string[]> = {
+    '1': ['research/phase-1-foundation/tier-1-claims/1.1-rbp-fair-pricing.md'],
+    '2': ['research/phase-1-foundation/tier-2-stop-loss/2.1-stop-loss-carriers.md'],
+    '3': [
+      'research/phase-1-foundation/tier-3-pharmacy/3.1-transparent-pbm-landscape.md',
+      'research/phase-1-foundation/tier-3-pharmacy/3.2-pbm-partnership-models.md',
+    ],
+    '6': ['research/phase-1-foundation/tier-6-care-delivery/6.1-advanced-primary-care.md'],
+    '11': ['research/phase-1-foundation/tier-11-analytics/11.1-independent-analytics.md'],
+  };
+
+  const files = categoryMap[categoryId];
+
+  if (!files || files.length === 0) {
+    return NextResponse.json({
+      explanation: `This category is documented in our vendor library. The research covers comprehensive vendor analysis with scoring across multiple dimensions.`,
+      vendors: [],
+      files: [],
+    });
+  }
+
+  try {
+    const fileData = await Promise.all(
+      files.map(async (filePath) => {
+        const command = new GetObjectCommand({
+          Bucket: BUCKET_NAME,
+          Key: filePath,
+        });
+        const response = await s3Client.send(command);
+        const content = await response.Body?.transformToString();
+        return { filePath, content };
+      })
+    );
+
+    // Parse vendors from markdown
+    const vendors = extractVendorsFromMarkdown(fileData);
+
+    // Extract category explanation
+    const explanation = extractCategoryExplanation(fileData[0].content);
+
+    return NextResponse.json({
+      explanation,
+      vendors,
+      files: fileData.map(f => ({ path: f.filePath, hasContent: !!f.content })),
+    });
+  } catch (error) {
+    console.error(`Error fetching category ${categoryId}:`, error);
+    return NextResponse.json(
+      { error: 'Failed to fetch category data' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * Extract vendor profiles from markdown content
+ */
+function extractVendorsFromMarkdown(fileData: Array<{ filePath: string; content?: string }>) {
+  const vendors: any[] = [];
+
+  for (const file of fileData) {
+    if (!file.content) continue;
+
+    // Look for vendor sections (### or #### headers with numbers)
+    const vendorMatches = file.content.matchAll(/###?\s+(\d+)\.\s+([^\n]+)/g);
+
+    for (const match of vendorMatches) {
+      const vendorName = match[2].trim();
+      const startIndex = match.index || 0;
+
+      // Find the next vendor section or end of file
+      const nextVendorMatch = file.content.indexOf('###', startIndex + 1);
+      const endIndex = nextVendorMatch > 0 ? nextVendorMatch : file.content.length;
+
+      const vendorSection = file.content.substring(startIndex, endIndex);
+
+      // Extract evaluation score
+      const scoreMatch = vendorSection.match(/\*\*Total:\s*(\d+)\/100\*\*/);
+      const score = scoreMatch ? parseInt(scoreMatch[1]) : 0;
+
+      // Extract overview
+      const overviewMatch = vendorSection.match(/\*\*Company Overview:\*\*\s*([^\n]+(?:\n(?!\*\*)[^\n]+)*)/);
+      const overview = overviewMatch ? overviewMatch[1].trim() : '';
+
+      // Extract best for
+      const bestForMatch = vendorSection.match(/\*\*Best For:\*\*\s*([^\n]+)/);
+      const bestFor = bestForMatch ? bestForMatch[1].trim() : '';
+
+      // Extract alignment details
+      const fairPricingMatch = vendorSection.match(/Fair Pricing:\s*(\d+)\/25/);
+      const memberProtectionMatch = vendorSection.match(/Member Protection:\s*(\d+)\/25/);
+      const providerRelationsMatch = vendorSection.match(/Provider Relations:\s*(\d+)\/25/);
+      const tpaIntegrationMatch = vendorSection.match(/TPA Integration:\s*(\d+)\/25/);
+
+      vendors.push({
+        name: vendorName,
+        score,
+        overview,
+        bestFor,
+        alignment: {
+          fairPricing: fairPricingMatch ? parseInt(fairPricingMatch[1]) : 0,
+          memberProtection: memberProtectionMatch ? parseInt(memberProtectionMatch[1]) : 0,
+          providerRelations: providerRelationsMatch ? parseInt(providerRelationsMatch[1]) : 0,
+          tpaIntegration: tpaIntegrationMatch ? parseInt(tpaIntegrationMatch[1]) : 0,
+        },
+        fullContent: vendorSection,
+      });
+    }
+  }
+
+  // Sort by score descending
+  return vendors.sort((a, b) => b.score - a.score);
+}
+
+/**
+ * Extract category explanation from markdown
+ */
+function extractCategoryExplanation(content?: string): string {
+  if (!content) return '';
+
+  // Look for Executive Summary
+  const summaryMatch = content.match(/##\s+Executive Summary\s+([\s\S]+?)(?=\n##|$)/);
+  if (summaryMatch) {
+    return summaryMatch[1].trim();
+  }
+
+  // Fallback: get first paragraph after title
+  const lines = content.split('\n');
+  const nonEmptyLines = lines.filter(line => line.trim() && !line.startsWith('#'));
+  return nonEmptyLines.slice(0, 3).join('\n').trim();
 }
