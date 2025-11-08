@@ -215,14 +215,84 @@ async function getOverview() {
 async function getCategoryData(categoryId: string) {
   // Map category IDs to their file paths
   const categoryMap: Record<string, string[]> = {
-    '1': ['research/phase-1-foundation/tier-1-claims/1.1-rbp-fair-pricing.md'],
-    '2': ['research/phase-1-foundation/tier-2-stop-loss/2.1-stop-loss-carriers.md'],
+    '1': [
+      'research/phase-1-foundation/tier-1-claims/1.1-rbp-fair-pricing.md',
+      'research/phase-1-foundation/tier-1-claims/1.2-payment-integrity.md',
+      'research/phase-1-foundation/tier-1-claims/1.3-direct-partnerships.md',
+      'research/phase-1-foundation/tier-1-claims/1.4-claims-commercial.md',
+    ],
+    '2': [
+      'research/phase-3-ecosystem/tier-2-risk/2.1-stoploss-partners.md',
+      'research/phase-3-ecosystem/tier-2-risk/2.2-alternative-risk.md',
+      'research/phase-3-ecosystem/tier-2-risk/2.3-risk-optimization.md',
+      'research/phase-3-ecosystem/tier-2-risk/2.4-stop-loss-mgus.md',
+    ],
     '3': [
       'research/phase-1-foundation/tier-3-pharmacy/3.1-transparent-pbm-landscape.md',
       'research/phase-1-foundation/tier-3-pharmacy/3.2-pbm-partnership-models.md',
+      'research/phase-1-foundation/tier-3-pharmacy/3.3-specialty-drug-compassion.md',
+      'research/phase-1-foundation/tier-3-pharmacy/3.4-biosimilar-innovation.md',
+      'research/phase-1-foundation/tier-3-pharmacy/3.5-pbm-commercial-transparency.md',
+      'research/phase-1-foundation/tier-3-pharmacy/3.6-international-pharmacy-sourcing.md',
     ],
-    '6': ['research/phase-1-foundation/tier-6-care-delivery/6.1-advanced-primary-care.md'],
-    '11': ['research/phase-1-foundation/tier-11-analytics/11.1-independent-analytics.md'],
+    '4': [
+      'research/phase-3-ecosystem/tier-4-high-cost/4.1-cancer-navigation.md',
+      'research/phase-3-ecosystem/tier-4-high-cost/4.2-dialysis-management.md',
+      'research/phase-3-ecosystem/tier-4-high-cost/4.3-transplant-management.md',
+      'research/phase-3-ecosystem/tier-4-high-cost/4.4-gene-cell-therapy.md',
+    ],
+    '5': [
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.1-diabetes-management.md',
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.2-msk-care.md',
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.3-rare-disease-management.md',
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.4-ckd-management.md',
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.5-cardiovascular-programs.md',
+      'research/phase-3-ecosystem/tier-5-high-prevalence/5.6-fertility-maternity.md',
+    ],
+    '6': [
+      'research/phase-1-foundation/tier-6-care-delivery/6.1-advanced-primary-care.md',
+      'research/phase-1-foundation/tier-6-care-delivery/6.2-virtual-care-access.md',
+      'research/phase-1-foundation/tier-6-care-delivery/6.3-centers-excellence.md',
+      'research/phase-2-connected/tier-6-care-delivery/6.4-delivery-integration.md',
+    ],
+    '7': [
+      'research/phase-3-ecosystem/tier-7-navigation/7.1-patient-navigation.md',
+      'research/phase-3-ecosystem/tier-7-navigation/7.2-second-opinion.md',
+    ],
+    '8': [
+      'research/phase-3-ecosystem/tier-8-behavioral/8.1-mental-health.md',
+      'research/phase-3-ecosystem/tier-8-behavioral/8.2-wellness-prevention.md',
+      'research/phase-3-ecosystem/tier-8-behavioral/8.3-weight-management.md',
+      'research/phase-3-ecosystem/tier-8-behavioral/8.4-autism-support.md',
+      'research/phase-3-ecosystem/tier-8-behavioral/8.5-substance-use-disorder.md',
+    ],
+    '9': [
+      'research/phase-2-connected/tier-9-utilization/9.1-intelligent-care.md',
+      'research/phase-2-connected/tier-9-utilization/9.2-benefit-coordination.md',
+    ],
+    '10': [
+      'research/phase-3-ecosystem/tier-10-compliance/10.1-benefits-admin.md',
+    ],
+    '11': [
+      'research/phase-1-foundation/tier-11-analytics/11.1-independent-analytics.md',
+      'research/phase-1-foundation/tier-11-analytics/11.2-cost-visibility.md',
+    ],
+    '12': [
+      // TPA research files to be added
+    ],
+    '13': [
+      'research/phase-3-ecosystem/tier-13-emerging/13.1-digital-therapeutics.md',
+    ],
+    '14': [
+      'research/phase-2-connected/tier-14-integration/14.1-data-liberation.md',
+      'research/phase-2-connected/tier-14-integration/14.2-unified-experience.md',
+      'research/phase-2-connected/tier-14-integration/14.3-performance-attribution.md',
+    ],
+    '15': [
+      'research/phase-1-foundation/tier-15-governance/15.1-fiduciary-leadership.md',
+      'research/phase-2-connected/tier-15-governance/15.2-partnership-frameworks.md',
+      'research/phase-2-connected/tier-15-governance/15.3-trust-verification.md',
+    ],
   };
 
   const files = categoryMap[categoryId];
