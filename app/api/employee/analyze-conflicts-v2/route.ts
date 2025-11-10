@@ -230,7 +230,7 @@ ${handbookChunk}`
   let response
   try {
     response = await anthropic.messages.create({
-      model: 'claude-3-5-haiku-20241022', // Use faster model for extraction
+      model: 'claude-3-5-sonnet-20241022', // Same reliable model as V3
       max_tokens: 4096,
       messages: [{ role: 'user', content: prompt }],
     })
