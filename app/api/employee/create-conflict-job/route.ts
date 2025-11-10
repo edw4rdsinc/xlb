@@ -19,11 +19,27 @@ export async function POST(request: Request) {
     console.log('Creating conflict analysis job:', {
       client_name: jobData.client_name,
       client_logo_url: jobData.client_logo_url,
+      spd_url: jobData.spd_url,
+      spd_filename: jobData.spd_filename,
+      handbook_url: jobData.handbook_url,
+      handbook_filename: jobData.handbook_filename,
       focus_areas: jobData.focus_areas,
       email_recipients: jobData.email_recipients,
       branding: jobData.branding,
       broker_profile_id: jobData.broker_profile_id,
     })
+
+    // Validate critical fields before insertion
+    if (!jobData.spd_url || !jobData.handbook_url) {
+      console.error('CRITICAL: Missing PDF URLs in job creation request!', {
+        spd_url: jobData.spd_url,
+        handbook_url: jobData.handbook_url,
+      })
+      return NextResponse.json(
+        { error: 'Missing required PDF URLs' },
+        { status: 400 }
+      )
+    }
 
     // Insert job using service role (bypasses RLS)
     const { data: job, error } = await supabase

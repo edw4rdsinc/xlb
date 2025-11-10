@@ -73,11 +73,6 @@ export default function Footer() {
                   Glossary
                 </Link>
               </li>
-              <li>
-                <Link href="/resources/carrier-directory" className="text-gray-300 hover:text-xl-bright-blue transition-colors">
-                  Carrier Directory
-                </Link>
-              </li>
             </ul>
           </div>
 

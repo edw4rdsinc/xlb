@@ -175,6 +175,7 @@ export default function ConflictAnalyzerPage() {
         throw new Error(`Handbook upload failed: ${errorData.error || errorData.details || 'Unknown error'}`)
       }
       const handbookData = await handbookUploadRes.json()
+      console.log('Handbook upload response data:', handbookData)
 
       // Validate upload succeeded
       if (!handbookData.fileUrl || !handbookData.fileName) {
