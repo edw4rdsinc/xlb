@@ -111,6 +111,11 @@ async function startExtraction(job: any) {
     // Extract SPD text
     const spdExtraction = await extractPDFText(job.spd_url, job.spd_filename)
 
+    // Validate SPD extraction
+    if (!spdExtraction.text || spdExtraction.text.trim().length === 0) {
+      throw new Error(`SPD extraction returned empty text. This may be a scanned PDF that requires OCR, or the PDF is corrupted.`)
+    }
+
     await supabase
       .from('conflict_analysis_jobs')
       .update({
@@ -122,6 +127,11 @@ async function startExtraction(job: any) {
 
     // Extract Handbook text
     const handbookExtraction = await extractPDFText(job.handbook_url, job.handbook_filename)
+
+    // Validate Handbook extraction
+    if (!handbookExtraction.text || handbookExtraction.text.trim().length === 0) {
+      throw new Error(`Handbook extraction returned empty text. This may be a scanned PDF that requires OCR, or the PDF is corrupted.`)
+    }
 
     await supabase
       .from('conflict_analysis_jobs')
@@ -149,28 +159,52 @@ async function startExtraction(job: any) {
 }
 
 async function continueExtraction(job: any) {
-  // Resume extraction if it was interrupted
-  if (!job.spd_text) {
-    const spdExtraction = await extractPDFText(job.spd_url, job.spd_filename)
-    await supabase
-      .from('conflict_analysis_jobs')
-      .update({
-        spd_text: spdExtraction.text,
-        spd_pages: spdExtraction.pages,
-        progress: { step: 'extracting_handbook', percent: 25 },
-      })
-      .eq('id', job.id)
-  }
+  try {
+    // Resume extraction if it was interrupted
+    if (!job.spd_text) {
+      const spdExtraction = await extractPDFText(job.spd_url, job.spd_filename)
 
-  if (!job.handbook_text) {
-    const handbookExtraction = await extractPDFText(job.handbook_url, job.handbook_filename)
+      // Validate SPD extraction
+      if (!spdExtraction.text || spdExtraction.text.trim().length === 0) {
+        throw new Error(`SPD extraction returned empty text. This may be a scanned PDF that requires OCR, or the PDF is corrupted.`)
+      }
+
+      await supabase
+        .from('conflict_analysis_jobs')
+        .update({
+          spd_text: spdExtraction.text,
+          spd_pages: spdExtraction.pages,
+          progress: { step: 'extracting_handbook', percent: 25 },
+        })
+        .eq('id', job.id)
+    }
+
+    if (!job.handbook_text) {
+      const handbookExtraction = await extractPDFText(job.handbook_url, job.handbook_filename)
+
+      // Validate Handbook extraction
+      if (!handbookExtraction.text || handbookExtraction.text.trim().length === 0) {
+        throw new Error(`Handbook extraction returned empty text. This may be a scanned PDF that requires OCR, or the PDF is corrupted.`)
+      }
+
+      await supabase
+        .from('conflict_analysis_jobs')
+        .update({
+          handbook_text: handbookExtraction.text,
+          handbook_pages: handbookExtraction.pages,
+          status: 'analyzing',
+          progress: { step: 'analyzing_conflicts', percent: 50 },
+        })
+        .eq('id', job.id)
+    }
+  } catch (error: any) {
+    console.error(`Continue extraction failed for job ${job.id}:`, error)
     await supabase
       .from('conflict_analysis_jobs')
       .update({
-        handbook_text: handbookExtraction.text,
-        handbook_pages: handbookExtraction.pages,
-        status: 'analyzing',
-        progress: { step: 'analyzing_conflicts', percent: 50 },
+        status: 'error',
+        error_message: `Extraction failed: ${error.message}`,
+        completed_at: new Date().toISOString()
       })
       .eq('id', job.id)
   }
@@ -212,22 +246,27 @@ async function continueAnalysis(job: any) {
 
 // V3: Single-call analysis (fast, simple, works for 95% of documents)
 async function analyzeWithV3(job: any) {
-  const analysisUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts-v3`
-    : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts-v3`
+  try {
+    const analysisUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/api/employee/analyze-conflicts-v3`
+      : `${process.env.NEXT_PUBLIC_SITE_URL}/api/employee/analyze-conflicts-v3`
 
-  const response = await fetch(analysisUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ jobId: job.id }),
-  })
+    console.log(`V3: Calling analysis endpoint: ${analysisUrl}`)
+    console.log(`V3: Job ${job.id} - SPD chars: ${job.spd_text?.length || 0}, Handbook chars: ${job.handbook_text?.length || 0}`)
 
-  if (!response.ok) {
-    const error = await response.text()
-    throw new Error(`V3 analysis failed: ${error}`)
-  }
+    const response = await fetch(analysisUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jobId: job.id }),
+    })
 
-  const result = await response.json()
+    if (!response.ok) {
+      const error = await response.text()
+      console.error(`V3: Analysis endpoint returned ${response.status}: ${error}`)
+      throw new Error(`V3 analysis failed (${response.status}): ${error}`)
+    }
+
+    const result = await response.json()
 
   if (result.complete) {
     console.log(`V3 analysis complete for job ${job.id}`)
@@ -261,6 +300,10 @@ async function analyzeWithV3(job: any) {
         })
         .eq('id', job.broker_profile_id)
     }
+  }
+  } catch (error: any) {
+    console.error(`V3 analysis error for job ${job.id}:`, error)
+    throw error // Re-throw to be caught by continueAnalysis
   }
 }
 
