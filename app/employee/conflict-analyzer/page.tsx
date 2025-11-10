@@ -85,10 +85,24 @@ export default function ConflictAnalyzerPage() {
   }
 
   const toggleFocusArea = (area: string) => {
+    const isAllBenefits = area === 'All Benefits (Comprehensive)'
+    const hasAllBenefits = focusAreas.includes('All Benefits (Comprehensive)')
+
     if (focusAreas.includes(area)) {
+      // Deselecting the clicked area
       setFocusAreas(focusAreas.filter(a => a !== area))
     } else {
-      setFocusAreas([...focusAreas, area])
+      // Selecting the clicked area
+      if (isAllBenefits) {
+        // If selecting "All Benefits", clear everything else
+        setFocusAreas([area])
+      } else if (hasAllBenefits) {
+        // If "All Benefits" is selected, replace it with the specific area
+        setFocusAreas([area])
+      } else {
+        // Normal selection
+        setFocusAreas([...focusAreas, area])
+      }
     }
   }
 
