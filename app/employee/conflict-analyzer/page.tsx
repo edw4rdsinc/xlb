@@ -134,6 +134,7 @@ export default function ConflictAnalyzerPage() {
 
     try {
       // Step 1: Upload SPD to Wasabi
+      console.log('Uploading SPD:', spdFile.name, 'Size:', spdFile.size)
       const spdFormData = new FormData()
       spdFormData.append('file', spdFile)
 
@@ -142,10 +143,23 @@ export default function ConflictAnalyzerPage() {
         body: spdFormData,
       })
 
-      if (!spdUploadRes.ok) throw new Error('SPD upload failed')
+      console.log('SPD upload response status:', spdUploadRes.status)
+
+      if (!spdUploadRes.ok) {
+        const errorData = await spdUploadRes.json()
+        throw new Error(`SPD upload failed: ${errorData.error || errorData.details || 'Unknown error'}`)
+      }
       const spdData = await spdUploadRes.json()
+      console.log('SPD upload response data:', spdData)
+
+      // Validate upload succeeded
+      if (!spdData.fileUrl || !spdData.fileName) {
+        console.error('SPD upload validation failed:', spdData)
+        throw new Error('SPD upload returned empty URL - upload may have failed silently')
+      }
 
       // Step 2: Upload Handbook to Wasabi
+      console.log('Uploading Handbook:', handbookFile.name, 'Size:', handbookFile.size)
       const handbookFormData = new FormData()
       handbookFormData.append('file', handbookFile)
 
@@ -154,8 +168,18 @@ export default function ConflictAnalyzerPage() {
         body: handbookFormData,
       })
 
-      if (!handbookUploadRes.ok) throw new Error('Handbook upload failed')
+      console.log('Handbook upload response status:', handbookUploadRes.status)
+
+      if (!handbookUploadRes.ok) {
+        const errorData = await handbookUploadRes.json()
+        throw new Error(`Handbook upload failed: ${errorData.error || errorData.details || 'Unknown error'}`)
+      }
       const handbookData = await handbookUploadRes.json()
+
+      // Validate upload succeeded
+      if (!handbookData.fileUrl || !handbookData.fileName) {
+        throw new Error('Handbook upload returned empty URL - upload may have failed silently')
+      }
 
       // Step 3: Upload broker logo if provided
       let logoUrl = null
