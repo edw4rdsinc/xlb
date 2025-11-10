@@ -173,7 +173,7 @@ Analyze thoroughly and return ONLY the JSON response.`
   let response
   try {
     response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-5-20250929', // Sonnet 4.5 - latest model
       max_tokens: 16000, // Increased for comprehensive analysis
       messages: [{ role: 'user', content: prompt }],
     })

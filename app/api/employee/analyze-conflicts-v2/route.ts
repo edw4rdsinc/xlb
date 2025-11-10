@@ -230,7 +230,7 @@ ${handbookChunk}`
   let response
   try {
     response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // Same reliable model as V3
+      model: 'claude-sonnet-4-5-20250929', // Sonnet 4.5 - latest model
       max_tokens: 4096,
       messages: [{ role: 'user', content: prompt }],
     })
@@ -309,7 +309,7 @@ ${JSON.stringify(handbookSections, null, 2)}`
   let response
   try {
     response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-5-20250929', // Sonnet 4.5 - latest model
       max_tokens: 8192,
       messages: [{ role: 'user', content: prompt }],
     })
