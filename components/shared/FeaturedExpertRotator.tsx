@@ -285,7 +285,7 @@ export default function FeaturedExpertRotator({ forceMemberIndex, forceState }: 
                 </p>
                 <a
                   href={`mailto:${selectedMember.email}?subject=Question about Stop-Loss Calculations`}
-                  className="inline-flex items-center px-6 py-3 bg-xl-bright-blue text-white rounded-lg hover:bg-white hover:text-xl-dark-blue transition-colors font-semibold"
+                  className="inline-flex items-center px-6 py-3 bg-xl-bright-blue rounded-lg hover:bg-xl-dark-blue transition-colors font-semibold text-white hover:text-white"
                 >
                   Ask {selectedMember.name.split(' ')[0]} a Question
                   <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

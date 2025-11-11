@@ -205,7 +205,7 @@ export default function SelfFundingFeasibilityPage() {
           <div className="text-center">
             <Link
               href="/contact"
-              className="inline-flex items-center bg-xl-bright-blue text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105"
+              className="inline-flex items-center bg-xl-bright-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 text-white hover:text-white"
             >
               Talk to an Expert About Your Results
             </Link>
