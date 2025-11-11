@@ -104,7 +104,7 @@ export default function Footer() {
         {/* Legal Links */}
         <div className="mt-8 pt-8 border-t border-gray-600">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-300">
-            <p>&copy; {currentYear} XL Benefits. All rights reserved.</p>
+            <p>&copy; {currentYear} XL Benefits | CA License #0M93299. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/privacy-policy" className="hover:text-xl-bright-blue transition-colors">
                 Privacy Policy
