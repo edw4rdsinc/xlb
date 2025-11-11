@@ -1,0 +1,220 @@
+{
+  "plan_name": "Local 22 Health Benefit Fund 4000 Bronze Plan",
+  "plan_type": "PPO",
+  "coverage_period": "Beginning on or after 01/01/2025",
+  "coverage_type": "Individual & Family",
+  "contact": {
+    "phone": "1-516-872-6690",
+    "address": "420 West Merrick Road, Valley Stream, NY 11580"
+  },
+  "key_details": {
+    "overall_deductible": {
+      "participating_providers": {
+        "individual": "$4,000",
+        "family": "$10,000"
+      },
+      "non_participating_providers": {
+        "individual": "$5,000",
+        "family": "$15,000"
+      }
+    },
+    "out_of_pocket_limit": {
+      "participating_providers": {
+        "individual": "$9,100",
+        "family": "$18,200"
+      },
+      "non_participating_providers": {
+        "individual": "$13,500",
+        "family": "$36,000"
+      }
+    },
+    "services_covered_before_deductible": "Yes, preventive care and prescription drug benefits",
+    "network_required": "Yes - BlueCross BlueShield (Anthem)",
+    "specialist_referral_required": "No"
+  },
+  "cost_sharing": {
+    "primary_care_visit": {
+      "in_network": "$45 copay (deductible does not apply)",
+      "out_of_network": "50% coinsurance"
+    },
+    "specialist_visit": {
+      "in_network": "$45 copay (deductible does not apply)",
+      "out_of_network": "50% coinsurance"
+    },
+    "preventive_care": {
+      "in_network": "No Charge",
+      "out_of_network": "50% coinsurance"
+    },
+    "emergency_room": {
+      "in_network": "$350 copay (deductible does not apply, waived if admitted)",
+      "out_of_network": "$350 copay (deductible does not apply)"
+    },
+    "urgent_care": {
+      "in_network": "$45 copay (deductible does not apply)",
+      "out_of_network": "$45 copay (deductible does not apply)"
+    },
+    "diagnostic_tests": {
+      "in_network": "20% coinsurance, $30 copay lab work",
+      "out_of_network": "50% coinsurance"
+    },
+    "imaging": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "note": "Preauthorization required: 1-866-317-5386"
+    },
+    "outpatient_surgery": {
+      "facility_fee": {
+        "in_network": "20% coinsurance",
+        "out_of_network": "50% coinsurance"
+      },
+      "physician_fees": {
+        "in_network": "20% coinsurance",
+        "out_of_network": "50% coinsurance"
+      },
+      "note": "Preauthorization required: 1-866-317-5386"
+    },
+    "hospital_stay": {
+      "facility_fee": {
+        "in_network": "20% coinsurance",
+        "out_of_network": "50% coinsurance"
+      },
+      "physician_fees": {
+        "in_network": "20% coinsurance",
+        "out_of_network": "50% coinsurance"
+      },
+      "note": "Preauthorization required: 1-866-317-5386"
+    }
+  },
+  "prescription_drugs": {
+    "retail_provider": "Broadreach Medical Resources (BMR): 1-877-718-2379",
+    "mail_order_provider": "Affordable Scripts: 1-800-325-7995",
+    "generic_drugs": {
+      "retail": "$10 copay (30-day supply)",
+      "mail_order": "$25 copay (31-90 day supply)",
+      "out_of_network": "Not Covered"
+    },
+    "preferred_brand_drugs": {
+      "retail": "$50 copay (30-day supply)",
+      "mail_order": "$87 copay (31-90 day supply)",
+      "out_of_network": "Not Covered"
+    },
+    "non_preferred_brand_drugs": {
+      "retail": "$75 copay (30-day supply)",
+      "mail_order": "$175 copay (31-90 day supply)",
+      "out_of_network": "Not Covered"
+    },
+    "specialty_drugs": {
+      "in_network": "Not Covered",
+      "out_of_network": "Not Covered",
+      "note": "Contact Payer Matrix: 1-877-305-6202"
+    }
+  },
+  "mental_health": {
+    "outpatient": {
+      "in_network": "$45 copay (deductible does not apply)",
+      "out_of_network": "50% coinsurance"
+    },
+    "inpatient": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "note": "Preauthorization required: 1-866-317-5386"
+    }
+  },
+  "maternity_care": {
+    "office_visits": {
+      "in_network": "$45 copay initial visit only (deductible does not apply)",
+      "out_of_network": "50% coinsurance"
+    },
+    "delivery_professional": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance"
+    },
+    "delivery_facility": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance"
+    },
+    "note": "Coverage limited to member and spouse only. Preauthorization required for inpatient services."
+  },
+  "special_services": {
+    "home_health_care": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "limit": "60 visits per calendar year",
+      "note": "Preauthorization required: 1-866-317-5386"
+    },
+    "rehabilitation_services": {
+      "in_network": "$45 copay (deductible does not apply)",
+      "out_of_network": "50% coinsurance",
+      "limit": "30 visits per calendar year",
+      "note": "Only at freestanding P/T Center"
+    },
+    "skilled_nursing_care": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "limit": "30 visits per calendar year",
+      "note": "Preauthorization required: 1-866-317-5386"
+    },
+    "durable_medical_equipment": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "note": "Preauthorization required: 1-516-872-6690"
+    },
+    "hospice_services": {
+      "in_network": "20% coinsurance",
+      "out_of_network": "50% coinsurance",
+      "limit": "30 visits per calendar year",
+      "note": "Preauthorization required: 1-866-317-5386"
+    },
+    "habilitation_services": {
+      "in_network": "Not Covered",
+      "out_of_network": "Not Covered"
+    }
+  },
+  "excluded_services": [
+    "Acupuncture",
+    "Bariatric Surgery",
+    "Cosmetic Surgery",
+    "Dental Care",
+    "Eye Exam",
+    "Habilitation Services",
+    "Infertility treatment",
+    "Long term care",
+    "Medical Care when traveling outside the U.S.",
+    "Private Duty Nursing",
+    "Routine Foot Care",
+    "Weight loss programs",
+    "Children's eye exam",
+    "Children's glasses",
+    "Children's dental check-up"
+  ],
+  "other_covered_services": [
+    "Chiropractic Care"
+  ],
+  "coverage_examples": {
+    "having_a_baby": {
+      "total_cost": "$12,800",
+      "deductible": "$4,000",
+      "copayments": "$45",
+      "coinsurance": "$1,740",
+      "total_patient_pays": "$5,785"
+    },
+    "managing_diabetes": {
+      "total_cost": "$7,400",
+      "deductible": "$1,000",
+      "copayments": "$540",
+      "coinsurance": "$0",
+      "total_patient_pays": "$1,540"
+    },
+    "simple_fracture": {
+      "total_cost": "$1,900",
+      "deductible": "$0",
+      "copayments": "$575",
+      "coinsurance": "$30",
+      "total_patient_pays": "$605"
+    }
+  },
+  "compliance": {
+    "minimum_essential_coverage": "Yes",
+    "minimum_value_standards": "Yes"
+  }
+}

@@ -355,8 +355,11 @@ function extractVendorsFromMarkdown(fileData: Array<{ filePath: string; content?
       const startIndex = match.index || 0;
 
       // Find the next vendor section or end of file
-      const nextVendorMatch = file.content.indexOf('###', startIndex + 1);
-      const endIndex = nextVendorMatch > 0 ? nextVendorMatch : file.content.length;
+      // Use regex to match only ### headers (not #### subsections)
+      const nextVendorRegex = /\n###\s+\d+\.\s+/g;
+      nextVendorRegex.lastIndex = startIndex + 1;
+      const nextVendorMatch = nextVendorRegex.exec(file.content);
+      const endIndex = nextVendorMatch ? nextVendorMatch.index : file.content.length;
 
       const vendorSection = file.content.substring(startIndex, endIndex);
 
@@ -372,11 +375,12 @@ function extractVendorsFromMarkdown(fileData: Array<{ filePath: string; content?
       const bestForMatch = vendorSection.match(/\*\*Best For:\*\*\s*([^\n]+)/);
       const bestFor = bestForMatch ? bestForMatch[1].trim() : '';
 
-      // Extract alignment details
-      const fairPricingMatch = vendorSection.match(/Fair Pricing:\s*(\d+)\/25/);
-      const memberProtectionMatch = vendorSection.match(/Member Protection:\s*(\d+)\/25/);
-      const providerRelationsMatch = vendorSection.match(/Provider Relations:\s*(\d+)\/25/);
-      const tpaIntegrationMatch = vendorSection.match(/TPA Integration:\s*(\d+)\/25/);
+      // Extract alignment details - support both old and new naming conventions
+      // Match format: "- Freedom: 23/25" or "Freedom: 23/25"
+      const freedomMatch = vendorSection.match(/-?\s*(?:Freedom|Fair Pricing):\s*(\d+)\/25/);
+      const transparencyMatch = vendorSection.match(/-?\s*(?:Transparency|Member Protection):\s*(\d+)\/25/);
+      const partnershipMatch = vendorSection.match(/-?\s*(?:Partnership|Provider Relations):\s*(\d+)\/25/);
+      const dignityMatch = vendorSection.match(/-?\s*(?:Human Dignity & Connectability|Human Dignity|TPA Integration):\s*(\d+)\/25/);
 
       vendors.push({
         name: vendorName,
@@ -384,10 +388,10 @@ function extractVendorsFromMarkdown(fileData: Array<{ filePath: string; content?
         overview,
         bestFor,
         alignment: {
-          fairPricing: fairPricingMatch ? parseInt(fairPricingMatch[1]) : 0,
-          memberProtection: memberProtectionMatch ? parseInt(memberProtectionMatch[1]) : 0,
-          providerRelations: providerRelationsMatch ? parseInt(providerRelationsMatch[1]) : 0,
-          tpaIntegration: tpaIntegrationMatch ? parseInt(tpaIntegrationMatch[1]) : 0,
+          fairPricing: freedomMatch ? parseInt(freedomMatch[1]) : 0,
+          memberProtection: transparencyMatch ? parseInt(transparencyMatch[1]) : 0,
+          providerRelations: partnershipMatch ? parseInt(partnershipMatch[1]) : 0,
+          tpaIntegration: dignityMatch ? parseInt(dignityMatch[1]) : 0,
         },
         fullContent: vendorSection,
       });
