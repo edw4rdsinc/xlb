@@ -167,7 +167,7 @@ export default function PrivacyPolicyPage() {
             <h3 className="text-xl font-bold text-gray-900 mt-6 mb-4">How to Exercise Your Rights</h3>
             <p className="mb-4">To exercise the access, data portability, and deletion rights described above, please submit a verifiable consumer request to us by either:</p>
             <ul className="list-disc pl-6 space-y-2 mb-6">
-              <li>Calling us at 386-888-7301 or</li>
+              <li>Calling us at (916) 512-8340 or</li>
               <li>
                 Emailing{' '}
                 <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:underline">
