@@ -28,8 +28,8 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Change or Delete Information</h2>
             <p className="mb-4">
               To change, delete or otherwise update your personal information, please contact us at{' '}
-              <a href="mailto:privacy@xlbenefits.com" className="text-xl-bright-blue hover:underline">
-                privacy@xlbenefits.com
+              <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:underline">
+                info@xlbenefits.com
               </a>
               . Please note it can take up to seven days for changes to become effective.
             </p>
@@ -170,8 +170,8 @@ export default function PrivacyPolicyPage() {
               <li>Calling us at 386-888-7301 or</li>
               <li>
                 Emailing{' '}
-                <a href="mailto:privacy@xlbenefits.com" className="text-xl-bright-blue hover:underline">
-                  privacy@xlbenefits.com
+                <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:underline">
+                  info@xlbenefits.com
                 </a>
               </li>
             </ul>
@@ -207,8 +207,8 @@ export default function PrivacyPolicyPage() {
             <h3 className="text-xl font-bold text-gray-900 mt-6 mb-4">Contact Information</h3>
             <p className="mb-4">
               If you have any questions or comments about this Privacy Notice, our Privacy Policy, the ways in which we collect and use your personal information, your choices and rights regarding such use, or wish to exercise your rights under California law, you may contact us via email at{' '}
-              <a href="mailto:privacy@xlbenefits.com" className="text-xl-bright-blue hover:underline">
-                privacy@xlbenefits.com
+              <a href="mailto:info@xlbenefits.com" className="text-xl-bright-blue hover:underline">
+                info@xlbenefits.com
               </a>
               .
             </p>
