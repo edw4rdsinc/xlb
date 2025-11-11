@@ -69,10 +69,10 @@ const stateRegulations: StateRegulation[] = [
   {
     state: 'California',
     citation: 'Ins. Code § 10752-10752.8',
-    employerSize: '1-50 employees',
+    employerSize: 'Up to 100 FTE: $40,000; 101+ FTE: $15,000',
     minSpecificDeductible: 'Up to 100 FTE: $40,000; 101+ FTE: $15,000',
-    specificRestrictions: 'Prohibits specific deductible limits below $35,000 (goes to $40,000 in 2016)',
-    aggregateRestrictions: 'Prohibits aggregate coverage attachment points of less than $5,000 per person, 120% of expected claims or $35,000 ($40,000 in 2016), whichever is greater',
+    specificRestrictions: 'Prohibits specific deductible limits below $40,000 (effective 2016)',
+    aggregateRestrictions: 'Prohibits aggregate coverage attachment points of less than $5,000 per person, 120% of expected claims or $40,000, whichever is greater',
     guaranteedIssue: 'Yes',
     otherNotes: 'Guaranteed renewable. Prohibits direct payment to covered individuals',
     minAggregateAttachment: 'Up to 100 FTE: $40,000; 101+ FTE: $10,000',
@@ -648,7 +648,7 @@ export default function StateRegulationsPage() {
                   </div>
                   <div>
                     <dt className="text-sm font-semibold text-gray-700">Applies to:</dt>
-                    <dd className="text-xl-grey">Employers with 1-50 employees</dd>
+                    <dd className="text-xl-grey">All employers (thresholds vary by FTE)</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-semibold text-gray-700">Minimum Specific Deductible:</dt>
@@ -690,7 +690,7 @@ export default function StateRegulationsPage() {
                     <svg className="w-5 h-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                     </svg>
-                    <span>Specific deductible limits below $35,000 prohibited (increased to $40,000 in 2016)</span>
+                    <span>Specific deductible limits below $40,000 prohibited (effective 2016)</span>
                   </li>
                 </ul>
 
@@ -900,63 +900,6 @@ export default function StateRegulationsPage() {
               <li>• States with "Regulated" badge have specific statutory requirements beyond the standard $10,000 minimum</li>
               <li>• Always verify current requirements with the state department of insurance before quoting</li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Reference - Treatment Life Standards */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-xl-dark-blue mb-6">
-            Industry Standard Aggregate Attachment Points
-          </h2>
-
-          <p className="text-xl-grey mb-6">
-            While many states don't mandate minimum aggregate attachment points, industry best practices suggest the following standards based on group size:
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border-2 border-green-200">
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-xl-dark-blue mb-2">Small Groups</h3>
-                <p className="text-sm text-gray-600 mb-4">5-9 Employees</p>
-                <div className="text-3xl font-bold text-green-700 mb-2">130%</div>
-                <p className="text-sm text-gray-600">of expected claims</p>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border-2 border-blue-200">
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-xl-dark-blue mb-2">Mid-Size Groups</h3>
-                <p className="text-sm text-gray-600 mb-4">10-50 Employees</p>
-                <div className="text-3xl font-bold text-blue-700 mb-2">120%</div>
-                <p className="text-sm text-gray-600">of expected claims</p>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border-2 border-purple-200">
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-xl-dark-blue mb-2">Large Groups</h3>
-                <p className="text-sm text-gray-600 mb-4">51+ Employees</p>
-                <div className="text-3xl font-bold text-purple-700 mb-2">115%</div>
-                <p className="text-sm text-gray-600">of expected claims</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-yellow-700">
-                  <strong>Important:</strong> These are industry guidelines from major carriers like Trustmark. Actual attachment points may vary by carrier, group characteristics, and claims history. State minimums take precedence where applicable.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
