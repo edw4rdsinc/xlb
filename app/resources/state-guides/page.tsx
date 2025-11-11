@@ -118,6 +118,63 @@ export default function StateGuidesPage() {
         </div>
       </section>
 
+      {/* Featured Resource - Comprehensive State Regulations */}
+      <section className="py-12 bg-white border-b-4 border-xl-bright-blue">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection animation="fade-up">
+            <div className="bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue rounded-xl shadow-2xl p-8 md:p-12 text-white">
+              <div className="flex items-start justify-between flex-col md:flex-row gap-6">
+                <div className="flex-1">
+                  <div className="inline-flex items-center bg-white/20 rounded-full px-4 py-1 text-sm font-semibold mb-4">
+                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    NABIP Research • Comprehensive Reference
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    Complete State-by-State Stop-Loss Regulations
+                  </h2>
+                  <p className="text-lg text-white/90 mb-6">
+                    Access detailed regulatory requirements, minimum deductibles, aggregate attachment points, and state insurance department contact information for all 50 states plus DC.
+                  </p>
+                  <ul className="space-y-2 mb-6 text-white/90">
+                    <li className="flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Legal citations & employer size requirements
+                    </li>
+                    <li className="flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      State insurance department contacts
+                    </li>
+                    <li className="flex items-center">
+                      <svg className="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Industry standard aggregate attachment guidelines
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex items-center">
+                  <Link
+                    href="/resources/state-guides/state-regulations"
+                    className="inline-flex items-center bg-white text-xl-dark-blue px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all hover:scale-105 shadow-xl whitespace-nowrap"
+                  >
+                    View Complete Guide
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* State Reference Table */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
