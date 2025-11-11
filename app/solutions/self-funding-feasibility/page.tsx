@@ -33,7 +33,7 @@ export default function SelfFundingFeasibilityPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white py-16">
+      <section className="relative bg-gradient-to-r from-xl-dark-blue to-xl-bright-blue text-white min-h-[50vh] flex items-center">
         {/* Desktop Background */}
         <div
           className="hidden md:block absolute inset-0"
@@ -55,7 +55,7 @@ export default function SelfFundingFeasibilityPage() {
           }}
         />
         <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
           <AnimatedSection animation="fade-up">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-white drop-shadow-lg">
               Self-Funding Readiness Assessment for Group Health Plans
