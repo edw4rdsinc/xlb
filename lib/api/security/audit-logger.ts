@@ -190,24 +190,31 @@ export function getUsageStats(): {
 export function sanitizeInputForLog(input: unknown): Record<string, unknown> {
   const sanitized: Record<string, any> = {};
 
+  // Type guard - ensure input is an object
+  if (!input || typeof input !== 'object') {
+    return sanitized;
+  }
+
+  const data = input as Record<string, any>;
+
   // For FIE Calculator
-  if (input.plans) {
-    sanitized.numberOfPlans = input.plans.length;
-    sanitized.totalEmployees = input.plans.reduce((sum: number, plan: any) => {
+  if (data.plans && Array.isArray(data.plans)) {
+    sanitized.numberOfPlans = data.plans.length;
+    sanitized.totalEmployees = data.plans.reduce((sum: number, plan: any) => {
       const censusValues = Object.values(plan.census || {}) as number[];
       return sum + censusValues.reduce((a: number, b: number) => a + b, 0);
     }, 0);
   }
 
   // For Deductible Analyzer
-  if (input.currentDeductible) {
-    sanitized.currentDeductible = input.currentDeductible;
-    sanitized.numberOfOptions = input.deductibleOptions?.length || 0;
+  if (data.currentDeductible) {
+    sanitized.currentDeductible = data.currentDeductible;
+    sanitized.numberOfOptions = data.deductibleOptions?.length || 0;
   }
 
   // For Assessment
-  if (input.answers) {
-    sanitized.numberOfAnswers = Object.keys(input.answers).length;
+  if (data.answers && typeof data.answers === 'object') {
+    sanitized.numberOfAnswers = Object.keys(data.answers).length;
   }
 
   // Never log personal data
