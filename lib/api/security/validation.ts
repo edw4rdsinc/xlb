@@ -207,7 +207,7 @@ export function performSecurityChecks(input: unknown): {
  */
 export function sanitizeOutput<T>(data: T): T {
   // Remove any internal fields
-  const cleaned = { ...data };
+  const cleaned: any = { ...data };
   delete cleaned._internal;
   delete cleaned.debug;
   delete cleaned.stackTrace;
