@@ -106,7 +106,7 @@ export default function FIECalculatorSecure() {
   useEffect(() => {
     const savedData = getFromSession();
     if (savedData) {
-      setWizardData(savedData);
+      setWizardData(savedData as WizardData);
     }
   }, []);
 
@@ -115,7 +115,7 @@ export default function FIECalculatorSecure() {
     if (wizardData.groupName) {
       const dataToSave = { ...wizardData };
       delete dataToSave.results; // Don't cache results
-      saveToSession(dataToSave);
+      saveToSession(dataToSave as any); // Cast to any since internal WizardData has slightly different structure
     }
   }, [wizardData]);
 

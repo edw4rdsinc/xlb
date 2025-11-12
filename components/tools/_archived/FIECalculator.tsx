@@ -82,14 +82,14 @@ export default function FIECalculator() {
   useEffect(() => {
     const savedData = getFromSession();
     if (savedData) {
-      setWizardData(savedData);
+      setWizardData(savedData as any);
     }
   }, []);
 
   // Save to session whenever wizard data changes
   useEffect(() => {
     if (wizardData.groupName) {
-      saveToSession(wizardData);
+      saveToSession(wizardData as any);
     }
   }, [wizardData]);
 
