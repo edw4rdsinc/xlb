@@ -206,6 +206,7 @@ export default function SelfFundingFeasibilityPage() {
             <Link
               href="/contact"
               className="inline-flex items-center bg-xl-bright-blue px-8 py-4 rounded-md font-semibold text-lg hover:bg-xl-dark-blue transition-all hover:scale-105 text-white hover:text-white"
+              style={{ color: '#FFFFFF' }}
             >
               Talk to an Expert About Your Results
             </Link>
