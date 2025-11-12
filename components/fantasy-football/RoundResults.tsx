@@ -103,7 +103,7 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
 
       setScores(roundScores);
     } catch (error) {
-      console.error('Error loading round scores:', error);
+      // Silently handle error - scores will be empty array
       setScores([]);
     } finally {
       setLoading(false);

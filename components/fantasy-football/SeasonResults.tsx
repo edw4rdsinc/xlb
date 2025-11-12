@@ -113,7 +113,7 @@ export function SeasonResults() {
 
       setScores(seasonScores.filter((s: any) => s.weeks_played > 0));
     } catch (error) {
-      console.error('Error loading season scores:', error);
+      // Silently handle error - scores will be empty array
       setScores([]);
     } finally {
       setLoading(false);

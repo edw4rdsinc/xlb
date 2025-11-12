@@ -1,6 +1,7 @@
 // FIE Calculator - Validation Utilities
 
 import { z } from 'zod';
+import type { FIEWizardData } from '@/lib/types/common';
 
 // Email validation schema
 export const emailSchema = z.object({
@@ -115,13 +116,13 @@ export function formatPhoneNumber(value: string): string {
 // Session storage helpers
 export const SESSION_KEY = 'fie-calculator-session';
 
-export function saveToSession(data: any): void {
+export function saveToSession(data: Partial<FIEWizardData>): void {
   if (typeof window !== 'undefined') {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
   }
 }
 
-export function getFromSession(): any | null {
+export function getFromSession(): Partial<FIEWizardData> | null {
   if (typeof window !== 'undefined') {
     const data = sessionStorage.getItem(SESSION_KEY);
     return data ? JSON.parse(data) : null;

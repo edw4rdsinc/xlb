@@ -140,7 +140,7 @@ export function validateInput<T>(
 /**
  * Additional security checks beyond schema validation
  */
-export function performSecurityChecks(input: any): {
+export function performSecurityChecks(input: unknown): {
   passed: boolean;
   reason?: string;
 } {
@@ -205,7 +205,7 @@ export function performSecurityChecks(input: any): {
 /**
  * Sanitize output before sending to client
  */
-export function sanitizeOutput(data: any): any {
+export function sanitizeOutput<T>(data: T): T {
   // Remove any internal fields
   const cleaned = { ...data };
   delete cleaned._internal;

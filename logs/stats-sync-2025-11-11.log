@@ -1,0 +1,109 @@
+================================================
+NFL Stats Sync - Tue Nov 11 07:00:01 AM PST 2025
+================================================
+Current NFL Week: 10
+Syncing stats for Week: 10
+
+Running stats sync...
+============================================================
+🏈 XL Benefits Fantasy Football - NFL Stats Sync
+============================================================
+Season: 2025
+Week: 10
+Mode: LIVE
+Time: 2025-11-11 07:00:01
+============================================================
+
+🗓️  Checking for bye weeks in 2025 Week 10...
+✅ Found 4 teams on bye: CIN, DAL, KC, TEN
+
+📊 Fetching NFL stats for 2025 Week 10 from nflreadpy...
+✅ Found 962 players with stats for Week 10
+
+🛡️  Aggregating team defense stats...
+✅ Aggregated defense stats for 25 teams
+✅ Combined 962 player stats + 25 team defense stats
+
+🔍 Fetching players from database...
+✅ Found 1045 players in database (34 DEF)
+
+🔄 Transforming stats to database schema...
+DEBUG: Total DEF players in db_players list: 34
+DEBUG: Players with None position: 0
+DEBUG match_player: Looking for 'ARI Defense'
+DEBUG match_player: Found 34 DEF position matches
+DEBUG match_player: First 3 names: ['Ravens', 'Falcons', 'CLE Defense']
+DEBUG match_player: Looking for 'ATL Defense'
+DEBUG match_player: Found 34 DEF position matches
+DEBUG match_player: First 3 names: ['Ravens', 'Falcons', 'CLE Defense']
+DEBUG match_player: Looking for 'PIT Defense'
+DEBUG match_player: Found 34 DEF position matches
+DEBUG match_player: First 3 names: ['Ravens', 'Falcons', 'CLE Defense']
+✅ Matched 362 players to database
+🛡️  Matched 25 defenses: ARI Defense, ATL Defense, BAL Defense, BUF Defense, CAR Defense, CHI Defense, CLE Defense, DEN Defense, DET Defense, HOU Defense, IND Defense, JAX Defense, LAC Defense, LAR Defense, LV Defense, MIA Defense, MIN Defense, NE Defense, NO Defense, NYJ Defense, PHI Defense, PIT Defense, SEA Defense, SF Defense, TB Defense
+
+⚠️  625 players not matched:
+   - Calais Campbell (DE)
+   - Thomas Morstead (P)
+   - Von Miller (OLB)
+   - Cameron Jordan (DE)
+   - Cameron Heyward (DT)
+   - Nick Bellore (LB)
+   - Bobby Wagner (MLB)
+   - Lavonte David (OLB)
+   - Harrison Smith (FS)
+   - Demario Davis (OLB)
+   ... and 615 more
+
+💾 Upserting 362 records to database...
+✅ Successfully upserted 362 player stats
+
+============================================================
+✅ SYNC COMPLETE
+============================================================
+Records processed: 362
+Week: 10
+Next steps: Go to /admin/scoring and click 'Calculate Scores'
+============================================================
+
+================================================
+✅ Stats sync completed successfully
+   Week 10 stats imported to Supabase
+
+Running score calculation...
+============================================================
+🏈 XL Benefits Fantasy Football - Score Calculation
+============================================================
+Season: 2025
+Week: 10
+Mode: LIVE
+Time: 2025-11-11 07:00:04
+============================================================
+
+📋 Fetching all lineups from database...
+✅ Found 4 lineups
+📊 Fetching player stats for Week 10...
+✅ Found stats for 362 players
+
+🔢 Calculating scores for 4 lineups...
+✅ Calculated scores for 4 lineups
+
+📈 Calculating cumulative scores...
+✅ Found Round 2 (Weeks 7-12)
+✅ Calculated cumulative scores
+
+💾 Upserting 4 score records to database...
+✅ Successfully upserted 4 score records
+
+============================================================
+✅ SCORE CALCULATION COMPLETE
+============================================================
+Lineups processed: 4
+Week: 10
+Next steps: Scores are now visible to users via their magic links
+============================================================
+
+
+================================================
+✅ Score calculation completed successfully
+   Week 10 scores calculated for all lineups

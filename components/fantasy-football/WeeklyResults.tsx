@@ -96,7 +96,7 @@ export function WeeklyResults({ currentWeek, rounds }: WeeklyResultsProps) {
 
       setScores(sortedScores);
     } catch (error) {
-      console.error('Error loading weekly scores:', error);
+      // Silently handle error - scores will be empty array
       setScores([]);
     } finally {
       setLoading(false);

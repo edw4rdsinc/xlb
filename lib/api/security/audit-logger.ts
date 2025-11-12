@@ -187,7 +187,7 @@ export function getUsageStats(): {
 /**
  * Sanitize input data for logging (remove sensitive info)
  */
-export function sanitizeInputForLog(input: any): Record<string, any> {
+export function sanitizeInputForLog(input: unknown): Record<string, unknown> {
   const sanitized: Record<string, any> = {};
 
   // For FIE Calculator

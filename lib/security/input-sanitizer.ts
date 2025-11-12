@@ -3,6 +3,8 @@
  * Prevents XSS, SQL injection, and other injection attacks
  */
 
+import type { JSONValue } from '@/lib/types/common';
+
 import DOMPurify from 'isomorphic-dompurify';
 
 /**
@@ -194,7 +196,7 @@ export function sanitizeURL(url: string, allowedHosts?: string[]): string | null
 /**
  * Sanitize JSON data
  */
-export function sanitizeJSON(data: any): any {
+export function sanitizeJSON(data: JSONValue): JSONValue {
   if (data === null || data === undefined) {
     return null;
   }
