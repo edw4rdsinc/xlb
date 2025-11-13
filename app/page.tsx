@@ -96,7 +96,7 @@ export default function HomePage() {
         <section className="relative py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center">
-            <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="bg-white rounded-lg shadow-xl-crisp hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-1 p-8">
               <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
                 Why Brokers Choose XL Benefits
               </h2>
@@ -128,7 +128,7 @@ export default function HomePage() {
             {/* Tool 1: Self-Funding Assessment - AVAILABLE */}
             <AnimatedSection animation="fade-up" delay={100}>
               <Link href="/solutions/self-funding-feasibility">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                <div className="bg-white border-2 border-xl-bright-blue rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-6 h-full flex flex-col group">
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -288,7 +288,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+              <div className="bg-xl-light-grey rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
                   "I believe that XL Benefits would be an excellent partner with any group client and their benefits."
                 </p>
@@ -298,7 +298,7 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+              <div className="bg-xl-light-grey rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
                   "The XL Benefits team has exceeded our expectations, setting a new standard for stop loss marketing."
                 </p>
@@ -308,7 +308,7 @@ export default function HomePage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-xl-light-grey rounded-lg p-8 h-full">
+              <div className="bg-xl-light-grey rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <p className="text-xl-grey mb-6 italic leading-relaxed">
                   "We consider XL Benefits an extension of our team. Their help is invaluable to our overall success."
                 </p>

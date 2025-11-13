@@ -52,7 +52,7 @@ export default function HowWeHelpPage() {
         <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up">
-            <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="bg-white rounded-lg shadow-xl-crisp hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-1 p-8">
               <p className="text-lg text-xl-grey leading-relaxed mb-4">
                 The difference between a good stop-loss placement and a great one often comes down to the details most people miss. XL Benefits exists to handle that complexity for you—bringing meticulous analysis, deep carrier relationships, and genuine partnership to every case.
               </p>
@@ -80,7 +80,7 @@ export default function HowWeHelpPage() {
           <div className="grid md:grid-cols-4 gap-8">
 
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-white rounded-lg shadow-md p-8 h-full">
+              <div className="bg-white rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -134,7 +134,7 @@ export default function HowWeHelpPage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-white rounded-lg shadow-md p-8 h-full">
+              <div className="bg-white rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -188,7 +188,7 @@ export default function HowWeHelpPage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-white rounded-lg shadow-md p-8 h-full">
+              <div className="bg-white rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -230,7 +230,7 @@ export default function HowWeHelpPage() {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={400}>
-              <div className="bg-white rounded-lg shadow-md p-8 h-full">
+              <div className="bg-white rounded-lg shadow-xl-soft hover:shadow-xl-bold transition-all duration-300 hover:-translate-y-1 p-8 h-full">
                 <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -542,7 +542,7 @@ export default function HowWeHelpPage() {
 
             <AnimatedSection animation="fade-up" delay={100}>
               <Link href="/how-we-help/our-process">
-                <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                <div className="bg-white rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-8 h-full flex flex-col group">
                   <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                     <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -566,7 +566,7 @@ export default function HowWeHelpPage() {
 
             <AnimatedSection animation="fade-up" delay={200}>
               <Link href="/how-we-help/meet-the-team">
-                <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                <div className="bg-white rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-8 h-full flex flex-col group">
                   <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                     <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -590,7 +590,7 @@ export default function HowWeHelpPage() {
 
             <AnimatedSection animation="fade-up" delay={300}>
               <Link href="/how-we-help/why-brokers-choose-us">
-                <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                <div className="bg-white rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-8 h-full flex flex-col group">
                   <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-6">
                     <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />

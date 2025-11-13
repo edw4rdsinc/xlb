@@ -127,28 +127,35 @@ export default function ToolkitPage() {
             {/* Tool 3: Self-Funding Assessment */}
             <AnimatedSection animation="fade-up" delay={300}>
               <Link href="/solutions/self-funding-feasibility">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <div className="relative bg-white border-2 border-xl-bright-blue rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-6 h-full flex flex-col group overflow-hidden">
+                  {/* Logo Watermark - appears on hover */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
+                    <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
+                  </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                        <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
+                          Self-Funding Readiness Assessment
+                        </h3>
+                        <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
+                      </div>
+                    </div>
+                    <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
+                      Evaluate whether your client is truly prepared for self-funding with a comprehensive feasibility quiz.
+                    </p>
+                    <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
+                      Use Tool
+                      <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">
-                        Self-Funding Readiness Assessment
-                      </h3>
-                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Evaluate whether your client is truly prepared for self-funding with a comprehensive feasibility quiz.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold inline-flex items-center text-sm group-hover:text-xl-dark-blue transition-colors">
-                    Use Tool
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
                   </div>
                 </div>
               </Link>
@@ -207,28 +214,35 @@ export default function ToolkitPage() {
             {/* Tool 6: Request Custom Tool */}
             <AnimatedSection animation="fade-up" delay={600}>
               <Link href="/contact">
-                <div className="bg-white border-2 border-xl-bright-blue rounded-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                <div className="relative bg-white border-2 border-xl-bright-blue rounded-lg shadow-xl-bold hover:shadow-xl-deep transition-all duration-300 hover:-translate-y-2 hover:scale-105 p-6 h-full flex flex-col group overflow-hidden">
+                  {/* Logo Watermark - appears on hover */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
+                    <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
+                  </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                        <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-xl-dark-blue">
+                          Request a Custom Tool
+                        </h3>
+                        <span className="text-xs text-xl-bright-blue font-semibold uppercase tracking-wide">CONTACT US</span>
+                      </div>
+                    </div>
+                    <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
+                      Need a specific calculator or analysis? Our team builds custom tools for unique self-funding scenarios.
+                    </p>
+                    <div className="text-xl-bright-blue font-semibold text-sm group-hover:text-xl-dark-blue inline-flex items-center">
+                      Contact Team
+                      <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-xl-dark-blue">
-                        Request a Custom Tool
-                      </h3>
-                      <span className="text-xs text-xl-bright-blue font-semibold uppercase tracking-wide">CONTACT US</span>
-                    </div>
-                  </div>
-                  <p className="text-xl-grey mb-4 flex-grow text-sm leading-relaxed">
-                    Need a specific calculator or analysis? Our team builds custom tools for unique self-funding scenarios.
-                  </p>
-                  <div className="text-xl-bright-blue font-semibold text-sm group-hover:text-xl-dark-blue inline-flex items-center">
-                    Contact Team
-                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
                   </div>
                 </div>
               </Link>
