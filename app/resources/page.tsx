@@ -61,7 +61,7 @@ export default function ResourcesPage() {
             <Link href="/resources/white-papers" className="group">
               <div className="relative bg-white rounded-lg shadow-xl-crisp p-8 hover:shadow-xl-deep hover:-translate-y-2 hover:scale-105 transition-all duration-300 h-full border-2 border-transparent hover:border-xl-premium-purple-500 overflow-hidden group-hover:bg-xl-premium-purple-500">
                 {/* Logo Watermark - appears on hover */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
                   <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
                 </div>
 
@@ -85,7 +85,7 @@ export default function ResourcesPage() {
             <Link href="/resources/blog" className="group">
               <div className="relative bg-white rounded-lg shadow-xl-bold p-8 hover:shadow-xl-deep hover:-translate-y-2 hover:scale-105 transition-all duration-300 h-full border-2 border-transparent hover:border-xl-success-green-500 overflow-hidden group-hover:bg-xl-success-green-500">
                 {/* Logo Watermark - appears on hover */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
                   <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
                 </div>
 
@@ -109,7 +109,7 @@ export default function ResourcesPage() {
             <Link href="/resources/faq" className="group">
               <div className="relative bg-white rounded-lg shadow-xl-crisp p-8 hover:shadow-xl-deep hover:-translate-y-2 hover:scale-105 transition-all duration-300 h-full border-2 border-transparent hover:border-xl-warning-orange-500 overflow-hidden group-hover:bg-xl-warning-orange-500">
                 {/* Logo Watermark - appears on hover */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
                   <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
                 </div>
 
@@ -133,7 +133,7 @@ export default function ResourcesPage() {
             <Link href="/resources/glossary" className="group">
               <div className="relative bg-white rounded-lg shadow-xl-bold p-8 hover:shadow-xl-deep hover:-translate-y-2 hover:scale-105 transition-all duration-300 h-full border-2 border-transparent hover:border-xl-bright-blue-500 overflow-hidden group-hover:bg-xl-bright-blue-500">
                 {/* Logo Watermark - appears on hover */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
                   <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
                 </div>
 
@@ -157,7 +157,7 @@ export default function ResourcesPage() {
             <Link href="/resources/state-guides" className="group">
               <div className="relative bg-white rounded-lg shadow-xl-crisp p-8 hover:shadow-xl-deep hover:-translate-y-2 hover:scale-105 transition-all duration-300 h-full border-2 border-transparent hover:border-xl-dark-blue-500 overflow-hidden group-hover:bg-xl-dark-blue-500">
                 {/* Logo Watermark - appears on hover */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
                   <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
                 </div>
 
