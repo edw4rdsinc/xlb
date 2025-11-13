@@ -125,107 +125,100 @@ export default function HomePage() {
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Tool 1: COBRA Calculator */}
+            {/* Tool 1: Self-Funding Assessment - AVAILABLE */}
             <AnimatedSection animation="fade-up" delay={100}>
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+              <Link href="/solutions/self-funding-feasibility">
+                <div className="bg-white border-2 border-xl-bright-blue rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
+                      <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-xl-dark-blue group-hover:text-xl-bright-blue transition-colors">Self-Funding Readiness Assessment</h3>
+                      <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">Available Now</span>
+                    </div>
+                  </div>
+                  <p className="text-xl-grey mb-6 flex-grow">
+                    Evaluate whether your client is truly prepared for self-funding with our comprehensive feasibility quiz. Identify risks before they become problems.
+                  </p>
+                  <div className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors">
+                    Try This Tool
+                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </AnimatedSection>
+
+            {/* Tool 2: TrueCost Calculator - COMING SOON */}
+            <AnimatedSection animation="fade-up" delay={200}>
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-xl-dark-blue">TrueCost: Fully Insured Equivalent Calculator</h3>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">TrueCost: Fully Insured Equivalent Calculator</h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q1 2026</span>
+                  </div>
                 </div>
-                <p className="text-xl-grey mb-6 flex-grow">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Accurately project fully insured equivalent rates for self-funded groups with state-specific compliance considerations. Get calculations you can confidently share with clients.
                 </p>
-                <Link
-                  href="/solutions/truecost-calculator"
-                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
-                >
-                  Try This Tool
-                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                <div className="text-gray-500 font-semibold">
+                  Coming Soon
+                </div>
               </div>
             </AnimatedSection>
 
-            {/* Tool 2: Deductible Analyzer */}
-            <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+            {/* Tool 3: Deductible Analyzer - COMING SOON */}
+            <AnimatedSection animation="fade-up" delay={300}>
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-xl-dark-blue">Stop-Loss Deductible Analyzer</h3>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Stop-Loss Deductible Analyzer</h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q1 2026</span>
+                  </div>
                 </div>
-                <p className="text-xl-grey mb-6 flex-grow">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Compare specific and aggregate deductible structures to identify optimal cost-savings strategies. Make data-driven recommendations for every client scenario.
                 </p>
-                <Link
-                  href="/solutions/deductible-optimization"
-                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
-                >
-                  Try This Tool
-                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            </AnimatedSection>
-
-            {/* Tool 3: Self-Funding Assessment */}
-            <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-xl-dark-blue">Self-Funding Readiness Assessment</h3>
+                <div className="text-gray-500 font-semibold">
+                  Coming Soon
                 </div>
-                <p className="text-xl-grey mb-6 flex-grow">
-                  Evaluate whether your client is truly prepared for self-funding with our comprehensive feasibility quiz. Identify risks before they become problems.
-                </p>
-                <Link
-                  href="/solutions/self-funding-feasibility"
-                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
-                >
-                  Try This Tool
-                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
               </div>
             </AnimatedSection>
 
-            {/* Tool 4: Agg Specific Calculator */}
+            {/* Tool 4: Agg Specific Calculator - COMING SOON */}
             <AnimatedSection animation="fade-up" delay={400}>
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+              <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-6 h-full flex flex-col opacity-75">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-xl-bright-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-xl-dark-blue">Aggregating Specific Calculator</h3>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Aggregating Specific Calculator</h3>
+                    <span className="text-xs text-gray-500 font-semibold uppercase tracking-wide">Q2 2026</span>
+                  </div>
                 </div>
-                <p className="text-xl-grey mb-6 flex-grow">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Analyze the ROI potential of aggregating specific deductibles versus traditional structures. Discover opportunities your clients might be missing.
                 </p>
-                <Link
-                  href="/solutions/aggregating-specific-analysis"
-                  className="text-xl-bright-blue font-semibold hover:text-xl-dark-blue inline-flex items-center transition-colors"
-                >
-                  Try This Tool
-                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                <div className="text-gray-500 font-semibold">
+                  Coming Soon
+                </div>
               </div>
             </AnimatedSection>
 
