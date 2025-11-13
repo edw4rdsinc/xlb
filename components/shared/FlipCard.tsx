@@ -93,13 +93,18 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl,
 
         {/* Back of card */}
         <div
-          className="flip-card-back absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-xl-dark-blue to-xl-bright-blue rounded-lg shadow-lg p-6 flex flex-col justify-between text-white"
+          className="flip-card-back absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-xl-dark-blue to-xl-bright-blue rounded-lg shadow-lg p-6 flex flex-col justify-between text-white overflow-hidden"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
         >
-          <div>
+          {/* Logo Watermark */}
+          <div className="absolute top-4 right-4 opacity-10 pointer-events-none">
+            <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
+          </div>
+
+          <div className="relative z-10">
             <h3 className="text-xl font-bold mb-2">{name}</h3>
             <p className="text-sm text-white/90 mb-4">{title}</p>
 
@@ -110,8 +115,10 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl,
             )}
           </div>
 
+          </div>
+
           {(email || linkedinUrl) && (
-            <div className="mt-4 flex gap-3 justify-center">
+            <div className="relative z-10 mt-4 flex gap-3 justify-center">
               {email && (
                 <a
                   href={`mailto:${email}`}
@@ -146,7 +153,7 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl,
             </div>
           )}
 
-          <div className="text-center text-xs font-semibold mt-4 text-white/80">
+          <div className="relative z-10 text-center text-xs font-semibold mt-4 text-white/80">
             Click to flip back ←
           </div>
         </div>
