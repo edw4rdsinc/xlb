@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 function ResultsContent() {
   const searchParams = useSearchParams();
   const [results, setResults] = useState<any>(null);
+  const [showShareToast, setShowShareToast] = useState(false);
 
   useEffect(() => {
     const resultsData = searchParams.get('data');
@@ -20,6 +21,35 @@ function ResultsContent() {
       }
     }
   }, [searchParams]);
+
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+    const shareTitle = 'Self-Funding Readiness Assessment Results';
+    const shareText = `I completed the Self-Funding Readiness Assessment and scored ${results.readinessScore}/100. Check out XL Benefits' assessment tool!`;
+
+    // Try Web Share API first (works on mobile and some desktop browsers)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (error) {
+        // User cancelled or share failed
+        console.log('Share cancelled or failed:', error);
+      }
+    } else {
+      // Fall back to copying link to clipboard
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShowShareToast(true);
+        setTimeout(() => setShowShareToast(false), 3000);
+      } catch (error) {
+        console.error('Failed to copy to clipboard:', error);
+      }
+    }
+  };
 
   if (!results) {
     return (
@@ -125,6 +155,15 @@ function ResultsContent() {
               >
                 Retake Assessment
               </Link>
+              <button
+                onClick={handleShare}
+                className="px-6 py-3 bg-white text-xl-dark-blue border-2 border-xl-dark-blue font-semibold rounded-lg hover:bg-xl-light-grey transition-colors text-center flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share Results
+              </button>
               <Link
                 href="/contact"
                 className="px-6 py-3 bg-xl-bright-blue font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors text-center"
@@ -133,6 +172,13 @@ function ResultsContent() {
                 Schedule Consultation
               </Link>
             </div>
+
+            {/* Toast notification for copy to clipboard */}
+            {showShareToast && (
+              <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-xl-dark-blue text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+                Link copied to clipboard!
+              </div>
+            )}
           </div>
         </AnimatedSection>
       </div>
