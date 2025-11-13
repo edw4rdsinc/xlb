@@ -127,7 +127,8 @@ function ResultsContent() {
               </Link>
               <Link
                 href="/contact"
-                className="px-6 py-3 bg-xl-bright-blue text-white font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors text-center"
+                className="px-6 py-3 bg-xl-bright-blue font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors text-center"
+                style={{ color: '#FFFFFF' }}
               >
                 Schedule Consultation
               </Link>
