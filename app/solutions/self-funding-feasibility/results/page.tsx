@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 
-export default function AssessmentResultsPage() {
+function ResultsContent() {
   const searchParams = useSearchParams();
   const [results, setResults] = useState<any>(null);
 
@@ -136,5 +136,20 @@ export default function AssessmentResultsPage() {
         </AnimatedSection>
       </div>
     </div>
+  );
+}
+
+export default function AssessmentResultsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-xl-light-grey flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-xl-bright-blue border-t-transparent mx-auto mb-4" />
+          <p className="text-lg text-xl-grey">Loading your results...</p>
+        </div>
+      </div>
+    }>
+      <ResultsContent />
+    </Suspense>
   );
 }
