@@ -293,13 +293,14 @@ export default function SelfFundingQuizClient() {
         {currentSection === 1 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-xl-dark-blue mb-6">
-              Client Basic Information
+              Basic Information
             </h2>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q1. Client's Current Funding Model (Max 4 points)
+                Q1. Current Funding Model (Max 4 points)
               </label>
+              <p className="text-sm text-xl-grey mb-2">What is the group's current health insurance funding model?</p>
               <select
                 value={formData.currentFunding}
                 onChange={(e) => handleInputChange('currentFunding', e.target.value)}
@@ -316,8 +317,9 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q2. Client's State of Domicile (Not Scored)
+                Q2. State of Domicile (Not Scored)
               </label>
+              <p className="text-sm text-xl-grey mb-2">What state is the group located in (if multiple, please select headquarters)?</p>
               <select
                 value={formData.stateDomicile}
                 onChange={(e) => handleInputChange('stateDomicile', e.target.value)}
@@ -380,8 +382,9 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q3. Client's Industry (Not Scored)
+                Q3. Industry (Not Scored)
               </label>
+              <p className="text-sm text-xl-grey mb-2">What industry is the company in?</p>
               <select
                 value={formData.industry}
                 onChange={(e) => handleInputChange('industry', e.target.value)}
@@ -405,8 +408,9 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q4. Client's Group Size - Enrolled in all plans (Max 20 points)
+                Q4. Group Size (Enrolled, all plans) (Max 20 points)
               </label>
+              <p className="text-sm text-xl-grey mb-2">How many employees are currently enrolled in all company-sponsored health plans?</p>
               <select
                 value={formData.groupSize}
                 onChange={(e) => handleInputChange('groupSize', e.target.value)}
@@ -427,14 +431,15 @@ export default function SelfFundingQuizClient() {
         {currentSection === 2 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-xl-dark-blue mb-6">
-              Client Renewal History & Claims Data
+              Renewal History & Claims Data
             </h2>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q5. Client's Most Recent Medical Renewal Increase (Max 15 points)
+                Q5. Most Recent Medical Renewal Increase (Max 15 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">Recent renewal performance signals urgency and potential for improvement.</p>
+              <p className="text-sm text-xl-grey mb-2">What was the increase negotiated for the company's most recent health insurance renewal?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Recent renewal performance signals urgency and potential for improvement.</p>
               <select
                 value={formData.recentRenewal}
                 onChange={(e) => handleInputChange('recentRenewal', e.target.value)}
@@ -448,15 +453,15 @@ export default function SelfFundingQuizClient() {
                 <option value="18-25">18–25% → 7</option>
                 <option value="26-40">26–40% → 4</option>
                 <option value="over-40">40%+ → 0</option>
-                <option value="unknown">Unknown / Not Available → 0</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q6. Client's Average Medical Renewal Increase (last 3-4 years) (Max 10 points)
+                Q6. Average Medical Renewal Increase (last 3–4 years) (Max 10 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">A lower long-term average indicates pricing stability and better risk.</p>
+              <p className="text-sm text-xl-grey mb-2">What is the average health insurance renewal increase for the company over the last 3–4 years?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Why it matters: A lower long-term average indicates pricing stability and better risk.</p>
               <select
                 value={formData.avgRenewal}
                 onChange={(e) => handleInputChange('avgRenewal', e.target.value)}
@@ -468,15 +473,15 @@ export default function SelfFundingQuizClient() {
                 <option value="13-17">13–17% → 6</option>
                 <option value="18-25">18–25% → 3</option>
                 <option value="over-25">25%+ → 0</option>
-                <option value="unknown">Unknown / Not Available → 0</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q7. Access to Client's Claims Experience (Max 15 points)
+                Q7. Access to Claims Experience (Max 15 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">Claims data is essential for accurate stop-loss underwriting and modeling.</p>
+              <p className="text-sm text-xl-grey mb-2">Does the group have access to claims experience (at least with their annual renewal)?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Claims data is essential for accurate stop-loss underwriting and modeling.</p>
               <select
                 value={formData.claimsAccess}
                 onChange={(e) => handleInputChange('claimsAccess', e.target.value)}
@@ -486,7 +491,7 @@ export default function SelfFundingQuizClient() {
                 <option value="both-monthly-and-large">Yes, both monthly claims and large claims → 15</option>
                 <option value="large-claims-only">Yes, but large claims only → 11</option>
                 <option value="monthly-claims-only">Yes, but monthly claims only → 7</option>
-                <option value="no-access">No / Unknown / Not Available → 0</option>
+                <option value="no-access">No, claims experience is not available → 0</option>
               </select>
             </div>
           </div>
@@ -496,35 +501,36 @@ export default function SelfFundingQuizClient() {
         {currentSection === 3 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-xl-dark-blue mb-6">
-              Client Plan Design & Enrollment
+              Plan Design & Enrollment
             </h2>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q8. Client's Single Premium (Employee Only) on Base Plan (Max 10 points)
+                Q8. Single Premium (Employee Only) on Base Plan (Max 10 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">Higher single premiums often indicate more room for improvement under self-funding.</p>
+              <p className="text-sm text-xl-grey mb-2">What is the current monthly rate for the employee-only plan? If more than one plan, please use the base/lowest cost plan.</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Higher single premiums often indicate more room for improvement under self-funding.</p>
               <select
                 value={formData.singlePremium}
                 onChange={(e) => handleInputChange('singlePremium', e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="age-banded">It depends… client is age-banded → 0</option>
+                <option value="age-banded">It depends… we are age-banded → 0</option>
                 <option value="under-500">&lt;$500 → 0</option>
                 <option value="500-649">$500–$649 → 4</option>
                 <option value="650-799">$650–$799 → 6</option>
                 <option value="800-999">$800–$999 → 8</option>
                 <option value="1000-plus">$1,000+ → 10</option>
-                <option value="unknown">Unknown / Not Available → 0</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q9. Client's PPO/EPO Enrollment Mix (Max 6 points)
+                Q9. PPO/EPO Enrollment Mix (Max 6 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">HMO-heavy groups can still transition, but execution is more complex.</p>
+              <p className="text-sm text-xl-grey mb-2">What percentage of enrolled employees are in PPO plans?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Note: HMO-heavy groups can still transition, but execution is more complex.</p>
               <select
                 value={formData.ppoMix}
                 onChange={(e) => handleInputChange('ppoMix', e.target.value)}
@@ -536,7 +542,6 @@ export default function SelfFundingQuizClient() {
                 <option value="40-59">40–59% PPO → 3</option>
                 <option value="10-39">10–39% PPO → 1</option>
                 <option value="0-9">0–9% PPO → 0</option>
-                <option value="unknown">Unknown / Not Available → 0</option>
               </select>
             </div>
           </div>
@@ -546,14 +551,15 @@ export default function SelfFundingQuizClient() {
         {currentSection === 4 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-xl-dark-blue mb-6">
-              Client Organizational Readiness
+              Organizational Readiness
             </h2>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q10. Client's Financial Stability / Cash Flow Readiness (Max 7 points)
+                Q10. Financial Stability / Cash Flow Readiness (Max 7 points)
               </label>
-              <p className="text-sm text-xl-grey mb-2">Can the client fund monthly claims with normal variance? Are reserves maintained?</p>
+              <p className="text-sm text-xl-grey mb-2">How would you describe the company's financial stability?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Rule of thumb: Can the group fund monthly claims with normal variance? Are reserves maintained?</p>
               <select
                 value={formData.financialStability}
                 onChange={(e) => handleInputChange('financialStability', e.target.value)}
@@ -569,8 +575,9 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q11. Client Leadership's Risk Tolerance (Max 8 points)
+                Q11. Leadership Risk Tolerance (Max 8 points)
               </label>
+              <p className="text-sm text-xl-grey mb-2">How would you describe the company's risk tolerance?</p>
               <select
                 value={formData.riskTolerance}
                 onChange={(e) => handleInputChange('riskTolerance', e.target.value)}
@@ -586,8 +593,9 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q12. Client's HR Team Capacity (Max 5 points)
+                Q12. HR Team Capacity (Max 5 points)
               </label>
+              <p className="text-sm text-xl-grey mb-2">How would you describe the HR team's capacity to manage a self-funded plan?</p>
               <select
                 value={formData.hrCapacity}
                 onChange={(e) => handleInputChange('hrCapacity', e.target.value)}
@@ -605,7 +613,8 @@ export default function SelfFundingQuizClient() {
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
                 Q13. Broker Experience with Self-Funding (Not Scored)
               </label>
-              <p className="text-sm text-xl-grey mb-2">Used to tailor XLB education, resources, and implementation support.</p>
+              <p className="text-sm text-xl-grey mb-2">How would you describe your experience helping a group transition to self-funding?</p>
+              <p className="text-xs text-xl-grey mb-2 italic">Used to tailor XLB education, resources, and implementation support.</p>
               <select
                 value={formData.brokerExperience}
                 onChange={(e) => handleInputChange('brokerExperience', e.target.value)}
@@ -619,31 +628,31 @@ export default function SelfFundingQuizClient() {
             </div>
 
             <div className="border-t pt-6 space-y-4">
-              <h3 className="text-lg font-semibold text-xl-dark-blue">Your Broker Contact Information</h3>
+              <h3 className="text-lg font-semibold text-xl-dark-blue">Your Contact Information</h3>
 
               <div>
                 <label className="block text-sm font-medium text-xl-grey mb-2">
-                  Brokerage/Agency Name *
+                  Company/Brokerage Name *
                 </label>
                 <input
                   type="text"
                   value={formData.companyName}
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="Your Brokerage Name"
+                  placeholder="Your Company Name"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-xl-grey mb-2">
-                  Your Email Address *
+                  Email Address *
                 </label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="broker@company.com"
+                  placeholder="your@email.com"
                 />
               </div>
             </div>
