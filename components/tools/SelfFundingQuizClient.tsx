@@ -77,7 +77,7 @@ export default function SelfFundingQuizClient() {
       case 3:
         return !!(formData.singlePremium && formData.ppoMix);
       case 4:
-        return !!(formData.financialStability && formData.riskTolerance && formData.hrCapacity && formData.brokerExperience && formData.email && formData.companyName);
+        return !!(formData.financialStability && formData.riskTolerance && formData.hrCapacity && formData.brokerExperience);
       default:
         return false;
     }
@@ -182,8 +182,8 @@ export default function SelfFundingQuizClient() {
           {/* Overall Score */}
           <div className={`p-6 rounded-lg border-2 mb-8 ${colors.bg} ${colors.border}`}>
             <div className="text-center mb-4">
-              <div className="text-6xl font-bold ${colors.text} mb-2">{results.readinessScore}</div>
-              <div className="text-xl ${colors.text}">out of 100 points</div>
+              <div className={`text-6xl font-bold mb-2 ${colors.text}`}>{results.readinessScore}</div>
+              <div className={`text-xl ${colors.text}`}>out of 100 points</div>
             </div>
             <h3 className={`text-2xl font-bold mb-3 ${colors.text} text-center`}>
               {results.readinessLevel === 'excellent' && 'Excellent Candidate (80-100)'}
@@ -252,7 +252,7 @@ export default function SelfFundingQuizClient() {
             </button>
             <a
               href="/contact"
-              className="px-6 py-3 bg-xl-bright-blue text-white font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors text-center"
+              className="px-6 py-3 bg-xl-bright-blue font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors text-center text-white"
             >
               Schedule Consultation
             </a>
@@ -298,7 +298,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q1. Current Funding Model (Max 4 points)
+                Current Funding Model
               </label>
               <p className="text-sm text-xl-grey mb-2">What is the group's current health insurance funding model?</p>
               <select
@@ -307,17 +307,17 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="fully-insured">Fully Insured → 2</option>
-                <option value="level-funded">Level Funded → 3</option>
-                <option value="already-self-funded">Already Self-Funded → 4</option>
-                <option value="not-sure">Not Sure → 2</option>
-                <option value="trust-peo-mewa">Trust / PEO / MEWA → 0</option>
+                <option value="fully-insured">Fully Insured</option>
+                <option value="level-funded">Level Funded</option>
+                <option value="already-self-funded">Already Self-Funded</option>
+                <option value="not-sure">Not Sure</option>
+                <option value="trust-peo-mewa">Trust / PEO / MEWA</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q2. State of Domicile (Not Scored)
+                State of Domicile
               </label>
               <p className="text-sm text-xl-grey mb-2">What state is the group located in (if multiple, please select headquarters)?</p>
               <select
@@ -382,7 +382,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q3. Industry (Not Scored)
+                Industry
               </label>
               <p className="text-sm text-xl-grey mb-2">What industry is the company in?</p>
               <select
@@ -408,7 +408,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q4. Group Size (Enrolled, all plans) (Max 20 points)
+                Group Size (Enrolled, all plans)
               </label>
               <p className="text-sm text-xl-grey mb-2">How many employees are currently enrolled in all company-sponsored health plans?</p>
               <select
@@ -417,11 +417,11 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="under-50">&lt;50 → 0</option>
-                <option value="50-99">50–99 → 8</option>
-                <option value="100-199">100–199 → 14</option>
-                <option value="200-499">200–499 → 17</option>
-                <option value="500-plus">500+ → 20</option>
+                <option value="under-50">&lt;50</option>
+                <option value="50-99">50–99</option>
+                <option value="100-199">100–199</option>
+                <option value="200-499">200–499</option>
+                <option value="500-plus">500+</option>
               </select>
             </div>
           </div>
@@ -436,7 +436,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q5. Most Recent Medical Renewal Increase (Max 15 points)
+                Most Recent Medical Renewal Increase
               </label>
               <p className="text-sm text-xl-grey mb-2">What was the increase negotiated for the company's most recent health insurance renewal?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Recent renewal performance signals urgency and potential for improvement.</p>
@@ -446,19 +446,19 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="reduction">Reduction in rates → 15</option>
-                <option value="0-7">0–7% → 15</option>
-                <option value="8-12">8–12% → 12</option>
-                <option value="13-17">13–17% → 10</option>
-                <option value="18-25">18–25% → 7</option>
-                <option value="26-40">26–40% → 4</option>
-                <option value="over-40">40%+ → 0</option>
+                <option value="reduction">Reduction in rates</option>
+                <option value="0-7">0–7%</option>
+                <option value="8-12">8–12%</option>
+                <option value="13-17">13–17%</option>
+                <option value="18-25">18–25%</option>
+                <option value="26-40">26–40%</option>
+                <option value="over-40">40%+</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q6. Average Medical Renewal Increase (last 3–4 years) (Max 10 points)
+                Average Medical Renewal Increase (last 3–4 years)
               </label>
               <p className="text-sm text-xl-grey mb-2">What is the average health insurance renewal increase for the company over the last 3–4 years?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Why it matters: A lower long-term average indicates pricing stability and better risk.</p>
@@ -468,17 +468,17 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="0-7">0–7% → 10</option>
-                <option value="8-12">8–12% → 8</option>
-                <option value="13-17">13–17% → 6</option>
-                <option value="18-25">18–25% → 3</option>
-                <option value="over-25">25%+ → 0</option>
+                <option value="0-7">0–7%</option>
+                <option value="8-12">8–12%</option>
+                <option value="13-17">13–17%</option>
+                <option value="18-25">18–25%</option>
+                <option value="over-25">25%+</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q7. Access to Claims Experience (Max 15 points)
+                Access to Claims Experience
               </label>
               <p className="text-sm text-xl-grey mb-2">Does the group have access to claims experience (at least with their annual renewal)?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Claims data is essential for accurate stop-loss underwriting and modeling.</p>
@@ -488,10 +488,10 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="both-monthly-and-large">Yes, both monthly claims and large claims → 15</option>
-                <option value="large-claims-only">Yes, but large claims only → 11</option>
-                <option value="monthly-claims-only">Yes, but monthly claims only → 7</option>
-                <option value="no-access">No, claims experience is not available → 0</option>
+                <option value="both-monthly-and-large">Yes, both monthly claims and large claims</option>
+                <option value="large-claims-only">Yes, but large claims only</option>
+                <option value="monthly-claims-only">Yes, but monthly claims only</option>
+                <option value="no-access">No, claims experience is not available</option>
               </select>
             </div>
           </div>
@@ -506,7 +506,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q8. Single Premium (Employee Only) on Base Plan (Max 10 points)
+                Single Premium (Employee Only) on Base Plan
               </label>
               <p className="text-sm text-xl-grey mb-2">What is the current monthly rate for the employee-only plan? If more than one plan, please use the base/lowest cost plan.</p>
               <p className="text-xs text-xl-grey mb-2 italic">Why it matters: Higher single premiums often indicate more room for improvement under self-funding.</p>
@@ -516,18 +516,18 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="age-banded">It depends… we are age-banded → 0</option>
-                <option value="under-500">&lt;$500 → 0</option>
-                <option value="500-649">$500–$649 → 4</option>
-                <option value="650-799">$650–$799 → 6</option>
-                <option value="800-999">$800–$999 → 8</option>
-                <option value="1000-plus">$1,000+ → 10</option>
+                <option value="age-banded">It depends… we are age-banded</option>
+                <option value="under-500">&lt;$500</option>
+                <option value="500-649">$500–$649</option>
+                <option value="650-799">$650–$799</option>
+                <option value="800-999">$800–$999</option>
+                <option value="1000-plus">$1,000+</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q9. PPO/EPO Enrollment Mix (Max 6 points)
+                PPO/EPO Enrollment Mix
               </label>
               <p className="text-sm text-xl-grey mb-2">What percentage of enrolled employees are in PPO plans?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Note: HMO-heavy groups can still transition, but execution is more complex.</p>
@@ -537,11 +537,11 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="90-100">90–100% PPO → 6</option>
-                <option value="60-89">60–89% PPO → 4</option>
-                <option value="40-59">40–59% PPO → 3</option>
-                <option value="10-39">10–39% PPO → 1</option>
-                <option value="0-9">0–9% PPO → 0</option>
+                <option value="90-100">90–100% PPO</option>
+                <option value="60-89">60–89% PPO</option>
+                <option value="40-59">40–59% PPO</option>
+                <option value="10-39">10–39% PPO</option>
+                <option value="0-9">0–9% PPO</option>
               </select>
             </div>
           </div>
@@ -556,7 +556,7 @@ export default function SelfFundingQuizClient() {
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q10. Financial Stability / Cash Flow Readiness (Max 7 points)
+                Financial Stability / Cash Flow Readiness
               </label>
               <p className="text-sm text-xl-grey mb-2">How would you describe the company's financial stability?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Rule of thumb: Can the group fund monthly claims with normal variance? Are reserves maintained?</p>
@@ -566,16 +566,16 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="very-stable">Very Stable – Consistent revenue, strong growth → 7</option>
-                <option value="stable">Stable – Predictable revenue, steady operation → 5</option>
-                <option value="moderate">Moderate – Some fluctuations in revenue → 3</option>
-                <option value="unstable">Unstable – Significant revenue variability → 0</option>
+                <option value="very-stable">Very Stable – Consistent revenue, strong growth</option>
+                <option value="stable">Stable – Predictable revenue, steady operation</option>
+                <option value="moderate">Moderate – Some fluctuations in revenue</option>
+                <option value="unstable">Unstable – Significant revenue variability</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q11. Leadership Risk Tolerance (Max 8 points)
+                Leadership Risk Tolerance
               </label>
               <p className="text-sm text-xl-grey mb-2">How would you describe the company's risk tolerance?</p>
               <select
@@ -584,16 +584,16 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="high">High – Very comfortable budgeting for month-to-month variability → 8</option>
-                <option value="moderate">Moderate – Some variability is acceptable → 6</option>
-                <option value="low">Low – Prefer predictable costs → 4</option>
-                <option value="very-low">Very Low – Need maximum cost certainty → 0</option>
+                <option value="high">High – Very comfortable budgeting for month-to-month variability</option>
+                <option value="moderate">Moderate – Some variability is acceptable</option>
+                <option value="low">Low – Prefer predictable costs</option>
+                <option value="very-low">Very Low – Need maximum cost certainty</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q12. HR Team Capacity (Max 5 points)
+                HR Team Capacity
               </label>
               <p className="text-sm text-xl-grey mb-2">How would you describe the HR team's capacity to manage a self-funded plan?</p>
               <select
@@ -602,16 +602,16 @@ export default function SelfFundingQuizClient() {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
               >
                 <option value="">Select one</option>
-                <option value="dedicated-experienced">Dedicated benefits team with experience → 5</option>
-                <option value="shared-some-experience">Shared responsibilities, some benefits experience → 3</option>
-                <option value="limited-minimal-experience">Limited HR staff, minimal benefits experience → 1</option>
-                <option value="no-dedicated">No dedicated HR resources → 0</option>
+                <option value="dedicated-experienced">Dedicated benefits team with experience</option>
+                <option value="shared-some-experience">Shared responsibilities, some benefits experience</option>
+                <option value="limited-minimal-experience">Limited HR staff, minimal benefits experience</option>
+                <option value="no-dedicated">No dedicated HR resources</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-xl-dark-blue mb-2">
-                Q13. Broker Experience with Self-Funding (Not Scored)
+                Broker Experience with Self-Funding
               </label>
               <p className="text-sm text-xl-grey mb-2">How would you describe your experience helping a group transition to self-funding?</p>
               <p className="text-xs text-xl-grey mb-2 italic">Used to tailor XLB education, resources, and implementation support.</p>
@@ -628,31 +628,31 @@ export default function SelfFundingQuizClient() {
             </div>
 
             <div className="border-t pt-6 space-y-4">
-              <h3 className="text-lg font-semibold text-xl-dark-blue">Your Contact Information</h3>
+              <h3 className="text-lg font-semibold text-xl-dark-blue">Your Contact Information (Optional)</h3>
 
               <div>
                 <label className="block text-sm font-medium text-xl-grey mb-2">
-                  Company/Brokerage Name *
+                  Company/Brokerage Name
                 </label>
                 <input
                   type="text"
                   value={formData.companyName}
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="Your Company Name"
+                  placeholder="Your Company Name (optional)"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-xl-grey mb-2">
-                  Email Address *
+                  Email Address
                 </label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
-                  placeholder="your@email.com"
+                  placeholder="your@email.com (optional)"
                 />
               </div>
             </div>
