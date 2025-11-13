@@ -100,8 +100,8 @@ export const deductibleAnalyzerSchema = z.object({
  * Self-Funding Assessment Input Validation
  */
 export const assessmentSchema = z.object({
-  // Email capture
-  email: emailSchema,
+  // Email capture (optional for now)
+  email: emailSchema.optional(),
   companyName: companyNameSchema.optional(),
 
   // Quiz answers

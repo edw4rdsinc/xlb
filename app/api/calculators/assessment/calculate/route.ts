@@ -11,16 +11,28 @@ import type { z } from 'zod';
 type AssessmentInput = z.infer<typeof assessmentSchema>;
 
 interface ScoreBreakdown {
-  financial: number;
-  claims: number;
-  administrative: number;
-  company: number;
+  q1_currentFunding: number;
+  q4_groupSize: number;
+  q5_recentRenewal: number;
+  q6_avgRenewal: number;
+  q7_claimsAccess: number;
+  q8_singlePremium: number;
+  q9_ppoMix: number;
+  q10_financialStability: number;
+  q11_riskTolerance: number;
+  q12_hrCapacity: number;
   total: number;
   maxScores: {
-    financial: number;
-    claims: number;
-    administrative: number;
-    company: number;
+    q1_currentFunding: number;
+    q4_groupSize: number;
+    q5_recentRenewal: number;
+    q6_avgRenewal: number;
+    q7_claimsAccess: number;
+    q8_singlePremium: number;
+    q9_ppoMix: number;
+    q10_financialStability: number;
+    q11_riskTolerance: number;
+    q12_hrCapacity: number;
     total: number;
   };
 }
@@ -30,195 +42,253 @@ interface ScoreBreakdown {
  * This protects the scoring algorithm from being reverse-engineered
  */
 function calculateScores(answers: Record<string, any>): ScoreBreakdown {
-  let financial = 0;
-  let claims = 0;
-  let administrative = 0;
-  let company = 0;
+  let q1_currentFunding = 0;
+  let q4_groupSize = 0;
+  let q5_recentRenewal = 0;
+  let q6_avgRenewal = 0;
+  let q7_claimsAccess = 0;
+  let q8_singlePremium = 0;
+  let q9_ppoMix = 0;
+  let q10_financialStability = 0;
+  let q11_riskTolerance = 0;
+  let q12_hrCapacity = 0;
 
-  // Section 1: Company Info (20 points max)
-  const employeeCountScores: Record<string, number> = {
-    '1-50': 5,
-    '51-100': 10,
-    '101-500': 15,
-    '500+': 20,
+  // Q1: Current Funding Model (Max 4 points)
+  const currentFundingScores: Record<string, number> = {
+    'fully-insured': 2,
+    'level-funded': 3,
+    'already-self-funded': 4,
+    'not-sure': 2,
+    'trust-peo-mewa': 0,
   };
-  company += employeeCountScores[answers.employeeCount] || 0;
+  q1_currentFunding = currentFundingScores[answers.currentFunding] || 0;
 
-  // Section 2: Financial Health (40 points max)
+  // Q4: Group Size (Max 20 points) - BIGGEST FACTOR
+  const groupSizeScores: Record<string, number> = {
+    'under-50': 0,
+    '50-99': 8,
+    '100-199': 14,
+    '200-499': 17,
+    '500-plus': 20,
+  };
+  q4_groupSize = groupSizeScores[answers.groupSize] || 0;
+
+  // Q5: Most Recent Medical Renewal Increase (Max 15 points)
+  const recentRenewalScores: Record<string, number> = {
+    'reduction': 15,
+    '0-7': 15,
+    '8-12': 12,
+    '13-17': 10,
+    '18-25': 7,
+    '26-40': 4,
+    'over-40': 0,
+  };
+  q5_recentRenewal = recentRenewalScores[answers.recentRenewal] || 0;
+
+  // Q6: Average Medical Renewal Increase (last 3-4 years) (Max 10 points)
+  const avgRenewalScores: Record<string, number> = {
+    '0-7': 10,
+    '8-12': 8,
+    '13-17': 6,
+    '18-25': 3,
+    'over-25': 0,
+  };
+  q6_avgRenewal = avgRenewalScores[answers.avgRenewal] || 0;
+
+  // Q7: Access to Claims Experience (Max 15 points)
+  const claimsAccessScores: Record<string, number> = {
+    'both-monthly-and-large': 15,
+    'large-claims-only': 11,
+    'monthly-claims-only': 7,
+    'no-access': 0,
+  };
+  q7_claimsAccess = claimsAccessScores[answers.claimsAccess] || 0;
+
+  // Q8: Single Premium (Employee Only) on Base Plan (Max 10 points)
+  const singlePremiumScores: Record<string, number> = {
+    'age-banded': 0,
+    'under-500': 0,
+    '500-649': 4,
+    '650-799': 6,
+    '800-999': 8,
+    '1000-plus': 10,
+  };
+  q8_singlePremium = singlePremiumScores[answers.singlePremium] || 0;
+
+  // Q9: PPO/EPO Enrollment Mix (Max 6 points)
+  const ppoMixScores: Record<string, number> = {
+    '90-100': 6,
+    '60-89': 4,
+    '40-59': 3,
+    '10-39': 1,
+    '0-9': 0,
+  };
+  q9_ppoMix = ppoMixScores[answers.ppoMix] || 0;
+
+  // Q10: Financial Stability / Cash Flow Readiness (Max 7 points)
   const financialStabilityScores: Record<string, number> = {
-    'very-stable': 15,
-    'stable': 10,
-    'moderate': 5,
+    'very-stable': 7,
+    'stable': 5,
+    'moderate': 3,
     'unstable': 0,
   };
-  financial += financialStabilityScores[answers.financialStability] || 0;
+  q10_financialStability = financialStabilityScores[answers.financialStability] || 0;
 
-  const cashReservesScores: Record<string, number> = {
-    '6-months': 10,
-    '3-6-months': 7,
-    '1-3-months': 4,
-    'less-1-month': 0,
-  };
-  financial += cashReservesScores[answers.cashReserves] || 0;
-
+  // Q11: Leadership Risk Tolerance (Max 8 points)
   const riskToleranceScores: Record<string, number> = {
-    'high': 10,
-    'moderate': 7,
+    'high': 8,
+    'moderate': 6,
     'low': 4,
     'very-low': 0,
   };
-  financial += riskToleranceScores[answers.riskTolerance] || 0;
+  q11_riskTolerance = riskToleranceScores[answers.riskTolerance] || 0;
 
-  const budgetFlexibilityScores: Record<string, number> = {
-    'high': 5,
-    'moderate': 3,
-    'low': 1,
-    'none': 0,
-  };
-  financial += budgetFlexibilityScores[answers.budgetFlexibility] || 0;
-
-  // Section 3: Claims History (20 points max)
-  const claimsPatternScores: Record<string, number> = {
-    'stable': 10,
-    'decreasing': 10,
-    'increasing': 5,
-    'unknown': 5,
-  };
-  claims += claimsPatternScores[answers.claimsPattern] || 0;
-
-  const largeClaimsScores: Record<string, number> = {
-    'none': 5,
-    '1-2': 3,
-    '3-5': 1,
-    '5+': 0,
-  };
-  claims += largeClaimsScores[answers.largeClaimsHistory] || 0;
-
-  const chronicConditionsScores: Record<string, number> = {
-    'low': 5,
-    'moderate': 3,
-    'high': 1,
-    'unknown': 3,
-  };
-  claims += chronicConditionsScores[answers.chronicConditions] || 0;
-
-  // Section 4: Administrative Readiness (20 points max)
+  // Q12: HR Team Capacity (Max 5 points)
   const hrCapacityScores: Record<string, number> = {
-    'dedicated': 6,
-    'shared': 4,
-    'limited': 2,
-    'none': 0,
+    'dedicated-experienced': 5,
+    'shared-some-experience': 3,
+    'limited-minimal-experience': 1,
+    'no-dedicated': 0,
   };
-  administrative += hrCapacityScores[answers.hrCapacity] || 0;
-
-  const vendorScores: Record<string, number> = {
-    'excellent': 6,
-    'good': 4,
-    'fair': 2,
-    'poor': 0,
-  };
-  administrative += vendorScores[answers.vendorRelationships] || 0;
-
-  const dataAnalyticsScores: Record<string, number> = {
-    'advanced': 4,
-    'basic': 2,
-    'minimal': 1,
-    'none': 0,
-  };
-  administrative += dataAnalyticsScores[answers.dataAnalytics] || 0;
-
-  const communicationScores: Record<string, number> = {
-    'excellent': 4,
-    'good': 3,
-    'fair': 1,
-    'poor': 0,
-  };
-  administrative += communicationScores[answers.employeeCommunication] || 0;
+  q12_hrCapacity = hrCapacityScores[answers.hrCapacity] || 0;
 
   // Calculate total
-  const total = financial + claims + administrative + company;
+  const total =
+    q1_currentFunding +
+    q4_groupSize +
+    q5_recentRenewal +
+    q6_avgRenewal +
+    q7_claimsAccess +
+    q8_singlePremium +
+    q9_ppoMix +
+    q10_financialStability +
+    q11_riskTolerance +
+    q12_hrCapacity;
 
   return {
-    financial,
-    claims,
-    administrative,
-    company,
+    q1_currentFunding,
+    q4_groupSize,
+    q5_recentRenewal,
+    q6_avgRenewal,
+    q7_claimsAccess,
+    q8_singlePremium,
+    q9_ppoMix,
+    q10_financialStability,
+    q11_riskTolerance,
+    q12_hrCapacity,
     total,
     maxScores: {
-      financial: 40,
-      claims: 20,
-      administrative: 20,
-      company: 20,
-      total: 100
-    }
+      q1_currentFunding: 4,
+      q4_groupSize: 20,
+      q5_recentRenewal: 15,
+      q6_avgRenewal: 10,
+      q7_claimsAccess: 15,
+      q8_singlePremium: 10,
+      q9_ppoMix: 6,
+      q10_financialStability: 7,
+      q11_riskTolerance: 8,
+      q12_hrCapacity: 5,
+      total: 100,
+    },
   };
 }
 
 /**
  * Generate personalized recommendations based on scores
  */
-function generateRecommendations(scores: ScoreBreakdown): {
-  readinessLevel: 'ready' | 'conditional' | 'not-ready';
+function generateRecommendations(
+  scores: ScoreBreakdown,
+  answers: Record<string, any>
+): {
+  readinessLevel: 'excellent' | 'good' | 'caution' | 'not-ready';
   primaryRecommendation: string;
   keyStrengths: string[];
   areasForImprovement: string[];
   nextSteps: string[];
+  guardrails: string[];
 } {
-  const { total, financial, claims, administrative, company } = scores;
-  const percentages = {
-    total: (total / scores.maxScores.total) * 100,
-    financial: (financial / scores.maxScores.financial) * 100,
-    claims: (claims / scores.maxScores.claims) * 100,
-    administrative: (administrative / scores.maxScores.administrative) * 100,
-    company: (company / scores.maxScores.company) * 100
-  };
+  const { total } = scores;
 
-  // Determine readiness level
-  let readinessLevel: 'ready' | 'conditional' | 'not-ready';
+  // Determine readiness level based on new thresholds
+  let readinessLevel: 'excellent' | 'good' | 'caution' | 'not-ready';
   let primaryRecommendation: string;
 
-  if (percentages.total >= 75 && percentages.financial >= 70) {
-    readinessLevel = 'ready';
-    primaryRecommendation = 'Your organization appears well-positioned for self-funding. The financial stability, claims history, and administrative infrastructure suggest you can successfully manage the risks and responsibilities of a self-funded plan.';
-  } else if (percentages.total >= 60 || (percentages.total >= 50 && percentages.financial >= 60)) {
-    readinessLevel = 'conditional';
-    primaryRecommendation = 'Your organization shows potential for self-funding but should address key areas before transitioning. Consider a phased approach or level-funded arrangement as an intermediate step.';
+  if (total >= 80) {
+    readinessLevel = 'excellent';
+    primaryRecommendation =
+      'Ready to explore self-funding at next renewal. Your organization demonstrates strong fundamentals across all key indicators.';
+  } else if (total >= 60) {
+    readinessLevel = 'good';
+    primaryRecommendation =
+      'Good Candidate with Guidance. Solid fundamentals; may need support in key areas.';
+  } else if (total >= 40) {
+    readinessLevel = 'caution';
+    primaryRecommendation =
+      'Proceed with Caution. May benefit from phased approach or preparation.';
   } else {
     readinessLevel = 'not-ready';
-    primaryRecommendation = 'Based on current indicators, your organization would benefit from remaining fully-insured while building the necessary infrastructure and financial reserves for future self-funding consideration.';
+    primaryRecommendation =
+      'Not Ready. Focus on readiness steps; reassess in 6-12 months.';
   }
 
   // Identify strengths
   const keyStrengths: string[] = [];
-  if (percentages.financial >= 75) keyStrengths.push('Strong financial foundation and risk tolerance');
-  if (percentages.claims >= 75) keyStrengths.push('Favorable claims history and predictability');
-  if (percentages.administrative >= 75) keyStrengths.push('Robust administrative capabilities');
-  if (company >= 15) keyStrengths.push('Sufficient employee base for risk pooling');
+  if (scores.q4_groupSize >= 17) keyStrengths.push('Excellent group size for risk pooling');
+  if (scores.q5_recentRenewal >= 12) keyStrengths.push('Strong recent renewal performance');
+  if (scores.q7_claimsAccess >= 11) keyStrengths.push('Good access to claims data');
+  if (scores.q10_financialStability >= 5) keyStrengths.push('Strong financial foundation');
+  if (scores.q11_riskTolerance >= 6) keyStrengths.push('Appropriate risk tolerance');
 
   // Identify improvements needed
   const areasForImprovement: string[] = [];
-  if (percentages.financial < 50) areasForImprovement.push('Build stronger cash reserves and financial stability');
-  if (percentages.claims < 50) areasForImprovement.push('Analyze and address claims volatility patterns');
-  if (percentages.administrative < 50) areasForImprovement.push('Strengthen HR capacity and vendor partnerships');
-  if (company < 10) areasForImprovement.push('Consider waiting until employee base grows');
+  if (scores.q4_groupSize < 14) areasForImprovement.push('Consider waiting for group to grow');
+  if (scores.q7_claimsAccess < 7) areasForImprovement.push('Negotiate access to claims data at renewal');
+  if (scores.q10_financialStability < 5) areasForImprovement.push('Build stronger cash reserves');
+  if (scores.q12_hrCapacity < 3) areasForImprovement.push('Strengthen HR capacity for benefits management');
+
+  // Add guardrails based on specific conditions
+  const guardrails: string[] = [];
+
+  if (scores.q4_groupSize < 14) {
+    guardrails.push(
+      'Group Size <150: Given the lack of credible claims data, member-level census may allow AI underwriting models to support feasibility.'
+    );
+  }
+
+  if (scores.q7_claimsAccess === 0) {
+    guardrails.push(
+      'Claims Experience = None: Consider negotiating access to claims data at next renewal to improve modeling and stop-loss pricing.'
+    );
+  }
+
+  if (scores.q8_singlePremium === 0 && answers.singlePremium === 'under-500') {
+    guardrails.push(
+      'Single Premium <$500: Current pricing appears efficient; self-funding may offer more control than cost savings.'
+    );
+  }
 
   // Generate next steps
   const nextSteps: string[] = [];
-  if (readinessLevel === 'ready') {
+  if (readinessLevel === 'excellent') {
     nextSteps.push('Request stop-loss quotes from multiple carriers');
     nextSteps.push('Evaluate TPA options and administrative platforms');
     nextSteps.push('Develop 12-month cash flow projections');
     nextSteps.push('Create employee communication strategy');
-  } else if (readinessLevel === 'conditional') {
+  } else if (readinessLevel === 'good') {
     nextSteps.push('Consider level-funded arrangement as transition strategy');
     nextSteps.push('Address identified gaps in administrative infrastructure');
-    nextSteps.push('Build cash reserves to 3-6 months of expected claims');
-    nextSteps.push('Implement claims management and wellness programs');
-  } else {
+    nextSteps.push('Build cash reserves to support claims variability');
+    nextSteps.push('Obtain detailed claims reporting from current carrier');
+  } else if (readinessLevel === 'caution') {
     nextSteps.push('Focus on building financial reserves');
-    nextSteps.push('Implement cost containment strategies in current plan');
+    nextSteps.push('Negotiate access to claims data');
+    nextSteps.push('Consider growth strategies to reach optimal group size');
     nextSteps.push('Develop HR and administrative capabilities');
-    nextSteps.push('Re-assess readiness in 12-18 months');
+  } else {
+    nextSteps.push('Remain fully-insured while building readiness');
+    nextSteps.push('Implement cost containment strategies in current plan');
+    nextSteps.push('Focus on growing employee base');
+    nextSteps.push('Re-assess readiness in 6-12 months');
   }
 
   return {
@@ -226,7 +296,8 @@ function generateRecommendations(scores: ScoreBreakdown): {
     primaryRecommendation,
     keyStrengths,
     areasForImprovement,
-    nextSteps
+    nextSteps,
+    guardrails,
   };
 }
 
@@ -238,7 +309,7 @@ async function handleAssessment(input: AssessmentInput) {
   const scores = calculateScores(input.answers);
 
   // Generate recommendations
-  const recommendations = generateRecommendations(scores);
+  const recommendations = generateRecommendations(scores, input.answers);
 
   // Return assessment results
   return {
@@ -249,26 +320,53 @@ async function handleAssessment(input: AssessmentInput) {
 
     // Score breakdown (percentages only, not raw scoring algorithm)
     scoreBreakdown: {
-      financial: {
-        score: scores.financial,
-        maxScore: scores.maxScores.financial,
-        percentage: Math.round((scores.financial / scores.maxScores.financial) * 100)
+      currentFunding: {
+        score: scores.q1_currentFunding,
+        maxScore: scores.maxScores.q1_currentFunding,
+        percentage: Math.round((scores.q1_currentFunding / scores.maxScores.q1_currentFunding) * 100),
       },
-      claims: {
-        score: scores.claims,
-        maxScore: scores.maxScores.claims,
-        percentage: Math.round((scores.claims / scores.maxScores.claims) * 100)
+      groupSize: {
+        score: scores.q4_groupSize,
+        maxScore: scores.maxScores.q4_groupSize,
+        percentage: Math.round((scores.q4_groupSize / scores.maxScores.q4_groupSize) * 100),
       },
-      administrative: {
-        score: scores.administrative,
-        maxScore: scores.maxScores.administrative,
-        percentage: Math.round((scores.administrative / scores.maxScores.administrative) * 100)
+      renewalPerformance: {
+        score: scores.q5_recentRenewal + scores.q6_avgRenewal,
+        maxScore: scores.maxScores.q5_recentRenewal + scores.maxScores.q6_avgRenewal,
+        percentage: Math.round(
+          ((scores.q5_recentRenewal + scores.q6_avgRenewal) /
+            (scores.maxScores.q5_recentRenewal + scores.maxScores.q6_avgRenewal)) *
+            100
+        ),
       },
-      company: {
-        score: scores.company,
-        maxScore: scores.maxScores.company,
-        percentage: Math.round((scores.company / scores.maxScores.company) * 100)
-      }
+      claimsAndData: {
+        score: scores.q7_claimsAccess,
+        maxScore: scores.maxScores.q7_claimsAccess,
+        percentage: Math.round((scores.q7_claimsAccess / scores.maxScores.q7_claimsAccess) * 100),
+      },
+      planDesign: {
+        score: scores.q8_singlePremium + scores.q9_ppoMix,
+        maxScore: scores.maxScores.q8_singlePremium + scores.maxScores.q9_ppoMix,
+        percentage: Math.round(
+          ((scores.q8_singlePremium + scores.q9_ppoMix) /
+            (scores.maxScores.q8_singlePremium + scores.maxScores.q9_ppoMix)) *
+            100
+        ),
+      },
+      organizationalReadiness: {
+        score: scores.q10_financialStability + scores.q11_riskTolerance + scores.q12_hrCapacity,
+        maxScore:
+          scores.maxScores.q10_financialStability +
+          scores.maxScores.q11_riskTolerance +
+          scores.maxScores.q12_hrCapacity,
+        percentage: Math.round(
+          ((scores.q10_financialStability + scores.q11_riskTolerance + scores.q12_hrCapacity) /
+            (scores.maxScores.q10_financialStability +
+              scores.maxScores.q11_riskTolerance +
+              scores.maxScores.q12_hrCapacity)) *
+            100
+        ),
+      },
     },
 
     // Personalized insights
@@ -276,18 +374,24 @@ async function handleAssessment(input: AssessmentInput) {
     keyStrengths: recommendations.keyStrengths,
     areasForImprovement: recommendations.areasForImprovement,
     nextSteps: recommendations.nextSteps,
+    guardrails: recommendations.guardrails,
 
     // Risk indicators
     riskFactors: {
-      financialRisk: scores.financial < 20 ? 'high' : scores.financial < 30 ? 'moderate' : 'low',
-      claimsRisk: scores.claims < 10 ? 'high' : scores.claims < 15 ? 'moderate' : 'low',
-      operationalRisk: scores.administrative < 10 ? 'high' : scores.administrative < 15 ? 'moderate' : 'low'
+      groupSize: scores.q4_groupSize < 8 ? 'high' : scores.q4_groupSize < 14 ? 'moderate' : 'low',
+      claimsAccess: scores.q7_claimsAccess === 0 ? 'high' : scores.q7_claimsAccess < 7 ? 'moderate' : 'low',
+      financialReadiness:
+        scores.q10_financialStability < 3
+          ? 'high'
+          : scores.q10_financialStability < 5
+          ? 'moderate'
+          : 'low',
     },
 
     // Metadata
     calculatedAt: new Date().toISOString(),
     calculator: 'assessment',
-    version: '1.0'
+    version: '2.0',
   };
 }
 
@@ -299,11 +403,11 @@ export const POST = createSecureHandler({
   calculator: 'assessment',
   schema: assessmentSchema,
   rateLimit: {
-    windowMs: 60 * 1000,  // 1 minute
-    maxRequests: 20        // 20 assessments per minute (it's just a quiz)
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 20, // 20 assessments per minute (it's just a quiz)
   },
-  requireCaptcha: false,  // Disabled for now, enable when reCAPTCHA keys are added
-  handler: handleAssessment
+  requireCaptcha: false, // Disabled for now, enable when reCAPTCHA keys are added
+  handler: handleAssessment,
 });
 
 /**
@@ -311,14 +415,11 @@ export const POST = createSecureHandler({
  * Return method not allowed
  */
 export async function GET(request: Request): Promise<Response> {
-  return new Response(
-    JSON.stringify({ error: 'Method not allowed' }),
-    {
-      status: 405,
-      headers: {
-        'Content-Type': 'application/json',
-        'Allow': 'POST'
-      }
-    }
-  );
+  return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+    status: 405,
+    headers: {
+      'Content-Type': 'application/json',
+      Allow: 'POST',
+    },
+  });
 }

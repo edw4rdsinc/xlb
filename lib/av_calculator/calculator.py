@@ -66,7 +66,7 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
 
     # Convergence variables
     adjusted_deduct = -1.0
-    adjusted_moop = moop_target  # Start with plan MOOP
+    adjusted_moop = -1.0  # Initialize to -1 to force loop entry (VBA line 1780)
     total_beneficiary_pay = -1.0
 
     # Check if deductible equals MOOP (special case)
@@ -84,14 +84,8 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
     # STEP 2: OUTER LOOP - DEDUCTIBLE/MOOP ADJUSTMENT
     # ========================================================================
 
+
     while iter_deduct <= MAX_ITERATIONS:
-
-        # Exit conditions
-        if not deduct_eq_moop and deduct_target <= adjusted_moop:
-            break  # Deductible satisfied
-
-        if abs(total_beneficiary_pay - moop_target) < TOLERANCE:
-            break  # Converged on MOOP
 
         # Initialize for this outer iteration
         moop_adjustment = 0.0
@@ -129,6 +123,7 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
             # they need 25% more spending to reach the deductible target
             adjusted_deduct = deduct_target / coins if coins > 0 else deduct_target
 
+
             # ================================================================
             # STEP 5: FIND DEDUCTIBLE ROW IN CONTINUANCE TABLE
             # ================================================================
@@ -142,16 +137,7 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
             process_all_services(cont_table, plan, deduct_row, accumulators)
 
             # ================================================================
-            # STEP 7: ADJUST DEDUCTIBLE FOR PLAN PAYMENTS BELOW DEDUCTIBLE
-            # ================================================================
-
-            if accumulators.plan_pay > 0:
-                # Plan paid some services below deductible (not subject to deductible)
-                # Enrollee needs more spending to reach deductible
-                deduct_target += accumulators.plan_pay
-
-            # ================================================================
-            # STEP 8: CALCULATE ACHIEVED COINSURANCE RATE
+            # STEP 7: CALCULATE ACHIEVED COINSURANCE RATE
             # ================================================================
 
             # What percentage did enrollee actually pay in deductible range?
@@ -190,47 +176,71 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
         num_inner_loops += 1
 
         # ====================================================================
-        # STEP 11: CALCULATE BENEFICIARY PAYMENT TO MOOP
+        # STEP 11: CALCULATE MOOP ADJUSTMENT
         # ====================================================================
 
-        # Find MOOP row in table
-        moop_row = get_continuance_table_row(cont_table.up_to, adjusted_moop)
+        # Calculate how much the enrollee pays beyond what counts toward deductible
+        # This adjusts MOOP to reflect actual out-of-pocket spending
+        if accumulators.total_pay > 0:
+            # Effective coinsurance in coinsurance range
+            eff_coins_to_moop = 1 - (accumulators.plan_pay / accumulators.total_pay) - \
+                                (accumulators.beneficiary_pay_to_deduct / accumulators.total_pay)
 
-        # Calculate spending between deductible and MOOP
-        spending_above_deduct = adjusted_moop - adjusted_deduct
-
-        # Calculate effective coinsurance rate
-        if eff_coins_denominator > 0:
-            eff_coins_rate = accumulators.eff_coins_numerator / eff_coins_denominator
+            # MOOP adjustment based on services in deductible range
+            moop_adjustment = adjusted_deduct * eff_coins_to_moop
         else:
-            eff_coins_rate = 0.0
+            moop_adjustment = 0.0
 
-        # Total beneficiary payment = payment to deductible + coinsurance portion to MOOP
-        total_beneficiary_pay = (accumulators.beneficiary_pay_to_deduct +
-                                spending_above_deduct * eff_coins_rate)
-
-        # ====================================================================
-        # STEP 12: ADJUST MOOP IF NEEDED
-        # ====================================================================
-
-        if total_beneficiary_pay > moop_target:
-            # Beneficiary would pay too much - reduce spending ceiling
-            deficit = total_beneficiary_pay - moop_target
-
-            if eff_coins_rate > 0:
-                adjusted_moop -= deficit / eff_coins_rate
-            else:
-                adjusted_moop = adjusted_deduct  # Fallback
+        # Adjusted MOOP for beneficiary cost calculations
+        adjusted_moop = moop_target - moop_adjustment
 
         # ====================================================================
-        # STEP 13: CHECK OUTER LOOP CONVERGENCE
+        # STEP 12: CALCULATE BENEFICIARY PAYMENT TO MOOP
         # ====================================================================
 
+        # Total beneficiary payment based on VBA logic (line 2134)
+        # TOT_BENEPAY = gADJ_DEDUCT * (1 - gPLAN_PAY / gTOT_PAY)
+        if accumulators.total_pay > 0:
+            total_beneficiary_pay = adjusted_deduct * (1 - accumulators.plan_pay / accumulators.total_pay)
+        else:
+            total_beneficiary_pay = 0.0
+
+        # ====================================================================
+        # STEP 13: ADJUST DEDUCTIBLE TARGET IF NEEDED (VBA lines 2122-2131)
+        # ====================================================================
+
+        # Debug output for first few iterations
+        if iter_deduct < 3:
+            print(f"\n--- Outer iteration {iter_deduct} ---")
+            print(f"  deduct_target: ${deduct_target:,.2f}")
+            print(f"  adjusted_deduct: ${adjusted_deduct:,.2f}")
+            print(f"  adjusted_moop: ${adjusted_moop:,.2f}")
+            print(f"  total_beneficiary_pay: ${total_beneficiary_pay:,.2f}")
+            print(f"  Inner iterations: {iter_coins}")
+
+        # If beneficiary would pay more than MOOP, adjust deductible target
+        if total_beneficiary_pay > moop_target or (adjusted_deduct > 0 and coins == 0) or deduct_eq_moop:
+            # Calculate adjustment percentage
+            change_pct = 1 + (moop_target - total_beneficiary_pay) / (2 * deduct_target)
+            # Constrain change percentage
+            change_pct = max(0.25, min(2.0, change_pct))
+            # Adjust deductible target
+            deduct_target = deduct_target * change_pct
+            # Mark that deductible equals MOOP for convergence purposes
+            deduct_eq_moop = True
+
+        # ====================================================================
+        # STEP 14: CHECK OUTER LOOP CONVERGENCE
+        # ====================================================================
+
+        # Check convergence on MOOP
         if abs(total_beneficiary_pay - moop_target) < TOLERANCE:
             break
 
-        # Mark first iteration complete
-        first_iteration_complete = True
+        # Check deductible satisfaction condition (matches VBA line 1797)
+        if not deduct_eq_moop and deduct_target <= adjusted_moop:
+            break
+
         iter_deduct += 1
 
     # End of outer loop
@@ -238,6 +248,15 @@ def calculate_av_combined(plan: PlanDesign, cont_table: ContinuanceTable) -> AVR
     # If loop didn't run, ensure adjusted_deduct is set properly
     if iter_deduct == 0 and adjusted_deduct < 0:
         adjusted_deduct = plan.deductible
+
+    # VBA lines 2147-2148: Recalculate plan payment below deductible
+    # Scale by ratio of expected cost at deductible to total cost processed
+    if accumulators.total_pay > 0:
+        deduct_row = get_continuance_table_row(cont_table.up_to, adjusted_deduct)
+        ded_maxd = compute_row_value(cont_table.maxd, deduct_row)
+        accumulators.plan_pay = ded_maxd * accumulators.plan_pay / accumulators.total_pay
+    else:
+        accumulators.plan_pay = 0.0
 
     # ========================================================================
     # STEP 14: CALCULATE PLAN PAYMENTS ACROSS ALL SPENDING RANGES
