@@ -115,8 +115,6 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl,
             )}
           </div>
 
-          </div>
-
           {(email || linkedinUrl) && (
             <div className="relative z-10 mt-4 flex gap-3 justify-center">
               {email && (
