@@ -295,123 +295,7 @@ export default function HowWeHelpPage() {
 
           <div className="space-y-12">
 
-            {/* Challenge 1: COBRA Calculation */}
-            <AnimatedSection animation="fade-up">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <div className="inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                    COMMON CHALLENGE
-                  </div>
-                  <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
-                    "How do I calculate fully insured equivalent rates accurately?"
-                  </h3>
-                  <p className="text-xl-grey mb-4 leading-relaxed">
-                    Fully insured equivalent rates for self-funded plans are notoriously complex. Coverage tier variations, plan design differences, and monthly adjustments require careful analysis to provide accurate calculations.
-                  </p>
-                  <p className="text-xl-grey mb-6 leading-relaxed">
-                    Let us help.
-                  </p>
-                  <Link
-                    href="/toolkit#cobra-calculator"
-                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
-                    style={{ color: 'white' }}
-                  >
-                    Try the TrueCost Calculator
-                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-                <div className="bg-xl-light-grey rounded-lg p-8">
-                  <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
-                  <ul className="space-y-3 text-xl-grey">
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Rates built on actuarial values and plan design</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Flexible tier structures (2-tier, 3-tier, 4-tier, 5-tier)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Client-ready PDF reports you can share with confidence</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Automatic COBRA rate calculations included</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <hr className="border-xl-light-grey" />
-
-            {/* Challenge 2: Deductible Optimization */}
-            <AnimatedSection animation="fade-up">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="md:order-2">
-                  <div className="inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                    COMMON CHALLENGE
-                  </div>
-                  <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
-                    "How do I find the best specific deductible for my client?"
-                  </h3>
-                  <p className="text-xl-grey mb-4 leading-relaxed">
-                    Finding the optimal specific deductible requires analyzing historical claims data and comparing the impact at different deductible levels. Most brokers don't have time for this complex analysis.
-                  </p>
-                  <p className="text-xl-grey mb-6 leading-relaxed">
-                    Our tool provides historically-based analysis to help you identify the deductible level that would have worked best for your client's specific claims pattern.
-                  </p>
-                  <Link
-                    href="/toolkit#deductible-analyzer"
-                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
-                    style={{ color: 'white' }}
-                  >
-                    Try the Deductible Analyzer
-                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-                <div className="bg-xl-light-grey rounded-lg p-8 md:order-1">
-                  <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
-                  <ul className="space-y-3 text-xl-grey">
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Evaluates historical claims data across multiple years</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Compares premium savings at different deductible levels</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Shows historically optimal deductible for your group</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <hr className="border-xl-light-grey" />
-
-            {/* Challenge 3: Self-Funding Readiness */}
+            {/* Challenge 1: Self-Funding Readiness */}
             <AnimatedSection animation="fade-up">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -472,6 +356,108 @@ export default function HowWeHelpPage() {
 
             <hr className="border-xl-light-grey" />
 
+            {/* Challenge 2: COBRA Calculation */}
+            <AnimatedSection animation="fade-up">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="md:order-2">
+                  <div className="inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                    COMMON CHALLENGE
+                  </div>
+                  <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
+                    "How do I calculate fully insured equivalent rates accurately?"
+                  </h3>
+                  <p className="text-xl-grey mb-4 leading-relaxed">
+                    Fully insured equivalent rates for self-funded plans are notoriously complex. Coverage tier variations, plan design differences, and monthly adjustments require careful analysis to provide accurate calculations.
+                  </p>
+                  <p className="text-xl-grey mb-6 leading-relaxed">
+                    Let us help.
+                  </p>
+                  <div className="inline-flex items-center bg-xl-grey/30 px-6 py-3 rounded-md font-semibold text-xl-grey cursor-not-allowed">
+                    coming in q1 2026
+                  </div>
+                </div>
+                <div className="bg-xl-light-grey rounded-lg p-8 md:order-1">
+                  <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
+                  <ul className="space-y-3 text-xl-grey">
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Rates built on actuarial values and plan design</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Flexible tier structures (2-tier, 3-tier, 4-tier, 5-tier)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Client-ready PDF reports you can share with confidence</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Automatic COBRA rate calculations included</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <hr className="border-xl-light-grey" />
+
+            {/* Challenge 3: Deductible Optimization */}
+            <AnimatedSection animation="fade-up">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                    COMMON CHALLENGE
+                  </div>
+                  <h3 className="text-3xl font-bold text-xl-dark-blue mb-4">
+                    "How do I find the best specific deductible for my client?"
+                  </h3>
+                  <p className="text-xl-grey mb-4 leading-relaxed">
+                    Finding the optimal specific deductible requires analyzing historical claims data and comparing the impact at different deductible levels. Most brokers don't have time for this complex analysis.
+                  </p>
+                  <p className="text-xl-grey mb-6 leading-relaxed">
+                    Our tool provides historically-based analysis to help you identify the deductible level that would have worked best for your client's specific claims pattern.
+                  </p>
+                  <div className="inline-flex items-center bg-xl-grey/30 px-6 py-3 rounded-md font-semibold text-xl-grey cursor-not-allowed">
+                    coming in q1 2026
+                  </div>
+                </div>
+                <div className="bg-xl-light-grey rounded-lg p-8">
+                  <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
+                  <ul className="space-y-3 text-xl-grey">
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Evaluates historical claims data across multiple years</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Compares premium savings at different deductible levels</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Shows historically optimal deductible for your group</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <hr className="border-xl-light-grey" />
+
             {/* Challenge 4: Aggregating Specific Deductibles */}
             <AnimatedSection animation="fade-up">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -488,16 +474,9 @@ export default function HowWeHelpPage() {
                   <p className="text-xl-grey mb-6 leading-relaxed">
                     Without proper analysis, you might miss opportunities to save clients thousands—or recommend a structure that costs them more.
                   </p>
-                  <Link
-                    href="/solutions/aggregating-specific-analysis"
-                    className="inline-flex items-center bg-xl-bright-blue px-6 py-3 rounded-md font-semibold hover:bg-xl-dark-blue transition-colors"
-                    style={{ color: 'white' }}
-                  >
-                    Try the Aggregating Specific Calculator
-                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
+                  <div className="inline-flex items-center bg-xl-grey/30 px-6 py-3 rounded-md font-semibold text-xl-grey cursor-not-allowed">
+                    coming in q1 2026
+                  </div>
                 </div>
                 <div className="bg-xl-light-grey rounded-lg p-8 md:order-1">
                   <h4 className="text-xl font-bold text-xl-dark-blue mb-4">Our Solution:</h4>
