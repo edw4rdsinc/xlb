@@ -483,8 +483,111 @@ export default function StateGuidesPage() {
         </div>
       </section>
 
-      {/* States with Specific Regulations */}
+      {/* All States Table */}
       <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-xl-dark-blue mb-6">
+            Complete State Reference Table
+          </h2>
+
+          <p className="text-xl-grey mb-6">
+            Comprehensive listing of all 50 states and DC with minimum requirements and regulatory contact information.
+          </p>
+
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-xl-dark-blue">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                      State
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                      Min Specific Deductible
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                      Min Aggregate Attachment
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                      Department Contact
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {stateRegulations.map((state, index) => {
+                    const isHighlyRegulated = state.state === 'California';
+                    const isRegulated = ['Alaska', 'Arkansas', 'Colorado', 'Connecticut', 'Florida'].includes(state.state);
+
+                    return (
+                      <tr key={state.state} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="font-medium text-xl-dark-blue">{state.state}</div>
+                            {isHighlyRegulated && (
+                              <a
+                                href="#regulated-states"
+                                className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-200 text-red-900 hover:bg-red-300 transition-colors cursor-pointer"
+                              >
+                                Highly Regulated
+                              </a>
+                            )}
+                            {isRegulated && (
+                              <a
+                                href="#regulated-states"
+                                className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors cursor-pointer"
+                              >
+                                Regulated
+                              </a>
+                            )}
+                          </div>
+                          {state.employerSize && (
+                            <div className="text-xs text-gray-500 mt-1">{state.employerSize}</div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm text-xl-grey whitespace-normal">{state.minSpecificDeductible}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm text-xl-grey whitespace-normal">{state.minAggregateAttachment}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm">
+                            <div className="font-medium text-xl-dark-blue text-xs">{state.department}</div>
+                            <div className="text-xs text-xl-grey mt-1">{state.phone}</div>
+                            <a
+                              href={state.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-xl-bright-blue hover:underline mt-1 inline-block"
+                            >
+                              Website
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p className="text-sm text-gray-700">
+              <strong>Legend:</strong>
+            </p>
+            <ul className="text-sm text-gray-600 mt-2 space-y-1">
+              <li>• <strong>"No minimum"</strong> indicates the state has not enacted specific minimum attachment point requirements</li>
+              <li>• <strong>FTE</strong> = Full-Time Equivalent employees</li>
+              <li>• States with "Regulated" badge have specific statutory requirements beyond the standard $10,000 minimum</li>
+              <li>• Always verify current requirements with the state department of insurance before quoting</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* States with Specific Regulations */}
+      <section id="regulated-states" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-xl-dark-blue mb-6">
             States with Specific Stop-Loss Regulations
@@ -495,7 +598,7 @@ export default function StateGuidesPage() {
           </p>
 
           {/* Alaska */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">Alaska</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -558,7 +661,7 @@ export default function StateGuidesPage() {
           </div>
 
           {/* Arkansas */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">Arkansas</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -630,7 +733,7 @@ export default function StateGuidesPage() {
           </div>
 
           {/* California */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">California</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -705,7 +808,7 @@ export default function StateGuidesPage() {
           </div>
 
           {/* Colorado */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">Colorado</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -746,7 +849,7 @@ export default function StateGuidesPage() {
           </div>
 
           {/* Connecticut */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">Connecticut</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -781,7 +884,7 @@ export default function StateGuidesPage() {
           </div>
 
           {/* Florida */}
-          <div className="mb-8 bg-gray-50 rounded-lg p-6 border-l-4 border-xl-bright-blue">
+          <div className="mb-8 bg-white rounded-lg p-6 border-l-4 border-xl-bright-blue shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <h3 className="text-2xl font-bold text-xl-dark-blue">Florida</h3>
               <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -813,93 +916,6 @@ export default function StateGuidesPage() {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* All States Table */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-xl-dark-blue mb-6">
-            Complete State Reference Table
-          </h2>
-
-          <p className="text-xl-grey mb-6">
-            Comprehensive listing of all 50 states and DC with minimum requirements and regulatory contact information.
-          </p>
-
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-xl-dark-blue">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                      State
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                      Min Specific Deductible
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                      Min Aggregate Attachment
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                      Department Contact
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {stateRegulations.map((state, index) => (
-                    <tr key={state.state} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="font-medium text-xl-dark-blue">{state.state}</div>
-                          {state.citation && (
-                            <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                              Regulated
-                            </span>
-                          )}
-                        </div>
-                        {state.employerSize && (
-                          <div className="text-xs text-gray-500 mt-1">{state.employerSize}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-xl-grey whitespace-normal">{state.minSpecificDeductible}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-xl-grey whitespace-normal">{state.minAggregateAttachment}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm">
-                          <div className="font-medium text-xl-dark-blue text-xs">{state.department}</div>
-                          <div className="text-xs text-xl-grey mt-1">{state.phone}</div>
-                          <a
-                            href={state.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-xl-bright-blue hover:underline mt-1 inline-block"
-                          >
-                            Website
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-gray-700">
-              <strong>Legend:</strong>
-            </p>
-            <ul className="text-sm text-gray-600 mt-2 space-y-1">
-              <li>• <strong>"No minimum"</strong> indicates the state has not enacted specific minimum attachment point requirements</li>
-              <li>• <strong>FTE</strong> = Full-Time Equivalent employees</li>
-              <li>• States with "Regulated" badge have specific statutory requirements beyond the standard $10,000 minimum</li>
-              <li>• Always verify current requirements with the state department of insurance before quoting</li>
-            </ul>
           </div>
         </div>
       </section>
