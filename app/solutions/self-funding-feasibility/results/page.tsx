@@ -193,7 +193,7 @@ function ResultsContent() {
                       <img
                         src={results.branding.clientLogo}
                         alt="Client logo"
-                        className="max-h-20 w-auto object-contain aspect-auto"
+                        className="max-h-32 w-auto object-contain aspect-auto flex-shrink-0"
                       />
                     )}
                     {results.branding.clientName && (
