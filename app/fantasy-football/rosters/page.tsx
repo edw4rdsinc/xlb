@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { supabase, type Player } from '@/lib/supabase/client';
 import { RosterGrid } from '@/components/fantasy-football/RosterGrid';
 import { RosterList } from '@/components/fantasy-football/RosterList';
@@ -134,9 +135,18 @@ export default function RostersPage() {
           <h1 className="text-4xl font-bold text-slate-800 mb-2">
             Team Rosters
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-lg text-slate-600 mb-4">
             View all submitted lineups for the current round
           </p>
+          <Link
+            href="/fantasy-football/results"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Results
+          </Link>
         </div>
 
         {/* Controls */}
