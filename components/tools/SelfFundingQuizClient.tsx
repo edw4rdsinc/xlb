@@ -193,13 +193,15 @@ export default function SelfFundingQuizClient() {
       }
     };
 
-    const resultsData = encodeURIComponent(JSON.stringify(resultsWithBranding));
-    window.location.href = `/solutions/self-funding-feasibility/results?data=${resultsData}`;
+    // Store in sessionStorage to avoid URL length limits with base64 images
+    sessionStorage.setItem('assessmentResults', JSON.stringify(resultsWithBranding));
+    window.location.href = `/solutions/self-funding-feasibility/results`;
   };
 
   const handleSkipBranding = () => {
-    const resultsData = encodeURIComponent(JSON.stringify(assessmentResults));
-    window.location.href = `/solutions/self-funding-feasibility/results?data=${resultsData}`;
+    // Store in sessionStorage
+    sessionStorage.setItem('assessmentResults', JSON.stringify(assessmentResults));
+    window.location.href = `/solutions/self-funding-feasibility/results`;
   };
 
   if (loading) {

@@ -10,6 +10,21 @@ function ResultsContent() {
   const [showShareToast, setShowShareToast] = useState(false);
 
   useEffect(() => {
+    // First try to get from sessionStorage (preferred - avoids URL length limits)
+    const storedResults = sessionStorage.getItem('assessmentResults');
+    if (storedResults) {
+      try {
+        const decoded = JSON.parse(storedResults);
+        setResults(decoded);
+        // Clear after reading to avoid stale data
+        sessionStorage.removeItem('assessmentResults');
+        return;
+      } catch (error) {
+        console.error('Failed to parse stored results:', error);
+      }
+    }
+
+    // Fallback to URL params for backward compatibility
     const resultsData = searchParams.get('data');
     if (resultsData) {
       try {
