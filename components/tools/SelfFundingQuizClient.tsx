@@ -1,6 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import Image from 'next/image';
+
+interface BrandingData {
+  clientName: string;
+  clientLogo: string | null;
+  brokerName: string;
+  brokerLogo: string | null;
+}
 
 interface FormData {
   // Q1: Current Funding Model
@@ -58,6 +66,17 @@ export default function SelfFundingQuizClient() {
   const [currentSection, setCurrentSection] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showBranding, setShowBranding] = useState(false);
+  const [assessmentResults, setAssessmentResults] = useState<any>(null);
+  const [branding, setBranding] = useState<BrandingData>({
+    clientName: '',
+    clientLogo: null,
+    brokerName: '',
+    brokerLogo: null,
+  });
+
+  const clientLogoRef = useRef<HTMLInputElement>(null);
+  const brokerLogoRef = useRef<HTMLInputElement>(null);
 
   const totalSections = 4;
 
@@ -132,14 +151,55 @@ export default function SelfFundingQuizClient() {
 
       const data = await response.json();
 
-      // Redirect to results page with data
-      const resultsData = encodeURIComponent(JSON.stringify(data.data));
-      window.location.href = `/solutions/self-funding-feasibility/results?data=${resultsData}`;
+      // Store results and show branding screen
+      setAssessmentResults(data.data);
+      setShowBranding(true);
+      setLoading(false);
     } catch (err) {
       setError('Failed to calculate assessment. Please try again.');
       console.error(err);
       setLoading(false);
     }
+  };
+
+  const handleLogoUpload = (type: 'client' | 'broker', file: File | null) => {
+    if (!file) {
+      setBranding(prev => ({
+        ...prev,
+        [type === 'client' ? 'clientLogo' : 'brokerLogo']: null
+      }));
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setBranding(prev => ({
+        ...prev,
+        [type === 'client' ? 'clientLogo' : 'brokerLogo']: e.target?.result as string
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleViewResults = () => {
+    // Combine assessment results with branding data
+    const resultsWithBranding = {
+      ...assessmentResults,
+      branding: {
+        clientName: branding.clientName || null,
+        clientLogo: branding.clientLogo || null,
+        brokerName: branding.brokerName || null,
+        brokerLogo: branding.brokerLogo || null,
+      }
+    };
+
+    const resultsData = encodeURIComponent(JSON.stringify(resultsWithBranding));
+    window.location.href = `/solutions/self-funding-feasibility/results?data=${resultsData}`;
+  };
+
+  const handleSkipBranding = () => {
+    const resultsData = encodeURIComponent(JSON.stringify(assessmentResults));
+    window.location.href = `/solutions/self-funding-feasibility/results?data=${resultsData}`;
   };
 
   if (loading) {
@@ -148,6 +208,149 @@ export default function SelfFundingQuizClient() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-xl-bright-blue border-t-transparent mx-auto mb-4" />
           <p className="text-lg text-xl-grey">Analyzing your readiness...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Branding screen - shown after assessment is complete
+  if (showBranding) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-xl-dark-blue mb-2">
+              Assessment Complete!
+            </h2>
+            <p className="text-xl-grey">
+              Personalize your report with client and broker branding (optional)
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Client Branding */}
+            <div className="border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-xl-dark-blue mb-4">Client Information</h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-xl-grey mb-2">
+                    Client Company Name
+                  </label>
+                  <input
+                    type="text"
+                    value={branding.clientName}
+                    onChange={(e) => setBranding(prev => ({ ...prev, clientName: e.target.value }))}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
+                    placeholder="Enter client company name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-xl-grey mb-2">
+                    Client Logo
+                  </label>
+                  <input
+                    ref={clientLogoRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleLogoUpload('client', e.target.files?.[0] || null)}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue text-sm"
+                  />
+                  {branding.clientLogo && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <img
+                        src={branding.clientLogo}
+                        alt="Client logo preview"
+                        className="h-12 object-contain"
+                      />
+                      <button
+                        onClick={() => {
+                          setBranding(prev => ({ ...prev, clientLogo: null }));
+                          if (clientLogoRef.current) clientLogoRef.current.value = '';
+                        }}
+                        className="text-red-500 text-sm hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Broker Branding */}
+            <div className="border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-xl-dark-blue mb-4">Broker Information</h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-xl-grey mb-2">
+                    Broker/Agency Name
+                  </label>
+                  <input
+                    type="text"
+                    value={branding.brokerName}
+                    onChange={(e) => setBranding(prev => ({ ...prev, brokerName: e.target.value }))}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue"
+                    placeholder="Enter broker or agency name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-xl-grey mb-2">
+                    Broker Logo
+                  </label>
+                  <input
+                    ref={brokerLogoRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleLogoUpload('broker', e.target.files?.[0] || null)}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-xl-bright-blue focus:border-xl-bright-blue text-sm"
+                  />
+                  {branding.brokerLogo && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <img
+                        src={branding.brokerLogo}
+                        alt="Broker logo preview"
+                        className="h-12 object-contain"
+                      />
+                      <button
+                        onClick={() => {
+                          setBranding(prev => ({ ...prev, brokerLogo: null }));
+                          if (brokerLogoRef.current) brokerLogoRef.current.value = '';
+                        }}
+                        className="text-red-500 text-sm hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 pt-6 border-t border-gray-200">
+            <button
+              onClick={handleSkipBranding}
+              className="px-6 py-3 bg-white text-xl-grey border border-gray-300 font-semibold rounded-lg hover:bg-xl-light-grey transition-colors"
+            >
+              Skip Branding
+            </button>
+            <button
+              onClick={handleViewResults}
+              className="px-6 py-3 bg-xl-bright-blue text-white font-semibold rounded-lg hover:bg-xl-dark-blue transition-colors"
+            >
+              View Results
+            </button>
+          </div>
         </div>
       </div>
     );

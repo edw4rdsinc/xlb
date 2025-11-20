@@ -100,7 +100,7 @@ export default function FlipCard({ name, title, expertise, bio, email, imageUrl,
           }}
         >
           {/* Logo Watermark */}
-          <div className="absolute top-4 right-4 opacity-10 pointer-events-none">
+          <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none">
             <img src="/images/logos/xl-logo-icon.png" alt="" className="w-24 h-24" />
           </div>
 

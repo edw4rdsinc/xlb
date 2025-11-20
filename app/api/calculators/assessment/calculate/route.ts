@@ -5,7 +5,12 @@
 
 import { createSecureHandler } from '@/lib/api/security/api-handler';
 import { assessmentSchema } from '@/lib/api/security/validation';
+import Anthropic from '@anthropic-ai/sdk';
 import type { z } from 'zod';
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY!,
+});
 
 // Type for validated input
 type AssessmentInput = z.infer<typeof assessmentSchema>;
@@ -302,6 +307,95 @@ function generateRecommendations(
 }
 
 /**
+ * Generate a professional narrative using Claude API
+ */
+async function generateNarrative(
+  scores: ScoreBreakdown,
+  recommendations: {
+    readinessLevel: string;
+    primaryRecommendation: string;
+    keyStrengths: string[];
+    areasForImprovement: string[];
+    nextSteps: string[];
+    guardrails: string[];
+  },
+  answers: Record<string, any>
+): Promise<string> {
+  try {
+    const readinessLabels: Record<string, string> = {
+      'excellent': 'Excellent Candidate (80-100 points)',
+      'good': 'Good Candidate with Guidance (60-79 points)',
+      'caution': 'Proceed with Caution (40-59 points)',
+      'not-ready': 'Not Ready (below 40 points)',
+    };
+
+    const groupSizeLabels: Record<string, string> = {
+      'under-50': 'fewer than 50 employees',
+      '50-99': '50-99 employees',
+      '100-199': '100-199 employees',
+      '200-499': '200-499 employees',
+      '500-plus': '500+ employees',
+    };
+
+    const prompt = `You are a senior benefits consultant writing a professional executive summary for a Self-Funding Readiness Assessment. Write a cohesive, flowing narrative (approximately 3-4 paragraphs, about one page) that synthesizes all the assessment findings into actionable guidance.
+
+ASSESSMENT DATA:
+- Overall Score: ${scores.total}/100
+- Readiness Level: ${readinessLabels[recommendations.readinessLevel] || recommendations.readinessLevel}
+- Group Size: ${groupSizeLabels[answers.groupSize] || answers.groupSize}
+- Current Funding: ${answers.currentFunding}
+- Industry: ${answers.industry}
+
+KEY STRENGTHS:
+${recommendations.keyStrengths.length > 0 ? recommendations.keyStrengths.map(s => `• ${s}`).join('\n') : '• No major strengths identified at this time'}
+
+AREAS FOR IMPROVEMENT:
+${recommendations.areasForImprovement.length > 0 ? recommendations.areasForImprovement.map(a => `• ${a}`).join('\n') : '• No critical gaps identified'}
+
+RECOMMENDED NEXT STEPS:
+${recommendations.nextSteps.map(s => `• ${s}`).join('\n')}
+
+IMPORTANT CONSIDERATIONS (GUARDRAILS):
+${recommendations.guardrails.length > 0 ? recommendations.guardrails.map(g => `• ${g}`).join('\n') : '• No special considerations'}
+
+WRITING GUIDELINES:
+1. Use second person ("Your organization...")
+2. Open with the overall assessment and what it means for their self-funding journey
+3. Discuss strengths as opportunities and frame improvements constructively
+4. Connect the dots between findings - show how factors relate to each other
+5. End with clear, prioritized guidance on next steps
+6. Maintain a professional, consultative tone - advisory but not alarmist
+7. Be specific and actionable, not generic
+8. Do NOT use bullet points - write in flowing paragraphs
+9. Do NOT include headers or section titles - just flowing prose
+
+Write the executive summary now:`;
+
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 1500,
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+    });
+
+    const content = message.content[0];
+    if (content.type !== 'text') {
+      throw new Error('Unexpected response type from Claude');
+    }
+
+    return content.text;
+  } catch (error: any) {
+    console.error('Narrative generation error:', error);
+    // Return a fallback narrative if Claude fails
+    return `Your organization scored ${scores.total} out of 100 on the Self-Funding Readiness Assessment, placing you in the "${recommendations.readinessLevel}" category. ${recommendations.primaryRecommendation}\n\nBased on your responses, we recommend reviewing the detailed findings below and scheduling a consultation with our team to discuss your specific situation and develop a customized transition strategy.`;
+  }
+}
+
+/**
  * Business logic handler for Assessment
  */
 async function handleAssessment(input: AssessmentInput) {
@@ -310,6 +404,9 @@ async function handleAssessment(input: AssessmentInput) {
 
   // Generate recommendations
   const recommendations = generateRecommendations(scores, input.answers);
+
+  // Generate professional narrative using Claude
+  const narrativeRecommendation = await generateNarrative(scores, recommendations, input.answers);
 
   // Return assessment results
   return {
@@ -371,6 +468,7 @@ async function handleAssessment(input: AssessmentInput) {
 
     // Personalized insights
     primaryRecommendation: recommendations.primaryRecommendation,
+    narrativeRecommendation,
     keyStrengths: recommendations.keyStrengths,
     areasForImprovement: recommendations.areasForImprovement,
     nextSteps: recommendations.nextSteps,
