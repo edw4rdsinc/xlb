@@ -193,7 +193,7 @@ function ResultsContent() {
                       <img
                         src={results.branding.clientLogo}
                         alt="Client logo"
-                        className="max-h-16 max-w-[200px] w-auto object-contain"
+                        className="max-h-20 w-auto object-contain aspect-auto"
                       />
                     )}
                     {results.branding.clientName && (
@@ -211,7 +211,7 @@ function ResultsContent() {
                         <img
                           src={results.branding.brokerLogo}
                           alt="Broker logo"
-                          className="max-h-14 max-w-[180px] w-auto object-contain"
+                          className="max-h-16 w-auto object-contain aspect-auto"
                         />
                       )}
                       {results.branding.brokerName && (
