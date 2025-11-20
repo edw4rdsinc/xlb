@@ -148,6 +148,34 @@ function ResultsContent() {
           .print-break-avoid {
             break-inside: avoid;
           }
+          /* Hide site header and footer - more specific selectors */
+          header, footer, nav {
+            display: none !important;
+          }
+          /* Target Next.js layout elements */
+          body > div > header,
+          body > div > footer,
+          body > div > nav,
+          #__next > header,
+          #__next > footer,
+          #__next > nav {
+            display: none !important;
+          }
+          /* Hide any navigation elements with common class patterns */
+          [class*="Navbar"],
+          [class*="navbar"],
+          [class*="Header"],
+          [class*="Footer"],
+          [class*="navigation"],
+          [class*="site-header"],
+          [class*="site-footer"] {
+            display: none !important;
+          }
+          /* Ensure main content starts at top */
+          main {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+          }
         }
       `}</style>
 
@@ -163,13 +191,11 @@ function ResultsContent() {
                   {/* Client Branding */}
                   <div className="flex items-center gap-3">
                     {results.branding.clientLogo && (
-                      <div className="bg-white rounded-lg p-2">
-                        <img
-                          src={results.branding.clientLogo}
-                          alt="Client logo"
-                          className="h-12 object-contain"
-                        />
-                      </div>
+                      <img
+                        src={results.branding.clientLogo}
+                        alt="Client logo"
+                        className="h-12 object-contain"
+                      />
                     )}
                     {results.branding.clientName && (
                       <div>
@@ -183,13 +209,11 @@ function ResultsContent() {
                   {(results.branding.brokerName || results.branding.brokerLogo) && (
                     <div className="flex items-center gap-3">
                       {results.branding.brokerLogo && (
-                        <div className="bg-white rounded-lg p-2">
-                          <img
-                            src={results.branding.brokerLogo}
-                            alt="Broker logo"
-                            className="h-10 object-contain"
-                          />
-                        </div>
+                        <img
+                          src={results.branding.brokerLogo}
+                          alt="Broker logo"
+                          className="h-10 object-contain"
+                        />
                       )}
                       {results.branding.brokerName && (
                         <div className="text-right">
@@ -209,7 +233,7 @@ function ResultsContent() {
               </h1>
 
               {/* Score Display */}
-              <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-6">
+              <div className="inline-block p-8 mb-6">
                 <div className="text-7xl sm:text-8xl font-bold mb-2">
                   {results.readinessScore}
                 </div>
@@ -241,11 +265,42 @@ function ResultsContent() {
                 <h2 className="text-2xl font-bold text-xl-dark-blue">Executive Summary</h2>
               </div>
               <div className="prose prose-gray max-w-none">
-                {results.narrativeRecommendation.split('\n\n').map((paragraph: string, index: number) => (
-                  <p key={index} className="text-gray-700 leading-relaxed mb-4 last:mb-0">
-                    {paragraph}
-                  </p>
-                ))}
+                {results.narrativeRecommendation.split('\n\n').map((paragraph: string, index: number) => {
+                  // Check if paragraph is a header (starts with # or **)
+                  if (paragraph.startsWith('##') || paragraph.startsWith('**')) {
+                    const headerText = paragraph.replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '');
+                    return (
+                      <h3 key={index} className="text-lg font-semibold text-xl-dark-blue mt-6 mb-3 first:mt-0">
+                        {headerText}
+                      </h3>
+                    );
+                  }
+                  // Check if paragraph contains bullet points
+                  if (paragraph.includes('\n- ') || paragraph.startsWith('- ')) {
+                    const lines = paragraph.split('\n');
+                    return (
+                      <ul key={index} className="list-disc pl-5 space-y-2 mb-4">
+                        {lines.map((line: string, lineIndex: number) => {
+                          const bulletText = line.replace(/^-\s*/, '').trim();
+                          if (bulletText) {
+                            return (
+                              <li key={lineIndex} className="text-gray-700 leading-relaxed">
+                                {bulletText}
+                              </li>
+                            );
+                          }
+                          return null;
+                        })}
+                      </ul>
+                    );
+                  }
+                  // Regular paragraph
+                  return (
+                    <p key={index} className="text-gray-700 leading-relaxed mb-4 last:mb-0">
+                      {paragraph}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           )}
