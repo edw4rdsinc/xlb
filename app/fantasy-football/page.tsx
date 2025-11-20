@@ -85,7 +85,7 @@ export default function FantasyFootballPage() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 text-white drop-shadow-2xl">
               FANTASY FOOTBALL CHALLENGE
             </h1>
-            <p className="text-xl sm:text-2xl md:text-3xl mb-10 md:mb-12 text-white/95 drop-shadow-lg max-w-2xl mx-auto">
+            <p className="text-sm sm:text-lg md:text-xl lg:text-2xl mb-10 md:mb-12 text-white/95 drop-shadow-lg whitespace-nowrap">
               18 weeks. 3 rounds. Over $1,000 in prizes. Free to play.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
