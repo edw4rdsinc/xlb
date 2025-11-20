@@ -180,45 +180,44 @@ function ResultsContent() {
       `}</style>
 
       <div className="min-h-screen bg-gray-50">
-        {/* Hero Section with Score */}
-        <section className={`relative bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} text-white py-16 print:py-8`}>
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section with Score - White Background */}
+        <section className="bg-white py-16 print:py-8 border-b border-gray-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Branding Header */}
             {results.branding && (results.branding.clientName || results.branding.clientLogo || results.branding.brokerName || results.branding.brokerLogo) && (
-              <div className="mb-8 pb-6 border-b border-white/20">
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="mb-8 pb-6 border-b border-gray-200">
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
                   {/* Client Branding */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     {results.branding.clientLogo && (
                       <img
                         src={results.branding.clientLogo}
                         alt="Client logo"
-                        className="h-12 object-contain"
+                        className="max-h-16 max-w-[200px] w-auto object-contain"
                       />
                     )}
                     {results.branding.clientName && (
                       <div>
-                        <p className="text-xs text-white/70 uppercase tracking-wide">Prepared for</p>
-                        <p className="text-lg font-bold">{results.branding.clientName}</p>
+                        <p className="text-xs text-gray-500 uppercase tracking-wide">Prepared for</p>
+                        <p className="text-lg font-bold text-xl-dark-blue">{results.branding.clientName}</p>
                       </div>
                     )}
                   </div>
 
                   {/* Broker Branding */}
                   {(results.branding.brokerName || results.branding.brokerLogo) && (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                       {results.branding.brokerLogo && (
                         <img
                           src={results.branding.brokerLogo}
                           alt="Broker logo"
-                          className="h-10 object-contain"
+                          className="max-h-14 max-w-[180px] w-auto object-contain"
                         />
                       )}
                       {results.branding.brokerName && (
                         <div className="text-right">
-                          <p className="text-xs text-white/70 uppercase tracking-wide">Presented by</p>
-                          <p className="text-md font-semibold">{results.branding.brokerName}</p>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Presented by</p>
+                          <p className="text-md font-semibold text-xl-dark-blue">{results.branding.brokerName}</p>
                         </div>
                       )}
                     </div>
@@ -228,30 +227,81 @@ function ResultsContent() {
             )}
 
             <div className="text-center">
-              <h1 className="text-3xl sm:text-4xl font-bold mb-6">
+              <h1 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-6">
                 Self-Funding Readiness Assessment
               </h1>
 
               {/* Score Display */}
               <div className="inline-block p-8 mb-6">
-                <div className="text-7xl sm:text-8xl font-bold mb-2">
+                <div className={`text-7xl sm:text-8xl font-bold mb-2 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} bg-clip-text text-transparent`}>
                   {results.readinessScore}
                 </div>
-                <div className="text-xl text-white/90">out of 100 points</div>
+                <div className="text-xl text-gray-600">out of 100 points</div>
               </div>
 
               <div className="mb-4">
-                <span className="inline-block bg-white text-gray-800 px-4 py-2 rounded-full font-bold text-lg">
+                <span className={`inline-block ${config.bgColor} ${config.textColor} px-4 py-2 rounded-full font-bold text-lg`}>
                   {config.label}
                 </span>
               </div>
-              <p className="text-white/80 text-sm">{config.description}</p>
+              <p className="text-gray-500 text-sm">{config.description}</p>
             </div>
           </div>
         </section>
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+          {/* Two Column Layout for Strengths and Improvements - First */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Key Strengths */}
+            {results.keyStrengths && results.keyStrengths.length > 0 && (
+              <div className="bg-white rounded-xl shadow-lg p-6 print-break-avoid">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-xl-dark-blue">Key Strengths</h3>
+                </div>
+                <ul className="space-y-3">
+                  {results.keyStrengths.map((strength: string, index: number) => (
+                    <li key={index} className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-gray-700">{strength}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Areas for Improvement */}
+            {results.areasForImprovement && results.areasForImprovement.length > 0 && (
+              <div className="bg-white rounded-xl shadow-lg p-6 print-break-avoid">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-xl-dark-blue">Areas for Improvement</h3>
+                </div>
+                <ul className="space-y-3">
+                  {results.areasForImprovement.map((area: string, index: number) => (
+                    <li key={index} className="flex items-start">
+                      <svg className="w-5 h-5 text-orange-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span className="text-gray-700">{area}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
 
           {/* Executive Summary */}
           {results.narrativeRecommendation && (
@@ -324,57 +374,6 @@ function ResultsContent() {
               </ul>
             </div>
           )}
-
-          {/* Two Column Layout for Strengths and Improvements */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {/* Key Strengths */}
-            {results.keyStrengths && results.keyStrengths.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 print-break-avoid">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-xl-dark-blue">Key Strengths</h3>
-                </div>
-                <ul className="space-y-3">
-                  {results.keyStrengths.map((strength: string, index: number) => (
-                    <li key={index} className="flex items-start">
-                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-gray-700">{strength}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Areas for Improvement */}
-            {results.areasForImprovement && results.areasForImprovement.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 print-break-avoid">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-xl-dark-blue">Areas for Improvement</h3>
-                </div>
-                <ul className="space-y-3">
-                  {results.areasForImprovement.map((area: string, index: number) => (
-                    <li key={index} className="flex items-start">
-                      <svg className="w-5 h-5 text-orange-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                      </svg>
-                      <span className="text-gray-700">{area}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
 
           {/* Recommended Next Steps */}
           {results.nextSteps && results.nextSteps.length > 0 && (
