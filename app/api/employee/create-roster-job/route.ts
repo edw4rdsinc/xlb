@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import pdf from 'pdf-parse/lib/pdf-parse'
+
+// pdf-parse doesn't have proper ESM exports, use dynamic require
+const pdf = require('pdf-parse')
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
