@@ -143,15 +143,44 @@ export default function RosterUploadPage() {
         setProgress(data.progress || { step: '', percent: 0 })
 
         if (data.status === 'awaiting_approval') {
-          setCurrentStep('approval')
-          setFuzzyMatches(data.fuzzy_matches_data || [])
-          setExactMatches(data.exact_matches || 0)
-          setNewRecords(data.new_records || 0)
-          setParsedRecords(data.parsed_records || [])
-          setTotalRecords(data.total_records || 0)
-          // Set the first parsed record as editable lineup
-          if (data.parsed_records && data.parsed_records.length > 0) {
-            setEditableLineup(data.parsed_records[0])
+          // Only set these once when first entering approval state
+          if (currentStep !== 'approval') {
+            setCurrentStep('approval')
+            setFuzzyMatches(data.fuzzy_matches_data || [])
+            setExactMatches(data.exact_matches || 0)
+            setNewRecords(data.new_records || 0)
+            setParsedRecords(data.parsed_records || [])
+            setTotalRecords(data.total_records || 0)
+            // Set the first parsed record as editable lineup (only once!)
+            if (data.parsed_records && data.parsed_records.length > 0) {
+              setEditableLineup(data.parsed_records[0])
+            } else {
+              // Create empty editable lineup if parsing failed
+              setEditableLineup({
+                row_index: 0,
+                participant_name: '',
+                team_name: '',
+                email: '',
+                phone: '',
+                lineup: {
+                  quarterback: { player_name: '', team: '', is_elite: false },
+                  running_backs: [
+                    { player_name: '', team: '', is_elite: false },
+                    { player_name: '', team: '', is_elite: false }
+                  ],
+                  wide_receivers: [
+                    { player_name: '', team: '', is_elite: false },
+                    { player_name: '', team: '', is_elite: false }
+                  ],
+                  tight_end: { player_name: '', team: '', is_elite: false },
+                  defense: '',
+                  kicker: ''
+                },
+                raw_data: {}
+              })
+            }
+            // Load player options immediately
+            loadPlayerOptions()
           }
         } else if (data.status === 'complete') {
           setCurrentStep('complete')
