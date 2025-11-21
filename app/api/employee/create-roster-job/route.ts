@@ -268,6 +268,8 @@ CRITICAL INSTRUCTIONS:
 3. Players highlighted in orange/yellow (SF, NE, NYG, CAR, NE, TB) are elite players
 4. Mark "is_elite": true if the player's team is highlighted
 5. Extract the exact player names and team abbreviations
+6. PARTICIPANT INFO: Look for fields labeled "Name:", "Team Name:", "Email:", "Phone:", "Address:" at the top of the form
+7. If you see table data, parse it carefully - rows with X marks are selected players
 
 PDF Text:
 ${pdfText.substring(0, 50000)}

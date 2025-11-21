@@ -14,6 +14,11 @@ export async function POST(request: NextRequest) {
       lineup_data: any
     }
 
+    console.log('=== FINALIZE REQUEST ===')
+    console.log('Job ID:', job_id)
+    console.log('Lineup data:', JSON.stringify(lineup_data, null, 2))
+    console.log('========================')
+
     if (!job_id || !lineup_data) {
       return NextResponse.json(
         { error: 'Job ID and lineup data required' },
@@ -66,20 +71,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create or find user by email
-    let userId = job.user_id
-    if (!userId && lineup_data.email) {
-      // Try to find existing user by email
-      const { data: existingUser } = await supabaseAdmin
-        .from('auth.users')
-        .select('id')
-        .eq('email', lineup_data.email)
-        .single()
-
-      if (existingUser) {
-        userId = existingUser.id
-      }
-    }
+    // Use the job user_id (already authenticated)
+    const userId = job.user_id
 
     // Create lineup entry
     const { data: lineup, error: lineupError } = await supabaseAdmin
@@ -88,6 +81,9 @@ export async function POST(request: NextRequest) {
         user_id: userId,
         round_id: activeRound.id,
         team_name: lineup_data.team_name || 'Team',
+        participant_name: lineup_data.participant_name || null,
+        email: lineup_data.email || null,
+        phone: lineup_data.phone || null,
         qb: lineup_data.lineup?.quarterback?.player_name || null,
         rb1: lineup_data.lineup?.running_backs?.[0]?.player_name || null,
         rb2: lineup_data.lineup?.running_backs?.[1]?.player_name || null,
