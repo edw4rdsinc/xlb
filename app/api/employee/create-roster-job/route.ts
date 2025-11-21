@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import pdfParse from 'pdf-parse'
+import pdf from 'pdf-parse/lib/pdf-parse'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -184,7 +184,7 @@ async function extractPdfText(pdfUrl: string, filename: string): Promise<string>
     const pdfBuffer = Buffer.concat(chunks)
 
     // Use pdf-parse to extract text (much cheaper than Claude for extraction)
-    const pdfData = await pdfParse(pdfBuffer)
+    const pdfData = await pdf(pdfBuffer)
 
     return pdfData.text || ''
   } catch (error: any) {
