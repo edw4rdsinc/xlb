@@ -87,19 +87,16 @@ export default function SelfFundingFeasibilityPage() {
             </p>
           </AnimatedSection>
 
-          <AnimatedSection animation="fade-up">
-            <div className="w-full aspect-video bg-xl-light-grey rounded-lg shadow-xl overflow-hidden">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube-nocookie.com/embed/hEDmoBgU3VU?rel=0"
-                title="Self-Funding Assessment Explainer"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </AnimatedSection>
+          <div className="relative w-full bg-xl-light-grey rounded-lg shadow-xl overflow-hidden" style={{ paddingTop: '56.25%' }}>
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube-nocookie.com/embed/hEDmoBgU3VU?rel=0"
+              title="Self-Funding Assessment Explainer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
 
           <AnimatedSection animation="fade-up">
             <div className="mt-8 text-center">
