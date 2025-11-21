@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football PDF Test Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1a365d;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .upload-area {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #4299e1;
+            background: #f0f9ff;
+        }
+        .upload-area.dragover {
+            border-color: #4299e1;
+            background: #e0f2fe;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .button {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .button:hover {
+            background: #3182ce;
+        }
+        .button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 30px;
+        }
+        .result-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .result-box h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        pre {
+            background: #1a202c;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .status.processing {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+        .lineup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .player-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .player-card .position {
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+        .player-card .name {
+            color: #1a365d;
+            font-size: 14px;
+        }
+        .empty {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: #718096;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        .tab.active {
+            color: #1a365d;
+            border-bottom-color: #4299e1;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 5px;
+        }
+        .info-item label {
+            font-weight: 600;
+            color: #4a5568;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .info-item .value {
+            color: #1a202c;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏈 Fantasy Football PDF Test Dashboard</h1>
+
+        <div class="test-section">
+            <h2>Upload PDF</h2>
+            <div class="upload-area" id="uploadArea">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#4299e1" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <p style="margin-top: 10px; color: #4a5568;">
+                    <strong id="fileName">Drop PDF here or click to browse</strong>
+                </p>
+                <input type="file" id="fileInput" accept=".pdf">
+            </div>
+            <button class="button" id="testButton" disabled>Run Test</button>
+        </div>
+
+        <div class="results" id="results" style="display: none;">
+            <div class="tabs">
+                <button class="tab active" data-tab="extraction">PDF Extraction</button>
+                <button class="tab" data-tab="parsing">AI Parsing</button>
+                <button class="tab" data-tab="lineup">Final Lineup</button>
+            </div>
+
+            <!-- Extraction Tab -->
+            <div class="tab-content active" id="extraction">
+                <div class="result-box">
+                    <h3>Extraction Status</h3>
+                    <span class="status" id="extractionStatus">-</span>
+                </div>
+                <div class="result-box">
+                    <h3>Extraction Details</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Pages</label>
+                            <div class="value" id="pages">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Text Length</label>
+                            <div class="value" id="textLength">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Has Tables</label>
+                            <div class="value" id="hasTables">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Has Checkboxes</label>
+                            <div class="value" id="hasCheckboxes">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <h3>Raw Text Preview</h3>
+                    <pre id="rawText">No text extracted yet...</pre>
+                </div>
+            </div>
+
+            <!-- Parsing Tab -->
+            <div class="tab-content" id="parsing">
+                <div class="result-box">
+                    <h3>AI Parsing Status</h3>
+                    <span class="status" id="parsingStatus">-</span>
+                </div>
+                <div class="result-box">
+                    <h3>Participant Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Name</label>
+                            <div class="value" id="participantName">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Team Name</label>
+                            <div class="value" id="teamName">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Email</label>
+                            <div class="value" id="email">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Phone</label>
+                            <div class="value" id="phone">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <h3>Raw JSON Response</h3>
+                    <pre id="jsonResponse">No parsing attempted yet...</pre>
+                </div>
+            </div>
+
+            <!-- Lineup Tab -->
+            <div class="tab-content" id="lineup">
+                <div class="result-box">
+                    <h3>Fantasy Lineup</h3>
+                    <div class="lineup-grid" id="lineupGrid">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileName = document.getElementById('fileName');
+        const testButton = document.getElementById('testButton');
+        const results = document.getElementById('results');
+
+        let selectedFile = null;
+
+        // File selection
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                fileName.textContent = selectedFile.name;
+                testButton.disabled = false;
+            }
+        });
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+
+            if (e.dataTransfer.files.length > 0) {
+                selectedFile = e.dataTransfer.files[0];
+                fileName.textContent = selectedFile.name;
+                testButton.disabled = false;
+            }
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Test button
+        testButton.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            testButton.disabled = true;
+            testButton.textContent = 'Testing...';
+            results.style.display = 'block';
+
+            // Reset UI
+            document.getElementById('extractionStatus').className = 'status processing';
+            document.getElementById('extractionStatus').textContent = 'Processing...';
+            document.getElementById('parsingStatus').className = 'status';
+            document.getElementById('parsingStatus').textContent = 'Not started';
+
+            try {
+                // Step 1: Upload PDF
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                const uploadRes = await fetch('/api/employee/upload-pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!uploadRes.ok) throw new Error('Upload failed');
+                const uploadData = await uploadRes.json();
+
+                // Step 2: Test extraction
+                const testRes = await fetch('/api/employee/test-pdf-extraction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename: uploadData.fileName })
+                });
+
+                const testData = await testRes.json();
+
+                // Display extraction results
+                if (testData.success) {
+                    document.getElementById('extractionStatus').className = 'status success';
+                    document.getElementById('extractionStatus').textContent = 'Success';
+
+                    document.getElementById('pages').textContent = testData.pages || '0';
+                    document.getElementById('textLength').textContent = (testData.text_length || 0) + ' chars';
+                    document.getElementById('hasTables').textContent = testData.has_tables ? 'Yes' : 'No';
+                    document.getElementById('hasCheckboxes').textContent = testData.has_checkboxes ? 'Yes' : 'No';
+
+                    const preview = testData.full_text || testData.first_1000_chars || 'No text extracted';
+                    document.getElementById('rawText').textContent = preview.substring(0, 2000);
+
+                    // If text was extracted, try Claude parsing
+                    if (testData.text_length > 0) {
+                        await testClaudeParsing(testData.full_text);
+                    }
+                } else {
+                    document.getElementById('extractionStatus').className = 'status error';
+                    document.getElementById('extractionStatus').textContent = 'Failed';
+                    document.getElementById('rawText').textContent = testData.error || 'Unknown error';
+                }
+
+            } catch (error) {
+                document.getElementById('extractionStatus').className = 'status error';
+                document.getElementById('extractionStatus').textContent = 'Error';
+                document.getElementById('rawText').textContent = error.message;
+            } finally {
+                testButton.disabled = false;
+                testButton.textContent = 'Run Test';
+            }
+        });
+
+        async function testClaudeParsing(pdfText) {
+            document.getElementById('parsingStatus').className = 'status processing';
+            document.getElementById('parsingStatus').textContent = 'Processing...';
+
+            // This would normally call your Claude API endpoint
+            // For now, just show the structure
+            const mockParsed = {
+                participant_name: "Extracted from PDF",
+                team_name: "Team Name from PDF",
+                email: "email@example.com",
+                phone: "555-1234",
+                lineup: {
+                    quarterback: { player_name: "QB Name", team: "DAL", is_elite: false },
+                    running_backs: [
+                        { player_name: "RB1 Name", team: "NYG", is_elite: false },
+                        { player_name: "RB2 Name", team: "PHI", is_elite: false }
+                    ],
+                    wide_receivers: [
+                        { player_name: "WR1 Name", team: "GB", is_elite: false },
+                        { player_name: "WR2 Name", team: "MIN", is_elite: false }
+                    ],
+                    tight_end: { player_name: "TE Name", team: "KC", is_elite: false },
+                    defense: "Ravens",
+                    kicker: "Justin Tucker"
+                }
+            };
+
+            // For actual implementation, you'd parse the real response
+            document.getElementById('parsingStatus').className = 'status success';
+            document.getElementById('parsingStatus').textContent = 'Success';
+
+            // Update participant info
+            document.getElementById('participantName').textContent = mockParsed.participant_name || '-';
+            document.getElementById('teamName').textContent = mockParsed.team_name || '-';
+            document.getElementById('email').textContent = mockParsed.email || '-';
+            document.getElementById('phone').textContent = mockParsed.phone || '-';
+
+            // Show JSON
+            document.getElementById('jsonResponse').textContent = JSON.stringify(mockParsed, null, 2);
+
+            // Update lineup grid
+            const lineupGrid = document.getElementById('lineupGrid');
+            lineupGrid.innerHTML = '';
+
+            const positions = [
+                { key: 'quarterback', label: 'QB', value: mockParsed.lineup?.quarterback },
+                { key: 'rb1', label: 'RB1', value: mockParsed.lineup?.running_backs?.[0] },
+                { key: 'rb2', label: 'RB2', value: mockParsed.lineup?.running_backs?.[1] },
+                { key: 'wr1', label: 'WR1', value: mockParsed.lineup?.wide_receivers?.[0] },
+                { key: 'wr2', label: 'WR2', value: mockParsed.lineup?.wide_receivers?.[1] },
+                { key: 'te', label: 'TE', value: mockParsed.lineup?.tight_end },
+                { key: 'defense', label: 'DEF', value: { player_name: mockParsed.lineup?.defense } },
+                { key: 'kicker', label: 'K', value: { player_name: mockParsed.lineup?.kicker } }
+            ];
+
+            positions.forEach(pos => {
+                const card = document.createElement('div');
+                card.className = 'player-card';
+                card.innerHTML = `
+                    <div class="position">${pos.label}</div>
+                    <div class="name">${pos.value?.player_name || '<span class="empty">Empty</span>'}</div>
+                    ${pos.value?.team ? `<div style="font-size: 12px; color: #718096;">${pos.value.team}</div>` : ''}
+                `;
+                lineupGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

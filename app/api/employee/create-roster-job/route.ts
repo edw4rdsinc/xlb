@@ -181,44 +181,91 @@ async function processRosterJob(jobId: string) {
 async function extractPdfText(pdfUrl: string, filename: string): Promise<string> {
   const key = filename.startsWith('pdf-uploads/') ? filename : `pdf-uploads/${filename}`
 
-  // Generate signed URL for the PDF
-  const command = new GetObjectCommand({
-    Bucket: process.env.WASABI_BUCKET,
-    Key: key,
-  })
-  const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 })
+  // Check if we're in local development mode
+  const isLocal = process.env.NODE_ENV === 'development' && !process.env.VERCEL_URL
 
-  // Build the correct base URL for Vercel
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  if (isLocal) {
+    // For local testing, download the PDF and send as base64
+    console.log('Local mode: Using local Python server for PDF extraction')
 
-  try {
-    // Call the Python pdfplumber serverless function
-    const response = await fetch(`${baseUrl}/api/extract-pdf`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        pdf_url: signedUrl
-      }),
+    try {
+      // Get the PDF from Wasabi
+      const command = new GetObjectCommand({
+        Bucket: process.env.WASABI_BUCKET,
+        Key: key,
+      })
+      const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 })
+
+      // Download the PDF
+      const pdfResponse = await fetch(signedUrl)
+      const pdfBuffer = await pdfResponse.arrayBuffer()
+      const pdfBase64 = Buffer.from(pdfBuffer).toString('base64')
+
+      // Call local Python server (run: python3 api/extract-pdf-local.py)
+      const response = await fetch('http://localhost:8080', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pdf_base64: pdfBase64
+        }),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Local PDF extraction error:', errorText)
+        throw new Error(`PDF extraction failed: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      if (!data.success) {
+        throw new Error(data.error || 'PDF extraction failed')
+      }
+
+      return data.text || ''
+    } catch (error: any) {
+      console.error('Local PDF extraction error:', error)
+      console.log('Make sure to run: python3 api/extract-pdf-local.py')
+      throw new Error(`Failed to extract PDF text locally: ${error.message}`)
+    }
+  } else {
+    // Production mode - use Vercel function
+    const command = new GetObjectCommand({
+      Bucket: process.env.WASABI_BUCKET,
+      Key: key,
     })
+    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 })
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('PDF extraction response error:', errorText)
-      throw new Error(`PDF extraction failed: ${response.status}`)
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+
+    try {
+      const response = await fetch(`${baseUrl}/api/extract-pdf`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pdf_url: signedUrl
+        }),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('PDF extraction response error:', errorText)
+        throw new Error(`PDF extraction failed: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      if (!data.success) {
+        throw new Error(data.error || 'PDF extraction failed')
+      }
+
+      return data.text || ''
+    } catch (error: any) {
+      console.error('PDF extraction error:', error)
+      throw new Error(`Failed to extract PDF text: ${error.message}`)
     }
-
-    const data = await response.json()
-
-    if (!data.success) {
-      throw new Error(data.error || 'PDF extraction failed')
-    }
-
-    return data.text || ''
-  } catch (error: any) {
-    console.error('PDF extraction error:', error)
-    throw new Error(`Failed to extract PDF text: ${error.message}`)
   }
 }
 
