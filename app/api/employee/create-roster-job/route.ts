@@ -3,9 +3,6 @@ import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 
-// pdf-parse doesn't have proper ESM exports, use dynamic require
-const pdf = require('pdf-parse')
-
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -184,11 +181,39 @@ async function extractPdfText(pdfUrl: string, filename: string): Promise<string>
       chunks.push(chunk)
     }
     const pdfBuffer = Buffer.concat(chunks)
+    const pdfBase64 = pdfBuffer.toString('base64')
 
-    // Use pdf-parse to extract text (much cheaper than Claude for extraction)
-    const pdfData = await pdf(pdfBuffer)
+    // Use Claude to read the PDF directly (more reliable on serverless)
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 8000,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'document',
+              source: {
+                type: 'base64',
+                media_type: 'application/pdf',
+                data: pdfBase64,
+              },
+            },
+            {
+              type: 'text',
+              text: 'Extract ALL text from this PDF. Include checkbox states as [X] for checked and [ ] for unchecked. Extract any handwritten text. Preserve the layout.',
+            },
+          ],
+        },
+      ],
+    })
 
-    return pdfData.text || ''
+    const content = message.content[0]
+    if (content.type !== 'text') {
+      throw new Error('Unexpected response type')
+    }
+
+    return content.text
   } catch (error: any) {
     console.error('PDF extraction error:', error)
     throw new Error(`Failed to extract PDF text: ${error.message}`)
