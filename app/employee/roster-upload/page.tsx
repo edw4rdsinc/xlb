@@ -93,10 +93,41 @@ export default function RosterUploadPage() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Player options for dropdowns
+  const [defenseOptions, setDefenseOptions] = useState<Array<{ id: string; name: string; team: string }>>([])
+  const [kickerOptions, setKickerOptions] = useState<Array<{ id: string; name: string; team: string }>>([])
+
   // Load teams on mount
   useEffect(() => {
     loadTeams()
   }, [])
+
+  // Load player options when entering approval step
+  useEffect(() => {
+    if (currentStep === 'approval') {
+      loadPlayerOptions()
+    }
+  }, [currentStep])
+
+  const loadPlayerOptions = async () => {
+    try {
+      // Fetch defenses
+      const defRes = await fetch('/api/employee/get-players-by-position?position=DEF')
+      if (defRes.ok) {
+        const defData = await defRes.json()
+        setDefenseOptions(defData.players || [])
+      }
+
+      // Fetch kickers
+      const kRes = await fetch('/api/employee/get-players-by-position?position=K')
+      if (kRes.ok) {
+        const kData = await kRes.json()
+        setKickerOptions(kData.players || [])
+      }
+    } catch (err) {
+      console.error('Error loading player options:', err)
+    }
+  }
 
   // Poll for job status when processing
   useEffect(() => {
@@ -688,48 +719,66 @@ export default function RosterUploadPage() {
                     />
                   </div>
 
-                  {/* Defense - Highlighted as write-in field */}
-                  <div className="flex items-center gap-3 p-3 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+                  {/* Defense - Dropdown from database */}
+                  <div className="flex items-center gap-3 p-3 bg-blue-50 border-2 border-blue-300 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">DEF</span>
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.defense || ''}
-                      onChange={(e) => setEditableLineup({
-                        ...editableLineup,
-                        lineup: {
-                          ...editableLineup.lineup,
-                          defense: e.target.value
-                        }
-                      })}
-                      placeholder="Team Name (e.g., Ravens)"
-                      className="flex-1 px-3 py-2 border border-yellow-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
-                    />
-                    <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                    <div className="flex-1">
+                      <p className="text-xs text-gray-500 mb-1">
+                        Detected: <span className="font-medium text-gray-700">{editableLineup.lineup?.defense || 'None'}</span>
+                      </p>
+                      <select
+                        value={editableLineup.lineup?.defense || ''}
+                        onChange={(e) => setEditableLineup({
+                          ...editableLineup,
+                          lineup: {
+                            ...editableLineup.lineup,
+                            defense: e.target.value
+                          }
+                        })}
+                        className="w-full px-3 py-2 border border-blue-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
+                      >
+                        <option value="">-- Select Defense --</option>
+                        {defenseOptions.map((player) => (
+                          <option key={player.id} value={player.name}>
+                            {player.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  {/* Kicker - Highlighted as write-in field */}
-                  <div className="flex items-center gap-3 p-3 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+                  {/* Kicker - Dropdown from database */}
+                  <div className="flex items-center gap-3 p-3 bg-blue-50 border-2 border-blue-300 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">K</span>
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.kicker || ''}
-                      onChange={(e) => setEditableLineup({
-                        ...editableLineup,
-                        lineup: {
-                          ...editableLineup.lineup,
-                          kicker: e.target.value
-                        }
-                      })}
-                      placeholder="Team Name (e.g., Ravens)"
-                      className="flex-1 px-3 py-2 border border-yellow-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
-                    />
-                    <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                    <div className="flex-1">
+                      <p className="text-xs text-gray-500 mb-1">
+                        Detected: <span className="font-medium text-gray-700">{editableLineup.lineup?.kicker || 'None'}</span>
+                      </p>
+                      <select
+                        value={editableLineup.lineup?.kicker || ''}
+                        onChange={(e) => setEditableLineup({
+                          ...editableLineup,
+                          lineup: {
+                            ...editableLineup.lineup,
+                            kicker: e.target.value
+                          }
+                        })}
+                        className="w-full px-3 py-2 border border-blue-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
+                      >
+                        <option value="">-- Select Kicker --</option>
+                        {kickerOptions.map((player) => (
+                          <option key={player.id} value={player.name}>
+                            {player.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
 
-                <p className="text-xs text-yellow-700 mt-3 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4" />
-                  Defense and Kicker are write-in fields - please verify they're correct
+                <p className="text-xs text-blue-700 mt-3 flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4" />
+                  Select Defense and Kicker from the dropdown to match database values
                 </p>
               </div>
 
