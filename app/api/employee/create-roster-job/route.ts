@@ -131,7 +131,7 @@ async function processRosterJob(jobId: string) {
       })
       .eq('id', jobId)
 
-    // Parse employee data using Claude
+    // Parse fantasy football lineup using Claude
     const parsedRecords = await parseRosterWithAI(pdfText)
 
     await supabaseAdmin
@@ -139,51 +139,13 @@ async function processRosterJob(jobId: string) {
       .update({
         parsed_records: parsedRecords,
         total_records: parsedRecords.length,
-        status: 'matching',
-        progress: { step: 'Finding matches with existing members', percent: 60 },
+        status: 'importing',
+        progress: { step: 'Creating lineup entry', percent: 70 },
       })
       .eq('id', jobId)
 
-    // Get existing team members
-    const { data: existingMembers } = await supabaseAdmin
-      .from('roster_members')
-      .select('*')
-      .eq('team_id', job.team_id)
-      .eq('is_active', true)
-
-    // Find matches
-    const { exactMatches, fuzzyMatches, newRecords } = await findMatches(
-      parsedRecords,
-      existingMembers || [],
-      jobId
-    )
-
-    // Store fuzzy matches for approval
-    if (fuzzyMatches.length > 0) {
-      await supabaseAdmin
-        .from('roster_pending_matches')
-        .insert(fuzzyMatches)
-    }
-
-    // Update job with results
-    await supabaseAdmin
-      .from('roster_upload_jobs')
-      .update({
-        exact_matches: exactMatches,
-        fuzzy_matches: fuzzyMatches.length,
-        new_records: newRecords,
-        status: fuzzyMatches.length > 0 ? 'awaiting_approval' : 'importing',
-        progress: {
-          step: fuzzyMatches.length > 0 ? 'Awaiting your review' : 'Ready to import',
-          percent: 80
-        },
-      })
-      .eq('id', jobId)
-
-    // If no fuzzy matches, proceed directly to import
-    if (fuzzyMatches.length === 0) {
-      await importRecords(jobId)
-    }
+    // Import fantasy football lineup directly (no matching needed)
+    await importFantasyLineup(jobId, parsedRecords[0])
 
   } catch (error: any) {
     console.error('Process roster job error:', error)
@@ -224,28 +186,69 @@ async function extractPdfText(pdfUrl: string, filename: string): Promise<string>
 }
 
 async function parseRosterWithAI(pdfText: string): Promise<any[]> {
-  const prompt = `You are a data extraction specialist. Parse the following employee roster/census data and extract structured employee records.
+  const prompt = `You are a fantasy football lineup extraction specialist. Parse this fantasy football lineup submission form.
 
-For each employee found, extract these fields (use null if not found):
-- employee_id: Employee ID or SSN (last 4 only)
-- first_name: First name
-- last_name: Last name
-- full_name: Full name if provided as single field
-- email: Email address
-- date_of_birth: Date of birth (YYYY-MM-DD format)
-- hire_date: Hire date (YYYY-MM-DD format)
-- department: Department name
-- job_title: Job title/position
-- salary: Annual salary (number only)
-- coverage_tier: Benefits coverage tier (Employee Only, EE+Spouse, EE+Children, Family)
-- gender: Gender (M/F)
+IMPORTANT: This form has CHECKBOXES for most positions and WRITE-IN fields for Defense and Kicker.
 
-Return a JSON array of employee objects. Include a "raw_data" field with any additional data found for each employee.
+Extract the following data structure:
+
+{
+  "participant_name": "Full name of participant",
+  "team_name": "Fantasy team name",
+  "email": "Email address",
+  "phone": "Phone number",
+  "submit_by": "Submit by date",
+  "lineup": {
+    "quarterback": {
+      "player_name": "Name from CHECKED box (e.g., 'Dak Prescott')",
+      "team": "Team abbreviation (e.g., 'DAL')",
+      "is_elite": false
+    },
+    "running_backs": [
+      {
+        "player_name": "Name from CHECKED box",
+        "team": "Team abbreviation",
+        "is_elite": false
+      },
+      {
+        "player_name": "Name from CHECKED box",
+        "team": "Team abbreviation",
+        "is_elite": false
+      }
+    ],
+    "wide_receivers": [
+      {
+        "player_name": "Name from CHECKED box",
+        "team": "Team abbreviation",
+        "is_elite": false
+      },
+      {
+        "player_name": "Name from CHECKED box",
+        "team": "Team abbreviation",
+        "is_elite": false
+      }
+    ],
+    "tight_end": {
+      "player_name": "Name from CHECKED box",
+      "team": "Team abbreviation",
+      "is_elite": false
+    },
+    "defense": "WRITE-IN team name (e.g., 'Ravens')",
+    "kicker": "WRITE-IN team name (e.g., 'Ravens')"
+  }
+}
+
+CRITICAL INSTRUCTIONS:
+1. Look for checkboxes marked with "X" to identify selected players
+2. For Defense and Kicker, look for WRITTEN team names (not checkboxes)
+3. Players highlighted in orange/yellow (SF, NE, NYG, CAR, NE, TB) are elite players
+4. Mark "is_elite": true if the player's team is highlighted
+5. Extract the exact player names and team abbreviations
 
 PDF Text:
 ${pdfText.substring(0, 50000)}
 
-Return ONLY valid JSON array, no other text.`
+Return ONLY a valid JSON object (not an array), no other text.`
 
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
@@ -268,11 +271,20 @@ Return ONLY valid JSON array, no other text.`
   }
 
   try {
-    const records = JSON.parse(jsonStr)
-    return records.map((record: any, index: number) => ({
-      row_index: index,
-      ...record,
-    }))
+    const lineup = JSON.parse(jsonStr)
+
+    // Convert single lineup object to array format for compatibility
+    // with existing job structure
+    return [{
+      row_index: 0,
+      participant_name: lineup.participant_name,
+      team_name: lineup.team_name,
+      email: lineup.email,
+      phone: lineup.phone,
+      submit_by: lineup.submit_by,
+      lineup: lineup.lineup,
+      raw_data: lineup
+    }]
   } catch (error) {
     console.error('JSON parse error:', error, jsonStr.substring(0, 500))
     throw new Error('Failed to parse AI response')
@@ -390,6 +402,91 @@ function generateMatchReason(record: any, member: any, score: number): string {
   }
 
   return reasons.join('; ') || `${Math.round(score * 100)}% name similarity`
+}
+
+async function importFantasyLineup(jobId: string, lineupData: any) {
+  try {
+    const { data: job } = await supabaseAdmin
+      .from('roster_upload_jobs')
+      .select('*')
+      .eq('id', jobId)
+      .single()
+
+    if (!job) throw new Error('Job not found')
+
+    // Get the current active round
+    const { data: activeRound } = await supabaseAdmin
+      .from('rounds')
+      .select('id')
+      .eq('is_active', true)
+      .single()
+
+    if (!activeRound) {
+      throw new Error('No active fantasy football round found')
+    }
+
+    // Create or find user by email
+    let userId = job.user_id
+    if (!userId && lineupData.email) {
+      // Try to find existing user by email
+      const { data: existingUser } = await supabaseAdmin
+        .from('auth.users')
+        .select('id')
+        .eq('email', lineupData.email)
+        .single()
+
+      if (existingUser) {
+        userId = existingUser.id
+      }
+    }
+
+    // Create lineup entry
+    const { data: lineup, error: lineupError } = await supabaseAdmin
+      .from('lineups')
+      .insert({
+        user_id: userId,
+        round_id: activeRound.id,
+        team_name: lineupData.team_name || 'Team',
+        qb: lineupData.lineup?.quarterback?.player_name || null,
+        rb1: lineupData.lineup?.running_backs?.[0]?.player_name || null,
+        rb2: lineupData.lineup?.running_backs?.[1]?.player_name || null,
+        wr1: lineupData.lineup?.wide_receivers?.[0]?.player_name || null,
+        wr2: lineupData.lineup?.wide_receivers?.[1]?.player_name || null,
+        te: lineupData.lineup?.tight_end?.player_name || null,
+        def: lineupData.lineup?.defense || null,
+        k: lineupData.lineup?.kicker || null,
+        is_locked: false,
+      })
+      .select()
+      .single()
+
+    if (lineupError) {
+      console.error('Lineup creation error:', lineupError)
+      throw new Error(`Failed to create lineup: ${lineupError.message}`)
+    }
+
+    // Update job to complete
+    await supabaseAdmin
+      .from('roster_upload_jobs')
+      .update({
+        status: 'complete',
+        imported_count: 1,
+        completed_at: new Date().toISOString(),
+        progress: { step: 'Lineup created successfully', percent: 100 },
+      })
+      .eq('id', jobId)
+
+  } catch (error: any) {
+    console.error('Import fantasy lineup error:', error)
+    await supabaseAdmin
+      .from('roster_upload_jobs')
+      .update({
+        status: 'error',
+        error_message: error.message || 'Failed to create lineup',
+      })
+      .eq('id', jobId)
+    throw error
+  }
 }
 
 async function importRecords(jobId: string) {
