@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -161,7 +160,7 @@ async function processRosterJob(jobId: string) {
 }
 
 async function extractPdfText(pdfUrl: string, filename: string): Promise<string> {
-  // Get signed URL for the PDF
+  // Get the PDF directly from Wasabi
   const key = filename.startsWith('pdf-uploads/') ? filename : `pdf-uploads/${filename}`
 
   const command = new GetObjectCommand({
@@ -169,21 +168,56 @@ async function extractPdfText(pdfUrl: string, filename: string): Promise<string>
     Key: key,
   })
 
-  const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 })
+  try {
+    const response = await s3Client.send(command)
 
-  // Call PDF extraction endpoint
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/employee/process-pdf`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fileName: key }),
-  })
+    if (!response.Body) {
+      throw new Error('No PDF content received from storage')
+    }
 
-  if (!response.ok) {
-    throw new Error('PDF extraction failed')
+    // Convert stream to buffer
+    const chunks: Uint8Array[] = []
+    for await (const chunk of response.Body as any) {
+      chunks.push(chunk)
+    }
+    const pdfBuffer = Buffer.concat(chunks)
+    const pdfBase64 = pdfBuffer.toString('base64')
+
+    // Use Claude to read the PDF directly
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 16000,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'document',
+              source: {
+                type: 'base64',
+                media_type: 'application/pdf',
+                data: pdfBase64,
+              },
+            },
+            {
+              type: 'text',
+              text: 'Extract ALL text from this PDF document. Include every word, checkbox, form field, and any handwritten text you can see. Format the output as plain text, preserving the general layout. Mark checkboxes that are checked with [X] and unchecked boxes with [ ].',
+            },
+          ],
+        },
+      ],
+    })
+
+    const content = message.content[0]
+    if (content.type !== 'text') {
+      throw new Error('Unexpected response type from PDF extraction')
+    }
+
+    return content.text
+  } catch (error: any) {
+    console.error('PDF extraction error:', error)
+    throw new Error(`Failed to extract PDF text: ${error.message}`)
   }
-
-  const data = await response.json()
-  return data.text || ''
 }
 
 async function parseRosterWithAI(pdfText: string): Promise<any[]> {
