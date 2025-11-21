@@ -106,6 +106,24 @@ export default function EmployeeDashboard() {
             </div>
           </Link>
 
+          {/* Roster Upload */}
+          <Link href="/employee/roster-upload">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-xl-bright-blue p-6 transition-all hover:shadow-lg group cursor-pointer">
+              <div className="w-12 h-12 bg-xl-bright-blue/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-xl-bright-blue/20 transition-colors">
+                <Upload className="w-6 h-6 text-xl-bright-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-xl-dark-blue mb-2 group-hover:text-xl-bright-blue transition-colors">
+                Roster Upload
+              </h3>
+              <p className="text-sm text-xl-grey mb-4">
+                Upload PDF rosters to populate team members with intelligent AI-powered matching and review.
+              </p>
+              <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">
+                Ready to Use
+              </span>
+            </div>
+          </Link>
+
           {/* Vendor Library Chatbot */}
           <div
             onClick={() => setShowVendorLibrary(true)}
