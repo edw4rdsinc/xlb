@@ -137,7 +137,20 @@ async function processRosterJob(jobId: string) {
       .eq('id', jobId)
 
     // Parse fantasy football lineup using Claude
-    const parsedRecords = await parseRosterWithAI(pdfText)
+    let parsedRecords = []
+    try {
+      parsedRecords = await parseRosterWithAI(pdfText)
+      console.log('=== PARSED RECORDS ===')
+      console.log('Count:', parsedRecords.length)
+      console.log('Records:', JSON.stringify(parsedRecords, null, 2))
+      console.log('=====================')
+    } catch (parseError: any) {
+      console.error('=== PARSING ERROR ===')
+      console.error('Error:', parseError.message)
+      console.error('=====================')
+      // Continue with empty records so user can fill manually
+      parsedRecords = []
+    }
 
     // Stop for user review/approval
     await supabaseAdmin
@@ -276,16 +289,24 @@ ${pdfText.substring(0, 50000)}
 
 Return ONLY a valid JSON object (not an array), no other text.`
 
+  console.log('=== CALLING CLAUDE AI ===')
+  console.log('PDF text length:', pdfText.length)
+  console.log('First 500 chars of PDF:', pdfText.substring(0, 500))
+
   const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-3-5-sonnet-20241022',
     max_tokens: 8000,
     messages: [{ role: 'user', content: prompt }],
   })
 
   const content = message.content[0]
   if (content.type !== 'text') {
-    throw new Error('Unexpected response type')
+    throw new Error('Unexpected response type from Claude')
   }
+
+  console.log('=== CLAUDE RESPONSE ===')
+  console.log('Response text:', content.text.substring(0, 1000))
+  console.log('======================')
 
   // Parse JSON from response
   let jsonStr = content.text.trim()
