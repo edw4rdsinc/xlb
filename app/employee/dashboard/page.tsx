@@ -113,10 +113,10 @@ export default function EmployeeDashboard() {
                 <Upload className="w-6 h-6 text-xl-bright-blue" />
               </div>
               <h3 className="text-xl font-bold text-xl-dark-blue mb-2 group-hover:text-xl-bright-blue transition-colors">
-                Roster Upload
+                Fantasy Football Lineup Upload
               </h3>
               <p className="text-sm text-xl-grey mb-4">
-                Upload PDF rosters to populate team members with intelligent AI-powered matching and review.
+                Upload PDF fantasy football lineups with AI-powered extraction and review before submission.
               </p>
               <span className="text-xs text-green-600 font-semibold uppercase tracking-wide">
                 Ready to Use

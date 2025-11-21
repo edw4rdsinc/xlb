@@ -6,22 +6,17 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-interface MatchDecision {
-  match_id: string
-  action: 'update' | 'create_new' | 'skip'
-}
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { job_id, decisions } = body as {
+    const { job_id, lineup_data } = body as {
       job_id: string
-      decisions: MatchDecision[]
+      lineup_data: any
     }
 
-    if (!job_id) {
+    if (!job_id || !lineup_data) {
       return NextResponse.json(
-        { error: 'Job ID required' },
+        { error: 'Job ID and lineup data required' },
         { status: 400 }
       )
     }
@@ -45,157 +40,82 @@ export async function POST(request: NextRequest) {
       .from('roster_upload_jobs')
       .update({
         status: 'importing',
-        progress: { step: 'Applying your decisions', percent: 85 },
+        progress: { step: 'Creating fantasy football lineup', percent: 85 },
       })
       .eq('id', job_id)
 
-    // Process decisions
-    let imported = job.imported_count || 0
-    let updated = job.updated_count || 0
-    let skipped = job.skipped_count || 0
+    // Get the current active round
+    const { data: activeRound, error: roundError } = await supabaseAdmin
+      .from('rounds')
+      .select('id')
+      .eq('is_active', true)
+      .single()
 
-    for (const decision of decisions) {
-      // Get the pending match
-      const { data: match } = await supabaseAdmin
-        .from('roster_pending_matches')
-        .select('*')
-        .eq('id', decision.match_id)
+    if (roundError || !activeRound) {
+      await supabaseAdmin
+        .from('roster_upload_jobs')
+        .update({
+          status: 'error',
+          error_message: 'No active fantasy football round found',
+        })
+        .eq('id', job_id)
+
+      return NextResponse.json(
+        { error: 'No active fantasy football round found' },
+        { status: 400 }
+      )
+    }
+
+    // Create or find user by email
+    let userId = job.user_id
+    if (!userId && lineup_data.email) {
+      // Try to find existing user by email
+      const { data: existingUser } = await supabaseAdmin
+        .from('auth.users')
+        .select('id')
+        .eq('email', lineup_data.email)
         .single()
 
-      if (!match) continue
-
-      // Update the match record with decision
-      await supabaseAdmin
-        .from('roster_pending_matches')
-        .update({
-          status: decision.action === 'update' ? 'approved' :
-            decision.action === 'skip' ? 'skipped' : 'rejected',
-          action: decision.action,
-          decision_at: new Date().toISOString(),
-        })
-        .eq('id', decision.match_id)
-
-      const record = match.parsed_record
-
-      if (decision.action === 'update') {
-        // Update existing member
-        await supabaseAdmin
-          .from('roster_members')
-          .update({
-            first_name: record.first_name,
-            last_name: record.last_name,
-            full_name: record.full_name,
-            email: record.email,
-            date_of_birth: record.date_of_birth,
-            hire_date: record.hire_date,
-            department: record.department,
-            job_title: record.job_title,
-            salary: record.salary,
-            coverage_tier: record.coverage_tier,
-            gender: record.gender,
-            raw_data: record.raw_data,
-            source_job_id: job_id,
-          })
-          .eq('id', match.existing_member_id)
-        updated++
-      } else if (decision.action === 'create_new') {
-        // Create new member
-        await supabaseAdmin
-          .from('roster_members')
-          .insert({
-            team_id: job.team_id,
-            employee_id: record.employee_id,
-            first_name: record.first_name,
-            last_name: record.last_name,
-            full_name: record.full_name,
-            email: record.email,
-            date_of_birth: record.date_of_birth,
-            hire_date: record.hire_date,
-            department: record.department,
-            job_title: record.job_title,
-            salary: record.salary,
-            coverage_tier: record.coverage_tier,
-            gender: record.gender,
-            raw_data: record.raw_data,
-            source_job_id: job_id,
-          })
-        imported++
-      } else {
-        // Skip
-        skipped++
+      if (existingUser) {
+        userId = existingUser.id
       }
     }
 
-    // Now import records that weren't fuzzy matches
-    const parsedRecords = job.parsed_records || []
+    // Create lineup entry
+    const { data: lineup, error: lineupError } = await supabaseAdmin
+      .from('lineups')
+      .insert({
+        user_id: userId,
+        round_id: activeRound.id,
+        team_name: lineup_data.team_name || 'Team',
+        qb: lineup_data.lineup?.quarterback?.player_name || null,
+        rb1: lineup_data.lineup?.running_backs?.[0]?.player_name || null,
+        rb2: lineup_data.lineup?.running_backs?.[1]?.player_name || null,
+        wr1: lineup_data.lineup?.wide_receivers?.[0]?.player_name || null,
+        wr2: lineup_data.lineup?.wide_receivers?.[1]?.player_name || null,
+        te: lineup_data.lineup?.tight_end?.player_name || null,
+        def: lineup_data.lineup?.defense || null,
+        k: lineup_data.lineup?.kicker || null,
+        is_locked: false,
+      })
+      .select()
+      .single()
 
-    // Get all pending match names to exclude
-    const { data: allMatches } = await supabaseAdmin
-      .from('roster_pending_matches')
-      .select('parsed_name')
-      .eq('job_id', job_id)
+    if (lineupError) {
+      console.error('Lineup creation error:', lineupError)
 
-    const matchedNames = new Set(allMatches?.map(m => m.parsed_name) || [])
+      await supabaseAdmin
+        .from('roster_upload_jobs')
+        .update({
+          status: 'error',
+          error_message: `Failed to create lineup: ${lineupError.message}`,
+        })
+        .eq('id', job_id)
 
-    // Get existing members for exact matching
-    const { data: existingMembers } = await supabaseAdmin
-      .from('roster_members')
-      .select('*')
-      .eq('team_id', job.team_id)
-
-    for (const record of parsedRecords) {
-      const recordName = record.full_name ||
-        `${record.first_name || ''} ${record.last_name || ''}`.trim()
-
-      // Skip if this was a fuzzy match (already handled above)
-      if (matchedNames.has(recordName)) continue
-
-      // Check for exact match
-      const exactMatch = existingMembers?.find(m =>
-        (record.email && m.email && record.email.toLowerCase() === m.email.toLowerCase()) ||
-        (record.employee_id && m.employee_id && record.employee_id === m.employee_id)
+      return NextResponse.json(
+        { error: `Failed to create lineup: ${lineupError.message}` },
+        { status: 500 }
       )
-
-      if (exactMatch) {
-        // Update existing
-        await supabaseAdmin
-          .from('roster_members')
-          .update({
-            first_name: record.first_name || exactMatch.first_name,
-            last_name: record.last_name || exactMatch.last_name,
-            full_name: record.full_name || exactMatch.full_name,
-            department: record.department || exactMatch.department,
-            job_title: record.job_title || exactMatch.job_title,
-            salary: record.salary || exactMatch.salary,
-            coverage_tier: record.coverage_tier || exactMatch.coverage_tier,
-            raw_data: record.raw_data,
-            source_job_id: job_id,
-          })
-          .eq('id', exactMatch.id)
-        updated++
-      } else {
-        // Create new
-        await supabaseAdmin
-          .from('roster_members')
-          .insert({
-            team_id: job.team_id,
-            employee_id: record.employee_id,
-            first_name: record.first_name,
-            last_name: record.last_name,
-            full_name: record.full_name,
-            email: record.email,
-            date_of_birth: record.date_of_birth,
-            hire_date: record.hire_date,
-            department: record.department,
-            job_title: record.job_title,
-            salary: record.salary,
-            coverage_tier: record.coverage_tier,
-            gender: record.gender,
-            raw_data: record.raw_data,
-            source_job_id: job_id,
-          })
-        imported++
-      }
     }
 
     // Calculate processing time
@@ -203,25 +123,26 @@ export async function POST(request: NextRequest) {
     const endTime = Date.now()
     const processingTimeSeconds = Math.round((endTime - startTime) / 1000)
 
-    // Update job with final results
+    // Update job to complete
     await supabaseAdmin
       .from('roster_upload_jobs')
       .update({
-        imported_count: imported,
-        updated_count: updated,
-        skipped_count: skipped,
         status: 'complete',
+        imported_count: 1,
+        updated_count: 0,
+        skipped_count: 0,
         completed_at: new Date().toISOString(),
         processing_time_seconds: processingTimeSeconds,
-        progress: { step: 'Complete', percent: 100 },
+        progress: { step: 'Lineup created successfully', percent: 100 },
       })
       .eq('id', job_id)
 
     return NextResponse.json({
       success: true,
-      imported,
-      updated,
-      skipped,
+      lineup_id: lineup.id,
+      imported: 1,
+      updated: 0,
+      skipped: 0,
     })
   } catch (error: any) {
     console.error('Finalize roster import error:', error)

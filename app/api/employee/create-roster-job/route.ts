@@ -134,18 +134,19 @@ async function processRosterJob(jobId: string) {
     // Parse fantasy football lineup using Claude
     const parsedRecords = await parseRosterWithAI(pdfText)
 
+    // Stop for user review/approval
     await supabaseAdmin
       .from('roster_upload_jobs')
       .update({
         parsed_records: parsedRecords,
         total_records: parsedRecords.length,
-        status: 'importing',
-        progress: { step: 'Creating lineup entry', percent: 70 },
+        exact_matches: 0,
+        fuzzy_matches: 0,
+        new_records: 1,
+        status: 'awaiting_approval',
+        progress: { step: 'Please review and confirm lineup', percent: 70 },
       })
       .eq('id', jobId)
-
-    // Import fantasy football lineup directly (no matching needed)
-    await importFantasyLineup(jobId, parsedRecords[0])
 
   } catch (error: any) {
     console.error('Process roster job error:', error)

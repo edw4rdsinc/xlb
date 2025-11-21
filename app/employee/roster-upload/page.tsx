@@ -26,17 +26,19 @@ interface Team {
 
 interface ParsedRecord {
   row_index: number
-  employee_id?: string
-  first_name?: string
-  last_name?: string
-  full_name?: string
+  participant_name?: string
+  team_name?: string
   email?: string
-  date_of_birth?: string
-  hire_date?: string
-  department?: string
-  job_title?: string
-  salary?: number
-  coverage_tier?: string
+  phone?: string
+  submit_by?: string
+  lineup?: {
+    quarterback?: { player_name: string; team: string; is_elite: boolean }
+    running_backs?: Array<{ player_name: string; team: string; is_elite: boolean }>
+    wide_receivers?: Array<{ player_name: string; team: string; is_elite: boolean }>
+    tight_end?: { player_name: string; team: string; is_elite: boolean }
+    defense?: string
+    kicker?: string
+  }
   raw_data: Record<string, any>
 }
 
@@ -71,6 +73,9 @@ export default function RosterUploadPage() {
   // Parsed data
   const [parsedRecords, setParsedRecords] = useState<ParsedRecord[]>([])
   const [totalRecords, setTotalRecords] = useState(0)
+
+  // Editable lineup state
+  const [editableLineup, setEditableLineup] = useState<ParsedRecord | null>(null)
 
   // Matching state
   const [fuzzyMatches, setFuzzyMatches] = useState<FuzzyMatch[]>([])
@@ -113,6 +118,10 @@ export default function RosterUploadPage() {
           setNewRecords(data.new_records || 0)
           setParsedRecords(data.parsed_records || [])
           setTotalRecords(data.total_records || 0)
+          // Set the first parsed record as editable lineup
+          if (data.parsed_records && data.parsed_records.length > 0) {
+            setEditableLineup(data.parsed_records[0])
+          }
         } else if (data.status === 'complete') {
           setCurrentStep('complete')
           setImportResults({
@@ -233,23 +242,18 @@ export default function RosterUploadPage() {
   }
 
   const handleFinalizeImport = async () => {
-    if (!jobId) return
+    if (!jobId || !editableLineup) return
 
     setIsProcessing(true)
     setCurrentStep('importing')
 
     try {
-      const decisions = fuzzyMatches.map(m => ({
-        match_id: m.id,
-        action: m.action || 'skip'
-      }))
-
       const res = await fetch('/api/employee/finalize-roster-import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           job_id: jobId,
-          decisions
+          lineup_data: editableLineup
         }),
       })
 
@@ -277,10 +281,10 @@ export default function RosterUploadPage() {
             <span className="text-sm">Back to Dashboard</span>
           </Link>
           <h1 className="text-2xl font-bold text-xl-dark-blue mt-2">
-            Roster Upload
+            Fantasy Football Roster Upload
           </h1>
           <p className="text-sm text-xl-grey mt-1">
-            Upload PDF rosters to populate team members with intelligent matching
+            Upload PDF fantasy football lineups with AI-powered extraction and review
           </p>
         </div>
       </header>
@@ -331,7 +335,7 @@ export default function RosterUploadPage() {
             <>
               <div className="mb-8">
                 <h2 className="text-lg font-semibold text-xl-dark-blue mb-4">
-                  1. Upload Roster PDF
+                  1. Upload Fantasy Football Lineup PDF
                 </h2>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-xl-bright-blue transition-colors">
                   <input
@@ -344,10 +348,10 @@ export default function RosterUploadPage() {
                   <label htmlFor="pdf-upload" className="cursor-pointer">
                     <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                     <p className="text-lg font-medium text-xl-dark-blue mb-2">
-                      {pdfFile ? pdfFile.name : 'Click to upload roster PDF'}
+                      {pdfFile ? pdfFile.name : 'Click to upload lineup PDF'}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Supports employee census, enrollment forms, and benefit rosters
+                      Upload your fantasy football lineup submission form
                     </p>
                   </label>
                 </div>
@@ -355,7 +359,7 @@ export default function RosterUploadPage() {
 
               <div className="mb-8">
                 <h2 className="text-lg font-semibold text-xl-dark-blue mb-4">
-                  2. Select or Create Team
+                  2. Team Information (Optional)
                 </h2>
 
                 {teams.length > 0 && (
@@ -399,11 +403,11 @@ export default function RosterUploadPage() {
 
               <button
                 onClick={handleSubmit}
-                disabled={!pdfFile || (!teamId && !newTeamName.trim())}
+                disabled={!pdfFile}
                 className="w-full bg-xl-bright-blue hover:bg-xl-dark-blue text-white font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <FileText className="w-5 h-5" />
-                Process Roster
+                Process Fantasy Lineup
               </button>
             </>
           )}
@@ -427,144 +431,326 @@ export default function RosterUploadPage() {
             </div>
           )}
 
-          {/* Step: Approval */}
-          {currentStep === 'approval' && (
+          {/* Step: Approval - Fantasy Football Lineup Review */}
+          {currentStep === 'approval' && editableLineup && (
             <>
-              {/* Summary */}
-              <div className="mb-8 grid grid-cols-4 gap-4">
-                <div className="bg-gray-50 rounded-lg p-4 text-center">
-                  <p className="text-2xl font-bold text-xl-dark-blue">{totalRecords}</p>
-                  <p className="text-sm text-gray-600">Total Records</p>
-                </div>
-                <div className="bg-green-50 rounded-lg p-4 text-center">
-                  <p className="text-2xl font-bold text-green-600">{exactMatches}</p>
-                  <p className="text-sm text-gray-600">Exact Matches</p>
-                </div>
-                <div className="bg-yellow-50 rounded-lg p-4 text-center">
-                  <p className="text-2xl font-bold text-yellow-600">{fuzzyMatches.length}</p>
-                  <p className="text-sm text-gray-600">Need Review</p>
-                </div>
-                <div className="bg-blue-50 rounded-lg p-4 text-center">
-                  <p className="text-2xl font-bold text-blue-600">{newRecords}</p>
-                  <p className="text-sm text-gray-600">New Records</p>
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-xl-dark-blue mb-2">
+                  Review Fantasy Football Lineup
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Please verify the extracted lineup below. Pay special attention to Defense and Kicker fields which are write-ins and may need correction.
+                </p>
+              </div>
+
+              {/* Participant Info */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <h3 className="text-sm font-medium text-gray-700 mb-3">Participant Information</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
+                    <input
+                      type="text"
+                      value={editableLineup.participant_name || ''}
+                      onChange={(e) => setEditableLineup({ ...editableLineup, participant_name: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Team Name</label>
+                    <input
+                      type="text"
+                      value={editableLineup.team_name || ''}
+                      onChange={(e) => setEditableLineup({ ...editableLineup, team_name: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                    <input
+                      type="email"
+                      value={editableLineup.email || ''}
+                      onChange={(e) => setEditableLineup({ ...editableLineup, email: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+                    <input
+                      type="text"
+                      value={editableLineup.phone || ''}
+                      onChange={(e) => setEditableLineup({ ...editableLineup, phone: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Fuzzy Matches for Approval */}
-              {fuzzyMatches.length > 0 && (
-                <div className="mb-8">
-                  <h2 className="text-lg font-semibold text-xl-dark-blue mb-4 flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-500" />
-                    Review Potential Matches
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    These records have similar but not exact matches. Please decide how to handle each one.
-                  </p>
+              {/* Lineup Positions */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-700 mb-3">Lineup Positions</h3>
+                <div className="space-y-3">
+                  {/* Quarterback */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">QB</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.quarterback?.player_name || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          quarterback: {
+                            ...editableLineup.lineup?.quarterback,
+                            player_name: e.target.value,
+                            team: editableLineup.lineup?.quarterback?.team || '',
+                            is_elite: editableLineup.lineup?.quarterback?.is_elite || false
+                          }
+                        }
+                      })}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.quarterback?.team || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          quarterback: {
+                            ...editableLineup.lineup?.quarterback,
+                            player_name: editableLineup.lineup?.quarterback?.player_name || '',
+                            team: e.target.value,
+                            is_elite: editableLineup.lineup?.quarterback?.is_elite || false
+                          }
+                        }
+                      })}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
 
-                  <div className="space-y-4">
-                    {fuzzyMatches.map((match) => (
-                      <div
-                        key={match.id}
-                        className={`border rounded-lg p-4 ${
-                          match.action ? 'bg-gray-50' : 'bg-white'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="grid grid-cols-2 gap-4 mb-3">
-                              <div>
-                                <p className="text-xs font-medium text-gray-500 uppercase mb-1">From PDF</p>
-                                <p className="font-semibold text-xl-dark-blue">{match.parsed_name}</p>
-                                {match.parsed_record.email && (
-                                  <p className="text-sm text-gray-600">{match.parsed_record.email}</p>
-                                )}
-                              </div>
-                              <div>
-                                <p className="text-xs font-medium text-gray-500 uppercase mb-1">Existing Member</p>
-                                <p className="font-semibold text-xl-dark-blue">{match.existing_name}</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                                match.match_score >= 0.9
-                                  ? 'bg-green-100 text-green-700'
-                                  : match.match_score >= 0.8
-                                    ? 'bg-yellow-100 text-yellow-700'
-                                    : 'bg-red-100 text-red-700'
-                              }`}>
-                                {Math.round(match.match_score * 100)}% match
-                              </span>
-                              <span className="text-gray-500">{match.match_reason}</span>
-                            </div>
-                          </div>
+                  {/* Running Back 1 */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">RB1</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.running_backs?.[0]?.player_name || ''}
+                      onChange={(e) => {
+                        const rbs = editableLineup.lineup?.running_backs || []
+                        const newRbs = [...rbs]
+                        newRbs[0] = { ...newRbs[0], player_name: e.target.value, team: newRbs[0]?.team || '', is_elite: newRbs[0]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
+                      }}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.running_backs?.[0]?.team || ''}
+                      onChange={(e) => {
+                        const rbs = editableLineup.lineup?.running_backs || []
+                        const newRbs = [...rbs]
+                        newRbs[0] = { ...newRbs[0], player_name: newRbs[0]?.player_name || '', team: e.target.value, is_elite: newRbs[0]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
+                      }}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
 
-                          {/* Action Buttons */}
-                          <div className="flex gap-2 ml-4">
-                            <button
-                              onClick={() => handleMatchDecision(match.id, 'update')}
-                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                match.action === 'update'
-                                  ? 'bg-green-600 text-white'
-                                  : 'bg-green-100 text-green-700 hover:bg-green-200'
-                              }`}
-                            >
-                              Update Existing
-                            </button>
-                            <button
-                              onClick={() => handleMatchDecision(match.id, 'create_new')}
-                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                match.action === 'create_new'
-                                  ? 'bg-blue-600 text-white'
-                                  : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                              }`}
-                            >
-                              Create New
-                            </button>
-                            <button
-                              onClick={() => handleMatchDecision(match.id, 'skip')}
-                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                match.action === 'skip'
-                                  ? 'bg-gray-600 text-white'
-                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
-                            >
-                              Skip
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  {/* Running Back 2 */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">RB2</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.running_backs?.[1]?.player_name || ''}
+                      onChange={(e) => {
+                        const rbs = editableLineup.lineup?.running_backs || []
+                        const newRbs = [...rbs]
+                        newRbs[1] = { ...newRbs[1], player_name: e.target.value, team: newRbs[1]?.team || '', is_elite: newRbs[1]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
+                      }}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.running_backs?.[1]?.team || ''}
+                      onChange={(e) => {
+                        const rbs = editableLineup.lineup?.running_backs || []
+                        const newRbs = [...rbs]
+                        newRbs[1] = { ...newRbs[1], player_name: newRbs[1]?.player_name || '', team: e.target.value, is_elite: newRbs[1]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
+                      }}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  {/* Wide Receiver 1 */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">WR1</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.wide_receivers?.[0]?.player_name || ''}
+                      onChange={(e) => {
+                        const wrs = editableLineup.lineup?.wide_receivers || []
+                        const newWrs = [...wrs]
+                        newWrs[0] = { ...newWrs[0], player_name: e.target.value, team: newWrs[0]?.team || '', is_elite: newWrs[0]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
+                      }}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.wide_receivers?.[0]?.team || ''}
+                      onChange={(e) => {
+                        const wrs = editableLineup.lineup?.wide_receivers || []
+                        const newWrs = [...wrs]
+                        newWrs[0] = { ...newWrs[0], player_name: newWrs[0]?.player_name || '', team: e.target.value, is_elite: newWrs[0]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
+                      }}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  {/* Wide Receiver 2 */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">WR2</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.wide_receivers?.[1]?.player_name || ''}
+                      onChange={(e) => {
+                        const wrs = editableLineup.lineup?.wide_receivers || []
+                        const newWrs = [...wrs]
+                        newWrs[1] = { ...newWrs[1], player_name: e.target.value, team: newWrs[1]?.team || '', is_elite: newWrs[1]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
+                      }}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.wide_receivers?.[1]?.team || ''}
+                      onChange={(e) => {
+                        const wrs = editableLineup.lineup?.wide_receivers || []
+                        const newWrs = [...wrs]
+                        newWrs[1] = { ...newWrs[1], player_name: newWrs[1]?.player_name || '', team: e.target.value, is_elite: newWrs[1]?.is_elite || false }
+                        setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
+                      }}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  {/* Tight End */}
+                  <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">TE</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.tight_end?.player_name || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          tight_end: {
+                            ...editableLineup.lineup?.tight_end,
+                            player_name: e.target.value,
+                            team: editableLineup.lineup?.tight_end?.team || '',
+                            is_elite: editableLineup.lineup?.tight_end?.is_elite || false
+                          }
+                        }
+                      })}
+                      placeholder="Player Name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.tight_end?.team || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          tight_end: {
+                            ...editableLineup.lineup?.tight_end,
+                            player_name: editableLineup.lineup?.tight_end?.player_name || '',
+                            team: e.target.value,
+                            is_elite: editableLineup.lineup?.tight_end?.is_elite || false
+                          }
+                        }
+                      })}
+                      placeholder="Team"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                    />
+                  </div>
+
+                  {/* Defense - Highlighted as write-in field */}
+                  <div className="flex items-center gap-3 p-3 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">DEF</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.defense || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          defense: e.target.value
+                        }
+                      })}
+                      placeholder="Team Name (e.g., Ravens)"
+                      className="flex-1 px-3 py-2 border border-yellow-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
+                    />
+                    <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  </div>
+
+                  {/* Kicker - Highlighted as write-in field */}
+                  <div className="flex items-center gap-3 p-3 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+                    <span className="text-xs font-bold text-gray-500 w-12">K</span>
+                    <input
+                      type="text"
+                      value={editableLineup.lineup?.kicker || ''}
+                      onChange={(e) => setEditableLineup({
+                        ...editableLineup,
+                        lineup: {
+                          ...editableLineup.lineup,
+                          kicker: e.target.value
+                        }
+                      })}
+                      placeholder="Team Name (e.g., Ravens)"
+                      className="flex-1 px-3 py-2 border border-yellow-400 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none bg-white"
+                    />
+                    <AlertTriangle className="w-5 h-5 text-yellow-600" />
                   </div>
                 </div>
-              )}
+
+                <p className="text-xs text-yellow-700 mt-3 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" />
+                  Defense and Kicker are write-in fields - please verify they're correct
+                </p>
+              </div>
 
               {/* Finalize Button */}
               <button
                 onClick={handleFinalizeImport}
-                disabled={!allMatchesDecided || isProcessing}
+                disabled={isProcessing}
                 className="w-full bg-xl-bright-blue hover:bg-xl-dark-blue text-white font-semibold py-4 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isProcessing ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Importing...
+                    Submitting Lineup...
                   </>
                 ) : (
                   <>
-                    <ArrowRight className="w-5 h-5" />
-                    Finalize Import ({fuzzyMatches.length > 0 && !allMatchesDecided
-                      ? `${fuzzyMatches.filter(m => m.action).length}/${fuzzyMatches.length} decided`
-                      : 'Ready'
-                    })
+                    <CheckCircle className="w-5 h-5" />
+                    Confirm and Submit Lineup
                   </>
                 )}
               </button>
-
-              {fuzzyMatches.length > 0 && !allMatchesDecided && (
-                <p className="text-sm text-yellow-600 text-center mt-2">
-                  Please make a decision for all {fuzzyMatches.length} potential matches before importing
-                </p>
-              )}
             </>
           )}
 
@@ -633,9 +819,9 @@ export default function RosterUploadPage() {
           {currentStep === 'upload' && (
             <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800">
-                <strong>How it works:</strong> Upload a PDF roster and we'll extract employee data using AI.
-                When we find potential matches with existing team members, you'll be asked to review and approve them.
-                This ensures data accuracy while making imports fast and easy.
+                <strong>How it works:</strong> Upload your fantasy football lineup PDF and we'll extract all player selections using AI.
+                You'll then review the extracted lineup (especially Defense and Kicker write-ins) before final submission.
+                This ensures accuracy while making submissions fast and easy.
               </p>
             </div>
           )}
