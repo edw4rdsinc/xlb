@@ -41,13 +41,35 @@ class handler(BaseHTTPRequestHandler):
                 # Extract text using pdfplumber
                 text = ""
                 page_count = 0
+                tables_text = ""
 
                 with pdfplumber.open(tmp_path) as pdf:
                     page_count = len(pdf.pages)
                     for page in pdf.pages:
+                        # Extract regular text
                         page_text = page.extract_text()
                         if page_text:
                             text += page_text + "\n\n"
+
+                        # Also extract tables (important for checkbox forms)
+                        tables = page.extract_tables()
+                        if tables:
+                            for table in tables:
+                                for row in table:
+                                    if row:
+                                        row_text = ' | '.join([str(cell) if cell else '' for cell in row])
+                                        tables_text += row_text + "\n"
+                            tables_text += "\n"
+
+                        # Extract characters for form checkbox detection
+                        chars = page.chars
+                        x_marks = [c for c in chars if c.get('text', '').upper() == 'X']
+                        if x_marks:
+                            text += f"\n[Found {len(x_marks)} X marks/checkboxes on this page]\n"
+
+                # Combine text and tables
+                if tables_text:
+                    text += "\n\n=== TABLE DATA ===\n" + tables_text
 
                 # Send success response
                 self.send_response(200)

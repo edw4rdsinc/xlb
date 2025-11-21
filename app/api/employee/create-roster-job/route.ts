@@ -122,6 +122,11 @@ async function processRosterJob(jobId: string) {
     // Extract text from PDF
     const pdfText = await extractPdfText(job.pdf_url, job.pdf_filename)
 
+    console.log('=== PDF TEXT EXTRACTED ===')
+    console.log('Length:', pdfText.length)
+    console.log('First 2000 chars:', pdfText.substring(0, 2000))
+    console.log('=========================')
+
     await supabaseAdmin
       .from('roster_upload_jobs')
       .update({
