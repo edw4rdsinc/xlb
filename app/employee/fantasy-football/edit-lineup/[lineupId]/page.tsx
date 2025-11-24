@@ -581,13 +581,7 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
       return;
     }
     console.log('✅ Elite limit OK');
-
-    console.log('🔵 Showing confirmation dialog');
-    if (!confirm('Save lineup changes?')) {
-      console.log('❌ User cancelled');
-      return;
-    }
-    console.log('✅ User confirmed, saving...');
+    console.log('✅ Proceeding to save...');
 
     setSaving(true);
 
