@@ -91,21 +91,32 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
   useEffect(() => {
     if (Object.keys(draftPool).length === 0) return;
 
-    const newNames: LineupData = { qb: '', rb1: '', rb2: '', wr1: '', wr2: '', te: '', k: '', def: '' };
+    setPlayerNames(prevNames => {
+      const newNames: LineupData = { ...prevNames }; // Start with existing names
 
-    for (const [pos, playerId] of Object.entries(lineup)) {
-      if (!playerId) continue;
-      const poolKey = pos === 'rb1' || pos === 'rb2' ? 'RB' :
-                      pos === 'wr1' || pos === 'wr2' ? 'WR' :
-                      pos.toUpperCase();
-      const players = draftPool[poolKey] || [];
-      const player = players.find(p => p.id === playerId);
-      if (player) {
-        newNames[pos as keyof LineupData] = player.name;
+      for (const [pos, playerId] of Object.entries(lineup)) {
+        if (!playerId) {
+          // Clear the name if no player selected
+          newNames[pos as keyof LineupData] = '';
+          continue;
+        }
+
+        // Only update if we don't already have a name for this position
+        // This prevents clearing names from API search results
+        if (!prevNames[pos as keyof LineupData]) {
+          const poolKey = pos === 'rb1' || pos === 'rb2' ? 'RB' :
+                          pos === 'wr1' || pos === 'wr2' ? 'WR' :
+                          pos.toUpperCase();
+          const players = draftPool[poolKey] || [];
+          const player = players.find(p => p.id === playerId);
+          if (player) {
+            newNames[pos as keyof LineupData] = player.name;
+          }
+        }
       }
-    }
 
-    setPlayerNames(newNames);
+      return newNames;
+    });
   }, [lineup, draftPool]);
 
   async function loadLineup() {
