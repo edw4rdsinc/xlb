@@ -723,10 +723,9 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                 <PlayerAutocomplete
                   value={playerNames[position]}
                   onChange={(name, team) => {
-                    // Update the displayed name when typing or selecting
+                    // This is only called when manually typing now, not when selecting
                     setPlayerNames({ ...playerNames, [position]: name });
-                    // Clear the lineup ID when typing (not selecting from dropdown)
-                    // This ensures we don't save partial/invalid selections
+                    // Clear the lineup ID when manually clearing the field
                     if (!name) {
                       setLineup({ ...lineup, [position]: '' });
                     }

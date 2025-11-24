@@ -111,14 +111,19 @@ export function PlayerAutocomplete({
     }
 
     setQuery(player.name)
-    onChange(player.name, player.team)
-    if (onTeamChange) {
-      onTeamChange(player.team)
-    }
-    // Call the ID-based selection callback if provided
+
+    // If onSelectPlayer is provided, use it instead of onChange
+    // This prevents conflicts when both are provided
     if (onSelectPlayer) {
       onSelectPlayer(player)
+    } else {
+      // Only call onChange if onSelectPlayer is not provided
+      onChange(player.name, player.team)
+      if (onTeamChange) {
+        onTeamChange(player.team)
+      }
     }
+
     setIsOpen(false)
     setSuggestions([])
   }

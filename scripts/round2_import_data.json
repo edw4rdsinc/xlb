@@ -1,0 +1,1586 @@
+[
+  {
+    "user": {
+      "name": "Adam Roberts",
+      "email": "adam.roberts@hmig.com",
+      "team_name": "Long-Shot"
+    },
+    "lineup": {
+      "qb": "Justin Fields",
+      "rb1": "Saquon Barkley",
+      "rb2": "James Conner",
+      "wr1": "Puka Nacua",
+      "wr2": "Jaxon Smith-Njigba",
+      "te": "Travis Kelce",
+      "defense": "PIT",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 693,
+      "round2_total": 425,
+      "season_total": 1118
+    }
+  },
+  {
+    "user": {
+      "name": "Alex Goettler",
+      "email": "alex@evolutionrisk.com",
+      "team_name": "Pittsburgh Goliaths"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "DK Metcalf",
+      "te": "Tucker Kraft",
+      "defense": "PIT",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 609,
+      "round2_total": 541,
+      "season_total": 1150
+    }
+  },
+  {
+    "user": {
+      "name": "Alisha Sexton",
+      "email": "asexton@ibatpa.com",
+      "team_name": "Joe's Jungle"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "James Cook",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Davante Adams",
+      "te": "Mark Andrews",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 610,
+      "round2_total": 449,
+      "season_total": 1059
+    }
+  },
+  {
+    "user": {
+      "name": "Alyssa Schastny",
+      "email": "alyssa@is-benefits.com",
+      "team_name": "The Boston Safe-ty Party"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Drake London",
+      "te": "George Kittle",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 618,
+      "round2_total": 614,
+      "season_total": 1232
+    }
+  },
+  {
+    "user": {
+      "name": "Amit Shah",
+      "email": "amit.shah@corpsyn.com",
+      "team_name": "Fins2win"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Davante Adams",
+      "wr2": "Drake London",
+      "te": "Sam LaPorta",
+      "defense": "DEN",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 678,
+      "round2_total": 653,
+      "season_total": 1331
+    }
+  },
+  {
+    "user": {
+      "name": "Ashley Oana",
+      "email": "ashley.oana@baldwin.com",
+      "team_name": "Like Thunda"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "De'Von Achane",
+      "rb2": "Alvin Kamara",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Brock Bowers",
+      "defense": "BAL",
+      "kicker": "Daniel Carlson"
+    },
+    "scores": {
+      "round1_total": 575,
+      "round2_total": 397,
+      "season_total": 972
+    }
+  },
+  {
+    "user": {
+      "name": "Barry Maas",
+      "email": "bmaas@naviabenefits.com",
+      "team_name": "Undutchables"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Derrick Henry",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Emeka Egbuka",
+      "wr2": "Rome Odunze",
+      "te": "Tucker Kraft",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 499,
+      "round2_total": 588,
+      "season_total": 1087
+    }
+  },
+  {
+    "user": {
+      "name": "Bill Hoitt",
+      "email": "bill.hoitt@cfins.com",
+      "team_name": "ChowDaddy"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Chuba Hubbard",
+      "wr1": "Justin Jefferson",
+      "wr2": "DK Metcalf",
+      "te": "Hunter Henry",
+      "defense": "NE",
+      "kicker": "Will Reichard"
+    },
+    "scores": {
+      "round1_total": 495,
+      "round2_total": 519,
+      "season_total": 1014
+    }
+  },
+  {
+    "user": {
+      "name": "Billy Wilkins",
+      "email": "billy.wilkins@voya.com",
+      "team_name": "Seek & Destroy"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "James Cook",
+      "wr1": "Puka Nacua",
+      "wr2": "Rome Odunze",
+      "te": "Tucker Kraft",
+      "defense": "NE",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 535,
+      "round2_total": 582,
+      "season_total": 1117
+    }
+  },
+  {
+    "user": {
+      "name": "Brian Flynn",
+      "email": "bflynn@onedigital.com",
+      "team_name": "YOSEF9"
+    },
+    "lineup": {
+      "qb": "Caleb Williams",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Tetairoa McMillan",
+      "wr2": "Rome Odunze",
+      "te": "Hunter Henry",
+      "defense": "PIT",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 522,
+      "round2_total": 579,
+      "season_total": 1101
+    }
+  },
+  {
+    "user": {
+      "name": "Brian Hunt",
+      "email": "bhunt@advantekbenefit.com",
+      "team_name": "Broadway Joe"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Jahmyr Gibbs",
+      "rb2": "Bucky Irving",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Tyreek Hill",
+      "te": "Travis Kelce",
+      "defense": "DEN",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 714,
+      "round2_total": 443,
+      "season_total": 1157
+    }
+  },
+  {
+    "user": {
+      "name": "Brian Joselit",
+      "email": "bjoselit@cornellins.com",
+      "team_name": "Joselit Risk Bombers"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Tetairoa McMillan",
+      "wr2": "Drake London",
+      "te": "T.J. Hockenson",
+      "defense": "BAL",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 656,
+      "round2_total": 566,
+      "season_total": 1222
+    }
+  },
+  {
+    "user": {
+      "name": "Brian Mercier",
+      "email": "brian.mercier@acentria.com",
+      "team_name": "Money Ball"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Sam LaPorta",
+      "defense": "BAL",
+      "kicker": "Tyler Bass"
+    },
+    "scores": {
+      "round1_total": 622,
+      "round2_total": 414,
+      "season_total": 1036
+    }
+  },
+  {
+    "user": {
+      "name": "Brian Reule",
+      "email": "brian@evolutionrisk.com",
+      "team_name": "Toe-Jam Football"
+    },
+    "lineup": {
+      "qb": "Caleb Williams",
+      "rb1": "Jahmyr Gibbs",
+      "rb2": "Bijan Robinson",
+      "wr1": "DK Metcalf",
+      "wr2": "Rome Odunze",
+      "te": "Cole Kmet",
+      "defense": "CHI",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 497,
+      "round2_total": 482,
+      "season_total": 979
+    }
+  },
+  {
+    "user": {
+      "name": "Bruce Thomas",
+      "email": "bthomas@iwins.com",
+      "team_name": "Da Bears"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Javonte Williams",
+      "rb2": "James Cook",
+      "wr1": "Emeka Egbuka",
+      "wr2": "Rome Odunze",
+      "te": "Dallas Goedert",
+      "defense": "DEN",
+      "kicker": "Chase McLaughlin"
+    },
+    "scores": {
+      "round1_total": 688,
+      "round2_total": 502,
+      "season_total": 1190
+    }
+  },
+  {
+    "user": {
+      "name": "Bryan McManaway",
+      "email": "bryan.mcmanaway@corpsyn.com",
+      "team_name": "Bay Shore Marauders"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Bijan Robinson",
+      "rb2": "James Cook",
+      "wr1": "George Pickens",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Dallas Goedert",
+      "defense": "NE",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 738,
+      "round2_total": 511,
+      "season_total": 1249
+    }
+  },
+  {
+    "user": {
+      "name": "Callie Porter",
+      "email": "callie.porter@insurica.com",
+      "team_name": "Dak My Team"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Cam Skattebo",
+      "rb2": "Chuba Hubbard",
+      "wr1": "Nico Collins",
+      "wr2": "Drake London",
+      "te": "George Kittle",
+      "defense": "TB",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 559,
+      "round2_total": 469,
+      "season_total": 1028
+    }
+  },
+  {
+    "user": {
+      "name": "Cam Katrena",
+      "email": "cameron.katrena@partnerre.com",
+      "team_name": "PR Panthers"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Jonathan Taylor",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Tee Higgins",
+      "te": "Trey McBride",
+      "defense": "PIT",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 783,
+      "round2_total": 692,
+      "season_total": 1475
+    }
+  },
+  {
+    "user": {
+      "name": "Chad Parker",
+      "email": "chad@evolutionrisk.com",
+      "team_name": "Steeler Nation"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "James Cook",
+      "wr1": "Justin Jefferson",
+      "wr2": "Terry McLaurin",
+      "te": "Brock Bowers",
+      "defense": "PIT",
+      "kicker": "Chris Boswell"
+    },
+    "scores": {
+      "round1_total": 473,
+      "round2_total": 382,
+      "season_total": 855
+    }
+  },
+  {
+    "user": {
+      "name": "Charles Michinock",
+      "email": "charles.michinock@bhspecialty.com",
+      "team_name": "In Chase We Trust"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "Alvin Kamara",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Mark Andrews",
+      "defense": "PHI",
+      "kicker": "Tyler Bass"
+    },
+    "scores": {
+      "round1_total": 564,
+      "round2_total": 361,
+      "season_total": 925
+    }
+  },
+  {
+    "user": {
+      "name": "Craig Gottwals",
+      "email": "ctgottwals@yahoo.com",
+      "team_name": "John Galt"
+    },
+    "lineup": {
+      "qb": "Daniel Jones",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "DK Metcalf",
+      "te": "T.J. Hockenson",
+      "defense": "CLE",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 474,
+      "round2_total": 524,
+      "season_total": 998
+    }
+  },
+  {
+    "user": {
+      "name": "Daniel Tillman",
+      "email": "daniel.tillman@acentria.com",
+      "team_name": "Big Tilly"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Kyren Williams",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Brock Bowers",
+      "defense": "BUF",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 636,
+      "round2_total": 465,
+      "season_total": 1101
+    }
+  },
+  {
+    "user": {
+      "name": "Dave Gottwals",
+      "email": "dgottwals@yahoo.com",
+      "team_name": "Rainmaker"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Rico Dowdle",
+      "wr1": "Justin Jefferson",
+      "wr2": "Drake London",
+      "te": "Hunter Henry",
+      "defense": "ATL",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 604,
+      "round2_total": 622,
+      "season_total": 1226
+    }
+  },
+  {
+    "user": {
+      "name": "Drew Nixon",
+      "email": "dnixon@pinnbrokers.com",
+      "team_name": "Pinnacle Patriots"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Saquon Barkley",
+      "rb2": "Bucky Irving",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Evan Engram",
+      "defense": "BAL",
+      "kicker": "Chase McLaughlin"
+    },
+    "scores": {
+      "round1_total": 672,
+      "round2_total": 385,
+      "season_total": 1057
+    }
+  },
+  {
+    "user": {
+      "name": "Erin Maloney",
+      "email": "erin_moloney@swissre.com",
+      "team_name": "BeetleJuice"
+    },
+    "lineup": {
+      "qb": "Jordan Love",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "DK Metcalf",
+      "wr2": "Rome Odunze",
+      "te": "Hunter Henry",
+      "defense": "MIN",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 528,
+      "round2_total": 519,
+      "season_total": 1047
+    }
+  },
+  {
+    "user": {
+      "name": "Evan Notaro",
+      "email": "evan@evolutionrisk.com",
+      "team_name": "Birds"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Saquon Barkley",
+      "rb2": "Bijan Robinson",
+      "wr1": "Davante Adams",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Travis Kelce",
+      "defense": "PHI",
+      "kicker": "Jake Elliott"
+    },
+    "scores": {
+      "round1_total": 718,
+      "round2_total": 525,
+      "season_total": 1243
+    }
+  },
+  {
+    "user": {
+      "name": "George Lemmon",
+      "email": "george@evolutionrisk.com",
+      "team_name": "Lions Year"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Jahmyr Gibbs",
+      "rb2": "Colston Loveland",
+      "wr1": "Marvin Harrison Jr.",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Sam LaPorta",
+      "defense": "DET",
+      "kicker": "Tyler Bass"
+    },
+    "scores": {
+      "round1_total": 667,
+      "round2_total": 508,
+      "season_total": 1175
+    }
+  },
+  {
+    "user": {
+      "name": "Gigi Walker",
+      "email": "gigi.walker@lpins.net",
+      "team_name": "Lightning Bolts of Fury"
+    },
+    "lineup": {
+      "qb": "Justin Herbert",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Puka Nacua",
+      "wr2": "DK Metcalf",
+      "te": "George Kittle",
+      "defense": "ATL",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 713,
+      "round2_total": 575,
+      "season_total": 1288
+    }
+  },
+  {
+    "user": {
+      "name": "Hunter Raymond",
+      "email": "hunter.raymond@corpsyn.com",
+      "team_name": "Head Hunter"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Rome Odunze",
+      "te": "Tucker Kraft",
+      "defense": "IND",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 722,
+      "round2_total": 554,
+      "season_total": 1276
+    }
+  },
+  {
+    "user": {
+      "name": "Jason Pitts",
+      "email": "jpitts@bannerengineering.com",
+      "team_name": "GO BLUE - MN"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Jonathan Taylor",
+      "rb2": "Kyren Williams",
+      "wr1": "Puka Nacua",
+      "wr2": "Emeka Egbuka",
+      "te": "Jake Ferguson",
+      "defense": "SEA",
+      "kicker": "Ka'imi Fairbairn"
+    },
+    "scores": {
+      "round1_total": 789,
+      "round2_total": 541,
+      "season_total": 1330
+    }
+  },
+  {
+    "user": {
+      "name": "Jennifer Vincent",
+      "email": "jennifer.vincent@baldwin.com",
+      "team_name": "Go Blue! JV"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "Chase Brown",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Davante Adams",
+      "te": "Sam LaPorta",
+      "defense": "DET",
+      "kicker": "Harrison Mevis"
+    },
+    "scores": {
+      "round1_total": 559,
+      "round2_total": 391,
+      "season_total": 950
+    }
+  },
+  {
+    "user": {
+      "name": "Jodie Biggs",
+      "email": "jbiggs@advantekbenefit.com",
+      "team_name": "Biggs Boyzz"
+    },
+    "lineup": {
+      "qb": "Joe Burrow",
+      "rb1": "Saquon Barkley",
+      "rb2": "James Cook",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Travis Kelce",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 674,
+      "round2_total": 453,
+      "season_total": 1127
+    }
+  },
+  {
+    "user": {
+      "name": "Jonathan Lowe",
+      "email": "jonathan_lowe@swissre.com",
+      "team_name": "What's the Lowe Down"
+    },
+    "lineup": {
+      "qb": "Brock Purdy",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Bijan Robinson",
+      "wr1": "DK Metcalf",
+      "wr2": "Rome Odunze",
+      "te": "George Kittle",
+      "defense": "GB",
+      "kicker": "Chase McLaughlin"
+    },
+    "scores": {
+      "round1_total": 688,
+      "round2_total": 480,
+      "season_total": 1168
+    }
+  },
+  {
+    "user": {
+      "name": "Kim McBee",
+      "email": "kim.mcbee@foundationrp.net",
+      "team_name": "Team Specialty"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "Puka Nacua",
+      "wr2": "Emeka Egbuka",
+      "te": "Jake Ferguson",
+      "defense": "SEA",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 0,
+      "round2_total": 544,
+      "season_total": 544
+    }
+  },
+  {
+    "user": {
+      "name": "Kristin McDuffie",
+      "email": "kristin.mcduffie@corpsyn.com",
+      "team_name": "Baby G.O.A.T"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "DK Metcalf",
+      "te": "George Kittle",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 618,
+      "round2_total": 617,
+      "season_total": 1235
+    }
+  },
+  {
+    "user": {
+      "name": "Larry Waks",
+      "email": "lwaks@skywardinsurance.com",
+      "team_name": "Go Birds!"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Derrick Henry",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Nico Collins",
+      "te": "George Kittle",
+      "defense": "NE",
+      "kicker": "Ka'imi Fairbairn"
+    },
+    "scores": {
+      "round1_total": 641,
+      "round2_total": 566,
+      "season_total": 1207
+    }
+  },
+  {
+    "user": {
+      "name": "Lawson Rouly",
+      "email": "ljr1720@aol.com",
+      "team_name": "Ragin Cajun"
+    },
+    "lineup": {
+      "qb": "Jaxson Dart",
+      "rb1": "Derrick Henry",
+      "rb2": "Travis Etienne",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "CeeDee Lamb",
+      "te": "George Kittle",
+      "defense": "ATL",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 609,
+      "round2_total": 558,
+      "season_total": 1167
+    }
+  },
+  {
+    "user": {
+      "name": "Lee Walter",
+      "email": "lwalter@pbaclaims.com",
+      "team_name": "The Abominable Iron Sloths"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Cam Skattebo",
+      "rb2": "Jonathan Taylor",
+      "wr1": "George Pickens",
+      "wr2": "Rome Odunze",
+      "te": "George Kittle",
+      "defense": "ATL",
+      "kicker": "Mike Badgley"
+    },
+    "scores": {
+      "round1_total": 679,
+      "round2_total": 535,
+      "season_total": 1214
+    }
+  },
+  {
+    "user": {
+      "name": "Leslie Caruthers",
+      "email": "leslie.caruthers@hubinternational.com",
+      "team_name": "G&G"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Derrick Henry",
+      "rb2": "Josh Jacobs",
+      "wr1": "Zay Flowers",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Tucker Kraft",
+      "defense": "PHI",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 618,
+      "round2_total": 536,
+      "season_total": 1154
+    }
+  },
+  {
+    "user": {
+      "name": "Linda Subbiondo",
+      "email": "linda@evolutionrisk.com",
+      "team_name": "Subbi Snaps"
+    },
+    "lineup": {
+      "qb": "Lamar Jackson",
+      "rb1": "Christian McCaffrey",
+      "rb2": "James Cook",
+      "wr1": "A.J. Brown",
+      "wr2": "Davante Adams",
+      "te": "Mark Andrews",
+      "defense": "PHI",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 664,
+      "round2_total": 528,
+      "season_total": 1192
+    }
+  },
+  {
+    "user": {
+      "name": "Maks Shutel",
+      "email": "mshutel@amalgamatedbenefits.com",
+      "team_name": "Take Me Back To Revis Island"
+    },
+    "lineup": {
+      "qb": "Caleb Williams",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Drake London",
+      "wr2": "Rome Odunze",
+      "te": "Tucker Kraft",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 725,
+      "round2_total": 620,
+      "season_total": 1345
+    }
+  },
+  {
+    "user": {
+      "name": "Marianna Gevorkian",
+      "email": "marianna.gevorkian@hubinternational.com",
+      "team_name": "Not So Swift"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Saquon Barkley",
+      "rb2": "Breece Hall",
+      "wr1": "Davante Adams",
+      "wr2": "Tyreek Hill",
+      "te": "Travis Kelce",
+      "defense": "SF",
+      "kicker": "Harrison Butker"
+    },
+    "scores": {
+      "round1_total": 608,
+      "round2_total": 457,
+      "season_total": 1065
+    }
+  },
+  {
+    "user": {
+      "name": "Maribeth DeForge",
+      "email": "mdeforge@mrmstoploss.com",
+      "team_name": "DeForge to be Reckoned With"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "George Pickens",
+      "wr2": "Jaxon Smith-Njigba",
+      "te": "Tucker Kraft",
+      "defense": "DEN",
+      "kicker": "Chris Boswell"
+    },
+    "scores": {
+      "round1_total": 650,
+      "round2_total": 633,
+      "season_total": 1283
+    }
+  },
+  {
+    "user": {
+      "name": "Mark Ostdiek",
+      "email": "mostdiek@jdoinsurance.com",
+      "team_name": "Lions Not Sheep"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Drake London",
+      "wr2": "CeeDee Lamb",
+      "te": "Trey McBride",
+      "defense": "PIT",
+      "kicker": "Ka'imi Fairbairn"
+    },
+    "scores": {
+      "round1_total": 647,
+      "round2_total": 665,
+      "season_total": 1312
+    }
+  },
+  {
+    "user": {
+      "name": "Mark Viereck",
+      "email": "mark.viereck@corpsyn.com",
+      "team_name": "Chaos Theory"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Emeka Egbuka",
+      "wr2": "DK Metcalf",
+      "te": "Tucker Kraft",
+      "defense": "DEN",
+      "kicker": "Chase McLaughlin"
+    },
+    "scores": {
+      "round1_total": 578,
+      "round2_total": 540,
+      "season_total": 1118
+    }
+  },
+  {
+    "user": {
+      "name": "Matt Cassayre",
+      "email": "mcassayre@sanderjacobs.com",
+      "team_name": "Rebobs"
+    },
+    "lineup": {
+      "qb": "Brock Purdy",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Chase Brown",
+      "wr1": "A.J. Brown",
+      "wr2": "Jaxon Smith-Njigba",
+      "te": "Brock Bowers",
+      "defense": "SF",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 567,
+      "round2_total": 496,
+      "season_total": 1063
+    }
+  },
+  {
+    "user": {
+      "name": "Matt Downs",
+      "email": "matt@downsconsult.com",
+      "team_name": "TouchDowns"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Jonathan Taylor",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Brock Bowers",
+      "defense": "HOU",
+      "kicker": "Chase McLaughlin"
+    },
+    "scores": {
+      "round1_total": 800,
+      "round2_total": 630,
+      "season_total": 1430
+    }
+  },
+  {
+    "user": {
+      "name": "Matt Lincoln",
+      "email": "mlincoln@carbonstoploss.com",
+      "team_name": "Chase Jam"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Derrick Henry",
+      "rb2": "James Cook",
+      "wr1": "Justin Jefferson",
+      "wr2": "Puka Nacua",
+      "te": "Jake Ferguson",
+      "defense": "NE",
+      "kicker": "Cairo Santos"
+    },
+    "scores": {
+      "round1_total": 505,
+      "round2_total": 481,
+      "season_total": 986
+    }
+  },
+  {
+    "user": {
+      "name": "Melanie Wyatt",
+      "email": "melanie@evolutionrisk.com",
+      "team_name": "Bacon Wrapped Pigskins"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Drake London",
+      "wr2": "DK Metcalf",
+      "te": "Hunter Henry",
+      "defense": "SF",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 618,
+      "round2_total": 573,
+      "season_total": 1191
+    }
+  },
+  {
+    "user": {
+      "name": "Merri Pogue",
+      "email": "mpogue@healthcomp.com",
+      "team_name": "Babe's Faves"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Derrick Henry",
+      "rb2": "Josh Jacobs",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "David Njoku",
+      "defense": "JAX",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 714,
+      "round2_total": 451,
+      "season_total": 1165
+    }
+  },
+  {
+    "user": {
+      "name": "Mike Cortese",
+      "email": "michael.cortese@ktbenefits.com",
+      "team_name": "Big Sweaty"
+    },
+    "lineup": {
+      "qb": "Dak Prescott",
+      "rb1": "Jonathan Taylor",
+      "rb2": "James Cook",
+      "wr1": "Emeka Egbuka",
+      "wr2": "Puka Nacua",
+      "te": "Jake Ferguson",
+      "defense": "NE",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 597,
+      "round2_total": 532,
+      "season_total": 1129
+    }
+  },
+  {
+    "user": {
+      "name": "Mike Enzenbacher",
+      "email": "mike.enzenbacher@bbrown.com",
+      "team_name": "Another Team of Bad Picks"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Cam Skattebo",
+      "rb2": "Christian McCaffrey",
+      "wr1": "George Pickens",
+      "wr2": "Nico Collins",
+      "te": "Tucker Kraft",
+      "defense": "MIN",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 498,
+      "round2_total": 525,
+      "season_total": 1023
+    }
+  },
+  {
+    "user": {
+      "name": "Mike Just",
+      "email": "mjust@isu-inc.net",
+      "team_name": "Omaha! Omaha!"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "George Pickens",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Jake Ferguson",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 782,
+      "round2_total": 586,
+      "season_total": 1368
+    }
+  },
+  {
+    "user": {
+      "name": "Mike Rea",
+      "email": "michael.rea@brmsonline.com",
+      "team_name": "FlyEaglesFly"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Christian McCaffrey",
+      "rb2": "James Cook",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Davante Adams",
+      "te": "Hunter Henry",
+      "defense": "ATL",
+      "kicker": "Zane Gonzalez"
+    },
+    "scores": {
+      "round1_total": 660,
+      "round2_total": 577,
+      "season_total": 1237
+    }
+  },
+  {
+    "user": {
+      "name": "Mike Young",
+      "email": "myoung@skywardinsurance.com",
+      "team_name": "StopLossGuy"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Jonathan Taylor",
+      "rb2": "Kyren Williams",
+      "wr1": "George Pickens",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Jake Ferguson",
+      "defense": "DEN",
+      "kicker": "Tyler Bass"
+    },
+    "scores": {
+      "round1_total": 556,
+      "round2_total": 538,
+      "season_total": 1094
+    }
+  },
+  {
+    "user": {
+      "name": "Monique Eubanks",
+      "email": "monique.eubanks@insurica.com",
+      "team_name": "E-Money"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Tetairoa McMillan",
+      "wr2": "Justin Jefferson",
+      "te": "Tucker Kraft",
+      "defense": "MIN",
+      "kicker": "Ka'imi Fairbairn"
+    },
+    "scores": {
+      "round1_total": 735,
+      "round2_total": 577,
+      "season_total": 1312
+    }
+  },
+  {
+    "user": {
+      "name": "Nate Rugaard",
+      "email": "nrugaard@unland.com",
+      "team_name": "Big Nate"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Rome Odunze",
+      "te": "Tucker Kraft",
+      "defense": "CHI",
+      "kicker": "Cairo Santos"
+    },
+    "scores": {
+      "round1_total": 779,
+      "round2_total": 608,
+      "season_total": 1387
+    }
+  },
+  {
+    "user": {
+      "name": "Nick Ostdiek",
+      "email": "nostdiek@jdoinsurance.com",
+      "team_name": "20FootJ"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "DK Metcalf",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Travis Kelce",
+      "defense": "KC",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 620,
+      "round2_total": 528,
+      "season_total": 1148
+    }
+  },
+  {
+    "user": {
+      "name": "Nicole Logan",
+      "email": "nicole.logan@relationinsurance.com",
+      "team_name": "Monsters of the Midway"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Drake London",
+      "te": "George Kittle",
+      "defense": "PIT",
+      "kicker": "Chris Boswell"
+    },
+    "scores": {
+      "round1_total": 622,
+      "round2_total": 617,
+      "season_total": 1239
+    }
+  },
+  {
+    "user": {
+      "name": "Riley Welter",
+      "email": "riley.welter@corpsyn.com",
+      "team_name": "Big Blue"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Rashee Rice",
+      "wr2": "Jaxon Smith-Njigba",
+      "te": "George Kittle",
+      "defense": "SEA",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 721,
+      "round2_total": 613,
+      "season_total": 1334
+    }
+  },
+  {
+    "user": {
+      "name": "Rob Maes",
+      "email": "rmaes@advantekbenefit.com",
+      "team_name": "Go Blue 16"
+    },
+    "lineup": {
+      "qb": "Josh Allen",
+      "rb1": "Saquon Barkley",
+      "rb2": "J.K. Dobbins",
+      "wr1": "Emeka Egbuka",
+      "wr2": "Ladd McConkey",
+      "te": "Hunter Henry",
+      "defense": "GB",
+      "kicker": "Jake Moody"
+    },
+    "scores": {
+      "round1_total": 600,
+      "round2_total": 449,
+      "season_total": 1049
+    }
+  },
+  {
+    "user": {
+      "name": "Sam Gallagher",
+      "email": "sgallagher@umexperts.com",
+      "team_name": "Brock the Casbah"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Saquon Barkley",
+      "rb2": "James Cook",
+      "wr1": "A.J. Brown",
+      "wr2": "Ladd McConkey",
+      "te": "Brock Bowers",
+      "defense": "DEN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 659,
+      "round2_total": 511,
+      "season_total": 1170
+    }
+  },
+  {
+    "user": {
+      "name": "Sarah Perry",
+      "email": "sarah.perry@voya.com",
+      "team_name": "Purple Reign"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Cam Skattebo",
+      "rb2": "Jonathan Taylor",
+      "wr1": "Rashee Rice",
+      "wr2": "Justin Jefferson",
+      "te": "George Kittle",
+      "defense": "MIN",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 511,
+      "round2_total": 535,
+      "season_total": 1046
+    }
+  },
+  {
+    "user": {
+      "name": "Steve Miller",
+      "email": "stephmll5@aol.com",
+      "team_name": "Space Cowboy"
+    },
+    "lineup": {
+      "qb": "Jared Goff",
+      "rb1": "Cam Skattebo",
+      "rb2": "Christian McCaffrey",
+      "wr1": "DK Metcalf",
+      "wr2": "Amon-Ra St. Brown",
+      "te": "Hunter Henry",
+      "defense": "PIT",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 706,
+      "round2_total": 484,
+      "season_total": 1190
+    }
+  },
+  {
+    "user": {
+      "name": "Tip Millard",
+      "email": "tip.millard@bhspecialty.com",
+      "team_name": "Gophers"
+    },
+    "lineup": {
+      "qb": "Patrick Mahomes",
+      "rb1": "Saquon Barkley",
+      "rb2": "Alvin Kamara",
+      "wr1": "Marvin Harrison Jr.",
+      "wr2": "CeeDee Lamb",
+      "te": "Mark Andrews",
+      "defense": "DAL",
+      "kicker": "Zane Gonzalez"
+    },
+    "scores": {
+      "round1_total": 537,
+      "round2_total": 438,
+      "season_total": 975
+    }
+  },
+  {
+    "user": {
+      "name": "Todd Lawrence",
+      "email": "todd.lawrence@acentria.com",
+      "team_name": "Da Baggz"
+    },
+    "lineup": {
+      "qb": "Jayden Daniels",
+      "rb1": "Cam Skattebo",
+      "rb2": "Christian McCaffrey",
+      "wr1": "Nico Collins",
+      "wr2": "Rome Odunze",
+      "te": "T.J. Hockenson",
+      "defense": "IND",
+      "kicker": "Ryan Fitzgerald"
+    },
+    "scores": {
+      "round1_total": 656,
+      "round2_total": 426,
+      "season_total": 1082
+    }
+  },
+  {
+    "user": {
+      "name": "Tracy Borden",
+      "email": "tracy.borden@getisls.com",
+      "team_name": "Tdog"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "De'Von Achane",
+      "rb2": "James Cook",
+      "wr1": "Nico Collins",
+      "wr2": "Jaylen Waddle",
+      "te": "George Kittle",
+      "defense": "BAL",
+      "kicker": "Jake Elliott"
+    },
+    "scores": {
+      "round1_total": 668,
+      "round2_total": 580,
+      "season_total": 1248
+    }
+  },
+  {
+    "user": {
+      "name": "Willie Mok",
+      "email": "williemok.44@gmail.com",
+      "team_name": "Stingrays"
+    },
+    "lineup": {
+      "qb": "Jaxson Dart",
+      "rb1": "Cam Skattebo",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Puka Nacua",
+      "wr2": "Rome Odunze",
+      "te": "Hunter Henry",
+      "defense": "JAX",
+      "kicker": "Matt Prater"
+    },
+    "scores": {
+      "round1_total": 425,
+      "round2_total": 454,
+      "season_total": 879
+    }
+  },
+  {
+    "user": {
+      "name": "XL Daron Pitts",
+      "email": "dpitts@xlbenefits.com",
+      "team_name": "XL Happy Cows"
+    },
+    "lineup": {
+      "qb": "Jalen Hurts",
+      "rb1": "Saquon Barkley",
+      "rb2": "De\u2019Von Achane",
+      "wr1": "Ja'Marr Chase",
+      "wr2": "Terry McLaurin",
+      "te": "Sam LaPorta",
+      "defense": "MIN",
+      "kicker": "Tyler Bass"
+    },
+    "scores": {
+      "round1_total": 668,
+      "round2_total": 469,
+      "season_total": 1137
+    }
+  },
+  {
+    "user": {
+      "name": "XL Jennifer Flynn",
+      "email": "jbaird@xlbenefits.com",
+      "team_name": "XL The Bryce is Right"
+    },
+    "lineup": {
+      "qb": "Drake Maye",
+      "rb1": "Christian McCaffrey",
+      "rb2": "Rico Dowdle",
+      "wr1": "Tetairoa McMillan",
+      "wr2": "Justin Jefferson",
+      "te": "George Kittle",
+      "defense": "DEN",
+      "kicker": "Cameron Dicker"
+    },
+    "scores": {
+      "round1_total": 837,
+      "round2_total": 656,
+      "season_total": 1493
+    }
+  },
+  {
+    "user": {
+      "name": "XL Joe Landziak",
+      "email": "jlandziak@xlbenefits.com",
+      "team_name": "XL Boston Poindexters"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Bijan Robinson",
+      "rb2": "Josh Jacobs",
+      "wr1": "Justin Jefferson",
+      "wr2": "Davante Adams",
+      "te": "Tucker Kraft",
+      "defense": "DEN",
+      "kicker": "Matt Gay"
+    },
+    "scores": {
+      "round1_total": 620,
+      "round2_total": 533,
+      "season_total": 1153
+    }
+  },
+  {
+    "user": {
+      "name": "XL Sam Edwards",
+      "email": "sam@edw4rds.com",
+      "team_name": "XL Samwise Gamgee"
+    },
+    "lineup": {
+      "qb": "Baker Mayfield",
+      "rb1": "Cam Skattebo",
+      "rb2": "Josh Jacobs",
+      "wr1": "George Pickens",
+      "wr2": "Justin Jefferson",
+      "te": "Trey McBride",
+      "defense": "BAL",
+      "kicker": "Brandon Aubrey"
+    },
+    "scores": {
+      "round1_total": 526,
+      "round2_total": 478,
+      "season_total": 1004
+    }
+  }
+]
