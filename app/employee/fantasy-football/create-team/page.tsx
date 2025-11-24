@@ -3,14 +3,23 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
-import { ArrowLeft, UserPlus } from 'lucide-react'
+import { ArrowLeft, UserPlus, Save } from 'lucide-react'
 import Link from 'next/link'
+import { PlayerAutocomplete } from '@/components/employee/PlayerAutocomplete'
 
 interface Round {
   id: string
   round_number: number
   start_week: number
   end_week: number
+}
+
+interface Player {
+  id: string
+  name: string
+  position: string
+  team?: string
+  is_elite?: boolean
 }
 
 export default function CreateTeamPage() {
@@ -23,12 +32,29 @@ export default function CreateTeamPage() {
     team_name: '',
     round_id: ''
   })
+  const [lineup, setLineup] = useState({
+    qb: '',
+    rb1: '',
+    rb2: '',
+    wr1: '',
+    wr2: '',
+    te: '',
+    k: '',
+    def: ''
+  })
+  const [draftPool, setDraftPool] = useState<{ [key: string]: Player[] }>({})
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     loadRounds()
   }, [])
+
+  useEffect(() => {
+    if (formData.round_id) {
+      loadDraftPool(formData.round_id)
+    }
+  }, [formData.round_id])
 
   async function loadRounds() {
     try {
@@ -52,13 +78,66 @@ export default function CreateTeamPage() {
     }
   }
 
+  async function loadDraftPool(roundId: string) {
+    try {
+      // Try to load from draft_pools first
+      const { data: draftPoolData, error: draftPoolError } = await supabase
+        .from('draft_pools')
+        .select(`
+          player_id,
+          position,
+          players!inner(
+            id,
+            name,
+            position,
+            team,
+            is_elite
+          )
+        `)
+        .eq('round_id', roundId)
+
+      let playersByPosition: { [key: string]: Player[] } = {}
+
+      if (draftPoolData && draftPoolData.length > 0) {
+        // Use draft pool data
+        draftPoolData.forEach(item => {
+          const player = item.players as any
+          if (!playersByPosition[player.position]) {
+            playersByPosition[player.position] = []
+          }
+          playersByPosition[player.position].push(player)
+        })
+      } else {
+        // Fallback to top 40 players per position
+        const positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
+
+        for (const position of positions) {
+          const { data: players } = await supabase
+            .from('players')
+            .select('*')
+            .eq('position', position)
+            .order('name')
+            .limit(40)
+
+          if (players) {
+            playersByPosition[position] = players
+          }
+        }
+      }
+
+      setDraftPool(playersByPosition)
+    } catch (err: any) {
+      console.error('Error loading draft pool:', err)
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
     setCreating(true)
 
     try {
-      // Validate
+      // Validate personal info
       if (!formData.name.trim()) {
         throw new Error('Name is required')
       }
@@ -70,6 +149,26 @@ export default function CreateTeamPage() {
       }
       if (!formData.round_id) {
         throw new Error('Please select a round')
+      }
+
+      // Validate all positions are filled
+      const positions = ['qb', 'rb1', 'rb2', 'wr1', 'wr2', 'te', 'k', 'def']
+      for (const pos of positions) {
+        if (!lineup[pos as keyof typeof lineup]) {
+          throw new Error(`Please select a player for ${pos.toUpperCase()}`)
+        }
+      }
+
+      // Count elite players
+      const selectedPlayerIds = Object.values(lineup)
+      const { data: selectedPlayers } = await supabase
+        .from('players')
+        .select('id, is_elite')
+        .in('id', selectedPlayerIds)
+
+      const eliteCount = selectedPlayers?.filter(p => p.is_elite).length || 0
+      if (eliteCount > 2) {
+        throw new Error('Maximum 2 elite players allowed per lineup')
       }
 
       // Check if user with this email already exists
@@ -116,22 +215,21 @@ export default function CreateTeamPage() {
         userId = newUser.id
       }
 
-      // Create empty lineup for this user and round
-      // Using correct column names with _id suffix
+      // Create lineup with all players filled in
       const { data: newLineup, error: createLineupError } = await supabase
         .from('lineups')
         .insert({
           user_id: userId,
           round_id: formData.round_id,
           is_locked: false,
-          qb_id: null,
-          rb1_id: null,
-          rb2_id: null,
-          wr1_id: null,
-          wr2_id: null,
-          te_id: null,
-          k_id: null,
-          def_id: null,
+          qb_id: lineup.qb,
+          rb1_id: lineup.rb1,
+          rb2_id: lineup.rb2,
+          wr1_id: lineup.wr1,
+          wr2_id: lineup.wr2,
+          te_id: lineup.te,
+          k_id: lineup.k,
+          def_id: lineup.def,
           submitted_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })
@@ -143,8 +241,8 @@ export default function CreateTeamPage() {
         throw new Error('Failed to create lineup: ' + createLineupError.message)
       }
 
-      // Redirect to edit the new lineup
-      router.push(`/employee/fantasy-football/edit-lineup/${newLineup.id}`)
+      // Redirect back to admin page (lineup is already complete)
+      router.push('/employee/fantasy-football')
 
     } catch (err: any) {
       console.error('Error creating team:', err)
@@ -275,6 +373,147 @@ export default function CreateTeamPage() {
             </div>
           </div>
 
+          {/* Player Selection */}
+          <div className="mb-8">
+            <h2 className="text-lg font-bold text-xl-dark-blue mb-4">Lineup Selection</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+
+              {/* QB */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Quarterback (QB) *
+                </label>
+                <PlayerAutocomplete
+                  position="QB"
+                  players={draftPool['QB'] || []}
+                  value={lineup.qb}
+                  onChange={(playerId) => setLineup({ ...lineup, qb: playerId })}
+                  placeholder="Select QB"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* RB1 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Running Back 1 (RB1) *
+                </label>
+                <PlayerAutocomplete
+                  position="RB"
+                  players={draftPool['RB'] || []}
+                  value={lineup.rb1}
+                  onChange={(playerId) => setLineup({ ...lineup, rb1: playerId })}
+                  placeholder="Select RB1"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* RB2 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Running Back 2 (RB2) *
+                </label>
+                <PlayerAutocomplete
+                  position="RB"
+                  players={draftPool['RB'] || []}
+                  value={lineup.rb2}
+                  onChange={(playerId) => setLineup({ ...lineup, rb2: playerId })}
+                  placeholder="Select RB2"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* WR1 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Wide Receiver 1 (WR1) *
+                </label>
+                <PlayerAutocomplete
+                  position="WR"
+                  players={draftPool['WR'] || []}
+                  value={lineup.wr1}
+                  onChange={(playerId) => setLineup({ ...lineup, wr1: playerId })}
+                  placeholder="Select WR1"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* WR2 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Wide Receiver 2 (WR2) *
+                </label>
+                <PlayerAutocomplete
+                  position="WR"
+                  players={draftPool['WR'] || []}
+                  value={lineup.wr2}
+                  onChange={(playerId) => setLineup({ ...lineup, wr2: playerId })}
+                  placeholder="Select WR2"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* TE */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Tight End (TE) *
+                </label>
+                <PlayerAutocomplete
+                  position="TE"
+                  players={draftPool['TE'] || []}
+                  value={lineup.te}
+                  onChange={(playerId) => setLineup({ ...lineup, te: playerId })}
+                  placeholder="Select TE"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* K */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Kicker (K) *
+                </label>
+                <PlayerAutocomplete
+                  position="K"
+                  players={draftPool['K'] || []}
+                  value={lineup.k}
+                  onChange={(playerId) => setLineup({ ...lineup, k: playerId })}
+                  placeholder="Select K"
+                  showTeamInput={false}
+                />
+              </div>
+
+              {/* DEF */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Defense (DEF) *
+                </label>
+                <PlayerAutocomplete
+                  position="DEF"
+                  players={draftPool['DEF'] || []}
+                  value={lineup.def}
+                  onChange={(playerId) => setLineup({ ...lineup, def: playerId })}
+                  placeholder="Select DEF"
+                  showTeamInput={false}
+                />
+              </div>
+            </div>
+
+            {/* Elite Player Counter */}
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">
+                Elite Players Selected: {
+                  Object.values(lineup).filter(playerId => {
+                    if (!playerId) return false
+                    const allPlayers = Object.values(draftPool).flat()
+                    const player = allPlayers.find(p => p.id === playerId)
+                    return player?.is_elite
+                  }).length
+                } / 2
+              </p>
+            </div>
+          </div>
+
           {/* Submit */}
           <div className="flex items-center justify-between pt-6 border-t border-gray-200">
             <Link
@@ -295,8 +534,8 @@ export default function CreateTeamPage() {
                 </>
               ) : (
                 <>
-                  <UserPlus className="w-4 h-4" />
-                  Create Team & Edit Lineup
+                  <Save className="w-4 h-4" />
+                  Create Complete Lineup
                 </>
               )}
             </button>
