@@ -117,20 +117,21 @@ export default function CreateTeamPage() {
       }
 
       // Create empty lineup for this user and round
+      // Using correct column names with _id suffix
       const { data: newLineup, error: createLineupError } = await supabase
         .from('lineups')
         .insert({
           user_id: userId,
           round_id: formData.round_id,
           is_locked: false,
-          qb: null,
-          rb1: null,
-          rb2: null,
-          wr1: null,
-          wr2: null,
-          te: null,
-          k: null,
-          def: null,
+          qb_id: null,
+          rb1_id: null,
+          rb2_id: null,
+          wr1_id: null,
+          wr2_id: null,
+          te_id: null,
+          k_id: null,
+          def_id: null,
           submitted_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })

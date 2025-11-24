@@ -16,6 +16,7 @@ import {
   ArrowRight
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
+import { PlayerAutocomplete } from '@/components/employee/PlayerAutocomplete'
 
 interface Team {
   id: string
@@ -553,198 +554,160 @@ export default function RosterUploadPage() {
                   {/* Quarterback */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">QB</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.quarterback?.player_name || ''}
-                      onChange={(e) => setEditableLineup({
+                      teamValue={editableLineup.lineup?.quarterback?.team || ''}
+                      position="QB"
+                      onChange={(name, team) => setEditableLineup({
                         ...editableLineup,
                         lineup: {
                           ...editableLineup.lineup,
                           quarterback: {
-                            ...editableLineup.lineup?.quarterback,
-                            player_name: e.target.value,
-                            team: editableLineup.lineup?.quarterback?.team || '',
+                            player_name: name,
+                            team: team,
                             is_elite: editableLineup.lineup?.quarterback?.is_elite || false
                           }
                         }
                       })}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.quarterback?.team || ''}
-                      onChange={(e) => setEditableLineup({
+                      onTeamChange={(team) => setEditableLineup({
                         ...editableLineup,
                         lineup: {
                           ...editableLineup.lineup,
                           quarterback: {
                             ...editableLineup.lineup?.quarterback,
                             player_name: editableLineup.lineup?.quarterback?.player_name || '',
-                            team: e.target.value,
+                            team: team,
                             is_elite: editableLineup.lineup?.quarterback?.is_elite || false
                           }
                         }
                       })}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 
                   {/* Running Back 1 */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">RB1</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.running_backs?.[0]?.player_name || ''}
-                      onChange={(e) => {
+                      teamValue={editableLineup.lineup?.running_backs?.[0]?.team || ''}
+                      position="RB"
+                      onChange={(name, team) => {
                         const rbs = editableLineup.lineup?.running_backs || []
                         const newRbs = [...rbs]
-                        newRbs[0] = { ...newRbs[0], player_name: e.target.value, team: newRbs[0]?.team || '', is_elite: newRbs[0]?.is_elite || false }
+                        newRbs[0] = { player_name: name, team: team, is_elite: newRbs[0]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
                       }}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.running_backs?.[0]?.team || ''}
-                      onChange={(e) => {
+                      onTeamChange={(team) => {
                         const rbs = editableLineup.lineup?.running_backs || []
                         const newRbs = [...rbs]
-                        newRbs[0] = { ...newRbs[0], player_name: newRbs[0]?.player_name || '', team: e.target.value, is_elite: newRbs[0]?.is_elite || false }
+                        newRbs[0] = { ...newRbs[0], player_name: newRbs[0]?.player_name || '', team: team, is_elite: newRbs[0]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
                       }}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 
                   {/* Running Back 2 */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">RB2</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.running_backs?.[1]?.player_name || ''}
-                      onChange={(e) => {
+                      teamValue={editableLineup.lineup?.running_backs?.[1]?.team || ''}
+                      position="RB"
+                      onChange={(name, team) => {
                         const rbs = editableLineup.lineup?.running_backs || []
                         const newRbs = [...rbs]
-                        newRbs[1] = { ...newRbs[1], player_name: e.target.value, team: newRbs[1]?.team || '', is_elite: newRbs[1]?.is_elite || false }
+                        newRbs[1] = { player_name: name, team: team, is_elite: newRbs[1]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
                       }}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.running_backs?.[1]?.team || ''}
-                      onChange={(e) => {
+                      onTeamChange={(team) => {
                         const rbs = editableLineup.lineup?.running_backs || []
                         const newRbs = [...rbs]
-                        newRbs[1] = { ...newRbs[1], player_name: newRbs[1]?.player_name || '', team: e.target.value, is_elite: newRbs[1]?.is_elite || false }
+                        newRbs[1] = { ...newRbs[1], player_name: newRbs[1]?.player_name || '', team: team, is_elite: newRbs[1]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, running_backs: newRbs } })
                       }}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 
                   {/* Wide Receiver 1 */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">WR1</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.wide_receivers?.[0]?.player_name || ''}
-                      onChange={(e) => {
+                      teamValue={editableLineup.lineup?.wide_receivers?.[0]?.team || ''}
+                      position="WR"
+                      onChange={(name, team) => {
                         const wrs = editableLineup.lineup?.wide_receivers || []
                         const newWrs = [...wrs]
-                        newWrs[0] = { ...newWrs[0], player_name: e.target.value, team: newWrs[0]?.team || '', is_elite: newWrs[0]?.is_elite || false }
+                        newWrs[0] = { player_name: name, team: team, is_elite: newWrs[0]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
                       }}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.wide_receivers?.[0]?.team || ''}
-                      onChange={(e) => {
+                      onTeamChange={(team) => {
                         const wrs = editableLineup.lineup?.wide_receivers || []
                         const newWrs = [...wrs]
-                        newWrs[0] = { ...newWrs[0], player_name: newWrs[0]?.player_name || '', team: e.target.value, is_elite: newWrs[0]?.is_elite || false }
+                        newWrs[0] = { ...newWrs[0], player_name: newWrs[0]?.player_name || '', team: team, is_elite: newWrs[0]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
                       }}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 
                   {/* Wide Receiver 2 */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">WR2</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.wide_receivers?.[1]?.player_name || ''}
-                      onChange={(e) => {
+                      teamValue={editableLineup.lineup?.wide_receivers?.[1]?.team || ''}
+                      position="WR"
+                      onChange={(name, team) => {
                         const wrs = editableLineup.lineup?.wide_receivers || []
                         const newWrs = [...wrs]
-                        newWrs[1] = { ...newWrs[1], player_name: e.target.value, team: newWrs[1]?.team || '', is_elite: newWrs[1]?.is_elite || false }
+                        newWrs[1] = { player_name: name, team: team, is_elite: newWrs[1]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
                       }}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.wide_receivers?.[1]?.team || ''}
-                      onChange={(e) => {
+                      onTeamChange={(team) => {
                         const wrs = editableLineup.lineup?.wide_receivers || []
                         const newWrs = [...wrs]
-                        newWrs[1] = { ...newWrs[1], player_name: newWrs[1]?.player_name || '', team: e.target.value, is_elite: newWrs[1]?.is_elite || false }
+                        newWrs[1] = { ...newWrs[1], player_name: newWrs[1]?.player_name || '', team: team, is_elite: newWrs[1]?.is_elite || false }
                         setEditableLineup({ ...editableLineup, lineup: { ...editableLineup.lineup, wide_receivers: newWrs } })
                       }}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 
                   {/* Tight End */}
                   <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
                     <span className="text-xs font-bold text-gray-500 w-12">TE</span>
-                    <input
-                      type="text"
+                    <PlayerAutocomplete
                       value={editableLineup.lineup?.tight_end?.player_name || ''}
-                      onChange={(e) => setEditableLineup({
+                      teamValue={editableLineup.lineup?.tight_end?.team || ''}
+                      position="TE"
+                      onChange={(name, team) => setEditableLineup({
                         ...editableLineup,
                         lineup: {
                           ...editableLineup.lineup,
                           tight_end: {
-                            ...editableLineup.lineup?.tight_end,
-                            player_name: e.target.value,
-                            team: editableLineup.lineup?.tight_end?.team || '',
+                            player_name: name,
+                            team: team,
                             is_elite: editableLineup.lineup?.tight_end?.is_elite || false
                           }
                         }
                       })}
-                      placeholder="Player Name"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={editableLineup.lineup?.tight_end?.team || ''}
-                      onChange={(e) => setEditableLineup({
+                      onTeamChange={(team) => setEditableLineup({
                         ...editableLineup,
                         lineup: {
                           ...editableLineup.lineup,
                           tight_end: {
                             ...editableLineup.lineup?.tight_end,
                             player_name: editableLineup.lineup?.tight_end?.player_name || '',
-                            team: e.target.value,
+                            team: team,
                             is_elite: editableLineup.lineup?.tight_end?.is_elite || false
                           }
                         }
                       })}
-                      placeholder="Team"
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                      className="flex-1"
                     />
                   </div>
 

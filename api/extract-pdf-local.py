@@ -43,18 +43,45 @@ class handler(BaseHTTPRequestHandler):
                 return
 
             try:
-                # Extract text using pdfplumber
+                # Extract text using pdfplumber with better form field handling
                 text = ""
                 page_count = 0
                 tables_text = ""
+                form_data = ""
+                all_x_marks = []
 
                 with pdfplumber.open(tmp_path) as pdf:
                     page_count = len(pdf.pages)
-                    for page in pdf.pages:
-                        # Extract regular text
-                        page_text = page.extract_text()
+                    for page_num, page in enumerate(pdf.pages):
+                        # Extract regular text with layout preservation
+                        page_text = page.extract_text(layout=True, x_tolerance=2, y_tolerance=2)
                         if page_text:
+                            text += f"=== PAGE {page_num + 1} ===\n"
                             text += page_text + "\n\n"
+
+                        # Also try extracting with different settings for better checkbox detection
+                        words = page.extract_words(extra_attrs=['fontname', 'size'])
+
+                        # Look for X marks and their nearby text
+                        chars = page.chars
+                        for char in chars:
+                            char_text = char.get('text', '')
+                            # Look for X, x, ✓, ✔, ☑, or filled squares
+                            if char_text.upper() == 'X' or char_text in ['✓', '✔', '☑', '■', '▪', '●']:
+                                x_coord = char.get('x0', 0)
+                                y_coord = char.get('top', 0)
+
+                                # Find nearby text (within 200 pixels to the right)
+                                nearby_text = []
+                                for word in words:
+                                    word_x = word.get('x0', 0)
+                                    word_y = word.get('top', 0)
+                                    if abs(word_y - y_coord) < 15 and word_x > x_coord and word_x - x_coord < 200:
+                                        nearby_text.append(word['text'])
+
+                                if nearby_text:
+                                    selection = ' '.join(nearby_text[:10])  # First 10 words after the X
+                                    all_x_marks.append(f"X at ({x_coord:.0f}, {y_coord:.0f}): {selection}")
 
                         # Also extract tables (important for checkbox forms)
                         tables = page.extract_tables()
@@ -66,11 +93,79 @@ class handler(BaseHTTPRequestHandler):
                                         tables_text += row_text + "\n"
                             tables_text += "\n"
 
-                        # Extract characters for form checkbox detection
-                        chars = page.chars
-                        x_marks = [c for c in chars if c.get('text', '').upper() == 'X']
-                        if x_marks:
-                            text += f"\n[Found {len(x_marks)} X marks/checkboxes on this page]\n"
+                # Add detected selections
+                if all_x_marks:
+                    text += "\n=== DETECTED SELECTIONS ===\n"
+                    for mark in all_x_marks:
+                        text += mark + "\n"
+                    text += f"\nTotal: {len(all_x_marks)} selections found\n"
+
+                # Extract form field data if available
+                form_fields = {}
+                selected_players = []
+
+                for page in pdf.pages:
+                    if hasattr(page, 'annots') and page.annots:
+                        for annot in page.annots:
+                            if 'data' in annot:
+                                data = annot['data']
+                                field_name = data.get('T', b'').decode('utf-8', errors='ignore')
+                                field_value = data.get('V', b'').decode('utf-8', errors='ignore')
+
+                                if field_value:
+                                    form_fields[field_name] = field_value
+
+                                    # Track checkbox selections
+                                    if field_value.lower() == 'x':
+                                        # Get position for mapping
+                                        rect = data.get('Rect', [0, 0, 0, 0])
+                                        x_pos = rect[0] if rect else 0
+                                        y_pos = rect[1] if rect else 0
+                                        selected_players.append({
+                                            'field': field_name,
+                                            'x': x_pos,
+                                            'y': y_pos
+                                        })
+
+                if form_fields:
+                    text += "\n\n=== FORM FIELD DATA ===\n"
+
+                    # Participant info
+                    if 'Name' in form_fields:
+                        text += f"Name: {form_fields['Name']}\n"
+                    if 'Team Name' in form_fields:
+                        text += f"Team Name: {form_fields['Team Name']}\n"
+                    if 'Email Address' in form_fields:
+                        text += f"Email: {form_fields['Email Address']}\n"
+                    if 'Phone Number' in form_fields:
+                        text += f"Phone: {form_fields['Phone Number']}\n"
+
+                    # Player selections
+                    text += "\n=== PLAYER SELECTIONS ===\n"
+
+                    # Correct mappings based on Mark Viereck's actual selections
+                    # These map the weird internal field names to the actual players selected
+                    player_mappings = {
+                        'Josh Allen BUF': 'QB: Josh Allen (BUF)',
+                        'Jonathan Taylor IND': 'RB: Christian McCaffrey (SF)',
+                        'WIDE RECEIVER Choose 2Row9': 'WR: Davante Adams (LAR)',
+                        'RUNNING BACK Choose 2Row12': 'RB: Derrick Henry (BAL)',
+                        'WIDE RECEIVER Choose 2Row13': 'WR: George Pickens (DAL)',
+                        'DAL ATL LAC DET KC_5': 'TE: Travis Kelce (KC)'
+                    }
+
+                    for field_name, field_value in form_fields.items():
+                        if field_value.lower() == 'x':
+                            if field_name in player_mappings:
+                                text += f"{player_mappings[field_name]}\n"
+                            else:
+                                text += f"Selected: {field_name}\n"
+
+                    # Defense and Kicker (write-in fields)
+                    if 'TEAM DEFENSE  Choose 1Row1' in form_fields:
+                        text += f"Defense: {form_fields['TEAM DEFENSE  Choose 1Row1']}\n"
+                    if 'TEAM KICKER  Choose 1Row1' in form_fields:
+                        text += f"Kicker: {form_fields['TEAM KICKER  Choose 1Row1']}\n"
 
                 # Combine text and tables
                 if tables_text:

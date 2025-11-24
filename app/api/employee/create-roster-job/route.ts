@@ -124,7 +124,9 @@ async function processRosterJob(jobId: string) {
 
     console.log('=== PDF TEXT EXTRACTED ===')
     console.log('Length:', pdfText.length)
-    console.log('First 2000 chars:', pdfText.substring(0, 2000))
+    console.log('\n--- FULL TEXT START ---')
+    console.log(pdfText)
+    console.log('--- FULL TEXT END ---\n')
     console.log('=========================')
 
     await supabaseAdmin
@@ -272,76 +274,75 @@ async function extractPdfText(pdfUrl: string, filename: string): Promise<string>
 async function parseRosterWithAI(pdfText: string): Promise<any[]> {
   const prompt = `You are a fantasy football lineup extraction specialist. Parse this fantasy football lineup submission form.
 
-IMPORTANT: This form has CHECKBOXES for most positions and WRITE-IN fields for Defense and Kicker.
+The extracted text includes:
+1. FORM FIELD DATA section with participant info (Name, Team Name, Email, Phone)
+2. PLAYER SELECTIONS section with selected players in format "Position: Player Name (TEAM)"
+3. Defense and Kicker selections
 
-Extract the following data structure:
-
+Extract this data into the following JSON structure:
 {
-  "participant_name": "Full name of participant",
+  "participant_name": "Full name from form",
   "team_name": "Fantasy team name",
   "email": "Email address",
   "phone": "Phone number",
-  "submit_by": "Submit by date",
+  "submit_by": "November 26, 2025",
   "lineup": {
     "quarterback": {
-      "player_name": "Name from CHECKED box (e.g., 'Dak Prescott')",
-      "team": "Team abbreviation (e.g., 'DAL')",
+      "player_name": "Player name only (no team)",
+      "team": "Team abbreviation",
       "is_elite": false
     },
     "running_backs": [
       {
-        "player_name": "Name from CHECKED box",
+        "player_name": "Player name only",
         "team": "Team abbreviation",
-        "is_elite": false
+        "is_elite": true if team is SF/NE/NYG/CAR/TB
       },
       {
-        "player_name": "Name from CHECKED box",
+        "player_name": "Player name only",
         "team": "Team abbreviation",
         "is_elite": false
       }
     ],
     "wide_receivers": [
       {
-        "player_name": "Name from CHECKED box",
+        "player_name": "Player name only",
         "team": "Team abbreviation",
         "is_elite": false
       },
       {
-        "player_name": "Name from CHECKED box",
+        "player_name": "Player name only",
         "team": "Team abbreviation",
         "is_elite": false
       }
     ],
     "tight_end": {
-      "player_name": "Name from CHECKED box",
+      "player_name": "Player name only",
       "team": "Team abbreviation",
       "is_elite": false
     },
-    "defense": "WRITE-IN team name (e.g., 'Ravens')",
-    "kicker": "WRITE-IN team name (e.g., 'Ravens')"
+    "defense": "Team name only (e.g., 'Broncos')",
+    "kicker": "Team name only (e.g., 'Jaguars')"
   }
 }
 
-CRITICAL INSTRUCTIONS:
-1. Look for checkboxes marked with "X" to identify selected players
-2. For Defense and Kicker, look for WRITTEN team names (not checkboxes)
-3. Players highlighted in orange/yellow (SF, NE, NYG, CAR, NE, TB) are elite players
-4. Mark "is_elite": true if the player's team is highlighted
-5. Extract the exact player names and team abbreviations
-6. PARTICIPANT INFO: Look for fields labeled "Name:", "Team Name:", "Email:", "Phone:", "Address:" at the top of the form
-7. If you see table data, parse it carefully - rows with X marks are selected players
+IMPORTANT PARSING RULES:
+1. If you see "QB: Josh Allen (BUF)" extract player_name: "Josh Allen" and team: "BUF"
+2. If you see "Defense: Broncos" extract defense: "Broncos"
+3. Mark is_elite: true only for players from these teams: SF, NE, NYG, CAR, TB
+4. Extract exact names without modifications
 
-PDF Text:
-${pdfText.substring(0, 50000)}
+PDF Text to parse:
+${pdfText}
 
-Return ONLY a valid JSON object (not an array), no other text.`
+Return ONLY valid JSON, no other text.`
 
   console.log('=== CALLING CLAUDE AI ===')
   console.log('PDF text length:', pdfText.length)
   console.log('First 500 chars of PDF:', pdfText.substring(0, 500))
 
   const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
+    model: 'claude-sonnet-4-5-20250929',
     max_tokens: 8000,
     messages: [{ role: 'user', content: prompt }],
   })

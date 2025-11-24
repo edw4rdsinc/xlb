@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { ArrowLeft, Save } from 'lucide-react';
 import Link from 'next/link';
-import SearchablePlayerDropdown from '@/components/fantasy-football/SearchablePlayerDropdown';
+import { PlayerAutocomplete } from '@/components/employee/PlayerAutocomplete';
 
 interface DraftPlayer {
   id: string;
@@ -62,6 +62,17 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
     k: '',
     def: '',
   });
+  // Store player names for autocomplete display
+  const [playerNames, setPlayerNames] = useState<LineupData>({
+    qb: '',
+    rb1: '',
+    rb2: '',
+    wr1: '',
+    wr2: '',
+    te: '',
+    k: '',
+    def: '',
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -76,11 +87,32 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
     }
   }, [lineupId]);
 
+  // Update player names when lineup or draft pool changes
+  useEffect(() => {
+    if (Object.keys(draftPool).length === 0) return;
+
+    const newNames: LineupData = { qb: '', rb1: '', rb2: '', wr1: '', wr2: '', te: '', k: '', def: '' };
+
+    for (const [pos, playerId] of Object.entries(lineup)) {
+      if (!playerId) continue;
+      const poolKey = pos === 'rb1' || pos === 'rb2' ? 'RB' :
+                      pos === 'wr1' || pos === 'wr2' ? 'WR' :
+                      pos.toUpperCase();
+      const players = draftPool[poolKey] || [];
+      const player = players.find(p => p.id === playerId);
+      if (player) {
+        newNames[pos as keyof LineupData] = player.name;
+      }
+    }
+
+    setPlayerNames(newNames);
+  }, [lineup, draftPool]);
+
   async function loadLineup() {
     try {
       setLoading(true);
 
-      // Get lineup data
+      // Get lineup data - using correct column names with _id suffix
       const { data: lineupData, error: lineupError } = await supabase
         .from('lineups')
         .select(`
@@ -88,14 +120,14 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
           user_id,
           round_id,
           is_locked,
-          qb,
-          rb1,
-          rb2,
-          wr1,
-          wr2,
-          te,
-          k,
-          def,
+          qb_id,
+          rb1_id,
+          rb2_id,
+          wr1_id,
+          wr2_id,
+          te_id,
+          k_id,
+          def_id,
           users!inner(name, team_name, email),
           rounds!inner(round_number, start_week, end_week)
         `)
@@ -106,14 +138,14 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
 
       setLineupInfo(lineupData);
       setLineup({
-        qb: lineupData.qb || '',
-        rb1: lineupData.rb1 || '',
-        rb2: lineupData.rb2 || '',
-        wr1: lineupData.wr1 || '',
-        wr2: lineupData.wr2 || '',
-        te: lineupData.te || '',
-        k: lineupData.k || '',
-        def: lineupData.def || '',
+        qb: lineupData.qb_id || '',
+        rb1: lineupData.rb1_id || '',
+        rb2: lineupData.rb2_id || '',
+        wr1: lineupData.wr1_id || '',
+        wr2: lineupData.wr2_id || '',
+        te: lineupData.te_id || '',
+        k: lineupData.k_id || '',
+        def: lineupData.def_id || '',
       });
 
       // Load draft pool for the round
@@ -493,6 +525,26 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
     return eliteCount < 2;
   }
 
+  // Wrapper for PlayerAutocomplete's canSelectPlayer (uses is_elite instead of isElite)
+  function canSelectPlayerFromAutocomplete(player: { id: string; is_elite: boolean }, currentPos: string): boolean {
+    if (!player.is_elite) return true;
+
+    // Count elite players excluding the current position
+    const selectedIds = Object.entries(lineup)
+      .filter(([pos, id]) => pos !== currentPos && id)
+      .map(([_, id]) => id);
+
+    const eliteCount = selectedIds.filter(id => {
+      for (const position of Object.values(draftPool)) {
+        const p = position.find(pl => pl.id === id);
+        if (p?.isElite) return true;
+      }
+      return false;
+    }).length;
+
+    return eliteCount < 2;
+  }
+
   async function handleSave() {
     // Validate all positions filled
     const positions = ['qb', 'rb1', 'rb2', 'wr1', 'wr2', 'te', 'k', 'def'];
@@ -519,14 +571,14 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
       const { error: updateError } = await supabase
         .from('lineups')
         .update({
-          qb: lineup.qb,
-          rb1: lineup.rb1,
-          rb2: lineup.rb2,
-          wr1: lineup.wr1,
-          wr2: lineup.wr2,
-          te: lineup.te,
-          k: lineup.k,
-          def: lineup.def,
+          qb_id: lineup.qb,
+          rb1_id: lineup.rb1,
+          rb2_id: lineup.rb2,
+          wr1_id: lineup.wr1,
+          wr2_id: lineup.wr2,
+          te_id: lineup.te,
+          k_id: lineup.k,
+          def_id: lineup.def,
           updated_at: new Date().toISOString(),
         })
         .eq('id', lineupId);
@@ -666,12 +718,19 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                 )}
 
                 {/* Player Selection with Search */}
-                <SearchablePlayerDropdown
-                  players={players}
-                  value={lineup[position]}
-                  onChange={(playerId) => setLineup({ ...lineup, [position]: playerId })}
-                  position={posLabel}
-                  canSelectPlayer={(playerId) => canSelectPlayer(playerId, position)}
+                <PlayerAutocomplete
+                  value={playerNames[position]}
+                  onChange={(name, team) => {
+                    setPlayerNames({ ...playerNames, [position]: name });
+                  }}
+                  position={poolKey}
+                  placeholder={`Search ${posLabel} players...`}
+                  showTeamInput={false}
+                  onSelectPlayer={(player) => {
+                    setLineup({ ...lineup, [position]: player.id });
+                    setPlayerNames({ ...playerNames, [position]: player.name });
+                  }}
+                  canSelectPlayer={(player) => canSelectPlayerFromAutocomplete(player, position)}
                 />
               </div>
             );
