@@ -720,8 +720,8 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                 {/* Player Selection with Search */}
                 <PlayerAutocomplete
                   value={playerNames[position]}
-                  onChange={(name, team) => {
-                    setPlayerNames({ ...playerNames, [position]: name });
+                  onChange={() => {
+                    // Don't update on typing - only update when selecting from dropdown
                   }}
                   position={poolKey}
                   placeholder={`Search ${posLabel} players...`}
