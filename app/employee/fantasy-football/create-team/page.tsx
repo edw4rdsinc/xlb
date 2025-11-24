@@ -385,9 +385,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="QB"
-                  players={draftPool['QB'] || []}
-                  value={lineup.qb}
-                  onChange={(playerId) => setLineup({ ...lineup, qb: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, qb: player.id })}
                   placeholder="Select QB"
                   showTeamInput={false}
                 />
@@ -400,9 +400,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="RB"
-                  players={draftPool['RB'] || []}
-                  value={lineup.rb1}
-                  onChange={(playerId) => setLineup({ ...lineup, rb1: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, rb1: player.id })}
                   placeholder="Select RB1"
                   showTeamInput={false}
                 />
@@ -415,9 +415,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="RB"
-                  players={draftPool['RB'] || []}
-                  value={lineup.rb2}
-                  onChange={(playerId) => setLineup({ ...lineup, rb2: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, rb2: player.id })}
                   placeholder="Select RB2"
                   showTeamInput={false}
                 />
@@ -430,9 +430,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="WR"
-                  players={draftPool['WR'] || []}
-                  value={lineup.wr1}
-                  onChange={(playerId) => setLineup({ ...lineup, wr1: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, wr1: player.id })}
                   placeholder="Select WR1"
                   showTeamInput={false}
                 />
@@ -445,9 +445,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="WR"
-                  players={draftPool['WR'] || []}
-                  value={lineup.wr2}
-                  onChange={(playerId) => setLineup({ ...lineup, wr2: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, wr2: player.id })}
                   placeholder="Select WR2"
                   showTeamInput={false}
                 />
@@ -460,9 +460,9 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="TE"
-                  players={draftPool['TE'] || []}
-                  value={lineup.te}
-                  onChange={(playerId) => setLineup({ ...lineup, te: playerId })}
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, te: player.id })}
                   placeholder="Select TE"
                   showTeamInput={false}
                 />
@@ -475,10 +475,10 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="K"
-                  players={draftPool['K'] || []}
-                  value={lineup.k}
-                  onChange={(playerId) => setLineup({ ...lineup, k: playerId })}
-                  placeholder="Select K"
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, k: player.id })}
+                  placeholder="Select Kicker"
                   showTeamInput={false}
                 />
               </div>
@@ -490,10 +490,10 @@ export default function CreateTeamPage() {
                 </label>
                 <PlayerAutocomplete
                   position="DEF"
-                  players={draftPool['DEF'] || []}
-                  value={lineup.def}
-                  onChange={(playerId) => setLineup({ ...lineup, def: playerId })}
-                  placeholder="Select DEF"
+                  value=""
+                  onChange={() => {}}
+                  onSelectPlayer={(player) => setLineup({ ...lineup, def: player.id })}
+                  placeholder="Select Defense"
                   showTeamInput={false}
                 />
               </div>
