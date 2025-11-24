@@ -166,7 +166,7 @@ export default function CreateTeamPage() {
         .select('id, is_elite')
         .in('id', selectedPlayerIds)
 
-      const eliteCount = selectedPlayers?.filter(p => p.is_elite).length || 0
+      const eliteCount = selectedPlayers?.filter((p: any) => p.is_elite).length || 0
       if (eliteCount > 2) {
         throw new Error('Maximum 2 elite players allowed per lineup')
       }
