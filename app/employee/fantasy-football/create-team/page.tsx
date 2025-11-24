@@ -100,7 +100,7 @@ export default function CreateTeamPage() {
 
       if (draftPoolData && draftPoolData.length > 0) {
         // Use draft pool data
-        draftPoolData.forEach(item => {
+        draftPoolData.forEach((item: any) => {
           const player = item.players as any
           if (!playersByPosition[player.position]) {
             playersByPosition[player.position] = []
