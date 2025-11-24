@@ -47,6 +47,7 @@ export function PlayerAutocomplete({
 
   // Sync external value changes
   useEffect(() => {
+    console.log('PlayerAutocomplete: syncing query with value prop', { value, currentQuery: query })
     setQuery(value)
   }, [value])
 
@@ -110,12 +111,20 @@ export function PlayerAutocomplete({
       return
     }
 
+    console.log('PlayerAutocomplete: handleSelect called with', player.name)
+
+    // Update internal state FIRST
     setQuery(player.name)
 
-    // If onSelectPlayer is provided, use it instead of onChange
-    // This prevents conflicts when both are provided
+    // Close dropdown and clear suggestions
+    setIsOpen(false)
+    setSuggestions([])
+
+    // Call the appropriate callback AFTER updating internal state
     if (onSelectPlayer) {
+      console.log('PlayerAutocomplete: calling onSelectPlayer')
       onSelectPlayer(player)
+      // Don't call onChange when using onSelectPlayer to avoid conflicts
     } else {
       // Only call onChange if onSelectPlayer is not provided
       onChange(player.name, player.team)
@@ -123,9 +132,6 @@ export function PlayerAutocomplete({
         onTeamChange(player.team)
       }
     }
-
-    setIsOpen(false)
-    setSuggestions([])
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
