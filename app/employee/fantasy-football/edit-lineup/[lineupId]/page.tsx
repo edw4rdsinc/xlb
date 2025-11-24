@@ -557,24 +557,37 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
   }
 
   async function handleSave() {
+    console.log('🔵 handleSave called');
+    console.log('Current lineup state:', lineup);
+    console.log('Current playerNames state:', playerNames);
+
     // Validate all positions filled
     const positions = ['qb', 'rb1', 'rb2', 'wr1', 'wr2', 'te', 'k', 'def'];
     for (const pos of positions) {
       if (!lineup[pos as keyof LineupData]) {
+        console.log(`❌ Missing player for ${pos}`);
         alert(`Please select a player for ${pos.toUpperCase()}`);
         return;
       }
     }
+    console.log('✅ All positions filled');
 
     // Check elite limit
-    if (countElitePlayers() > 2) {
+    const eliteCount = countElitePlayers();
+    console.log(`Elite player count: ${eliteCount}`);
+    if (eliteCount > 2) {
+      console.log('❌ Too many elite players');
       alert('Maximum 2 elite players allowed');
       return;
     }
+    console.log('✅ Elite limit OK');
 
+    console.log('🔵 Showing confirmation dialog');
     if (!confirm('Save lineup changes?')) {
+      console.log('❌ User cancelled');
       return;
     }
+    console.log('✅ User confirmed, saving...');
 
     setSaving(true);
 
