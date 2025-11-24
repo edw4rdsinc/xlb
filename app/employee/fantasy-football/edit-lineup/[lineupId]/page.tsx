@@ -673,9 +673,11 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto">
-        {/* Elite Counter */}
-        <div className="mb-6 flex justify-center">
+      <div className="max-w-7xl mx-auto flex gap-6">
+        {/* Main Content */}
+        <div className="flex-1">
+          {/* Elite Counter */}
+          <div className="mb-6 flex justify-center">
           <div className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold text-lg ${
             eliteCount >= 2 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
           }`}>
@@ -753,6 +755,57 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
             </p>
           </div>
         )}
+        </div>
+
+        {/* Sidebar - Current Roster */}
+        <div className="w-80">
+          <div className="bg-white rounded-xl shadow-xl border border-gray-100 sticky top-24">
+            <div className="bg-gradient-to-r from-xl-bright-blue to-xl-dark-blue text-white p-4 rounded-t-xl">
+              <h3 className="font-bold text-lg">Current Roster</h3>
+              <p className="text-sm opacity-90">Your selected lineup</p>
+            </div>
+            <div className="p-4 space-y-3">
+              {['qb', 'rb1', 'rb2', 'wr1', 'wr2', 'te', 'k', 'def'].map(pos => {
+                const posLabel = pos === 'def' ? 'DEF' : pos === 'k' ? 'K' : pos.toUpperCase();
+                const playerId = lineup[pos as keyof LineupData];
+                const playerName = playerNames[pos as keyof typeof playerNames] || '';
+
+                // Find the player in the draft pool to get their elite status
+                let isElite = false;
+                const poolKey = pos === 'def' ? 'DEF' : pos === 'k' ? 'K' :
+                               pos === 'qb' ? 'QB' :
+                               pos.startsWith('rb') ? 'RB' :
+                               pos.startsWith('wr') ? 'WR' : 'TE';
+
+                const player = draftPool[poolKey]?.find(p => p.id === playerId);
+                if (player) {
+                  isElite = player.isElite;
+                }
+
+                return (
+                  <div key={pos} className={`p-3 rounded-lg border ${playerName ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-semibold text-gray-600">{posLabel}</span>
+                      {isElite && (
+                        <span className="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs font-bold rounded">
+                          ELITE
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm font-medium mt-1">
+                      {playerName || <span className="text-gray-400 italic">Not selected</span>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="p-4 border-t">
+              <div className={`text-center font-semibold ${eliteCount > 2 ? 'text-red-600' : 'text-green-600'}`}>
+                Elite Players: {eliteCount}/2
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
