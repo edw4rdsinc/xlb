@@ -720,13 +720,20 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                 {/* Player Selection with Search */}
                 <PlayerAutocomplete
                   value={playerNames[position]}
-                  onChange={() => {
-                    // Don't update on typing - only update when selecting from dropdown
+                  onChange={(name, team) => {
+                    // Update the displayed name when typing or selecting
+                    setPlayerNames({ ...playerNames, [position]: name });
+                    // Clear the lineup ID when typing (not selecting from dropdown)
+                    // This ensures we don't save partial/invalid selections
+                    if (!name) {
+                      setLineup({ ...lineup, [position]: '' });
+                    }
                   }}
                   position={poolKey}
                   placeholder={`Search ${posLabel} players...`}
                   showTeamInput={false}
                   onSelectPlayer={(player) => {
+                    // This is called when selecting from dropdown - update both ID and name
                     setLineup({ ...lineup, [position]: player.id });
                     setPlayerNames({ ...playerNames, [position]: player.name });
                   }}
