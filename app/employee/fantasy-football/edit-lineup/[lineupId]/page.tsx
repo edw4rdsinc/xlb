@@ -735,7 +735,6 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                   value={playerNames[position]}
                   onChange={(name, team) => {
                     // This is only called when manually typing now, not when selecting
-                    console.log(`EditLineup: onChange for ${position}, name="${name}"`)
                     setPlayerNames({ ...playerNames, [position]: name });
                     // Clear the lineup ID when manually clearing the field
                     if (!name) {
@@ -747,17 +746,8 @@ export default function AdminEditLineupPage({ params }: { params: Promise<{ line
                   showTeamInput={false}
                   onSelectPlayer={(player) => {
                     // This is called when selecting from dropdown - update both ID and name
-                    console.log(`EditLineup: onSelectPlayer for ${position}, player="${player.name}", id="${player.id}"`)
-                    setLineup(prev => {
-                      const updated = { ...prev, [position]: player.id }
-                      console.log(`EditLineup: lineup updated`, updated)
-                      return updated
-                    });
-                    setPlayerNames(prev => {
-                      const updated = { ...prev, [position]: player.name }
-                      console.log(`EditLineup: playerNames updated`, updated)
-                      return updated
-                    });
+                    setLineup(prev => ({ ...prev, [position]: player.id }));
+                    setPlayerNames(prev => ({ ...prev, [position]: player.name }));
                   }}
                   canSelectPlayer={(player) => canSelectPlayerFromAutocomplete(player, position)}
                 />

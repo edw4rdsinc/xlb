@@ -47,7 +47,6 @@ export function PlayerAutocomplete({
 
   // Sync external value changes
   useEffect(() => {
-    console.log('PlayerAutocomplete: syncing query with value prop', { value, currentQuery: query })
     setQuery(value)
   }, [value])
 
@@ -111,8 +110,6 @@ export function PlayerAutocomplete({
       return
     }
 
-    console.log('PlayerAutocomplete: handleSelect called with', player.name)
-
     // Update internal state FIRST
     setQuery(player.name)
 
@@ -122,7 +119,6 @@ export function PlayerAutocomplete({
 
     // Call the appropriate callback AFTER updating internal state
     if (onSelectPlayer) {
-      console.log('PlayerAutocomplete: calling onSelectPlayer')
       onSelectPlayer(player)
       // Don't call onChange when using onSelectPlayer to avoid conflicts
     } else {
