@@ -36,6 +36,7 @@ export default function FantasyFootballAdminPage() {
   const [lockStatus, setLockStatus] = useState<LockStatus | null>(null)
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     loadData()
@@ -169,6 +170,18 @@ export default function FantasyFootballAdminPage() {
     }
   }
 
+  // Filter lineups based on search query
+  const filteredLineups = lineups.filter(lineup => {
+    if (!searchQuery.trim()) return true
+
+    const query = searchQuery.toLowerCase()
+    const teamName = lineup.users.team_name?.toLowerCase() || ''
+    const userName = lineup.users.name?.toLowerCase() || ''
+    const email = lineup.users.email?.toLowerCase() || ''
+
+    return teamName.includes(query) || userName.includes(query) || email.includes(query)
+  })
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -290,7 +303,23 @@ export default function FantasyFootballAdminPage() {
         {/* Lineups Table */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-bold text-xl-dark-blue">All Lineups</h3>
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-lg font-bold text-xl-dark-blue">All Lineups</h3>
+              <div className="flex-1 max-w-md">
+                <input
+                  type="text"
+                  placeholder="Search by team name, user name, or email..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-xl-bright-blue focus:border-transparent outline-none"
+                />
+              </div>
+              {searchQuery && (
+                <p className="text-sm text-xl-grey whitespace-nowrap">
+                  Showing {filteredLineups.length} of {lineups.length}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="overflow-x-auto">
@@ -318,14 +347,14 @@ export default function FantasyFootballAdminPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {lineups.length === 0 ? (
+                {filteredLineups.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center text-xl-grey">
-                      No lineups found
+                      {searchQuery ? 'No lineups match your search' : 'No lineups found'}
                     </td>
                   </tr>
                 ) : (
-                  lineups.map((lineup) => (
+                  filteredLineups.map((lineup) => (
                     <tr key={lineup.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="font-medium text-xl-dark-blue">{lineup.users.team_name}</div>
