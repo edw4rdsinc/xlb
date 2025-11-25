@@ -29,14 +29,7 @@ export function SeasonResults() {
     try {
       setLoading(true);
 
-      // Get all users
-      const { data: users, error: usersError } = await supabase
-        .from('users')
-        .select('id, name, team_name');
-
-      if (usersError) throw usersError;
-
-      // Get all rounds
+      // Get all rounds for week-to-round mapping
       const { data: rounds, error: roundsError } = await supabase
         .from('rounds')
         .select('*')
@@ -44,61 +37,65 @@ export function SeasonResults() {
 
       if (roundsError) throw roundsError;
 
-      const seasonScores: SeasonScore[] = [];
+      // Get all weekly scores directly via user_id
+      const { data: allScores, error: scoresError } = await supabase
+        .from('weekly_scores')
+        .select(`
+          *,
+          user:users!user_id(
+            id,
+            name,
+            team_name
+          )
+        `);
 
-      for (const user of users || []) {
-        let seasonTotal = 0;
-        let defTotal = 0;
-        let kTotal = 0;
-        let weeksPlayed = 0;
-        const roundTotals = [0, 0, 0];
+      if (scoresError) throw scoresError;
 
-        // Get all lineups for this user across all rounds
-        const { data: lineups, error: lineupsError } = await supabase
-          .from('lineups')
-          .select('id, round_id')
-          .eq('user_id', user.id);
+      // Aggregate scores by user
+      const userScoresMap = new Map<string, SeasonScore>();
 
-        if (lineupsError) throw lineupsError;
+      for (const score of allScores || []) {
+        const userId = score.user_id;
+        const user = score.user;
 
-        // Get all weekly scores for these lineups
-        for (const lineup of lineups || []) {
-          const { data: weeklyScores, error: scoresError } = await supabase
-            .from('weekly_scores')
-            .select('*')
-            .eq('lineup_id', lineup.id);
+        if (!userId || !user) continue;
 
-          if (scoresError) throw scoresError;
-
-          const lineupTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.total_points, 0) || 0;
-          const lineupDefTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.def_points, 0) || 0;
-          const lineupKTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.k_points, 0) || 0;
-
-          seasonTotal += lineupTotal;
-          defTotal += lineupDefTotal;
-          kTotal += lineupKTotal;
-          weeksPlayed += weeklyScores?.length || 0;
-
-          // Track round totals
-          const round = rounds?.find((r: any) => r.id === lineup.round_id);
-          if (round) {
-            roundTotals[round.round_number - 1] = lineupTotal;
-          }
+        if (!userScoresMap.has(userId)) {
+          userScoresMap.set(userId, {
+            user_id: userId,
+            team_name: user.team_name || 'Unknown',
+            name: user.name || 'Unknown',
+            season_total: 0,
+            def_total: 0,
+            k_total: 0,
+            weeks_played: 0,
+            round1_total: 0,
+            round2_total: 0,
+            round3_total: 0,
+          });
         }
 
-        seasonScores.push({
-          user_id: user.id,
-          team_name: user.team_name,
-          name: user.name,
-          season_total: seasonTotal,
-          def_total: defTotal,
-          k_total: kTotal,
-          weeks_played: weeksPlayed,
-          round1_total: roundTotals[0],
-          round2_total: roundTotals[1],
-          round3_total: roundTotals[2],
-        });
+        const userScore = userScoresMap.get(userId)!;
+        userScore.season_total += score.total_points || 0;
+        userScore.def_total += score.def_points || 0;
+        userScore.k_total += score.k_points || 0;
+        userScore.weeks_played += 1;
+
+        // Track round totals based on week number
+        const weekNum = score.week_number;
+        const round = rounds?.find((r: any) => weekNum >= r.start_week && weekNum <= r.end_week);
+        if (round) {
+          if (round.round_number === 1) {
+            userScore.round1_total += score.total_points || 0;
+          } else if (round.round_number === 2) {
+            userScore.round2_total += score.total_points || 0;
+          } else if (round.round_number === 3) {
+            userScore.round3_total += score.total_points || 0;
+          }
+        }
       }
+
+      const seasonScores = Array.from(userScoresMap.values());
 
       // Sort by season_total (desc), then def_total (desc), then k_total (desc)
       seasonScores.sort((a, b) => {
@@ -146,38 +143,9 @@ export function SeasonResults() {
         <h3 className="font-semibold text-blue-900 mb-2">
           Season Championship
         </h3>
-        <p className="text-sm text-blue-700 mb-3">
+        <p className="text-sm text-blue-700">
           The overall season champion is determined by cumulative points across all 18 weeks (3 rounds).
         </p>
-        <div className="grid grid-cols-3 gap-3 text-sm">
-          <div className="bg-white rounded p-3 border border-yellow-200">
-            <div className="flex items-center justify-center mb-1">
-              <svg className="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <p className="font-bold text-yellow-700 text-center">1st Place</p>
-            <p className="text-2xl font-bold text-yellow-900 text-center">$400</p>
-          </div>
-          <div className="bg-white rounded p-3 border border-slate-200">
-            <div className="flex items-center justify-center mb-1">
-              <svg className="w-6 h-6 text-slate-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <p className="font-bold text-slate-700 text-center">2nd Place</p>
-            <p className="text-2xl font-bold text-slate-900 text-center">$250</p>
-          </div>
-          <div className="bg-white rounded p-3 border border-amber-200">
-            <div className="flex items-center justify-center mb-1">
-              <svg className="w-6 h-6 text-amber-700" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <p className="font-bold text-amber-800 text-center">3rd Place</p>
-            <p className="text-2xl font-bold text-amber-900 text-center">$100</p>
-          </div>
-        </div>
       </div>
 
       {/* Loading State */}
@@ -230,9 +198,6 @@ export function SeasonResults() {
                 <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">
                   Avg Per Week
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                  Prize
-                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
@@ -242,20 +207,12 @@ export function SeasonResults() {
                   ? score.season_total / score.weeks_played
                   : 0;
 
-                let prize = '';
-                let prizeColor = '';
                 let rowBg = '';
                 if (rank === 1) {
-                  prize = '$400';
-                  prizeColor = 'text-yellow-700 font-bold';
                   rowBg = 'bg-gradient-to-r from-yellow-50 to-amber-50';
                 } else if (rank === 2) {
-                  prize = '$250';
-                  prizeColor = 'text-slate-600 font-semibold';
                   rowBg = 'bg-slate-50';
                 } else if (rank === 3) {
-                  prize = '$100';
-                  prizeColor = 'text-amber-700 font-semibold';
                   rowBg = 'bg-amber-50';
                 }
 
@@ -288,9 +245,6 @@ export function SeasonResults() {
                     </td>
                     <td className="px-4 py-3 text-right text-slate-600">
                       {avgPerWeek.toFixed(2)}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <span className={prizeColor}>{prize}</span>
                     </td>
                   </tr>
                 );

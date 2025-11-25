@@ -46,16 +46,14 @@ export function WeeklyResults({ currentWeek, rounds }: WeeklyResultsProps) {
     try {
       setLoading(true);
 
-      // Get weekly scores with user info
+      // Get weekly scores with user info directly via user_id
       const { data: scoresData, error: scoresError } = await supabase
         .from('weekly_scores')
         .select(`
           *,
-          lineup:lineups!inner(
-            user:users!inner(
-              name,
-              team_name
-            )
+          user:users!user_id(
+            name,
+            team_name
           )
         `)
         .eq('week_number', selectedWeek)
@@ -78,8 +76,8 @@ export function WeeklyResults({ currentWeek, rounds }: WeeklyResultsProps) {
         k_points: score.k_points,
         def_points: score.def_points,
         user: {
-          name: score.lineup.user.name,
-          team_name: score.lineup.user.team_name,
+          name: score.user?.name || 'Unknown',
+          team_name: score.user?.team_name || 'Unknown',
         },
       }));
 

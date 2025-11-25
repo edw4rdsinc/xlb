@@ -40,14 +40,14 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def fetch_lineups() -> List[Dict]:
     """
-    Fetch all lineups from the database.
+    Fetch all lineups from the database with user_id for direct user association.
 
     Returns:
-        List of lineup dictionaries with player IDs for each position
+        List of lineup dictionaries with player IDs for each position and user_id
     """
     print("📋 Fetching all lineups from database...")
 
-    response = supabase.table('lineups').select('*').execute()
+    response = supabase.table('lineups').select('*, users(id)').execute()
 
     if not response.data:
         print("⚠️  No lineups found in database")
@@ -122,9 +122,13 @@ def calculate_lineup_scores(lineups: List[Dict], player_stats: Dict[str, float],
             else:
                 position_points[f'{pos}_points'] = 0.0
 
-        # Create weekly_scores record
+        # Get user_id from the joined users data
+        user_id = lineup.get('users', {}).get('id') if lineup.get('users') else lineup.get('user_id')
+
+        # Create weekly_scores record with both lineup_id and user_id
         score_record = {
             'lineup_id': lineup['id'],
+            'user_id': user_id,
             'week_number': week,
             'qb_points': position_points['qb_points'],
             'rb1_points': position_points['rb1_points'],
@@ -176,24 +180,31 @@ def calculate_cumulative_scores(weekly_scores: List[Dict], week: int, season: in
 
     print(f"✅ Found Round {current_round['round_number']} (Weeks {current_round['start_week']}-{current_round['end_week']})")
 
-    # For each lineup, calculate cumulative scores
+    # For each lineup, calculate cumulative scores using user_id
     for score in weekly_scores:
-        lineup_id = score['lineup_id']
+        user_id = score['user_id']
 
-        # Calculate round cumulative (sum of all weeks in current round)
+        if not user_id:
+            # Fallback to lineup_id if no user_id (shouldn't happen)
+            print(f"⚠️  No user_id for lineup {score['lineup_id']}, skipping cumulative")
+            score['round_cumulative_points'] = score['total_points']
+            score['season_cumulative_points'] = score['total_points']
+            continue
+
+        # Calculate round cumulative (sum of all weeks in current round) using user_id
         round_response = supabase.table('weekly_scores') \
             .select('total_points') \
-            .eq('lineup_id', lineup_id) \
+            .eq('user_id', user_id) \
             .gte('week_number', current_round['start_week']) \
             .lte('week_number', week) \
             .execute()
 
         round_cumulative = sum(float(r['total_points'] or 0) for r in round_response.data)
 
-        # Calculate season cumulative (sum of all weeks in season)
+        # Calculate season cumulative (sum of all weeks in season) using user_id
         season_response = supabase.table('weekly_scores') \
             .select('total_points') \
-            .eq('lineup_id', lineup_id) \
+            .eq('user_id', user_id) \
             .lte('week_number', week) \
             .execute()
 
@@ -232,13 +243,15 @@ def upsert_scores(weekly_scores: List[Dict], dry_run: bool = False) -> None:
 
     for score in weekly_scores:
         try:
+            # Use user_id and week_number for conflict resolution
+            # This allows scores to be tracked by user rather than lineup
             supabase.table('weekly_scores').upsert(
                 score,
-                on_conflict='lineup_id,week_number'
+                on_conflict='user_id,week_number'
             ).execute()
             success_count += 1
         except Exception as e:
-            print(f"⚠️  Failed to upsert score for lineup {score['lineup_id']}: {e}")
+            print(f"⚠️  Failed to upsert score for user {score.get('user_id')}: {e}")
             error_count += 1
 
     print(f"✅ Successfully upserted {success_count} score records")

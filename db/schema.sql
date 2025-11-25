@@ -70,9 +70,13 @@ CREATE INDEX IF NOT EXISTS idx_lineups_round ON lineups(round_id);
 CREATE INDEX IF NOT EXISTS idx_lineups_locked ON lineups(is_locked);
 
 -- Weekly_Scores Table
+-- Note: user_id is the primary identifier for scores. lineup_id is optional
+-- and only populated when scores are calculated from actual lineups (Round 3+).
+-- For historical/imported scores, user_id is set directly without a lineup.
 CREATE TABLE IF NOT EXISTS weekly_scores (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  lineup_id UUID NOT NULL REFERENCES lineups(id) ON DELETE CASCADE,
+  lineup_id UUID REFERENCES lineups(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   week_number INTEGER NOT NULL CHECK (week_number BETWEEN 1 AND 18),
   qb_points DECIMAL(10,2) DEFAULT 0,
   rb1_points DECIMAL(10,2) DEFAULT 0,
@@ -87,11 +91,12 @@ CREATE TABLE IF NOT EXISTS weekly_scores (
   season_cumulative_points DECIMAL(10,2) DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(lineup_id, week_number)
+  UNIQUE(user_id, week_number)
 );
 
 CREATE INDEX IF NOT EXISTS idx_weekly_scores_week ON weekly_scores(week_number);
 CREATE INDEX IF NOT EXISTS idx_weekly_scores_lineup ON weekly_scores(lineup_id);
+CREATE INDEX IF NOT EXISTS idx_weekly_scores_user ON weekly_scores(user_id);
 CREATE INDEX IF NOT EXISTS idx_weekly_scores_total ON weekly_scores(total_points DESC);
 
 -- Player_Weekly_Stats Table

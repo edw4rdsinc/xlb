@@ -45,50 +45,52 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
       const round = rounds.find((r: any) => r.id === selectedRound);
       if (!round) return;
 
-      // Get all lineups for this round
-      const { data: lineups, error: lineupsError } = await supabase
-        .from('lineups')
+      // Get weekly scores directly via user_id for the weeks in this round
+      const { data: weeklyScores, error: scoresError } = await supabase
+        .from('weekly_scores')
         .select(`
-          id,
-          user_id,
-          user:users!inner(
+          *,
+          user:users!user_id(
+            id,
             name,
             team_name
           )
         `)
-        .eq('round_id', selectedRound);
+        .gte('week_number', round.start_week)
+        .lte('week_number', round.end_week);
 
-      if (lineupsError) throw lineupsError;
+      if (scoresError) throw scoresError;
 
-      // Get weekly scores for each lineup in this round
-      const roundScores: RoundScore[] = [];
+      // Aggregate scores by user
+      const userScoresMap = new Map<string, RoundScore>();
 
-      for (const lineup of lineups || []) {
-        const user = Array.isArray(lineup.user) ? lineup.user[0] : lineup.user;
-        const { data: weeklyScores, error: scoresError } = await supabase
-          .from('weekly_scores')
-          .select('*')
-          .eq('lineup_id', lineup.id)
-          .gte('week_number', round.start_week)
-          .lte('week_number', round.end_week);
+      for (const score of weeklyScores || []) {
+        const userId = score.user_id;
+        const user = score.user;
 
-        if (scoresError) throw scoresError;
+        if (!userId || !user) continue;
 
-        const roundTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.total_points, 0) || 0;
-        const defTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.def_points, 0) || 0;
-        const kTotal = weeklyScores?.reduce((sum: number, score: any) => sum + score.k_points, 0) || 0;
+        if (!userScoresMap.has(userId)) {
+          userScoresMap.set(userId, {
+            user_id: userId,
+            lineup_id: score.lineup_id || '',
+            team_name: user.team_name || 'Unknown',
+            name: user.name || 'Unknown',
+            round_total: 0,
+            def_total: 0,
+            k_total: 0,
+            weeks_played: 0,
+          });
+        }
 
-        roundScores.push({
-          user_id: lineup.user_id,
-          lineup_id: lineup.id,
-          team_name: user.team_name,
-          name: user.name,
-          round_total: roundTotal,
-          def_total: defTotal,
-          k_total: kTotal,
-          weeks_played: weeklyScores?.length || 0,
-        });
+        const userScore = userScoresMap.get(userId)!;
+        userScore.round_total += score.total_points || 0;
+        userScore.def_total += score.def_points || 0;
+        userScore.k_total += score.k_points || 0;
+        userScore.weeks_played += 1;
       }
+
+      const roundScores = Array.from(userScoresMap.values());
 
       // Sort by round_total (desc), then def_total (desc), then k_total (desc)
       roundScores.sort((a, b) => {
@@ -180,12 +182,6 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
                 {selectedRoundData.is_active ? 'Active' : 'Completed'}
               </span>
             </div>
-            <div>
-              <span className="text-blue-700">Prizes:</span>
-              <span className="ml-2 font-medium text-blue-900">
-                $150 / $100 / $50
-              </span>
-            </div>
           </div>
         </div>
       )}
@@ -234,9 +230,6 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
                 <th className="px-4 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">
                   Weeks Played
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                  Prize
-                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
@@ -246,22 +239,9 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
                   ? score.round_total / score.weeks_played
                   : 0;
 
-                let prize = '';
-                let prizeColor = '';
-                if (rank === 1) {
-                  prize = '$150';
-                  prizeColor = 'text-yellow-700 font-bold';
-                } else if (rank === 2) {
-                  prize = '$100';
-                  prizeColor = 'text-slate-600 font-semibold';
-                } else if (rank === 3) {
-                  prize = '$50';
-                  prizeColor = 'text-amber-700 font-semibold';
-                }
-
                 return (
                   <tr
-                    key={score.lineup_id}
+                    key={score.user_id}
                     className={`hover:bg-slate-50 transition-colors ${
                       rank === 1 ? 'bg-yellow-50' : rank <= 3 ? 'bg-blue-50' : ''
                     }`}
@@ -286,9 +266,6 @@ export function RoundResults({ rounds, currentRoundId }: RoundResultsProps) {
                       <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">
                         {score.weeks_played}
                       </span>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <span className={prizeColor}>{prize}</span>
                     </td>
                   </tr>
                 );

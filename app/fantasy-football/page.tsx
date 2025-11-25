@@ -86,7 +86,7 @@ export default function FantasyFootballPage() {
               FANTASY FOOTBALL CHALLENGE
             </h1>
             <p className="text-sm sm:text-lg md:text-xl lg:text-2xl mb-10 md:mb-12 text-white/95 drop-shadow-lg whitespace-nowrap">
-              18 weeks. 3 rounds. Over $1,000 in prizes. Free to play.
+              18 weeks. 3 rounds. Track your results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
               <Link
@@ -127,74 +127,54 @@ export default function FantasyFootballPage() {
       </section>
       </div>
 
-      {/* Prize Structure */}
+      {/* Results Overview */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="fade-up" className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-xl-dark-blue mb-4">
-              Prize Structure
+              View Your Results
             </h2>
             <p className="text-xl text-gray-600">
-              Multiple ways to win throughout the season
+              Track standings across the entire season
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Weekly Prizes */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Weekly Results */}
             <AnimatedSection animation="fade-up" delay={100}>
               <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
-                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Weekly Winner</h3>
-                <div className="text-3xl font-bold text-xl-bright-blue mb-2">$25</div>
-                <p className="text-gray-700 text-sm">
-                  Amazon gift card for highest single-week score
-                </p>
-                <div className="mt-4 text-xs text-gray-600">
-                  18 opportunities to win!
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Round Prizes */}
-            <AnimatedSection animation="fade-up" delay={200}>
-              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
-                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Round Winners</h3>
-                <div className="space-y-1 mb-2">
-                  <div className="font-bold text-lg">1st: $75</div>
-                  <div className="font-bold text-lg">2nd: $50</div>
-                  <div className="font-bold text-lg">3rd: $25</div>
-                </div>
-                <p className="text-gray-700 text-sm">
-                  Cumulative 6-week totals
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Grand Prize */}
-            <AnimatedSection animation="fade-up" delay={300}>
-              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
-                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Grand Prize</h3>
-                <div className="space-y-1 mb-2">
-                  <div className="font-bold text-lg">1st: $400</div>
-                  <div className="font-bold text-lg">2nd: $300</div>
-                  <div className="font-bold text-lg">3rd: $200</div>
-                  <div className="font-bold text-lg">4th: $100</div>
-                </div>
-                <p className="text-gray-700 text-sm">
-                  Full season cumulative
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Total Prizes */}
-            <AnimatedSection animation="fade-up" delay={400}>
-              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
-                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Total Pool</h3>
-                <div className="text-4xl font-bold text-xl-bright-blue mb-2">$1,450+</div>
+                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Weekly Results</h3>
                 <p className="text-gray-700 text-sm mb-4">
-                  In prizes this season
+                  See how every team performed each week with detailed position-by-position scoring breakdowns.
                 </p>
                 <div className="text-xs text-gray-600">
-                  * Winners receiving $600+ will receive W-9 form for IRS reporting
+                  18 weeks of results
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Round Results */}
+            <AnimatedSection animation="fade-up" delay={200}>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
+                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Round Standings</h3>
+                <p className="text-gray-700 text-sm mb-4">
+                  View cumulative totals for each 6-week round and see who's leading the pack.
+                </p>
+                <div className="text-xs text-gray-600">
+                  3 rounds per season
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Season Results */}
+            <AnimatedSection animation="fade-up" delay={300}>
+              <div className="bg-white rounded-lg p-6 h-full border-2 border-xl-bright-blue">
+                <h3 className="text-xl font-bold text-xl-dark-blue mb-3">Season Leaderboard</h3>
+                <p className="text-gray-700 text-sm mb-4">
+                  Track the overall season standings with full cumulative scores across all 18 weeks.
+                </p>
+                <div className="text-xs text-gray-600">
+                  Full season championship
                 </div>
               </div>
             </AnimatedSection>
@@ -270,10 +250,10 @@ export default function FantasyFootballPage() {
                     4
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Win Prizes</h3>
+                    <h3 className="text-xl font-bold text-xl-dark-blue mb-2">Track Your Standings</h3>
                     <p className="text-gray-700">
-                      Win weekly, round, and grand prizes based on your performance. The more weeks you compete,
-                      the more chances you have to win!
+                      Check the results page to see weekly, round, and season standings. Compare your performance
+                      against other teams throughout the season!
                     </p>
                   </div>
                 </div>
@@ -417,6 +397,30 @@ export default function FantasyFootballPage() {
               </Link>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Promotion Disclaimer Footer */}
+      <section className="py-8 bg-slate-100 border-t border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <details className="group">
+            <summary className="flex items-center justify-center cursor-pointer text-sm text-slate-600 hover:text-slate-800 transition-colors">
+              <svg className="w-4 h-4 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="font-medium">Promotion Disclaimer</span>
+              <svg className="w-4 h-4 ml-2 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div className="mt-4 text-xs text-slate-600 text-center leading-relaxed max-w-3xl mx-auto">
+              <p>
+                This Fantasy Football promotion is for entertainment purposes only and is not affiliated with or endorsed by the NFL or any team. Participation is by invitation only. No purchase necessary. Any prizes offered comply with applicable laws. Personal data collected will be used solely for contest administration and handled in accordance with our{' '}
+                <Link href="/privacy" className="text-xl-bright-blue hover:underline">Privacy Policy</Link>
+                {' '}and applicable law. This promotion does not impact any insurance products or services and cannot be used to bind, amend, or cancel coverage.
+              </p>
+            </div>
+          </details>
         </div>
       </section>
     </div>
